@@ -1,3 +1,13 @@
+# IDEA dir
+.idea/*
+out/*
+
+# db dir
+ranklist_db
+
+# MacOS file
+.DS*
+
 # Compiled class file
 *.class
 

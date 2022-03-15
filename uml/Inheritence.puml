@@ -1,0 +1,80 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class FlyingObject
+{
+    # int locationX
+    # int locationY
+    # int speedX
+    # int speedY
+    # BufferedImage image
+    # int width
+    # int height
+    # boolean isValid
+
+    + FlyingObject(int locationX, int locationY, int speedX, int speedY):void
+    + forward():void
+    + crash(FlyingObject flyingObject):boolean
+    + setLocation(double locationX, double locationY):void
+    + getLocationX():int
+    + getLocationY():int
+    + getSpeedY():int
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
+}
+abstract class AbstractAircraft
+{
+	# int maxHp
+    # int hp
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + decreaseHp(int decrease):void
+    + getHp():int
+    + {abstract} shoot():List<Bullet>
+ }
+
+abstract class AbstractBullet
+{
+    - int power
+    + Bullet(int locationX, int locationY, int speedX, int speedY, int power):void
+    + forward():void
+	+ getPower():int
+}
+
+FlyingObject <|-- AbstractAircraft
+FlyingObject <|-- AbstractBullet
+
+AbstractAircraft <|-- HeroAircraft
+AbstractAircraft <|-- MobEnemy
+
+AbstractBullet <|-- HeroBullet
+AbstractBullet <|-- EnemyBullet
+
+class HeroAircraft {
+    - int shootNum
+    - int power
+    - int direction
+    + HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + forward():void
+    + shoot():List<Bullet>
+}
+
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + forward():void
+    + shoot():List<Bullet>
+}
+
+class HeroBullet {
+    + HeroBullet(int locationX, int locationY,
+     int speedX, int speedY, int power):void
+}
+
+class EnemyBullet {
+    + EnemyBullet(int locationX, int locationY,
+     int speedX, int speedY, int power):void
+}
+
+@enduml
