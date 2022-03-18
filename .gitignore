@@ -35,7 +35,12 @@ hs_err_pid*
 # scala
 /out
 /target
-/project
+/project/target/
+/project/project/
+/project/build.properties
 /.bsp
 
 */target/
+
+!/project/plugins.sbt
+!/.idea/runConfigurations

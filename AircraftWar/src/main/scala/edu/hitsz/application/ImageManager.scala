@@ -4,7 +4,7 @@ import edu.hitsz.aircraft.{HeroAircraft, MobEnemy}
 import edu.hitsz.bullet.{EnemyBullet, HeroBullet}
 
 import java.awt.image.BufferedImage
-import java.io.{FileInputStream, IOException}
+import java.io.{FileInputStream, FileNotFoundException, IOException}
 import java.util
 import javax.imageio.ImageIO
 
@@ -21,15 +21,31 @@ object ImageManager {
    */
   private val CLASSNAME_IMAGE_MAP = new util.HashMap[String, BufferedImage]
 
-  val BACKGROUND_IMAGE = ImageIO.read(new FileInputStream(getClass.getResource("/images/bg.jpg").getFile))
-  val HERO_IMAGE = ImageIO.read(new FileInputStream(getClass.getResource("/images/hero.png").getFile))
-  val MOB_ENEMY_IMAGE = ImageIO.read(new FileInputStream(getClass.getResource("/images/mob.png").getFile))
-  val HERO_BULLET_IMAGE = ImageIO.read(new FileInputStream(getClass.getResource("/images/bullet_hero.png").getFile))
-  val ENEMY_BULLET_IMAGE = ImageIO.read(new FileInputStream(getClass.getResource("/images/bullet_enemy.png").getFile))
+  def tryGetImageFile(filename: String): BufferedImage = {
+    def getImage(path: String) = ImageIO.read(new FileInputStream(getClass.getResource(path).getFile))
+
+    try {
+      getImage(f"/$filename")
+    } catch {
+      case e: FileNotFoundException => getImage(f"$filename")
+    }
+  }
+
+  val BACKGROUND_IMAGE = tryGetImageFile("images/bg.jpg")
+  val HERO_IMAGE = tryGetImageFile("images/hero.png")
+  val MOB_ENEMY_IMAGE = tryGetImageFile("images/mob.png")
+  val HERO_BULLET_IMAGE = tryGetImageFile("images/bullet_hero.png")
+  val ENEMY_BULLET_IMAGE = tryGetImageFile("images/bullet_enemy.png")
   CLASSNAME_IMAGE_MAP.put(classOf[HeroAircraft].getName, HERO_IMAGE)
   CLASSNAME_IMAGE_MAP.put(classOf[MobEnemy].getName, MOB_ENEMY_IMAGE)
   CLASSNAME_IMAGE_MAP.put(classOf[HeroBullet].getName, HERO_BULLET_IMAGE)
   CLASSNAME_IMAGE_MAP.put(classOf[EnemyBullet].getName, ENEMY_BULLET_IMAGE)
+
+  // val test = classOf[this]
+
+  // def get[T](c: Class[T]) = c match {
+  //   case () => 1
+  // }
 
   def get(className: String) = CLASSNAME_IMAGE_MAP.get(className)
 

@@ -48,12 +48,12 @@ abstract class FlyingObject() {
    */
   protected var isValid = true
 
-  def this(locationX: Int, locationY: Int, speedX: Int, speedY: Int) {
+  def this(locationXInit: Int, locationYInit: Int, speedXInit: Int, speedYInit: Int) {
     this()
-    this.locationX = locationX
-    this.locationY = locationY
-    this.speedX = speedX
-    this.speedY = speedY
+    this.locationX = locationXInit
+    this.locationY = locationYInit
+    this.speedX = speedXInit
+    this.speedY = speedYInit
   }
 
   /**
