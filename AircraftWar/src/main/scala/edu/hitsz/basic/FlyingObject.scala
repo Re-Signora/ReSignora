@@ -1,37 +1,31 @@
 package edu.hitsz.basic
 
 import edu.hitsz.aircraft.AbstractAircraft
-import edu.hitsz.application.ImageManager
-import edu.hitsz.application.Main
-import java.awt.image.BufferedImage
+import edu.hitsz.application.{ImageResource, ImageResourceReady, Main}
 
 /**
  * 可飞行对象的父类
  *
  * @author chiro2001
  */
-abstract class FlyingObject() {
+abstract class FlyingObject(locationXInit: Int, locationYInit: Int, speedXInit: Int, speedYInit: Int) extends ImageResourceReady {
+  println(s"Object created at ($locationXInit, $locationYInit) ${getClass.getName}")
   /**
    * x 轴坐标
    */
-  protected var locationX = 0
+  protected var locationX = locationXInit
   /**
    * y 轴坐标
    */
-  protected var locationY = 0
+  protected var locationY = locationYInit
   /**
    * x 轴移动速度
    */
-  protected var speedX = 0
+  protected var speedX = speedXInit
   /**
    * y 轴移动速度
    */
-  protected var speedY = 0
-  /**
-   * 图片,
-   * null 表示未设置
-   */
-  protected var image: Option[BufferedImage] = None
+  protected var speedY = speedYInit
   /**
    * x 轴长度，根据图片尺寸获得
    * -1 表示未设置
@@ -46,15 +40,7 @@ abstract class FlyingObject() {
    * 有效（生存）标记，
    * 通常标记为 false的对象会再下次刷新时清除
    */
-  protected var isValid = true
-
-  def this(locationXInit: Int, locationYInit: Int, speedXInit: Int, speedYInit: Int) {
-    this()
-    this.locationX = locationXInit
-    this.locationY = locationYInit
-    this.speedX = speedXInit
-    this.speedY = speedYInit
-  }
+  protected var valid = true
 
   /**
    * 可飞行对象根据速度移动
@@ -84,15 +70,16 @@ abstract class FlyingObject() {
    * @return true: 我方被击中; false 我方未被击中
    */
   def crash(flyingObject: FlyingObject) = { // 缩放因子，用于控制 y轴方向区域范围
-    val factor = if (this.isInstanceOf[AbstractAircraft]) 2
-    else 1
-    val fFactor = if (flyingObject.isInstanceOf[AbstractAircraft]) 2
-    else 1
+    val factor = if (this.isInstanceOf[AbstractAircraft]) 2 else 1
+    val fFactor = if (flyingObject.isInstanceOf[AbstractAircraft]) 2 else 1
     val x = flyingObject.getLocationX
     val y = flyingObject.getLocationY
     val fWidth = flyingObject.getWidth
     val fHeight = flyingObject.getHeight
-    x + (fWidth + this.getWidth) / 2 > locationX && x - (fWidth + this.getWidth) / 2 < locationX && y + (fHeight / fFactor + this.getHeight / factor) / 2 > locationY && y - (fHeight / fFactor + this.getHeight / factor) / 2 < locationY
+    x + (fWidth + this.getWidth) / 2 > locationX &&
+      x - (fWidth + this.getWidth) / 2 < locationX &&
+      y + (fHeight / fFactor + this.getHeight / factor) / 2 > locationY &&
+      y - (fHeight / fFactor + this.getHeight / factor) / 2 < locationY
   }
 
   def getLocationX = locationX
@@ -106,31 +93,24 @@ abstract class FlyingObject() {
 
   def getSpeedY = speedY
 
-  def getImage = {
-    if (image.isEmpty) image = Some(ImageManager.get(this))
-    image.get
-  }
-
   def getWidth = {
-    if (width == -1) { // 若未设置，则查询图片宽度并设置
-      width = ImageManager.get(this).getWidth
-    }
+    // 若未设置，则查询图片宽度并设置
+    if (width == -1) width = getImage.getWidth
     width
   }
 
   def getHeight = {
-    if (height == -1) { // 若未设置，则查询图片高度并设置
-      height = ImageManager.get(this).getHeight
-    }
+    // 若未设置，则查询图片高度并设置
+    if (height == -1) height = getImage.getHeight
     height
   }
 
-  def notValid = !this.isValid
+  def isValid = !this.valid
 
   /**
    * 标记消失，
    * isValid = false.
    * notValid() => true.
    */
-  def vanish() = isValid = false
+  def vanish() = valid = false
 }

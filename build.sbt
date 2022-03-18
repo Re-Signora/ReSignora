@@ -4,15 +4,6 @@ ThisBuild / scalaVersion     := "2.13.8"
 ThisBuild / version          := projectVersion
 ThisBuild / organization     := "edu.hitsz"
 
-ThisBuild / assemblyMergeStrategy := {
-  case PathList("about.html") => MergeStrategy.rename
-  case x =>
-    val oldStrategy = (ThisBuild / assemblyMergeStrategy).value
-    println(x)
-    oldStrategy(x)
-}
-
-
 lazy val AirCraft = (project in file("AircraftWar"))
   .settings(
     assembly / mainClass := Some("edu.hitsz.application.Main"),

@@ -1,5 +1,6 @@
 package edu.hitsz.aircraft
 
+import edu.hitsz.application.ImageResource
 import edu.hitsz.bullet.{AbstractBullet, HeroBullet}
 
 import java.util
@@ -16,7 +17,7 @@ import java.util
  */
 class HeroAircraft(locationX: Int, locationY: Int, speedX: Int, speedY: Int, hpInit: Int)
   extends AbstractAircraft(locationX, locationY, speedX, speedY, hpInit) {
-  /** 攻击方式 */
+  // 攻击方式
   private val shootNum = 1 //子弹一次发射数量
   private val power = 30 //子弹伤害
   private val direction = -1 //子弹射击方向 (向上发射：1，向下发射：-1)
@@ -24,9 +25,11 @@ class HeroAircraft(locationX: Int, locationY: Int, speedX: Int, speedY: Int, hpI
   override def forward() = {
     // 英雄机由鼠标控制，不通过forward函数移动
   }
+
   /**
    * 通过射击产生子弹
-   *  @return 射击出的子弹List
+   *
+   * @return 射击出的子弹List
    */
   override def shoot() = {
     val x = this.getLocationX
@@ -35,4 +38,10 @@ class HeroAircraft(locationX: Int, locationY: Int, speedX: Int, speedY: Int, hpI
     val speedY = this.getSpeedY + direction * 5
     for {i <- 0 until shootNum} yield new HeroBullet(x + (i * 2 - shootNum + 1) * 10, y, speedX, speedY, power)
   }
+
+  override def getImage = HeroAircraft.getImage
+}
+
+object HeroAircraft extends ImageResource {
+  override def getImageCachedPath = "images/hero.png"
 }

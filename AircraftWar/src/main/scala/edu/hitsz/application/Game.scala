@@ -3,6 +3,7 @@ package edu.hitsz.application
 import edu.hitsz.aircraft._
 import edu.hitsz.basic.FlyingObject
 import edu.hitsz.bullet.AbstractBullet
+import edu.hitsz.scene.Background
 
 import java.awt._
 import java.util.concurrent.{ScheduledThreadPoolExecutor, TimeUnit}
@@ -16,7 +17,7 @@ import scala.collection.mutable.ListBuffer
  */
 class Game extends JPanel {
   println(s"Window(${Main.WINDOW_WIDTH}x${Main.WINDOW_HEIGHT})")
-  val heroAircraft = new HeroAircraft(Main.WINDOW_WIDTH / 2, Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight, 0, 0, 100)
+  val heroAircraft = new HeroAircraft(Main.WINDOW_WIDTH / 2, Main.WINDOW_HEIGHT - Background.getImage.getHeight, 0, 0, 100)
   val enemyAircrafts = new ListBuffer[AbstractAircraft]
   val heroBullets = new ListBuffer[AbstractBullet]
   val enemyBullets = new ListBuffer[AbstractBullet]
@@ -26,7 +27,7 @@ class Game extends JPanel {
   new HeroController(this, heroAircraft)
   private var backGroundTop = 0
   // 时间间隔(ms)，控制刷新频率
-  private val timeInterval = 100
+  private val timeInterval = 10
   private val timeStart = System.currentTimeMillis
   private val enemyMaxNumber = 5
   private var gameOverFlag = false
@@ -36,7 +37,7 @@ class Game extends JPanel {
    * 周期（ms)
    * 指示子弹的发射、敌机的产生频率
    */
-  private val bulletDuration = 60
+  private val bulletDuration = 600
   private var cycleTime = 0
   private val frameCount = new ListBuffer[Long]
 
@@ -47,19 +48,18 @@ class Game extends JPanel {
     // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
     val task = new Runnable {
       override def run() = {
-        // println("task run")
         // time += timeInterval
         time = System.currentTimeMillis - timeStart
         frameCount.append(time)
         frameCount.filterInPlace(_ >= (if (time >= 1000) time - 1000 else 0))
         // 周期性执行（控制频率）
         if (timeCountAndNewCycleJudge) {
-          if (time < 1000) println(f"[ ${time}ms ]")
-          else println(f"[ ${time}ms ] ${frameCount.size} fps")
+          if (time < 1000) println(f"[ ${time.toFloat / 1000}%.3fs ]")
+          else println(f"[ ${time.toFloat / 1000}%.3s ] ${frameCount.size} fps")
           // 新敌机产生
           if (enemyAircrafts.size < enemyMaxNumber) enemyAircrafts.append(
             new MobEnemy(
-              (Math.random * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth)).toInt * 1,
+              (Math.random * (Main.WINDOW_WIDTH - MobEnemy.getImage.getWidth)).toInt * 1,
               (Math.random * Main.WINDOW_HEIGHT * 0.2).toInt * 1, 0, 10, 30
             )
           )
@@ -132,15 +132,15 @@ class Game extends JPanel {
     // TODO 敌机子弹攻击英雄
     // 英雄子弹攻击敌机
     heroBullets.foreach(bullet => {
-      if (!bullet.notValid)
+      if (bullet.isValid)
         enemyAircrafts.foreach(enemyAircraft => {
-          if (!enemyAircraft.notValid) { // 已被其他子弹击毁的敌机，不再检测
+          if (enemyAircraft.isValid) { // 已被其他子弹击毁的敌机，不再检测
             // 避免多个子弹重复击毁同一敌机的判定
             if (enemyAircraft.crash(bullet)) { // 敌机撞击到英雄机子弹
               // 敌机损失一定生命值
               enemyAircraft.decreaseHp(bullet.getPower)
               bullet.vanish()
-              if (enemyAircraft.notValid) {
+              if (!enemyAircraft.isValid) {
                 // TODO 获得分数，产生道具补给
                 score += 10
               }
@@ -164,9 +164,9 @@ class Game extends JPanel {
    * 无效的原因可能是撞击或者飞出边界
    */
   private def postProcessAction() = {
-    enemyBullets.filterInPlace(!_.notValid)
-    heroBullets.filterInPlace(!_.notValid)
-    enemyAircrafts.filterInPlace(!_.notValid)
+    enemyBullets.filterInPlace(_.isValid)
+    heroBullets.filterInPlace(_.isValid)
+    enemyAircrafts.filterInPlace(_.isValid)
   }
 
   /**
@@ -176,8 +176,8 @@ class Game extends JPanel {
   override def paint(g: Graphics) = {
     super.paint(g)
     // 绘制背景,图片滚动
-    g.drawImage(ImageManager.BACKGROUND_IMAGE, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null)
-    g.drawImage(ImageManager.BACKGROUND_IMAGE, 0, this.backGroundTop, null)
+    g.drawImage(Background.getImage, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null)
+    g.drawImage(Background.getImage, 0, this.backGroundTop, null)
     this.backGroundTop += 1
     if (this.backGroundTop == Main.WINDOW_HEIGHT) this.backGroundTop = 0
     // 先绘制子弹，后绘制飞机
@@ -186,9 +186,9 @@ class Game extends JPanel {
     paintImageWithPositionRevised(g, heroBullets)
     paintImageWithPositionRevised(g, enemyAircrafts)
     g.drawImage(
-      ImageManager.HERO_IMAGE,
-      heroAircraft.getLocationX - ImageManager.HERO_IMAGE.getWidth / 2,
-      heroAircraft.getLocationY - ImageManager.HERO_IMAGE.getHeight / 2,
+      HeroAircraft.getImage,
+      heroAircraft.getLocationX - HeroAircraft.getImage.getWidth / 2,
+      heroAircraft.getLocationY - HeroAircraft.getImage.getHeight / 2,
       null
     )
     //绘制得分和生命值

@@ -1,7 +1,6 @@
 package edu.hitsz.bullet
 
-import edu.hitsz.application.Game
-import edu.hitsz.application.Main
+import edu.hitsz.application.{Game, ImageResource, Main}
 import edu.hitsz.basic.FlyingObject
 
 /**
@@ -10,7 +9,7 @@ import edu.hitsz.basic.FlyingObject
  *
  * @author chiro2001
  */
-class AbstractBullet(locationXInit: Int, locationYInit: Int, speedX: Int, speedY: Int, val power: Int)
+abstract class AbstractBullet(locationXInit: Int, locationYInit: Int, speedX: Int, speedY: Int, val power: Int)
   extends FlyingObject(locationXInit, locationYInit, speedX, speedY) {
   override def forward() = {
     super.forward()
