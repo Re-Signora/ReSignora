@@ -55,7 +55,7 @@ class Game extends JPanel {
         // 周期性执行（控制频率）
         if (timeCountAndNewCycleJudge) {
           if (time < 1000) println(f"[ ${time.toFloat / 1000}%.3fs ]")
-          else println(f"[ ${time.toFloat / 1000}%.3s ] ${frameCount.size} fps")
+          else println(f"[ ${time.toFloat / 1000}%.3fs ] ${frameCount.size} fps")
           // 新敌机产生
           if (enemyAircrafts.size < enemyMaxNumber) enemyAircrafts.append(
             new MobEnemy(
