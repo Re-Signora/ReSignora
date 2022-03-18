@@ -21,11 +21,11 @@ object ImageManager {
    */
   private val CLASSNAME_IMAGE_MAP = new util.HashMap[String, BufferedImage]
 
-  val BACKGROUND_IMAGE = ImageIO.read(new FileInputStream("src/images/bg.jpg"))
-  val HERO_IMAGE = ImageIO.read(new FileInputStream("src/images/hero.png"))
-  val MOB_ENEMY_IMAGE = ImageIO.read(new FileInputStream("src/images/mob.png"))
-  val HERO_BULLET_IMAGE = ImageIO.read(new FileInputStream("src/images/bullet_hero.png"))
-  val ENEMY_BULLET_IMAGE = ImageIO.read(new FileInputStream("src/images/bullet_enemy.png"))
+  val BACKGROUND_IMAGE = ImageIO.read(new FileInputStream(getClass.getResource("/images/bg.jpg").getFile))
+  val HERO_IMAGE = ImageIO.read(new FileInputStream(getClass.getResource("/images/hero.png").getFile))
+  val MOB_ENEMY_IMAGE = ImageIO.read(new FileInputStream(getClass.getResource("/images/mob.png").getFile))
+  val HERO_BULLET_IMAGE = ImageIO.read(new FileInputStream(getClass.getResource("/images/bullet_hero.png").getFile))
+  val ENEMY_BULLET_IMAGE = ImageIO.read(new FileInputStream(getClass.getResource("/images/bullet_enemy.png").getFile))
   CLASSNAME_IMAGE_MAP.put(classOf[HeroAircraft].getName, HERO_IMAGE)
   CLASSNAME_IMAGE_MAP.put(classOf[MobEnemy].getName, MOB_ENEMY_IMAGE)
   CLASSNAME_IMAGE_MAP.put(classOf[HeroBullet].getName, HERO_BULLET_IMAGE)

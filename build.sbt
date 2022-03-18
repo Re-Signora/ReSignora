@@ -4,7 +4,7 @@ ThisBuild / scalaVersion     := "2.13.8"
 ThisBuild / version          := "0.3.0"
 ThisBuild / organization     := "edu.hitsz"
 
-lazy val AirCraft = (project in file("."))
+lazy val AirCraft = (project in file("AircraftWar"))
   .settings(
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.2.11",
@@ -14,6 +14,9 @@ lazy val AirCraft = (project in file("."))
       "-language:reflectiveCalls",
       "-deprecation",
       "-feature",
-      "-Xcheckinit"
-    )
+      "-Xcheckinit",
+      // for scala2plantuml
+      "-Yrangepos"
+    ),
+    addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.5.0" cross CrossVersion.full)
   )

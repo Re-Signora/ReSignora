@@ -26,7 +26,7 @@ class Game extends JPanel {
   new HeroController(this, heroAircraft)
   private var backGroundTop = 0
   // 时间间隔(ms)，控制刷新频率
-  private val timeInterval = 10
+  private val timeInterval = 100
   private val timeStart = System.currentTimeMillis
   private val enemyMaxNumber = 5
   private var gameOverFlag = false
