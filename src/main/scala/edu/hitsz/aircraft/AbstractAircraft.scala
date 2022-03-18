@@ -7,7 +7,7 @@ import edu.hitsz.bullet.AbstractBullet
  * 所有种类飞机的抽象父类：
  * 敌机（BOSS, ELITE, MOB），英雄飞机
  *
- * @author hitsz
+ * @author chiro2001
  */
 abstract class AbstractAircraft(locationX: Int, locationY: Int, speedX: Int, speedY: Int, hpInit: Int)
   extends FlyingObject(locationX, locationY, speedX, speedY) {

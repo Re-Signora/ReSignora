@@ -7,7 +7,7 @@ import java.util
 /**
  * 英雄飞机，游戏玩家操控
  *
- * @author hitsz
+ * @author chiro2001
  * @param locationX 英雄机位置x坐标
  * @param locationY 英雄机位置y坐标
  * @param speedX    英雄机射出的子弹的基准速度（英雄机无特定速度）
@@ -33,7 +33,6 @@ class HeroAircraft(locationX: Int, locationY: Int, speedX: Int, speedY: Int, hpI
     val y = this.getLocationY + direction * 2
     val speedX = 0
     val speedY = this.getSpeedY + direction * 5
-    var abstractBullet: HeroBullet = null
     for {i <- 0 until shootNum} yield new HeroBullet(x + (i * 2 - shootNum + 1) * 10, y, speedX, speedY, power)
   }
 }

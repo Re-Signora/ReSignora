@@ -12,7 +12,7 @@ import scala.collection.mutable.ListBuffer
 /**
  * 游戏主面板，游戏启动
  *
- * @author hitsz
+ * @author chiro2001
  */
 class Game extends JPanel {
   println(s"Window(${Main.WINDOW_WIDTH}x${Main.WINDOW_HEIGHT})")

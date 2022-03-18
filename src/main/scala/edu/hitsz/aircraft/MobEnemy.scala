@@ -3,7 +3,7 @@ package edu.hitsz.aircraft
 import edu.hitsz.application.Main
 /**
  * 普通敌机，不可攻击
- * @author hitsz
+ * @author chiro2001
  * @param locationXInit 初始 X 坐标
  * @param locationYInit 初始 Y 坐标
  * @param speedX        X 方向速度
