@@ -14,7 +14,6 @@ lazy val AirCraft = (project in file("."))
       "-language:reflectiveCalls",
       "-deprecation",
       "-feature",
-      "-Xcheckinit",
-      "-Ypartial-unification"
+      "-Xcheckinit"
     )
   )
