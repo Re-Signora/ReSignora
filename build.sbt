@@ -20,3 +20,5 @@ lazy val AirCraft = (project in file("AircraftWar"))
     ),
     addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.5.0" cross CrossVersion.full)
   )
+
+addSbtPlugin("nz.co.bottech" % "sbt-scala2plantuml" % "0.3.0")
