@@ -1,17 +1,17 @@
 package edu.hitsz.aircraft
 
 import edu.hitsz.application.Main
-import edu.hitsz.bullet.AbstractBullet
-
-import java.util
-
 /**
- * 普通敌机
- * 不可射击
- *
+ * 普通敌机，不可攻击
  * @author hitsz
+ * @param locationXInit 初始 X 坐标
+ * @param locationYInit 初始 Y 坐标
+ * @param speedX        X 方向速度
+ * @param speedY        Y 方向速度
+ * @param hpInit        初始血量
  */
-class MobEnemy(locationX: Int, locationY: Int, speedX: Int, speedY: Int, hpInit: Int) extends AbstractAircraft(locationX, locationY, speedX, speedY, hpInit) {
+class MobEnemy(locationXInit: Int, locationYInit: Int, speedX: Int, speedY: Int, hpInit: Int) extends AbstractAircraft(locationXInit, locationYInit, speedX, speedY, hpInit) {
+  println(s"MobEnemy($locationXInit, $locationYInit)")
   override def forward() = {
     super.forward()
     // 判定 y 轴向下飞行出界

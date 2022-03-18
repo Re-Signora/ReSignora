@@ -14,43 +14,55 @@ import scala.collection.mutable.ListBuffer
  *
  * @author hitsz
  */
-class Game() extends JPanel {
-  var heroAircraft = new HeroAircraft(Main.WINDOW_WIDTH / 2, Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight, 0, 0, 100)
-  var enemyAircrafts = new ListBuffer[AbstractAircraft]
-  var heroBullets = new ListBuffer[AbstractBullet]
-  var enemyBullets = new ListBuffer[AbstractBullet]
+class Game extends JPanel {
+  println(s"Window(${Main.WINDOW_WIDTH}x${Main.WINDOW_HEIGHT})")
+  val heroAircraft = new HeroAircraft(Main.WINDOW_WIDTH / 2, Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight, 0, 0, 100)
+  val enemyAircrafts = new ListBuffer[AbstractAircraft]
+  val heroBullets = new ListBuffer[AbstractBullet]
+  val enemyBullets = new ListBuffer[AbstractBullet]
   //Scheduled 线程池，用于定时任务调度
-  var executorService = new ScheduledThreadPoolExecutor(1)
+  val executorService = new ScheduledThreadPoolExecutor(1)
   //启动英雄机鼠标监听
   new HeroController(this, heroAircraft)
   private var backGroundTop = 0
-  /**
-   * 时间间隔(ms)，控制刷新频率
-   */
-  private val timeInterval = 40
+  // 时间间隔(ms)，控制刷新频率
+  private val timeInterval = 10
+  private val timeStart = System.currentTimeMillis
   private val enemyMaxNumber = 5
   private var gameOverFlag = false
   private var score = 0
-  private var time = 0
+  private var time: Long = 0
   /**
    * 周期（ms)
    * 指示子弹的发射、敌机的产生频率
    */
-  private val cycleDuration = 600
+  private val bulletDuration = 60
   private var cycleTime = 0
+  private val frameCount = new ListBuffer[Long]
 
   /**
    * 游戏启动入口，执行游戏逻辑
    */
-  def action() = { // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
+  def action() = {
+    // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
     val task = new Runnable {
       override def run() = {
-        time += timeInterval
+        // println("task run")
+        // time += timeInterval
+        time = System.currentTimeMillis - timeStart
+        frameCount.append(time)
+        frameCount.filterInPlace(_ >= (if (time >= 1000) time - 1000 else 0))
         // 周期性执行（控制频率）
         if (timeCountAndNewCycleJudge) {
-          System.out.println(time)
+          if (time < 1000) println(f"[ ${time}ms ]")
+          else println(f"[ ${time}ms ] ${frameCount.size} fps")
           // 新敌机产生
-          if (enemyAircrafts.size < enemyMaxNumber) enemyAircrafts.append(new MobEnemy((Math.random * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth)).toInt * 1, (Math.random * Main.WINDOW_HEIGHT * 0.2).toInt * 1, 0, 10, 30))
+          if (enemyAircrafts.size < enemyMaxNumber) enemyAircrafts.append(
+            new MobEnemy(
+              (Math.random * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth)).toInt * 1,
+              (Math.random * Main.WINDOW_HEIGHT * 0.2).toInt * 1, 0, 10, 30
+            )
+          )
           // 飞机射出子弹
           shootAction()
         }
@@ -68,20 +80,23 @@ class Game() extends JPanel {
         if (heroAircraft.getHp <= 0) { // 游戏结束
           executorService.shutdown()
           gameOverFlag = true
-          System.out.println("Game Over!")
+          println("Game Over!")
         }
       }
     }
-    /*
-              以固定延迟时间进行执行
-              本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
-             */ executorService.scheduleWithFixedDelay(task, timeInterval, timeInterval, TimeUnit.MILLISECONDS)
+
+    /**
+     * 以固定延迟时间进行执行
+     * 本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
+     */
+    executorService.scheduleWithFixedDelay(task, timeInterval, timeInterval, TimeUnit.MILLISECONDS)
   }
 
   private def timeCountAndNewCycleJudge = {
     cycleTime += timeInterval
-    if (cycleTime >= cycleDuration && cycleTime - timeInterval < cycleTime) { // 跨越到新的周期
-      cycleTime %= cycleDuration
+    // 跨越到新的周期
+    if (cycleTime >= bulletDuration && cycleTime - timeInterval < cycleTime) {
+      cycleTime %= bulletDuration
       true
     }
     else false
@@ -113,7 +128,8 @@ class Game() extends JPanel {
    * 2. 英雄攻击/撞击敌机
    * 3. 英雄获得补给
    */
-  private def crashCheckAction() = { // TODO 敌机子弹攻击英雄
+  private def crashCheckAction() = {
+    // TODO 敌机子弹攻击英雄
     // 英雄子弹攻击敌机
     heroBullets.foreach(bullet => {
       if (!bullet.notValid)
@@ -124,7 +140,8 @@ class Game() extends JPanel {
               // 敌机损失一定生命值
               enemyAircraft.decreaseHp(bullet.getPower)
               bullet.vanish()
-              if (enemyAircraft.notValid) { // TODO 获得分数，产生道具补给
+              if (enemyAircraft.notValid) {
+                // TODO 获得分数，产生道具补给
                 score += 10
               }
             }
@@ -144,13 +161,12 @@ class Game() extends JPanel {
    * 1. 删除无效的子弹
    * 2. 删除无效的敌机
    * 3. 检查英雄机生存
-   * <p>
    * 无效的原因可能是撞击或者飞出边界
    */
   private def postProcessAction() = {
-    enemyBullets.filterInPlace(_.notValid)
-    heroBullets.filterInPlace(_.notValid)
-    enemyAircrafts.filterInPlace(_.notValid)
+    enemyBullets.filterInPlace(!_.notValid)
+    heroBullets.filterInPlace(!_.notValid)
+    enemyAircrafts.filterInPlace(!_.notValid)
   }
 
   /**
@@ -169,18 +185,22 @@ class Game() extends JPanel {
     paintImageWithPositionRevised(g, enemyBullets)
     paintImageWithPositionRevised(g, heroBullets)
     paintImageWithPositionRevised(g, enemyAircrafts)
-    g.drawImage(ImageManager.HERO_IMAGE, heroAircraft.getLocationX - ImageManager.HERO_IMAGE.getWidth / 2, heroAircraft.getLocationY - ImageManager.HERO_IMAGE.getHeight / 2, null)
+    g.drawImage(
+      ImageManager.HERO_IMAGE,
+      heroAircraft.getLocationX - ImageManager.HERO_IMAGE.getWidth / 2,
+      heroAircraft.getLocationY - ImageManager.HERO_IMAGE.getHeight / 2,
+      null
+    )
     //绘制得分和生命值
     paintScoreAndLife(g)
   }
 
   private def paintImageWithPositionRevised(g: Graphics, objects: ListBuffer[_ <: FlyingObject]): Unit = {
-    if (objects.isEmpty) return
-    for (obj <- objects) {
+    objects.foreach(obj => {
       val image = obj.getImage
       assert(image != null, objects.getClass.getName + " has no image! ")
       g.drawImage(image, obj.getLocationX - image.getWidth / 2, obj.getLocationY - image.getHeight / 2, null)
-    }
+    })
   }
 
   private def paintScoreAndLife(g: Graphics) = {

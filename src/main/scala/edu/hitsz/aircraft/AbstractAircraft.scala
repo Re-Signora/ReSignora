@@ -10,11 +10,10 @@ import edu.hitsz.bullet.AbstractBullet
  * @author hitsz
  */
 abstract class AbstractAircraft(locationX: Int, locationY: Int, speedX: Int, speedY: Int, hpInit: Int)
-
-/**
- * 生命值
- */ extends FlyingObject(locationX, locationY, speedX, speedY) {
+  extends FlyingObject(locationX, locationY, speedX, speedY) {
+  // 生命值
   var hp = hpInit
+
   def decreaseHp(decrease: Int) = {
     hp -= decrease
     if (hp <= 0) {
@@ -30,7 +29,7 @@ abstract class AbstractAircraft(locationX: Int, locationY: Int, speedX: Int, spe
    *
    * @return
    * 可射击对象需实现，返回子弹
-   * 非可射击对象空实现，返回null
+   * 非可射击对象空实现，返回空 Seq
    */
   def shoot(): Seq[AbstractBullet]
 }
