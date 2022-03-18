@@ -105,7 +105,7 @@ abstract class FlyingObject(locationXInit: Int, locationYInit: Int, speedXInit: 
     height
   }
 
-  def isValid = !this.valid
+  def isValid = this.valid
 
   /**
    * 标记消失，

@@ -164,9 +164,9 @@ class Game extends JPanel {
    * 无效的原因可能是撞击或者飞出边界
    */
   private def postProcessAction() = {
-    enemyBullets.filterInPlace(_.isValid)
-    heroBullets.filterInPlace(_.isValid)
-    enemyAircrafts.filterInPlace(_.isValid)
+    enemyBullets.synchronized(enemyBullets.filterInPlace(_.isValid))
+    heroBullets.synchronized(heroBullets.filterInPlace(_.isValid))
+    enemyAircrafts.synchronized(enemyAircrafts.filterInPlace(_.isValid))
   }
 
   /**
@@ -196,11 +196,12 @@ class Game extends JPanel {
   }
 
   private def paintImageWithPositionRevised(g: Graphics, objects: ListBuffer[_ <: FlyingObject]): Unit = {
-    objects.foreach(obj => {
-      val image = obj.getImage
-      assert(image != null, objects.getClass.getName + " has no image! ")
-      g.drawImage(image, obj.getLocationX - image.getWidth / 2, obj.getLocationY - image.getHeight / 2, null)
-    })
+    objects.synchronized {
+      objects.foreach(obj => {
+        val image = obj.getImage
+        g.drawImage(image, obj.getLocationX - image.getWidth / 2, obj.getLocationY - image.getHeight / 2, null)
+      })
+    }
   }
 
   private def paintScoreAndLife(g: Graphics) = {

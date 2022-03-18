@@ -16,10 +16,10 @@ trait ImageResource extends ImageResourceReady {
     imageCache = Some(tryGetImageFile(getImageCachedPath))
     imageCache.get
   } else imageCache.get
-
-  private var imageCache: Option[BufferedImage] = None
 }
 
 trait ImageResourceReady {
   def getImage: BufferedImage
+  def hasImage = imageCache.isDefined
+  var imageCache: Option[BufferedImage] = None
 }
