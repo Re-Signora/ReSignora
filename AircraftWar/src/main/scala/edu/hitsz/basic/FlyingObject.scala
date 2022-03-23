@@ -8,16 +8,9 @@ import edu.hitsz.application.{ImageResource, ImageResourceReady, Main}
  *
  * @author chiro2001
  */
-abstract class FlyingObject(locationXInit: Int, locationYInit: Int, speedXInit: Int, speedYInit: Int) extends ImageResourceReady {
-  println(s"Object created at ($locationXInit, $locationYInit) ${getClass.getName}")
-  /**
-   * x 轴坐标
-   */
-  protected var locationX = locationXInit
-  /**
-   * y 轴坐标
-   */
-  protected var locationY = locationYInit
+abstract class FlyingObject(posInit: Position, speedXInit: Int, speedYInit: Int) extends ImageResourceReady {
+  println(s"Object created at $posInit ${getClass.getName}")
+  protected var pos = posInit.copy
   /**
    * x 轴移动速度
    */
