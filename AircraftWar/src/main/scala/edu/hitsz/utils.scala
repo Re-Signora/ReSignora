@@ -13,4 +13,6 @@ object utils {
   val timeStartGlobal: Long = System.currentTimeMillis
 
   def getTimeMills: Double = (System.currentTimeMillis - timeStartGlobal).toDouble
+
+  def SetInRangeInt(source: Int, downTo: Int, upTo: Int) = if (source < downTo) downTo else if (source > upTo) upTo else source
 }
