@@ -1,7 +1,7 @@
 package edu.hitsz.bullet
 
 import edu.hitsz.animate.AnimateContainer
-import edu.hitsz.application.{Game, ImageResource, Main}
+import edu.hitsz.application.Main
 import edu.hitsz.basic.PositionType.Position
 import edu.hitsz.basic.{FlyingObject, Vec2Double}
 

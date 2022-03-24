@@ -2,12 +2,10 @@ package edu.hitsz.aircraft
 
 import edu.hitsz.animate.{AnimateContainer, AnimateLinear, AnimateVectorType}
 import edu.hitsz.application.{ImageResource, Main}
-import edu.hitsz.basic.Vec2Double
 import edu.hitsz.basic.PositionType.Position
-import edu.hitsz.bullet.{AbstractBullet, HeroBullet}
+import edu.hitsz.basic.Vec2Double
+import edu.hitsz.bullet.HeroBullet
 import edu.hitsz.utils.getTimeMills
-
-import java.util
 
 /**
  * 英雄飞机，游戏玩家操控

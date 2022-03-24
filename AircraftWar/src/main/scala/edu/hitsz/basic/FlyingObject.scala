@@ -1,8 +1,8 @@
 package edu.hitsz.basic
 
 import edu.hitsz.aircraft.AbstractAircraft
-import edu.hitsz.animate.{AbstractAnimate, AnimateContainer, AnimateTypeEnumeration}
-import edu.hitsz.application.{ImageResource, ImageResourceReady, Main}
+import edu.hitsz.animate.AnimateContainer
+import edu.hitsz.application.ImageResourceReady
 import edu.hitsz.basic.PositionType.Position
 import edu.hitsz.utils.getTimeMills
 

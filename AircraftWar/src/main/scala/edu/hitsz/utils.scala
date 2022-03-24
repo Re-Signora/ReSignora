@@ -1,7 +1,6 @@
 package edu.hitsz
 
 import java.awt.image.BufferedImage
-import java.io.{FileInputStream, FileNotFoundException}
 import javax.imageio.ImageIO
 
 object utils {
