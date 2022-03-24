@@ -11,13 +11,9 @@ import java.util
 
 /**
  * 英雄飞机，游戏玩家操控
- *
- * @author chiro2001
- * @param locationX 英雄机位置x坐标
- * @param locationY 英雄机位置y坐标
- * @param speedX    英雄机射出的子弹的基准速度（英雄机无特定速度）
- * @param speedY    英雄机射出的子弹的基准速度（英雄机无特定速度）
- * @param hpInit    初始生命值
+ * @param posInit           初始坐标
+ * @param animateContainer  动画容器
+ * @param hpInit            初始血量
  */
 class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Double], hpInit: Int)
   extends AbstractAircraft(posInit, animateContainer, hpInit) {
@@ -40,10 +36,10 @@ class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Dou
     val y = getLocationY + direction * 2
     // val speedX = 0
     // val speedY = getSpeedY + direction * 5
-    for {i <- 0 until shootNum} {
+    for {i <- 0 until shootNum} yield {
       val posNew = new Position(x + (i * 2 - shootNum + 1) * 10, y)
       new HeroBullet(posNew, new AnimateContainer[Position](List(
-        new AnimateLinear(posNew, new Position(x + (i * 2 - shootNum + 1) * 10, Main.WINDOW_HEIGHT), AnimateVectorType.PositionLike, getTimeMills, 1000)
+        new AnimateLinear(posNew, new Position(x + (i * 2 - shootNum + 1) * 10, Main.WINDOW_HEIGHT), AnimateVectorType.PositionLike.id, getTimeMills, 1000)
       )), power)
     }
     // for {i <- 0 until shootNum} yield new HeroBullet(x + (i * 2 - shootNum + 1) * 10, y, speedX, speedY, power)

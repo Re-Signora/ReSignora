@@ -8,7 +8,7 @@ import edu.hitsz.bullet.AbstractBullet
 import edu.hitsz.scene.Background
 import edu.hitsz.utils.getTimeMills
 
-import java.awt._
+import java.awt.{Color, Font, Graphics}
 import java.util.concurrent.{ScheduledThreadPoolExecutor, TimeUnit}
 import javax.swing._
 import scala.collection.mutable.ListBuffer
@@ -69,8 +69,8 @@ class Game extends JPanel {
             new MobEnemy(
               positionEnemyNew, new AnimateContainer[Position](List(
                 new AnimateLinear(positionEnemyNew, new Position(
-                  (Math.random * (Main.WINDOW_WIDTH - MobEnemy.getImage.getWidth)).toInt * 1, 0), AnimateVectorType.PositionLike, getTimeMills, 2000)
-              )), 10, 30
+                  (Math.random * (Main.WINDOW_WIDTH - MobEnemy.getImage.getWidth)).toInt * 1, 0), AnimateVectorType.PositionLike.id, getTimeMills, 2000)
+              )), 30
             )
           }
           )
@@ -198,8 +198,8 @@ class Game extends JPanel {
     paintImageWithPositionRevised(g, enemyAircrafts)
     g.drawImage(
       HeroAircraft.getImage,
-      heroAircraft.getLocationX - HeroAircraft.getImage.getWidth / 2,
-      heroAircraft.getLocationY - HeroAircraft.getImage.getHeight / 2,
+      (heroAircraft.getLocationX - HeroAircraft.getImage.getWidth / 2).toInt,
+      (heroAircraft.getLocationY - HeroAircraft.getImage.getHeight / 2).toInt,
       null
     )
     //绘制得分和生命值
@@ -210,7 +210,7 @@ class Game extends JPanel {
     objects.synchronized {
       objects.foreach(obj => {
         val image = obj.getImage
-        g.drawImage(image, obj.getLocationX - image.getWidth / 2, obj.getLocationY - image.getHeight / 2, null)
+        g.drawImage(image, (obj.getLocationX - image.getWidth / 2).toInt, (obj.getLocationY - image.getHeight / 2).toInt, null)
       })
     }
   }
