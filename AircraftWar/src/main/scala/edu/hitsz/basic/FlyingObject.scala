@@ -1,24 +1,27 @@
 package edu.hitsz.basic
 
 import edu.hitsz.aircraft.AbstractAircraft
+import edu.hitsz.animate.{AbstractAnimate, AnimateContainer, AnimateTypeEnumeration}
 import edu.hitsz.application.{ImageResource, ImageResourceReady, Main}
+import edu.hitsz.basic.PositionType.Position
+import edu.hitsz.utils.getTimeMills
 
 /**
  * 可飞行对象的父类
  *
  * @author chiro2001
  */
-abstract class FlyingObject(posInit: Position, speedXInit: Int, speedYInit: Int) extends ImageResourceReady {
+abstract class FlyingObject(posInit: Position, animateContainer: AnimateContainer[Vec2Double])
+  extends ImageResourceReady {
   println(s"Object created at $posInit ${getClass.getName}")
-  protected var pos = posInit.copy
-  /**
-   * x 轴移动速度
-   */
-  protected var speedX = speedXInit
-  /**
-   * y 轴移动速度
-   */
-  protected var speedY = speedYInit
+  protected var pos = posInit
+
+  def getPos = pos
+
+  def setPos(posNew: Position) = pos.set(posNew)
+
+  def setPos(posX: Double, posY: Double) = pos.set(new Position(posX, posY))
+
   /**
    * x 轴长度，根据图片尺寸获得
    * -1 表示未设置
@@ -39,12 +42,8 @@ abstract class FlyingObject(posInit: Position, speedXInit: Int, speedYInit: Int)
    * 可飞行对象根据速度移动
    * 若飞行对象触碰到横向边界，横向速度反向
    */
-  def forward() = {
-    locationX += speedX
-    locationY += speedY
-    if (locationX <= 0 || locationX >= Main.WINDOW_WIDTH) { // 横向超出边界后反向
-      speedX = -speedX
-    }
+  def forward(): Unit = {
+    animateContainer.updateAll(getTimeMills)
   }
 
   /**
@@ -62,29 +61,27 @@ abstract class FlyingObject(posInit: Position, speedXInit: Int, speedYInit: Int)
    * @param flyingObject 撞击对方
    * @return true: 我方被击中; false 我方未被击中
    */
-  def crash(flyingObject: FlyingObject) = { // 缩放因子，用于控制 y轴方向区域范围
+  def crash(flyingObject: FlyingObject) = {
+    // 缩放因子，用于控制 y轴方向区域范围
     val factor = if (this.isInstanceOf[AbstractAircraft]) 2 else 1
     val fFactor = if (flyingObject.isInstanceOf[AbstractAircraft]) 2 else 1
     val x = flyingObject.getLocationX
     val y = flyingObject.getLocationY
     val fWidth = flyingObject.getWidth
     val fHeight = flyingObject.getHeight
-    x + (fWidth + this.getWidth) / 2 > locationX &&
-      x - (fWidth + this.getWidth) / 2 < locationX &&
-      y + (fHeight / fFactor + this.getHeight / factor) / 2 > locationY &&
-      y - (fHeight / fFactor + this.getHeight / factor) / 2 < locationY
+    x + (fWidth + getWidth) / 2 > getLocationX &&
+      x - (fWidth + getWidth) / 2 < getLocationX &&
+      y + (fHeight / fFactor + getHeight / factor) / 2 > getLocationY &&
+      y - (fHeight / fFactor + getHeight / factor) / 2 < getLocationY
   }
 
-  def getLocationX = locationX
+  def getLocationX = getPos.getX
 
-  def getLocationY = locationY
+  def getLocationY = getPos.getY
 
-  def setLocation(locationX: Double, locationY: Double) = {
-    this.locationX = locationX.toInt
-    this.locationY = locationY.toInt
-  }
+  def setLocation(locationX: Double, locationY: Double) = setPos(locationX, locationY)
 
-  def getSpeedY = speedY
+  def getSpeedY = animateContainer.getSpeed(getTimeMills).get(1)
 
   def getWidth = {
     // 若未设置，则查询图片宽度并设置

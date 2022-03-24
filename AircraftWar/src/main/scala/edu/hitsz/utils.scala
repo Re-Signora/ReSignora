@@ -11,4 +11,7 @@ object utils {
     getImage(f"$filename")
   }
 
+  val timeStartGlobal: Long = System.currentTimeMillis
+
+  def getTimeMills: Double = (System.currentTimeMillis - timeStartGlobal).toDouble
 }

@@ -1,9 +1,12 @@
 package edu.hitsz.application
 
 import edu.hitsz.aircraft._
+import edu.hitsz.animate.{AnimateContainer, AnimateLinear, AnimateVectorType}
 import edu.hitsz.basic.FlyingObject
+import edu.hitsz.basic.PositionType.Position
 import edu.hitsz.bullet.AbstractBullet
 import edu.hitsz.scene.Background
+import edu.hitsz.utils.getTimeMills
 
 import java.awt._
 import java.util.concurrent.{ScheduledThreadPoolExecutor, TimeUnit}
@@ -17,7 +20,8 @@ import scala.collection.mutable.ListBuffer
  */
 class Game extends JPanel {
   println(s"Window(${Main.WINDOW_WIDTH}x${Main.WINDOW_HEIGHT})")
-  val heroAircraft = new HeroAircraft(Main.WINDOW_WIDTH / 2, Main.WINDOW_HEIGHT - Background.getImage.getHeight, 0, 0, 100)
+  val heroPosition = new Position(Main.WINDOW_WIDTH / 2, Main.WINDOW_HEIGHT - Background.getImage.getHeight)
+  val heroAircraft = new HeroAircraft(heroPosition, new AnimateContainer[Position], 100)
   val enemyAircrafts = new ListBuffer[AbstractAircraft]
   val heroBullets = new ListBuffer[AbstractBullet]
   val enemyBullets = new ListBuffer[AbstractBullet]
@@ -57,11 +61,18 @@ class Game extends JPanel {
           if (time < 1000) println(f"[ ${time.toFloat / 1000}%.3fs ]")
           else println(f"[ ${time.toFloat / 1000}%.3fs ] ${frameCount.size} fps")
           // 新敌机产生
-          if (enemyAircrafts.size < enemyMaxNumber) enemyAircrafts.append(
-            new MobEnemy(
+          if (enemyAircrafts.size < enemyMaxNumber) enemyAircrafts.append({
+            val positionEnemyNew = new Position(
               (Math.random * (Main.WINDOW_WIDTH - MobEnemy.getImage.getWidth)).toInt * 1,
-              (Math.random * Main.WINDOW_HEIGHT * 0.2).toInt * 1, 0, 10, 30
+              (Math.random * Main.WINDOW_HEIGHT * 0.2).toInt * 1
             )
+            new MobEnemy(
+              positionEnemyNew, new AnimateContainer[Position](List(
+                new AnimateLinear(positionEnemyNew, new Position(
+                  (Math.random * (Main.WINDOW_WIDTH - MobEnemy.getImage.getWidth)).toInt * 1, 0), AnimateVectorType.PositionLike, getTimeMills, 2000)
+              )), 10, 30
+            )
+          }
           )
           // 飞机射出子弹
           shootAction()
@@ -176,10 +187,10 @@ class Game extends JPanel {
   override def paint(g: Graphics) = {
     super.paint(g)
     // 绘制背景,图片滚动
-    g.drawImage(Background.getImage, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null)
-    g.drawImage(Background.getImage, 0, this.backGroundTop, null)
-    this.backGroundTop += 1
-    if (this.backGroundTop == Main.WINDOW_HEIGHT) this.backGroundTop = 0
+    g.drawImage(Background.getImage, 0, backGroundTop - Main.WINDOW_HEIGHT, null)
+    g.drawImage(Background.getImage, 0, backGroundTop, null)
+    backGroundTop += 1
+    if (backGroundTop == Main.WINDOW_HEIGHT) backGroundTop = 0
     // 先绘制子弹，后绘制飞机
     // 这样子弹显示在飞机的下层
     paintImageWithPositionRevised(g, enemyBullets)

@@ -1,7 +1,11 @@
 package edu.hitsz.aircraft
 
-import edu.hitsz.application.ImageResource
+import edu.hitsz.animate.{AnimateContainer, AnimateLinear, AnimateVectorType}
+import edu.hitsz.application.{ImageResource, Main}
+import edu.hitsz.basic.Vec2Double
+import edu.hitsz.basic.PositionType.Position
 import edu.hitsz.bullet.{AbstractBullet, HeroBullet}
+import edu.hitsz.utils.getTimeMills
 
 import java.util
 
@@ -15,8 +19,8 @@ import java.util
  * @param speedY    英雄机射出的子弹的基准速度（英雄机无特定速度）
  * @param hpInit    初始生命值
  */
-class HeroAircraft(locationX: Int, locationY: Int, speedX: Int, speedY: Int, hpInit: Int)
-  extends AbstractAircraft(locationX, locationY, speedX, speedY, hpInit) {
+class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Double], hpInit: Int)
+  extends AbstractAircraft(posInit, animateContainer, hpInit) {
   // 攻击方式
   private val shootNum = 1 //子弹一次发射数量
   private val power = 30 //子弹伤害
@@ -32,11 +36,17 @@ class HeroAircraft(locationX: Int, locationY: Int, speedX: Int, speedY: Int, hpI
    * @return 射击出的子弹List
    */
   override def shoot() = {
-    val x = this.getLocationX
-    val y = this.getLocationY + direction * 2
-    val speedX = 0
-    val speedY = this.getSpeedY + direction * 5
-    for {i <- 0 until shootNum} yield new HeroBullet(x + (i * 2 - shootNum + 1) * 10, y, speedX, speedY, power)
+    val x = getLocationX
+    val y = getLocationY + direction * 2
+    // val speedX = 0
+    // val speedY = getSpeedY + direction * 5
+    for {i <- 0 until shootNum} {
+      val posNew = new Position(x + (i * 2 - shootNum + 1) * 10, y)
+      new HeroBullet(posNew, new AnimateContainer[Position](List(
+        new AnimateLinear(posNew, new Position(x + (i * 2 - shootNum + 1) * 10, Main.WINDOW_HEIGHT), AnimateVectorType.PositionLike, getTimeMills, 1000)
+      )), power)
+    }
+    // for {i <- 0 until shootNum} yield new HeroBullet(x + (i * 2 - shootNum + 1) * 10, y, speedX, speedY, power)
   }
 
   override def getImage = HeroAircraft.getImage

@@ -1,7 +1,9 @@
 package edu.hitsz.bullet
 
+import edu.hitsz.animate.AnimateContainer
 import edu.hitsz.application.{Game, ImageResource, Main}
-import edu.hitsz.basic.FlyingObject
+import edu.hitsz.basic.PositionType.Position
+import edu.hitsz.basic.{FlyingObject, Vec2Double}
 
 /**
  * 子弹类。
@@ -9,18 +11,18 @@ import edu.hitsz.basic.FlyingObject
  *
  * @author chiro2001
  */
-abstract class AbstractBullet(locationXInit: Int, locationYInit: Int, speedX: Int, speedY: Int, val power: Int)
-  extends FlyingObject(locationXInit, locationYInit, speedX, speedY) {
+abstract class AbstractBullet(posInit: Position, animateContainer: AnimateContainer[Vec2Double], power: Int)
+  extends FlyingObject(posInit, animateContainer) {
   override def forward() = {
     super.forward()
     // 判定 x 轴出界
-    if (locationX <= 0 || locationX >= Main.WINDOW_WIDTH) vanish()
+    if (getLocationX <= 0 || getLocationY >= Main.WINDOW_WIDTH) vanish()
     // 判定 y 轴出界
-    if (speedY > 0 && locationY >= Main.WINDOW_HEIGHT) {
+    if (getSpeedY > 0 && getLocationY >= Main.WINDOW_HEIGHT) {
       // 向下飞行出界
       vanish()
     }
-    else if (locationY <= 0) {
+    else if (getLocationY <= 0) {
       // 向上飞行出界
       vanish()
     }

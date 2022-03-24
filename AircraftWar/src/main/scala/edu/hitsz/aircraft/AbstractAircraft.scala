@@ -1,6 +1,8 @@
 package edu.hitsz.aircraft
 
-import edu.hitsz.basic.FlyingObject
+import edu.hitsz.animate.AnimateContainer
+import edu.hitsz.basic.PositionType.Position
+import edu.hitsz.basic.{FlyingObject, Vec2Double}
 import edu.hitsz.bullet.AbstractBullet
 
 /**
@@ -9,8 +11,8 @@ import edu.hitsz.bullet.AbstractBullet
  *
  * @author chiro2001
  */
-abstract class AbstractAircraft(locationX: Int, locationY: Int, speedX: Int, speedY: Int, hpInit: Int)
-  extends FlyingObject(locationX, locationY, speedX, speedY) {
+abstract class AbstractAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Double], hpInit: Int)
+  extends FlyingObject(posInit, animateContainer) {
   // 生命值
   var hp = hpInit
 
