@@ -21,7 +21,7 @@ object utils {
   def setInRangeInt(source: Int, downTo: Int, upTo: Int) = if (source < downTo) downTo else if (source > upTo) upTo else source
 
   def getNewFlightPosition(imageWidth: Int) = new Position(
-    (math.random * (Main.WINDOW_WIDTH - imageWidth)).toInt * 1,
-    (math.random * Main.WINDOW_HEIGHT * 0.2).toInt * 1
+    (math.random() * (Main.WINDOW_WIDTH - imageWidth)).toInt * 1,
+    (math.random() * Main.WINDOW_HEIGHT * 0.2).toInt * 1
   )
 }

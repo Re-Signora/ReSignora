@@ -92,9 +92,9 @@ class Game extends JPanel {
         repaint()
         // 游戏结束检查
         if (heroAircraft.getHp <= 0) { // 游戏结束
-          // executorService.shutdown()
-          // gameOverFlag = true
-          // println("Game Over!")
+          executorService.shutdown()
+          gameOverFlag = true
+          println("Game Over!")
         }
         lastFrameTime = frameTime
       }
@@ -200,7 +200,7 @@ class Game extends JPanel {
                 score += 10
                 if (enemyAircraft.getClass.getName.endsWith("ELiteEnemy")) {
                   // 产生道具补给
-                  if (math.random < 0.7) {
+                  if (math.random() < 0.7) {
                     props.synchronized(props.append((math.random() * 3).toInt match {
                       case 0 => BulletProp.create(enemyAircraft.getPos)
                       case 1 => BombProp.create(enemyAircraft.getPos)
