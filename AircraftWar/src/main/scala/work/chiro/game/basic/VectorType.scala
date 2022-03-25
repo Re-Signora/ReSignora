@@ -1,4 +1,4 @@
-package edu.hitsz.basic
+package work.chiro.game.basic
 
 import scala.collection.mutable.ListBuffer
 import scala.language.implicitConversions

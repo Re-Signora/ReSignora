@@ -1,7 +1,7 @@
-package edu.hitsz.application
+package work.chiro.game.application
 
-import edu.hitsz.aircraft.HeroAircraft
-import edu.hitsz.utils.setInRangeInt
+import work.chiro.game.aircraft.HeroAircraft
+import work.chiro.game.utils.setInRangeInt
 
 import java.awt.event.{MouseAdapter, MouseEvent}
 

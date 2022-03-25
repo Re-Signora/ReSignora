@@ -1,6 +1,6 @@
-package edu.hitsz.animate
+package work.chiro.game.animate
 
-import edu.hitsz.basic._
+import work.chiro.game.basic.VecDouble
 
 class AnimateTypeEnumeration extends Enumeration
 
@@ -39,7 +39,7 @@ class AnimateLinear[V <: VecDouble]
 (vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double)
   extends AbstractAnimate(vecSource, vecTarget, AnimateType.Linear.id, animateVectorType, timeStart, timeSpan) {
 
-  println(s"Animate Linear $vecSource => $vecTarget")
+  // println(s"Animate Linear $vecSource => $vecTarget")
 
   override def update(timeNow: Double) = {
     val done = isDone(timeNow)

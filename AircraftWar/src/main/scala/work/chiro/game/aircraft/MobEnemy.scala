@@ -1,19 +1,17 @@
-package edu.hitsz.aircraft
+package work.chiro.game.aircraft
 
-import edu.hitsz.animate.AnimateContainer
-import edu.hitsz.application.{ImageResource, Main}
-import edu.hitsz.basic.PositionType.Position
-import edu.hitsz.basic.Vec2Double
+import work.chiro.game.animate.AnimateContainer
+import work.chiro.game.application.{ImageResource, Main}
+import work.chiro.game.basic.PositionType.Position
+import work.chiro.game.basic.Vec2Double
 
 /**
  * 普通敌机，不可攻击
  *
  * @author chiro2001
- * @param locationXInit 初始 X 坐标
- * @param locationYInit 初始 Y 坐标
- * @param speedX        X 方向速度
- * @param speedY        Y 方向速度
- * @param hpInit        初始血量
+ * @param posInit          敌机初始位置
+ * @param animateContainer 动画容器
+ * @param hpInit           初始血量
  */
 class MobEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Double], hpInit: Int)
   extends AbstractAircraft(posInit, animateContainer, hpInit) {

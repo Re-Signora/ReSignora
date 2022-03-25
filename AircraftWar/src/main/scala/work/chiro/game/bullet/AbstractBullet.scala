@@ -1,9 +1,9 @@
-package edu.hitsz.bullet
+package work.chiro.game.bullet
 
-import edu.hitsz.animate.AnimateContainer
-import edu.hitsz.application.Main
-import edu.hitsz.basic.PositionType.Position
-import edu.hitsz.basic.{FlyingObject, Vec2Double}
+import work.chiro.game.animate.AnimateContainer
+import work.chiro.game.application.Main
+import work.chiro.game.basic.PositionType.Position
+import work.chiro.game.basic.{FlyingObject, Vec2Double}
 
 /**
  * 子弹类。

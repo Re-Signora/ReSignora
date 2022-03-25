@@ -1,10 +1,10 @@
-package edu.hitsz.basic
+package work.chiro.game.basic
 
-import edu.hitsz.aircraft.AbstractAircraft
-import edu.hitsz.animate.AnimateContainer
-import edu.hitsz.application.ImageResourceReady
-import edu.hitsz.basic.PositionType.Position
-import edu.hitsz.utils.getTimeMills
+import work.chiro.game.aircraft.AbstractAircraft
+import work.chiro.game.animate.AnimateContainer
+import work.chiro.game.application.ImageResourceReady
+import work.chiro.game.basic.PositionType.Position
+import work.chiro.game.utils.getTimeMills
 
 /**
  * 可飞行对象的父类
@@ -13,7 +13,7 @@ import edu.hitsz.utils.getTimeMills
  */
 abstract class FlyingObject(posInit: Position, animateContainer: AnimateContainer[Vec2Double])
   extends ImageResourceReady {
-  println(s"Object created at $posInit ${getClass.getName}")
+  // println(s"Object created at $posInit ${getClass.getName}")
   protected var pos = posInit
 
   def getPos = pos

@@ -1,4 +1,4 @@
-package edu.hitsz.application
+package work.chiro.game.application
 
 import java.awt.Toolkit
 import javax.swing.{JFrame, WindowConstants}

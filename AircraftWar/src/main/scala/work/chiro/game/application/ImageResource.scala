@@ -1,6 +1,6 @@
-package edu.hitsz.application
+package work.chiro.game.application
 
-import edu.hitsz.utils.tryGetImageFile
+import work.chiro.game.utils.tryGetImageFile
 import java.awt.image.BufferedImage
 
 /**

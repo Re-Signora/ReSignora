@@ -1,4 +1,4 @@
-package edu.hitsz
+package work.chiro.game
 
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO

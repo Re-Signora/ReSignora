@@ -1,11 +1,11 @@
-package edu.hitsz.aircraft
+package work.chiro.game.aircraft
 
-import edu.hitsz.animate.{AnimateContainer, AnimateLinear, AnimateVectorType}
-import edu.hitsz.application.{ImageResource, Main}
-import edu.hitsz.basic.PositionType.Position
-import edu.hitsz.basic.Vec2Double
-import edu.hitsz.bullet.HeroBullet
-import edu.hitsz.utils.getTimeMills
+import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateVectorType}
+import work.chiro.game.application.ImageResource
+import work.chiro.game.basic.PositionType.Position
+import work.chiro.game.basic.Vec2Double
+import work.chiro.game.bullet.HeroBullet
+import work.chiro.game.utils.getTimeMills
 
 /**
  * 英雄飞机，游戏玩家操控
@@ -37,7 +37,7 @@ class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Dou
     for {i <- 0 until shootNum} yield {
       val posNew = new Position(x + (i * 2 - shootNum + 1) * 10, y)
       new HeroBullet(posNew, new AnimateContainer[Position](List(
-        new AnimateLinear(posNew, new Position(posNew.getX, 0), AnimateVectorType.PositionLike.id, getTimeMills, 1000)
+        new AnimateLinear(posNew, new Position(posNew.getX, 0), AnimateVectorType.PositionLike.id, getTimeMills, 300)
       )), power)
     }
     // for {i <- 0 until shootNum} yield new HeroBullet(x + (i * 2 - shootNum + 1) * 10, y, speedX, speedY, power)

@@ -1,9 +1,9 @@
-package edu.hitsz.aircraft
+package work.chiro.game.aircraft
 
-import edu.hitsz.animate.AnimateContainer
-import edu.hitsz.basic.PositionType.Position
-import edu.hitsz.basic.{FlyingObject, Vec2Double}
-import edu.hitsz.bullet.AbstractBullet
+import work.chiro.game.animate.AnimateContainer
+import work.chiro.game.basic.PositionType.Position
+import work.chiro.game.basic.{FlyingObject, Vec2Double}
+import work.chiro.game.bullet.AbstractBullet
 
 /**
  * 所有种类飞机的抽象父类：

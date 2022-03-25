@@ -1,6 +1,6 @@
-package edu.hitsz.scene
+package work.chiro.game.scene
 
-import edu.hitsz.application.ImageResource
+import work.chiro.game.application.ImageResource
 
 object Background extends ImageResource {
   override def getImageCachedPath = "images/bg.jpg"

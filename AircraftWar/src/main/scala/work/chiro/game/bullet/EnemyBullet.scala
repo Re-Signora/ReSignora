@@ -1,9 +1,9 @@
-package edu.hitsz.bullet
+package work.chiro.game.bullet
 
-import edu.hitsz.animate.AnimateContainer
-import edu.hitsz.application.ImageResource
-import edu.hitsz.basic.PositionType.Position
-import edu.hitsz.basic.Vec2Double
+import work.chiro.game.animate.AnimateContainer
+import work.chiro.game.application.ImageResource
+import work.chiro.game.basic.PositionType.Position
+import work.chiro.game.basic.Vec2Double
 
 /**
  * @author chiro2001

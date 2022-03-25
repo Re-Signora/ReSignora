@@ -1,12 +1,12 @@
-package edu.hitsz.application
+package work.chiro.game.application
 
-import edu.hitsz.aircraft._
-import edu.hitsz.animate.{AnimateContainer, AnimateLinear, AnimateVectorType}
-import edu.hitsz.basic.FlyingObject
-import edu.hitsz.basic.PositionType.Position
-import edu.hitsz.bullet.AbstractBullet
-import edu.hitsz.scene.Background
-import edu.hitsz.utils.getTimeMills
+import work.chiro.game.aircraft._
+import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateVectorType}
+import work.chiro.game.basic.FlyingObject
+import work.chiro.game.basic.PositionType.Position
+import work.chiro.game.bullet.AbstractBullet
+import work.chiro.game.scene.Background
+import work.chiro.game.utils.getTimeMills
 
 import java.awt.{Color, Font, Graphics}
 import java.util.concurrent.{ScheduledThreadPoolExecutor, TimeUnit}
@@ -37,13 +37,14 @@ class Game extends JPanel {
   private var score = 0
   private var frameTime: Double = 0
   private var lastFrameTime: Double = 0
-  /**
-   * 周期（ms)
-   * 指示子弹的发射、敌机的产生频率
-   */
-  private val bulletDuration = 600
-  private var cycleTime: Double = 0
+  private val heroShootDuration = 6
+  private val mobCreateDuration = 600
+  private var heroShootCycleTime: Double = 0
+  private var mobCreateCycleTime: Double = 0
+  private var fpsCycleTime: Double = 0
   private val frameCount = new ListBuffer[Double]
+
+  def frameTimeDelta = frameTime - lastFrameTime
 
   /**
    * 游戏启动入口，执行游戏逻辑
@@ -52,14 +53,15 @@ class Game extends JPanel {
     // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
     val task = new Runnable {
       override def run() = {
-        // time += timeInterval
         frameTime = getTimeMills
         frameCount.append(frameTime)
         frameCount.filterInPlace(_ >= (if (frameTime >= 1000) frameTime - 1000 else 0))
         // 周期性执行（控制频率）
-        if (timeCountAndNewCycleJudge) {
-          if (frameTime < 1000) println(f"[ ${frameTime.toFloat / 1000}%.3fs ]")
-          else println(f"[ ${frameTime.toFloat / 1000}%.3fs ] ${frameCount.size} fps")
+        if (onHeroShootCountCycle) {
+          // 飞机射出子弹
+          shootAction()
+        }
+        if (onMobCreateCountCycle) {
           // 新敌机产生
           if (enemyAircrafts.size < enemyMaxNumber) enemyAircrafts.append({
             val positionEnemyNew = new Position(
@@ -73,9 +75,10 @@ class Game extends JPanel {
               )), 30
             )
           })
-          // println(s"Now size of enemyAircrafts = ${enemyAircrafts.size}")
-          // 飞机射出子弹
-          shootAction()
+        }
+        if (onFpsCountCycle) {
+          if (frameTime < 1000) println(f"[ ${frameTime.toFloat / 1000}%.3fs ]")
+          else println(f"[ ${frameTime.toFloat / 1000}%.3fs ] ${frameCount.size} fps")
         }
         // 子弹移动
         bulletsMoveAction()
@@ -89,9 +92,9 @@ class Game extends JPanel {
         repaint()
         // 游戏结束检查
         if (heroAircraft.getHp <= 0) { // 游戏结束
-          // executorService.shutdown()
-          // gameOverFlag = true
-          // println("Game Over!")
+          executorService.shutdown()
+          gameOverFlag = true
+          println("Game Over!")
         }
         lastFrameTime = frameTime
       }
@@ -104,20 +107,36 @@ class Game extends JPanel {
     executorService.scheduleWithFixedDelay(task, timeInterval, timeInterval, TimeUnit.MILLISECONDS)
   }
 
-  private def timeCountAndNewCycleJudge = {
-    val timeDelta = frameTime - lastFrameTime
-    cycleTime += timeDelta
+  private def onHeroShootCountCycle = {
+    heroShootCycleTime += frameTimeDelta
     // 跨越到新的周期
-    if (cycleTime >= bulletDuration && cycleTime - timeInterval < cycleTime) {
-      cycleTime %= bulletDuration
+    if (heroShootCycleTime >= heroShootDuration) {
+      heroShootCycleTime %= heroShootDuration
       true
-    }
-    else false
+    } else false
+  }
+
+  private def onMobCreateCountCycle = {
+    mobCreateCycleTime += frameTimeDelta
+    // 跨越到新的周期
+    if (mobCreateCycleTime >= mobCreateDuration) {
+      mobCreateCycleTime %= mobCreateDuration
+      true
+    } else false
+  }
+
+  private def onFpsCountCycle = {
+    fpsCycleTime += frameTimeDelta
+    // 跨越到新的周期
+    if (fpsCycleTime >= 1000) {
+      fpsCycleTime %= 1000
+      true
+    } else false
   }
 
   private def shootAction() = { // TODO 敌机射击
     // 英雄射击
-    heroBullets.addAll(heroAircraft.shoot())
+    heroBullets.synchronized(heroBullets.addAll(heroAircraft.shoot()))
   }
 
   private def bulletsMoveAction() = {
