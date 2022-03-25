@@ -6,7 +6,7 @@ import work.chiro.game.basic.FlyingObject
 import work.chiro.game.basic.PositionType.Position
 import work.chiro.game.bullet.AbstractBullet
 import work.chiro.game.scene.Background
-import work.chiro.game.utils.getTimeMills
+import work.chiro.game.utils.{getNewFlightPosition, getTimeMills}
 
 import java.awt.{Color, Font, Graphics}
 import java.util.concurrent.{ScheduledThreadPoolExecutor, TimeUnit}
@@ -20,27 +20,33 @@ import scala.collection.mutable.ListBuffer
  */
 class Game extends JPanel {
   println(s"Window(${Main.WINDOW_WIDTH}x${Main.WINDOW_HEIGHT})")
-  val heroPosition = new Position(Main.WINDOW_WIDTH / 2, Main.WINDOW_HEIGHT - HeroAircraft.getImage.getHeight)
-  val heroAircraft = new HeroAircraft(heroPosition, new AnimateContainer[Position], 100)
+  val heroAircraft = HeroAircraft.create()
+  val heroPosition = HeroAircraft.getHeroPositionInstance
   val enemyAircrafts = new ListBuffer[AbstractAircraft]
   val heroBullets = new ListBuffer[AbstractBullet]
   val enemyBullets = new ListBuffer[AbstractBullet]
-  //Scheduled 线程池，用于定时任务调度
+  // Scheduled 线程池，用于定时任务调度
   val executorService = new ScheduledThreadPoolExecutor(1)
-  //启动英雄机鼠标监听
+  // 启动英雄机鼠标监听
   new HeroController(this, heroAircraft)
   private var backGroundTop = 0
-  // 时间间隔(ms)，控制刷新频率
   private val timeInterval = 1
   private val enemyMaxNumber = 5
   private var gameOverFlag = false
   private var score = 0
+
   private var frameTime: Double = 0
   private var lastFrameTime: Double = 0
+
   private val heroShootDuration = 6
-  private val mobCreateDuration = 600
   private var heroShootCycleTime: Double = 0
+
+  private val mobCreateDuration = 600
   private var mobCreateCycleTime: Double = 0
+
+  private val eLiteCreateDuration = 600
+  private var eLiteCreateCycleTime: Double = 0
+
   private var fpsCycleTime: Double = 0
   private val frameCount = new ListBuffer[Double]
 
@@ -57,25 +63,12 @@ class Game extends JPanel {
         frameCount.append(frameTime)
         frameCount.filterInPlace(_ >= (if (frameTime >= 1000) frameTime - 1000 else 0))
         // 周期性执行（控制频率）
-        if (onHeroShootCountCycle) {
-          // 飞机射出子弹
-          shootAction()
-        }
-        if (onMobCreateCountCycle) {
-          // 新敌机产生
-          if (enemyAircrafts.size < enemyMaxNumber) enemyAircrafts.append({
-            val positionEnemyNew = new Position(
-              (Math.random * (Main.WINDOW_WIDTH - MobEnemy.getImage.getWidth)).toInt * 1,
-              (Math.random * Main.WINDOW_HEIGHT * 0.2).toInt * 1
-            )
-            new MobEnemy(
-              positionEnemyNew, new AnimateContainer[Position](List(
-                new AnimateLinear(positionEnemyNew, new Position(positionEnemyNew.getX, Main.WINDOW_HEIGHT),
-                  AnimateVectorType.PositionLike.id, getTimeMills, 2000)
-              )), 30
-            )
-          })
-        }
+        // 飞机射出子弹
+        if (onHeroShootCountCycle) shootAction()
+        // 新敌机产生
+        if (onMobCreateCountCycle) enemyAircrafts.append(MobEnemy.create())
+        // 产生精英敌机
+        if (onELiteCreateCountCycle) enemyAircrafts.append(ELiteEnemy.create())
         if (onFpsCountCycle) {
           if (frameTime < 1000) println(f"[ ${frameTime.toFloat / 1000}%.3fs ]")
           else println(f"[ ${frameTime.toFloat / 1000}%.3fs ] ${frameCount.size} fps")
@@ -121,6 +114,15 @@ class Game extends JPanel {
     // 跨越到新的周期
     if (mobCreateCycleTime >= mobCreateDuration) {
       mobCreateCycleTime %= mobCreateDuration
+      true
+    } else false
+  }
+
+  private def onELiteCreateCountCycle = {
+    eLiteCreateCycleTime += frameTimeDelta
+    // 跨越到新的周期
+    if (eLiteCreateCycleTime >= eLiteCreateDuration) {
+      eLiteCreateCycleTime %= eLiteCreateDuration
       true
     } else false
   }

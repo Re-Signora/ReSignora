@@ -14,7 +14,7 @@ import work.chiro.game.utils.{getNewFlightPosition, getTimeMills}
  * @param animateContainer 动画容器
  * @param hpInit           初始血量
  */
-class MobEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Double], hpInit: Int)
+class ELiteEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Double], hpInit: Int)
   extends AbstractAircraft(posInit, animateContainer, hpInit) {
   override def forward() = {
     super.forward()
@@ -24,19 +24,19 @@ class MobEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Double]
 
   override def shoot() = List()
 
-  override def getImage = MobEnemy.getImage
+  override def getImage = ELiteEnemy.getImage
 
-  override def create() = MobEnemy.create()
+  override def create() = ELiteEnemy.create()
 }
 
-object MobEnemy extends ImageResource {
-  override def getImageCachedPath = "images/mob.png"
+object ELiteEnemy extends ImageResource {
+  override def getImageCachedPath = "images/elite.png"
   def create() = {
-    val positionEnemyNew = getNewFlightPosition(MobEnemy.getImage.getWidth)
-    new MobEnemy(
+    val positionEnemyNew = getNewFlightPosition(ELiteEnemy.getImage.getWidth)
+    new ELiteEnemy(
       positionEnemyNew, new AnimateContainer[Position](List(
         new AnimateLinear(positionEnemyNew, new Position(positionEnemyNew.getX, Main.WINDOW_HEIGHT),
-          AnimateVectorType.PositionLike.id, getTimeMills, 2000)
+          AnimateVectorType.PositionLike.id, getTimeMills, 20000)
       )), 30
     )
   }
