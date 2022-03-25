@@ -1,0 +1,251 @@
+@startuml
+'https: //plantuml.com/class-diagram
+
+abstract class Enumeration
+
+abstract class VectorType<T> {
+    # List<T> content
+    + VectorType<T>(int size, List<T> dataInit)
+    + {abstract} getDefaultValue(): T
+    + getSize(): int
+    + get(): List<T>
+    + set(List<T> values)
+}
+
+abstract class Vec<T> {
+    # boolean supportDifferentSize
+    + Vec<T>(int size, List<T> dataInit)
+    + calc<TRes>(Vec<T> that): TRes
+}
+VectorType <|-- Vec
+
+class VecInt {
+    # getNewClass
+    + VecInt(int size, List<int> dataInit)
+    + calc(VecInt that, String operator): VecInt
+    + +(VecInt that): VecInt
+    + -(VecInt that): VecInt
+    + *(VecInt that): VecInt
+    + /(VecInt that): VecInt
+}
+Vec <|-- VecInt
+
+class VecDouble {
+    # getNewClass
+    + VecDouble(int size, List<double> dataInit)
+    + calc(VecDouble that, String operator): VecDouble
+    + +(VecDouble that): VecDouble
+    + -(VecDouble that): VecDouble
+    + *(VecDouble that): VecDouble
+    + /(VecDouble that): VecDouble
+    + +(double that): VecDouble
+    + -(double that): VecDouble
+    + *(double that): VecDouble
+    + /(double that): VecDouble
+    + set(VecDouble that): void
+    + copy(): VecDouble
+}
+Vec <|-- VecDouble
+
+class Vec1Double {
+    + Vec1Double(double xInit)
+    + getX(): double
+    + setX(double value): void
+}
+VecDouble <|-- Vec1Double
+
+class Vec2Double {
+    + Vec2Double(double xInit)
+    + getX(): double
+    + setX(double value): void
+    + getY(): double
+    + setY(double value): void
+    + toString(): String
+    + calc(Vec2Double that, String operator): Vec2Double
+    + +(Vec2Double that): Vec2Double
+    + -(Vec2Double that): Vec2Double
+    + +=(Vec2Double that): Vec2Double
+    + -=(Vec2Double that): Vec2Double
+    + copy(): Vec2Double
+    + {static} toVec2Double(VecDouble vecDouble): Vec2Double
+}
+VecDouble <|-- Vec2Double
+
+class AnimateType
+Enumeration <|-- AnimateType
+
+class AnimateVectorTypeEnumeration
+Enumeration <|-- AnimateVectorTypeEnumeration
+
+abstract class AbstractAnimate<V> {
+    # V vec
+    # V source
+    # V target
+    # V delta
+    + AbstractAnimate(V vecSource, V vecTarget, int animateType, int animateVectorType, double timeStart, double timeSpan)
+    + getAnimateType(): int
+    + getAnimateType(): int
+    + getVector(): V
+    + {abstract} update(double timeNow): boolean
+    + isDone(double timeNow): boolean
+    + {abstract} getSpeed(double timeNow): V
+}
+
+class AnimateLinear<V> {
+    + AnimateLinear(V vecSource, V vecTarget, int animateVectorType, double timeStart, double timeSpan)
+    + update(double timeNow): boolean
+    + getSpeed(double timeNow): V
+}
+AbstractAnimate <|-- AnimateLinear
+
+class AnimateContainer<V> {
+    + AnimateContainer(List<AbstractAnimate> animateSeq)
+    + getAnimateSeq(): List<AbstractAnimate>
+    + updateAll(double timeNow): List<boolean>
+    + getSpeed(double timeNow): V
+}
+
+abstract class ImageResourceReady {
+    + {abstract} getImage(): BufferedImage
+    + hasImage(): boolean
+    # BufferedImage imageCache
+}
+
+abstract class ImageResource {
+    + getImage(): BufferedImage
+    + {abstract} getImageCachedPath(): String
+}
+ImageResource <|-- ImageResourceReady
+
+object Background {
+    + getImageCachedPath(): String
+}
+ImageResource <|-- Background
+
+abstract class FlyingObject {
+    # Position pos
+    # boolean valid
+    # int speedX
+    # int speedY
+    # int width
+    # int height
+    # boolean valid
+
+    + FlyingObject(Position pos, AnimateContainer<Vec2Double> animateContainer)
+    + forward(): void
+    + crash(FlyingObject flyingObject): boolean
+    + setLocation(double locationX, double locationY): void
+    + getLocationX(): int
+    + getLocationY(): int
+    + getSpeedY(): double
+    + getWidth(): int
+    + getHeight(): int
+    + isValid(): boolean
+    + vanish(): void
+}
+ImageResourceReady <|-- FlyingObject
+
+abstract class AbstractAircraft {
+	# int hpMax
+    # int hp
+    + AbstractAircraft(Position pos, AnimateContainer<Vec2Double> animateContainer, int hpInit)
+    + decreaseHp(int decrease): void
+    + increaseHp(int increase): void
+    + getHp(): int
+    + {abstract} shoot(): List<AbstractBullet>
+    + {abstract} create(): AbstractAircraft
+}
+FlyingObject <|-- AbstractAircraft
+
+class HeroAircraft {
+    - int shootNum
+    - int power
+    - int direction
+    + HeroAircraft(Position pos, AnimateContainer<Vec2Double> animateContainer, int hpInit)
+    + getShootNum(): int
+    + setShootNum(int num): void
+    + getImage(): BufferedImage
+    + forward(): void
+    + shoot(): List<AbstractBullet>
+    + {static} create(): HeroAircraft
+    + {static} getHeroInstance(): HeroAircraft
+    + {static} getHeroPositionInstance(): Position
+    + {static} getImageCachedPath(): String
+}
+AbstractAircraft <|-- HeroAircraft
+
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + getImage(): BufferedImage
+    + shoot(): List<AbstractBullet>
+    + {static} create(): MobEnemy
+    + {static} getImageCachedPath(): String
+}
+AbstractAircraft <|-- MobEnemy
+
+class ELiteEnemy {
+    # int power
+    + ELiteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + getImage(): BufferedImage
+    + shoot(): List<AbstractBullet>
+    + {static} create(): ELiteEnemy
+    + {static} getImageCachedPath(): String
+}
+AbstractAircraft <|-- ELiteEnemy
+
+abstract class AbstractBullet {
+    - int power
+    + AbstractBullet(Position pos, AnimateContainer<Vec2Double> animateContainer, int power)
+    + forward(): void
+	+ getPower(): int
+}
+FlyingObject <|-- AbstractBullet
+
+class HeroBullet {
+    + HeroBullet(Position posInit, AnimateContainer<Vec2Double> animateContainer, int power)
+    + {static} getImageCachedPath(): String
+}
+AbstractBullet <|-- HeroBullet
+
+class EnemyBullet {
+    + EnemyBullet(Position posInit, AnimateContainer<Vec2Double> animateContainer, int power)
+    + {static} getImageCachedPath(): String
+}
+AbstractBullet <|-- EnemyBullet
+
+abstract class AbstractProp {
+	+ AbstractProp(Position pos, AnimateContainer<Vec2Double> animateContainer)
+    + forward(): int
+    + {abstract} AbstractProp(List<AbstractAircraft>): void
+    + {abstract} create(): AbstractAircraft
+}
+FlyingObject <|-- AbstractProp
+
+class BloodProp {
+    # int bloodIncrease
+    + BloodProp(Position pos, AnimateContainer<Vec2Double> animateContainer)
+    + BloodProp(List<AbstractAircraft>): void
+    + {static} create(): BloodProp
+    + {static} getImageCachedPath(): String
+}
+AbstractProp <|-- BloodProp
+
+class BombProp {
+    + BombProp(Position pos, AnimateContainer<Vec2Double> animateContainer)
+    + BombProp(List<AbstractAircraft>): void
+    + {static} create(): BombProp
+    + {static} getImageCachedPath(): String
+}
+AbstractProp <|-- BombProp
+
+class BulletProp {
+    + BulletProp(Position pos, AnimateContainer<Vec2Double> animateContainer)
+    + BulletProp(List<AbstractAircraft>): void
+    + {static} create(): BulletProp
+    + {static} getImageCachedPath(): String
+}
+AbstractProp <|-- BulletProp
+
+@enduml

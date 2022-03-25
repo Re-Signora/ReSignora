@@ -9,8 +9,6 @@ import work.chiro.game.utils.getTimeMills
 
 class BombProp(posInit: Position, animateContainer: AnimateContainer[Vec2Double])
   extends AbstractProp(posInit, animateContainer) {
-  val bloodIncrease = 100
-
   override def handleAircrafts(enemyAircrafts: List[AbstractAircraft]) = {
     println("BombSupply active!")
     enemyAircrafts.foreach(_.vanish())
