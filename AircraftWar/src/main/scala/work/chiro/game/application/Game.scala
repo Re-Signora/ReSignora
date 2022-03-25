@@ -3,7 +3,7 @@ package work.chiro.game.application
 import work.chiro.game.aircraft._
 import work.chiro.game.basic.FlyingObject
 import work.chiro.game.bullet.AbstractBullet
-import work.chiro.game.prop.{AbstractProp, BloodProp}
+import work.chiro.game.prop.{AbstractProp, BloodProp, BombProp, BulletProp}
 import work.chiro.game.scene.Background
 import work.chiro.game.utils.getTimeMills
 
@@ -71,9 +71,9 @@ class Game extends JPanel {
         // 敌机射出子弹
         if (onELiteShootCountCycle) eLiteShootAction()
         // 新敌机产生
-        if (onMobCreateCountCycle) enemyAircrafts.append(MobEnemy.create())
+        if (onMobCreateCountCycle) enemyAircrafts.synchronized(enemyAircrafts.append(MobEnemy.create()))
         // 产生精英敌机
-        if (onELiteCreateCountCycle) enemyAircrafts.append(ELiteEnemy.create())
+        if (onELiteCreateCountCycle) enemyAircrafts.synchronized(enemyAircrafts.append(ELiteEnemy.create()))
         if (onFpsCountCycle) {
           if (frameTime < 1000) println(f"[ ${frameTime.toFloat / 1000}%.3fs ]")
           else println(f"[ ${frameTime.toFloat / 1000}%.3fs ] ${frameCount.size} fps")
@@ -92,9 +92,9 @@ class Game extends JPanel {
         repaint()
         // 游戏结束检查
         if (heroAircraft.getHp <= 0) { // 游戏结束
-          executorService.shutdown()
-          gameOverFlag = true
-          println("Game Over!")
+          // executorService.shutdown()
+          // gameOverFlag = true
+          // println("Game Over!")
         }
         lastFrameTime = frameTime
       }
@@ -200,7 +200,13 @@ class Game extends JPanel {
                 score += 10
                 if (enemyAircraft.getClass.getName.endsWith("ELiteEnemy")) {
                   // 产生道具补给
-                  props.append(BloodProp.create(enemyAircraft.getPos))
+                  if (math.random < 0.7) {
+                    props.synchronized(props.append((math.random() * 3).toInt match {
+                      case 0 => BulletProp.create(enemyAircraft.getPos)
+                      case 1 => BombProp.create(enemyAircraft.getPos)
+                      case 2 => BloodProp.create(enemyAircraft.getPos)
+                    }))
+                  }
                 }
               }
             }

@@ -17,13 +17,16 @@ import work.chiro.game.utils.getTimeMills
 class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Double], hpInit: Int)
   extends AbstractAircraft(posInit, animateContainer, hpInit) {
   // 攻击方式
-  private val shootNum = 1 //子弹一次发射数量
+  private var shootNum = 1 //子弹一次发射数量
   private val power = 30 //子弹伤害
   // private val direction = -1 //子弹射击方向 (向上发射：1，向下发射：-1)
 
   override def forward() = {
     // 英雄机由鼠标控制，不通过forward函数移动
   }
+
+  def setShootNum(num: Int) = shootNum = num
+  def getShootNum = shootNum
 
   /**
    * 通过射击产生子弹
