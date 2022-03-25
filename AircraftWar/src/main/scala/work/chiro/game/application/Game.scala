@@ -47,6 +47,9 @@ class Game extends JPanel {
   private val eLiteCreateDuration = 600
   private var eLiteCreateCycleTime: Double = 0
 
+  private val eLiteShootDuration = 600
+  private var eLiteShootCycleTime: Double = 0
+
   private var fpsCycleTime: Double = 0
   private val frameCount = new ListBuffer[Double]
 
@@ -63,8 +66,10 @@ class Game extends JPanel {
         frameCount.append(frameTime)
         frameCount.filterInPlace(_ >= (if (frameTime >= 1000) frameTime - 1000 else 0))
         // 周期性执行（控制频率）
-        // 飞机射出子弹
-        if (onHeroShootCountCycle) shootAction()
+        // 英雄飞机射出子弹
+        if (onHeroShootCountCycle) heroShootAction()
+        // 敌机射出子弹
+        if (onELiteShootCountCycle) eLiteShootAction()
         // 新敌机产生
         if (onMobCreateCountCycle) enemyAircrafts.append(MobEnemy.create())
         // 产生精英敌机
@@ -109,6 +114,15 @@ class Game extends JPanel {
     } else false
   }
 
+  private def onELiteShootCountCycle = {
+    eLiteShootCycleTime += frameTimeDelta
+    // 跨越到新的周期
+    if (eLiteShootCycleTime >= eLiteShootDuration) {
+      eLiteShootCycleTime %= eLiteShootDuration
+      true
+    } else false
+  }
+
   private def onMobCreateCountCycle = {
     mobCreateCycleTime += frameTimeDelta
     // 跨越到新的周期
@@ -136,24 +150,23 @@ class Game extends JPanel {
     } else false
   }
 
-  private def shootAction() = { // TODO 敌机射击
+  private def heroShootAction() = {
     // 英雄射击
     heroBullets.synchronized(heroBullets.addAll(heroAircraft.shoot()))
   }
 
+  private def eLiteShootAction() = {
+    // 精英敌机射击
+    enemyAircrafts.foreach(enemy => enemyBullets.synchronized(enemyBullets.addAll(enemy.shoot())))
+  }
+
   private def bulletsMoveAction() = {
-    for (bullet <- heroBullets) {
-      bullet.forward()
-    }
-    for (bullet <- enemyBullets) {
-      bullet.forward()
-    }
+    heroBullets.foreach(_.forward())
+    enemyBullets.foreach(_.forward())
   }
 
   private def aircraftsMoveAction() = {
-    for (enemyAircraft <- enemyAircrafts) {
-      enemyAircraft.forward()
-    }
+    enemyAircrafts.foreach(_.forward())
   }
 
   /**

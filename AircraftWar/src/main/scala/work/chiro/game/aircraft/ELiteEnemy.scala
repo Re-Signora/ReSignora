@@ -4,6 +4,7 @@ import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateVectorTy
 import work.chiro.game.application.{ImageResource, Main}
 import work.chiro.game.basic.PositionType.Position
 import work.chiro.game.basic.Vec2Double
+import work.chiro.game.bullet.EnemyBullet
 import work.chiro.game.utils.{getNewFlightPosition, getTimeMills}
 
 /**
@@ -16,13 +17,23 @@ import work.chiro.game.utils.{getNewFlightPosition, getTimeMills}
  */
 class ELiteEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Double], hpInit: Int)
   extends AbstractAircraft(posInit, animateContainer, hpInit) {
+
+  val power = 10
+
   override def forward() = {
     super.forward()
     // 判定 y 轴向下飞行出界
     if (getLocationY >= Main.WINDOW_HEIGHT) vanish()
   }
 
-  override def shoot() = List()
+  override def shoot() = List({
+    val x = getLocationX
+    val y = getLocationY
+    val posNew = new Position(x, y)
+    new EnemyBullet(posNew, new AnimateContainer[Position](List(
+      new AnimateLinear(posNew, new Position(posNew.getX, Main.WINDOW_HEIGHT), AnimateVectorType.PositionLike.id, getTimeMills, 3000)
+    )), power)
+  })
 
   override def getImage = ELiteEnemy.getImage
 
@@ -31,6 +42,7 @@ class ELiteEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Doubl
 
 object ELiteEnemy extends ImageResource {
   override def getImageCachedPath = "images/elite.png"
+
   def create() = {
     val positionEnemyNew = getNewFlightPosition(ELiteEnemy.getImage.getWidth)
     new ELiteEnemy(

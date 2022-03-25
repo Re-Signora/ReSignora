@@ -32,16 +32,13 @@ class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Dou
    */
   override def shoot() = {
     val x = getLocationX
-    val y = getLocationY // + direction * 2
-    // val speedX = 0
-    // val speedY = getSpeedY + direction * 5
+    val y = getLocationY
     for {i <- 0 until shootNum} yield {
       val posNew = new Position(x + (i * 2 - shootNum + 1) * 10, y)
       new HeroBullet(posNew, new AnimateContainer[Position](List(
         new AnimateLinear(posNew, new Position(posNew.getX, 0), AnimateVectorType.PositionLike.id, getTimeMills, 300)
       )), power)
     }
-    // for {i <- 0 until shootNum} yield new HeroBullet(x + (i * 2 - shootNum + 1) * 10, y, speedX, speedY, power)
   }
 
   override def getImage = HeroAircraft.getImage
