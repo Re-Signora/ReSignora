@@ -1,12 +1,11 @@
 package work.chiro.game.application
 
 import work.chiro.game.aircraft._
-import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateVectorType}
 import work.chiro.game.basic.FlyingObject
-import work.chiro.game.basic.PositionType.Position
 import work.chiro.game.bullet.AbstractBullet
+import work.chiro.game.prop.{AbstractProp, BloodProp}
 import work.chiro.game.scene.Background
-import work.chiro.game.utils.{getNewFlightPosition, getTimeMills}
+import work.chiro.game.utils.getTimeMills
 
 import java.awt.{Color, Font, Graphics}
 import java.util.concurrent.{ScheduledThreadPoolExecutor, TimeUnit}
@@ -25,13 +24,14 @@ class Game extends JPanel {
   val enemyAircrafts = new ListBuffer[AbstractAircraft]
   val heroBullets = new ListBuffer[AbstractBullet]
   val enemyBullets = new ListBuffer[AbstractBullet]
+  val props = new ListBuffer[AbstractProp]
   // Scheduled 线程池，用于定时任务调度
   val executorService = new ScheduledThreadPoolExecutor(1)
   // 启动英雄机鼠标监听
   new HeroController(this, heroAircraft)
   private var backGroundTop = 0
   private val timeInterval = 1
-  private val enemyMaxNumber = 5
+  // private val enemyMaxNumber = 5
   private var gameOverFlag = false
   private var score = 0
 
@@ -82,6 +82,8 @@ class Game extends JPanel {
         bulletsMoveAction()
         // 飞机移动
         aircraftsMoveAction()
+        // 道具移动
+        props.foreach(_.forward())
         // 撞击检测
         crashCheckAction()
         // 后处理
@@ -176,7 +178,13 @@ class Game extends JPanel {
    * 3. 英雄获得补给
    */
   private def crashCheckAction() = {
-    // TODO 敌机子弹攻击英雄
+    // 敌机子弹攻击英雄
+    enemyBullets.foreach(bullet => if (bullet.isValid) {
+      if (heroAircraft.crash(bullet)) {
+        heroAircraft.decreaseHp(bullet.getPower)
+        bullet.vanish()
+      }
+    })
     // 英雄子弹攻击敌机
     heroBullets.foreach(bullet => {
       if (bullet.isValid)
@@ -188,8 +196,12 @@ class Game extends JPanel {
               enemyAircraft.decreaseHp(bullet.getPower)
               bullet.vanish()
               if (!enemyAircraft.isValid) {
-                // TODO 获得分数，产生道具补给
+                // 获得分数
                 score += 10
+                if (enemyAircraft.getClass.getName.endsWith("ELiteEnemy")) {
+                  // 产生道具补给
+                  props.append(BloodProp.create(enemyAircraft.getPos))
+                }
               }
             }
             // 英雄机 与 敌机 相撞，均损毁
@@ -200,7 +212,14 @@ class Game extends JPanel {
           }
         })
     })
-    // Todo: 我方获得道具，道具生效
+    // 我方获得道具
+    props.foreach(prop => if (prop.isValid) {
+      if (prop.crash(heroAircraft)) {
+        // 道具生效
+        prop.handleAircrafts(enemyAircrafts.toList)
+        prop.vanish()
+      }
+    })
   }
 
   /**
@@ -214,6 +233,7 @@ class Game extends JPanel {
     enemyBullets.synchronized(enemyBullets.filterInPlace(_.isValid))
     heroBullets.synchronized(heroBullets.filterInPlace(_.isValid))
     enemyAircrafts.synchronized(enemyAircrafts.filterInPlace(_.isValid))
+    props.synchronized(props.filterInPlace(_.isValid))
   }
 
   /**
@@ -232,6 +252,7 @@ class Game extends JPanel {
     paintImageWithPositionRevised(g, enemyBullets)
     paintImageWithPositionRevised(g, heroBullets)
     paintImageWithPositionRevised(g, enemyAircrafts)
+    paintImageWithPositionRevised(g, props)
     g.drawImage(
       HeroAircraft.getImage,
       (heroAircraft.getLocationX - HeroAircraft.getImage.getWidth / 2).toInt,

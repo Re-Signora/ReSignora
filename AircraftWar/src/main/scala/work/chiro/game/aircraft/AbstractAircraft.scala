@@ -15,6 +15,7 @@ abstract class AbstractAircraft(posInit: Position, animateContainer: AnimateCont
   extends FlyingObject(posInit, animateContainer) {
   // 生命值
   var hp = hpInit
+  val hpMax = 300
 
   def decreaseHp(decrease: Int) = {
     hp -= decrease
@@ -22,6 +23,10 @@ abstract class AbstractAircraft(posInit: Position, animateContainer: AnimateCont
       hp = 0
       vanish()
     }
+  }
+
+  def increaseHp(increase: Int) = {
+    hp = math.min(hp + increase, hpMax)
   }
 
   def getHp = hp
