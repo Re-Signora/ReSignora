@@ -1,7 +1,7 @@
 package edu.hitsz.application
 
 import edu.hitsz.aircraft.HeroAircraft
-import edu.hitsz.utils.SetInRangeInt
+import edu.hitsz.utils.setInRangeInt
 
 import java.awt.event.{MouseAdapter, MouseEvent}
 
@@ -17,8 +17,8 @@ class HeroController(game: Game, heroAircraft: HeroAircraft) {
       super.mouseDragged(e)
       // val x = e.getX
       // val y = e.getY
-      val x = SetInRangeInt(e.getX, 0, Main.WINDOW_WIDTH)
-      val y = SetInRangeInt(e.getY, 0, Main.WINDOW_HEIGHT - heroAircraft.getHeight / 2)
+      val x = setInRangeInt(e.getX, 0, Main.WINDOW_WIDTH)
+      val y = setInRangeInt(e.getY, 0, Main.WINDOW_HEIGHT - heroAircraft.getHeight / 2)
       // 防止超出边界
       // if (x < 0 || x > Main.WINDOW_WIDTH || y < 0 || y > Main.WINDOW_HEIGHT) return
       heroAircraft.setLocation(x, y)

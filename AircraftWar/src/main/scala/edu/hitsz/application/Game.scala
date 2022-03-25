@@ -20,7 +20,7 @@ import scala.collection.mutable.ListBuffer
  */
 class Game extends JPanel {
   println(s"Window(${Main.WINDOW_WIDTH}x${Main.WINDOW_HEIGHT})")
-  val heroPosition = new Position(Main.WINDOW_WIDTH / 2, Main.WINDOW_HEIGHT - Background.getImage.getHeight)
+  val heroPosition = new Position(Main.WINDOW_WIDTH / 2, Main.WINDOW_HEIGHT - HeroAircraft.getImage.getHeight)
   val heroAircraft = new HeroAircraft(heroPosition, new AnimateContainer[Position], 100)
   val enemyAircrafts = new ListBuffer[AbstractAircraft]
   val heroBullets = new ListBuffer[AbstractBullet]
@@ -31,19 +31,19 @@ class Game extends JPanel {
   new HeroController(this, heroAircraft)
   private var backGroundTop = 0
   // 时间间隔(ms)，控制刷新频率
-  private val timeInterval = 10
-  private val timeStart = System.currentTimeMillis
+  private val timeInterval = 1
   private val enemyMaxNumber = 5
   private var gameOverFlag = false
   private var score = 0
-  private var time: Long = 0
+  private var frameTime: Double = 0
+  private var lastFrameTime: Double = 0
   /**
    * 周期（ms)
    * 指示子弹的发射、敌机的产生频率
    */
   private val bulletDuration = 600
-  private var cycleTime = 0
-  private val frameCount = new ListBuffer[Long]
+  private var cycleTime: Double = 0
+  private val frameCount = new ListBuffer[Double]
 
   /**
    * 游戏启动入口，执行游戏逻辑
@@ -53,13 +53,13 @@ class Game extends JPanel {
     val task = new Runnable {
       override def run() = {
         // time += timeInterval
-        time = System.currentTimeMillis - timeStart
-        frameCount.append(time)
-        frameCount.filterInPlace(_ >= (if (time >= 1000) time - 1000 else 0))
+        frameTime = getTimeMills
+        frameCount.append(frameTime)
+        frameCount.filterInPlace(_ >= (if (frameTime >= 1000) frameTime - 1000 else 0))
         // 周期性执行（控制频率）
         if (timeCountAndNewCycleJudge) {
-          if (time < 1000) println(f"[ ${time.toFloat / 1000}%.3fs ]")
-          else println(f"[ ${time.toFloat / 1000}%.3fs ] ${frameCount.size} fps")
+          if (frameTime < 1000) println(f"[ ${frameTime.toFloat / 1000}%.3fs ]")
+          else println(f"[ ${frameTime.toFloat / 1000}%.3fs ] ${frameCount.size} fps")
           // 新敌机产生
           if (enemyAircrafts.size < enemyMaxNumber) enemyAircrafts.append({
             val positionEnemyNew = new Position(
@@ -68,12 +68,12 @@ class Game extends JPanel {
             )
             new MobEnemy(
               positionEnemyNew, new AnimateContainer[Position](List(
-                new AnimateLinear(positionEnemyNew, new Position(
-                  (Math.random * (Main.WINDOW_WIDTH - MobEnemy.getImage.getWidth)).toInt * 1, 0), AnimateVectorType.PositionLike.id, getTimeMills, 2000)
+                new AnimateLinear(positionEnemyNew, new Position(positionEnemyNew.getX, Main.WINDOW_HEIGHT),
+                  AnimateVectorType.PositionLike.id, getTimeMills, 2000)
               )), 30
             )
-          }
-          )
+          })
+          // println(s"Now size of enemyAircrafts = ${enemyAircrafts.size}")
           // 飞机射出子弹
           shootAction()
         }
@@ -89,10 +89,11 @@ class Game extends JPanel {
         repaint()
         // 游戏结束检查
         if (heroAircraft.getHp <= 0) { // 游戏结束
-          executorService.shutdown()
-          gameOverFlag = true
-          println("Game Over!")
+          // executorService.shutdown()
+          // gameOverFlag = true
+          // println("Game Over!")
         }
+        lastFrameTime = frameTime
       }
     }
 
@@ -104,7 +105,8 @@ class Game extends JPanel {
   }
 
   private def timeCountAndNewCycleJudge = {
-    cycleTime += timeInterval
+    val timeDelta = frameTime - lastFrameTime
+    cycleTime += timeDelta
     // 跨越到新的周期
     if (cycleTime >= bulletDuration && cycleTime - timeInterval < cycleTime) {
       cycleTime %= bulletDuration
@@ -210,6 +212,7 @@ class Game extends JPanel {
     objects.synchronized {
       objects.foreach(obj => {
         val image = obj.getImage
+        // println(f"paint ${(obj.getLocationX - image.getWidth / 2).toInt}, ${(obj.getLocationY - image.getHeight / 2).toInt} ${obj.getClass.getName}")
         g.drawImage(image, (obj.getLocationX - image.getWidth / 2).toInt, (obj.getLocationY - image.getHeight / 2).toInt, null)
       })
     }

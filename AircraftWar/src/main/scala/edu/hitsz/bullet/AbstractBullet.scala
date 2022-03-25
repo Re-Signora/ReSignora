@@ -16,7 +16,7 @@ abstract class AbstractBullet(posInit: Position, animateContainer: AnimateContai
   override def forward() = {
     super.forward()
     // 判定 x 轴出界
-    if (getLocationX <= 0 || getLocationY >= Main.WINDOW_WIDTH) vanish()
+    if (getLocationX <= 0 || getLocationY >= Main.WINDOW_HEIGHT) vanish()
     // 判定 y 轴出界
     if (getSpeedY > 0 && getLocationY >= Main.WINDOW_HEIGHT) {
       // 向下飞行出界

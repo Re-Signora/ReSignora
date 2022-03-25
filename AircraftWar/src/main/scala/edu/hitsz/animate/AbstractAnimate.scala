@@ -39,10 +39,14 @@ class AnimateLinear[V <: VecDouble]
 (vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double)
   extends AbstractAnimate(vecSource, vecTarget, AnimateType.Linear.id, animateVectorType, timeStart, timeSpan) {
 
+  println(s"Animate Linear $vecSource => $vecTarget")
+
   override def update(timeNow: Double) = {
     val done = isDone(timeNow)
-    if (done) vec.set(source + (delta * ((timeNow - timeStart) / timeSpan)))
-    else vec.set(vecTarget)
+    val deltaNew = delta * ((timeNow - timeStart) / timeSpan)
+    // println(f"delta = $delta deltaNew = $deltaNew")
+    if (done) vec.set(vecTarget)
+    else vec.set(source + deltaNew)
     done
   }
 
@@ -73,7 +77,7 @@ class AnimateContainer[V <: VecDouble]
 (animateSeq: List[AbstractAnimate[V]] = List()) {
   def getAnimateSeq = animateSeq
 
-  def updateAll(timeNow: Double) = animateSeq.map(a => a.update(timeNow))
+  def updateAll(timeNow: Double) = animateSeq.map(_.update(timeNow))
 
   def getSpeed(timeNow: Double): VecDouble = {
     val positionLikeAnimates = animateSeq.filter(_.getAnimateVectorType == AnimateVectorType.PositionLike.id)

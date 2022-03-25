@@ -102,5 +102,9 @@ abstract class FlyingObject(posInit: Position, animateContainer: AnimateContaine
    * isValid = false.
    * notValid() => true.
    */
-  def vanish() = valid = false
+  // def vanish() = valid = false
+  def vanish() = {
+    // println(s"${getClass.getName} vanish!")
+    valid = false
+  }
 }

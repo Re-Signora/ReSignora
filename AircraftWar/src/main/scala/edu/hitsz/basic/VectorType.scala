@@ -20,6 +20,7 @@ abstract class VectorType[T](size: Int, dataInit: Seq[T] = Seq()) {
 
 abstract class Vec[T](size: Int, dataInit: Seq[T]) extends VectorType[T](size, dataInit) {
   val supportDifferentSize = false
+
   def calc[TRes <: Vec[T]](that: Vec[T])(implicit operate: (T, T) => T, getNewClass: (Int, Seq[T]) => TRes): TRes = {
     if (supportDifferentSize) {
       val newSize = math.max(size, that.getSize)
@@ -64,7 +65,7 @@ class VecInt(size: Int, dataInit: Seq[Int] = Seq()) extends Vec[Int](size, dataI
 class VecDouble(size: Int, dataInit: Seq[Double] = Seq()) extends Vec[Double](size, dataInit) {
   override def getDefaultValue = 0.0
 
-  def set(that: VecDouble): Unit = set(that.content.toList)
+  def set(that: VecDouble): Unit = set(that.get.toList)
 
   implicit val getNewClass = (sizeNew: Int, dataInitNew: Seq[Double]) => new VecDouble(sizeNew, dataInitNew)
 
@@ -95,6 +96,8 @@ class VecDouble(size: Int, dataInit: Seq[Double] = Seq()) extends Vec[Double](si
   def /(that: Double) = calc(new VecDouble(size, Seq.fill(size)(that)), "/")
 
   def copy: VecDouble = new VecDouble(size, content.toList)
+
+  override def toString = f"${get.mkString("Vec(", ", ", ")")}"
 }
 
 class Vec1Double(xInit: Double = 0) extends VecDouble(1, Seq(xInit)) {

@@ -18,7 +18,7 @@ class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Dou
   // 攻击方式
   private val shootNum = 1 //子弹一次发射数量
   private val power = 30 //子弹伤害
-  private val direction = -1 //子弹射击方向 (向上发射：1，向下发射：-1)
+  // private val direction = -1 //子弹射击方向 (向上发射：1，向下发射：-1)
 
   override def forward() = {
     // 英雄机由鼠标控制，不通过forward函数移动
@@ -31,13 +31,13 @@ class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Dou
    */
   override def shoot() = {
     val x = getLocationX
-    val y = getLocationY + direction * 2
+    val y = getLocationY// + direction * 2
     // val speedX = 0
     // val speedY = getSpeedY + direction * 5
     for {i <- 0 until shootNum} yield {
       val posNew = new Position(x + (i * 2 - shootNum + 1) * 10, y)
       new HeroBullet(posNew, new AnimateContainer[Position](List(
-        new AnimateLinear(posNew, new Position(x + (i * 2 - shootNum + 1) * 10, Main.WINDOW_HEIGHT), AnimateVectorType.PositionLike.id, getTimeMills, 1000)
+        new AnimateLinear(posNew, new Position(posNew.getX, 0), AnimateVectorType.PositionLike.id, getTimeMills, 1000)
       )), power)
     }
     // for {i <- 0 until shootNum} yield new HeroBullet(x + (i * 2 - shootNum + 1) * 10, y, speedX, speedY, power)
