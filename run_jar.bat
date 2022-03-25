@@ -1,0 +1,1 @@
+java -jar AircraftWar\target\scala-2.13\aircraft-war-0.0.2.jar
