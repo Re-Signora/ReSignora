@@ -2,9 +2,9 @@ package work.chiro.game.aircraft
 
 import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateVectorType}
-import work.chiro.game.application.{ImageResource, Main}
+import work.chiro.game.application.{ImageResourceFactory, Main}
 import work.chiro.game.basic.PositionType.Position
-import work.chiro.game.basic.Vec2Double
+import work.chiro.game.basic.{AbstractObjectFactory, Vec2Double}
 import work.chiro.game.bullet.HeroBullet
 import work.chiro.game.utils.getTimeMills
 
@@ -27,6 +27,7 @@ class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Dou
   }
 
   def setShootNum(num: Int) = shootNum = num
+
   def getShootNum = shootNum
 
   /**
@@ -46,24 +47,24 @@ class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Dou
   }
 
   override def getImage = HeroAircraft.getImage
-
-  override def create() = HeroAircraft.create()
 }
 
-object HeroAircraft extends ImageResource {
+object HeroAircraft extends ImageResourceFactory with AbstractObjectFactory {
   override def getImageCachedPath = "images/hero.png"
 
   var heroInstance: Option[HeroAircraft] = None
   var heroPositionInstance: Option[Position] = None
 
-  def getHeroInstance = heroInstance.get
+  def getInstance = heroInstance.get
 
-  def getHeroPositionInstance = heroPositionInstance.get
+  def getPositionInstance = heroPositionInstance.get
 
   def create() = {
     if (heroInstance.isEmpty) {
       heroPositionInstance = Some(new Position(config.window.width / 2, config.window.height - HeroAircraft.getImage.getHeight))
-      heroInstance = Some(new HeroAircraft(heroPositionInstance.get, new AnimateContainer[Position], 100))
+      heroInstance.synchronized({
+        heroInstance = Some(new HeroAircraft(heroPositionInstance.get, new AnimateContainer[Position], 100))
+      })
     }
     heroInstance.get
   }

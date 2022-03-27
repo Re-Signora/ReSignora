@@ -2,9 +2,9 @@ package work.chiro.game.aircraft
 
 import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateNonLinearToTarget, AnimateVectorType}
-import work.chiro.game.application.{ImageResource, Main}
+import work.chiro.game.application.{ImageResourceFactory, Main}
 import work.chiro.game.basic.PositionType.Position
-import work.chiro.game.basic.Vec2Double
+import work.chiro.game.basic.{AbstractObjectFactory, Vec2Double}
 import work.chiro.game.bullet.EnemyBullet
 import work.chiro.game.utils.{getNewFlightPosition, getTimeMills}
 
@@ -34,17 +34,15 @@ class EliteEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Doubl
     new EnemyBullet(posNew, new AnimateContainer[Position](List(
       // new AnimateLinear(posNew, new Position(posNew.getX, Main.WINDOW_HEIGHT), AnimateVectorType.PositionLike.id, getTimeMills, 3000)
       // new AnimateLinearToTarget(posNew, HeroAircraft.getHeroPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000)
-      new AnimateNonLinearToTarget(posNew, HeroAircraft.getHeroPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000,
+      new AnimateNonLinearToTarget(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000,
         new Position(0, 0), new Position(0.002, 0.002))
     )), power)
   })
 
   override def getImage = EliteEnemy.getImage
-
-  override def create() = EliteEnemy.create()
 }
 
-object EliteEnemy extends ImageResource {
+object EliteEnemy extends ImageResourceFactory with AbstractObjectFactory {
   override def getImageCachedPath = "images/elite.png"
 
   def create() = {

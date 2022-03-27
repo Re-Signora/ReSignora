@@ -3,15 +3,21 @@ package work.chiro.game.basic
 import work.chiro.game.aircraft.AbstractAircraft
 import work.chiro.game.animate.AnimateContainer
 import work.chiro.game.application.ImageResourceReady
-import work.chiro.game.basic.PositionType.Position
+import work.chiro.game.basic.PositionType.{Position, Scale, Size}
 import work.chiro.game.utils.getTimeMills
 
 /**
- * 可飞行对象的父类
+ * 所有对象的基类
  *
  * @author chiro2001
+ * @param posInit          初始位置
+ * @param animateContainer 动画容器
+ * @param sizeInit         初始化大小，不设置则使用图片大小
  */
-abstract class AbstractObject(posInit: Position, animateContainer: AnimateContainer[Vec2Double], size: Option[Vec2Double] = None)
+abstract class AbstractObject(posInit: Position,
+                              animateContainer: AnimateContainer[Vec2Double],
+                              sizeInit: Option[Size] = None,
+                              rotationInit: Option[Scale] = None)
   extends ImageResourceReady {
   // println(s"Object created at $posInit ${getClass.getName}")
   protected var pos = posInit
@@ -22,16 +28,12 @@ abstract class AbstractObject(posInit: Position, animateContainer: AnimateContai
 
   def setPos(posX: Double, posY: Double) = pos.set(new Position(posX, posY))
 
-  /**
-   * x 轴长度，根据图片尺寸获得
-   * -1 表示未设置
-   */
-  protected var width = -1
-  /**
-   * y 轴长度，根据图片尺寸获得
-   * -1 表示未设置
-   */
-  protected var height = -1
+  // 尺寸 -1 表示未设置，等待加载图片后依据图片大小自动设置
+  val size = if (sizeInit.nonEmpty) sizeInit.get else new Size(-1, -1)
+
+  // 旋转角度（弧度制）
+  val rotation = if (rotationInit.nonEmpty) rotationInit.get else new Scale
+
   /**
    * 有效（生存）标记，
    * 通常标记为 false的对象会再下次刷新时清除
@@ -85,14 +87,14 @@ abstract class AbstractObject(posInit: Position, animateContainer: AnimateContai
 
   def getWidth = {
     // 若未设置，则查询图片宽度并设置
-    if (width == -1) width = getImage.getWidth
-    width
+    if (size.getX == -1) size.setX(getImage.getWidth)
+    size.getX
   }
 
   def getHeight = {
     // 若未设置，则查询图片高度并设置
-    if (height == -1) height = getImage.getHeight
-    height
+    if (size.getY == -1) size.setY(getImage.getHeight)
+    size.getY
   }
 
   def isValid = this.valid
@@ -107,4 +109,8 @@ abstract class AbstractObject(posInit: Position, animateContainer: AnimateContai
     // println(s"${getClass.getName} vanish!")
     valid = false
   }
+}
+
+trait AbstractObjectFactory {
+  def create(): AbstractObject
 }

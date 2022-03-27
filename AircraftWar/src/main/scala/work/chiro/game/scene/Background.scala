@@ -1,7 +1,7 @@
 package work.chiro.game.scene
 
-import work.chiro.game.application.ImageResource
+import work.chiro.game.application.ImageResourceFactory
 
-object Background extends ImageResource {
+object Background extends ImageResourceFactory {
   override def getImageCachedPath = "images/bg.jpg"
 }

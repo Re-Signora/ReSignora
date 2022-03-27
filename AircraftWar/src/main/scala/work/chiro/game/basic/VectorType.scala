@@ -36,6 +36,8 @@ abstract class Vec[T](size: Int, dataInit: Seq[T]) extends VectorType[T](size, d
       getNewClass(size, for {i <- 0 until size} yield operate(content(i), that.get(i)))
     }
   }
+
+  override def toString = f"${get.mkString("Vec(", ", ", ")")}"
 }
 
 class VecInt(size: Int, dataInit: Seq[Int] = Seq()) extends Vec[Int](size, dataInit) {
@@ -60,6 +62,8 @@ class VecInt(size: Int, dataInit: Seq[Int] = Seq()) extends Vec[Int](size, dataI
   def *(that: VecInt) = calc(that, "*")
 
   def /(that: VecInt) = calc(that, "/")
+
+  def copy: VecInt = new VecInt(size, content.toList)
 }
 
 class VecDouble(size: Int, dataInit: Seq[Double] = Seq()) extends Vec[Double](size, dataInit) {
@@ -146,4 +150,46 @@ object Vec2Double {
   implicit def toVec2Double(vecDouble: VecDouble): Vec2Double = new Vec2Double(vecDouble.get.head, vecDouble.get(1))
 
   def apply(xInit: Double = 0, yInit: Double = 0) = new Vec2Double(xInit, yInit)
+}
+
+class Vec2Int(xInit: Int = 0, yInit: Int = 0) extends VecInt(2, Seq(xInit, yInit)) {
+  def getX: Int = content.head
+
+  def getY: Int = content(1)
+
+  def setX(value: Int) = content(0) = value
+
+  def setY(value: Int) = content(1) = value
+
+  override def toString = f"($getX, $getY)"
+
+  def calc(that: Vec2Int, operator: String): Vec2Int =
+    operator match {
+      case "+" => new Vec2Int(getX + that.getX, getY + that.getY)
+      case "-" => new Vec2Int(getX - that.getX, getY - that.getY)
+      case "+=" =>
+        setX(getX + that.getX)
+        setY(getY + that.getY)
+        this
+      case "-=" =>
+        setX(getX - that.getX)
+        setY(getY - that.getY)
+        this
+    }
+
+  def +(that: Vec2Int): Vec2Int = calc(that, "+")
+
+  def -(that: Vec2Int): Vec2Int = calc(that, "-")
+
+  def +=(that: Vec2Int): Vec2Int = calc(that, "+=")
+
+  def -=(that: Vec2Int): Vec2Int = calc(that, "-=")
+
+  override def copy: Vec2Int = new Vec2Int(getX, getY)
+}
+
+object Vec2Int {
+  implicit def toVec2Int(vecInt: VecInt): Vec2Int = new Vec2Int(vecInt.get.head, vecInt.get(1))
+
+  def apply(xInit: Int = 0, yInit: Int = 0) = new Vec2Int(xInit, yInit)
 }

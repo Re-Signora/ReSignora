@@ -23,7 +23,7 @@ import scala.collection.mutable.ListBuffer
 class Game extends JPanel {
   println(s"Window(${config.window.width}x${config.window.height})")
   val heroAircraft = HeroAircraft.create()
-  val heroPosition = HeroAircraft.getHeroPositionInstance
+  val heroPosition = HeroAircraft.getPositionInstance
   val enemyAircrafts = new ListBuffer[AbstractAircraft]
   val heroBullets = new ListBuffer[AbstractBullet]
   val enemyBullets = new ListBuffer[AbstractBullet]

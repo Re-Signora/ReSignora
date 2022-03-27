@@ -3,7 +3,7 @@ package work.chiro.game.prop
 import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.aircraft.{AbstractAircraft, HeroAircraft}
 import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateVectorType}
-import work.chiro.game.application.{ImageResource, Main}
+import work.chiro.game.application.{ImageResourceFactory, Main}
 import work.chiro.game.basic.PositionType.Position
 import work.chiro.game.basic.Vec2Double
 import work.chiro.game.utils.getTimeMills
@@ -14,7 +14,7 @@ class BulletProp(posInit: Position, animateContainer: AnimateContainer[Vec2Doubl
 
   override def handleAircrafts(enemyAircrafts: List[AbstractAircraft]) = {
     println("FireSupply active!")
-    HeroAircraft.getHeroInstance.setShootNum(HeroAircraft.getHeroInstance.getShootNum + 1)
+    HeroAircraft.getInstance.setShootNum(HeroAircraft.getInstance.getShootNum + 1)
   }
 
   override def create(position: Position) = BulletProp.create(position)
@@ -22,7 +22,7 @@ class BulletProp(posInit: Position, animateContainer: AnimateContainer[Vec2Doubl
   override def getImage = BulletProp.getImage
 }
 
-object BulletProp extends ImageResource {
+object BulletProp extends ImageResourceFactory {
   override def getImageCachedPath = "images/prop_bullet.png"
 
   def create(position: Position) = {

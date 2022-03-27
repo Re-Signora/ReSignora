@@ -39,6 +39,4 @@ abstract class AbstractAircraft(posInit: Position, animateContainer: AnimateCont
    * 非可射击对象空实现，返回空 Seq
    */
   def shoot(): Seq[AbstractBullet]
-
-  def create(): AbstractAircraft
 }

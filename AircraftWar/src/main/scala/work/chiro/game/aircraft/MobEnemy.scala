@@ -2,9 +2,9 @@ package work.chiro.game.aircraft
 
 import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateVectorType}
-import work.chiro.game.application.{ImageResource, Main}
+import work.chiro.game.application.{ImageResourceFactory, Main}
 import work.chiro.game.basic.PositionType.Position
-import work.chiro.game.basic.Vec2Double
+import work.chiro.game.basic.{AbstractObjectFactory, Vec2Double}
 import work.chiro.game.utils.{getNewFlightPosition, getTimeMills}
 
 /**
@@ -26,12 +26,11 @@ class MobEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Double]
   override def shoot() = List()
 
   override def getImage = MobEnemy.getImage
-
-  override def create() = MobEnemy.create()
 }
 
-object MobEnemy extends ImageResource {
+object MobEnemy extends ImageResourceFactory with AbstractObjectFactory {
   override def getImageCachedPath = "images/mob.png"
+
   def create() = {
     val positionEnemyNew = getNewFlightPosition(MobEnemy.getImage.getWidth)
     new MobEnemy(
