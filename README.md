@@ -33,13 +33,19 @@ Scala 项目的 UML 图见 [AircraftWar-scala.puml](uml/AircraftWar-scala.puml)�
 
 3. 重启 IDEA 并且重新打开文件夹，等待 IDEA 加载 sbt 完成
 
-4. 打开 `AircraftWar/src/main/scala/work/chiro/game/application/Main.scala`
+4. 如果运行配置中有这一项：![image-20220327174215752](README.assets/image-20220327174215752.png)
 
-5. 点击三角形运行
+   1. 运行这一项（`Main (scala)`）即可
 
-   ![image-20220325193510570](README.assets/image-20220325193510570.png)
+5. 如果运行配置中没有这一项
 
-   ![image-20220325193520239](README.assets/image-20220325193520239.png)
+   1. 打开 `AircraftWar/src/main/scala/work/chiro/game/application/Main.scala`
+
+   2. 点击三角形运行
+
+      ![image-20220325193510570](README.assets/image-20220325193510570.png)
+
+      ![image-20220325193520239](README.assets/image-20220325193520239.png)
 
 ### 运行 Java
 
@@ -47,10 +53,15 @@ Scala 项目的 UML 图见 [AircraftWar-scala.puml](uml/AircraftWar-scala.puml)�
 
 2. 等待 IDEA 加载 sbt 完成
 
-3. 打开 `AircraftWar/src/main/scala/edu/hitsz/application/Main.java`
+3. 如果运行配置中有这一项：![image-20220327174334883](README.assets/image-20220327174334883.png)
 
-4. 点击三角形运行
+   1. 运行这一项（`Main (java)`）即可
 
-   ![image-20220325193510570](README.assets/image-20220325193510570.png)
+4. 如果运行配置中没有这一项
 
-   ![image-20220325193520239](README.assets/image-20220325193520239.png)
+   1. 打开 `AircraftWar/src/main/scala/edu/hitsz/application/Main.java`
+
+   2. 点击三角形运行
+
+      ![image-20220327174436632](README.assets/image-20220327174436632.png)
+
