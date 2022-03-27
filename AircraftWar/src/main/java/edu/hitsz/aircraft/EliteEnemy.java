@@ -12,12 +12,12 @@ import java.util.LinkedList;
  *
  * @author hitsz
  */
-public class ELiteEnemy extends AbstractAircraft {
+public class EliteEnemy extends AbstractAircraft {
 
     int shootDivider = 4;
     int shootCnt = 0;
 
-    public ELiteEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
+    public EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
     }
 

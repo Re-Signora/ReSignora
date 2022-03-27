@@ -88,7 +88,7 @@ public class Game extends JPanel {
                 // 新敌机产生
                 if (enemyAircrafts.size() < enemyMaxNumber) {
                     if (Math.random() < 0.3) {
-                        enemyAircrafts.add(new ELiteEnemy(
+                        enemyAircrafts.add(new EliteEnemy(
                                 (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())) * 1,
                                 (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2) * 1,
                                 0,
@@ -216,7 +216,7 @@ public class Game extends JPanel {
                     if (enemyAircraft.notValid()) {
                         // 获得分数，产生道具补给
                         // System.out.println(enemyAircraft.getClass().getName());
-                        if (enemyAircraft.getClass().getName().endsWith("ELiteEnemy")) {
+                        if (enemyAircraft.getClass().getName().endsWith("EliteEnemy")) {
                             int select = (int) (Math.random() * 3);
                             if (select == 0) {
                                 props.add(new BloodProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), 0, 2, 100));

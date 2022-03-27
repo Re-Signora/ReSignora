@@ -16,7 +16,7 @@ import work.chiro.game.utils.{getNewFlightPosition, getTimeMills}
  * @param animateContainer 动画容器
  * @param hpInit           初始血量
  */
-class ELiteEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Double], hpInit: Int)
+class EliteEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Double], hpInit: Int)
   extends AbstractAircraft(posInit, animateContainer, hpInit) {
 
   val power = 10
@@ -39,17 +39,17 @@ class ELiteEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Doubl
     )), power)
   })
 
-  override def getImage = ELiteEnemy.getImage
+  override def getImage = EliteEnemy.getImage
 
-  override def create() = ELiteEnemy.create()
+  override def create() = EliteEnemy.create()
 }
 
-object ELiteEnemy extends ImageResource {
+object EliteEnemy extends ImageResource {
   override def getImageCachedPath = "images/elite.png"
 
   def create() = {
-    val positionEnemyNew = getNewFlightPosition(ELiteEnemy.getImage.getWidth)
-    new ELiteEnemy(
+    val positionEnemyNew = getNewFlightPosition(EliteEnemy.getImage.getWidth)
+    new EliteEnemy(
       positionEnemyNew, new AnimateContainer[Position](List(
         new AnimateLinearToTarget(positionEnemyNew, new Position(positionEnemyNew.getX, config.window.height),
           AnimateVectorType.PositionLike.id, getTimeMills, 20000)

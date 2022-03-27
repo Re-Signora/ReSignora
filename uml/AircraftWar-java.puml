@@ -64,12 +64,12 @@ class MobEnemy {
     + shoot():List<Bullet>
 }
 
-class ELiteEnemy {
-    + ELiteEnemy(int locationX, int locationY, int speedX, int speedY, int hp):void
+class EliteEnemy {
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp):void
     + forward():void
     + shoot():List<Bullet>
 }
-AbstractAircraft <|-- ELiteEnemy
+AbstractAircraft <|-- EliteEnemy
 
 class HeroBullet {
     + HeroBullet(int locationX, int locationY, int speedX, int speedY, int power):void

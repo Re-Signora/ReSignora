@@ -184,16 +184,16 @@ class MobEnemy {
 }
 AbstractAircraft <|-- MobEnemy
 
-class ELiteEnemy {
+class EliteEnemy {
     # int power
-    + ELiteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward(): void
     + getImage(): BufferedImage
     + shoot(): List<AbstractBullet>
-    + {static} create(): ELiteEnemy
+    + {static} create(): EliteEnemy
     + {static} getImageCachedPath(): String
 }
-AbstractAircraft <|-- ELiteEnemy
+AbstractAircraft <|-- EliteEnemy
 
 abstract class AbstractBullet {
     - int power

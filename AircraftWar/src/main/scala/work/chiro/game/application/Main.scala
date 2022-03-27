@@ -15,7 +15,7 @@ object Main {
   def getFrameInstance = frameInstance
 
   def main(args: Array[String]): Unit = {
-    System.out.println("Hello Aircraft War" + (if (config.isDebug) "[DEBUG MODE]" else ""))
+    System.out.println("Hello Aircraft War" + (if (config.isDebug) " [DEBUG MODE]" else ""))
     // 获得屏幕的分辨率，初始化 Frame
     val screenSize = Toolkit.getDefaultToolkit.getScreenSize
     frameInstance = Some(new JFrame("Aircraft War"))

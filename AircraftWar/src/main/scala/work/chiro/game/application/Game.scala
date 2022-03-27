@@ -74,11 +74,11 @@ class Game extends JPanel {
         // 英雄飞机射出子弹
         if (onHeroShootCountCycle) heroShootAction()
         // 敌机射出子弹
-        if (onELiteShootCountCycle) eLiteShootAction()
+        if (onEliteShootCountCycle) eLiteShootAction()
         // 新敌机产生
         if (onMobCreateCountCycle) enemyAircrafts.synchronized(enemyAircrafts.append(MobEnemy.create()))
         // 产生精英敌机
-        if (onELiteCreateCountCycle) enemyAircrafts.synchronized(enemyAircrafts.append(ELiteEnemy.create()))
+        if (onEliteCreateCountCycle) enemyAircrafts.synchronized(enemyAircrafts.append(EliteEnemy.create()))
         if (onFpsCountCycle) {
           val fpsInfo = if (frameTime < 1000) f"[ ${frameTime.toFloat / 1000}%.3fs ]"
           else f"[ ${frameTime.toFloat / 1000}%.3fs ] ${frameCount.size} fps"
@@ -123,7 +123,7 @@ class Game extends JPanel {
     } else false
   }
 
-  private def onELiteShootCountCycle = {
+  private def onEliteShootCountCycle = {
     eLiteShootCycleTime += frameTimeDelta
     // 跨越到新的周期
     if (eLiteShootCycleTime >= eLiteShootDuration) {
@@ -141,7 +141,7 @@ class Game extends JPanel {
     } else false
   }
 
-  private def onELiteCreateCountCycle = {
+  private def onEliteCreateCountCycle = {
     eLiteCreateCycleTime += frameTimeDelta
     // 跨越到新的周期
     if (eLiteCreateCycleTime >= eLiteCreateDuration) {
@@ -205,7 +205,7 @@ class Game extends JPanel {
               if (!enemyAircraft.isValid) {
                 // 获得分数
                 score += 10
-                if (enemyAircraft.getClass.getName.endsWith("ELiteEnemy")) {
+                if (enemyAircraft.getClass.getName.endsWith("EliteEnemy")) {
                   // 产生道具补给
                   if (math.random() < 0.7) {
                     props.synchronized(props.append((math.random() * 3).toInt match {
