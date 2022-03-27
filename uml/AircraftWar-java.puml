@@ -24,7 +24,7 @@ abstract class AbstractFlyingObject {
     + notValid():boolean
     + vanish():void
 }
-abstract class AbstractAircraft {
+abstract class AbstractAircraft extends AbstractFlyingObject {
 	# int maxHp
     # int hp
     + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
@@ -33,23 +33,14 @@ abstract class AbstractAircraft {
     + {abstract} shoot():List<Bullet>
  }
 
-abstract class AbstractBullet {
+abstract class AbstractBullet extends AbstractFlyingObject {
     - int power
     + Bullet(int locationX, int locationY, int speedX, int speedY, int power)
     + forward():void
 	+ getPower():int
 }
 
-AbstractFlyingObject <|-- AbstractAircraft
-AbstractFlyingObject <|-- AbstractBullet
-
-AbstractAircraft <|-- HeroAircraft
-AbstractAircraft <|-- MobEnemy
-
-AbstractBullet <|-- HeroBullet
-AbstractBullet <|-- EnemyBullet
-
-class HeroAircraft {
+class HeroAircraft extends AbstractAircraft {
     - int shootNum
     - int power
     - int direction
@@ -58,52 +49,49 @@ class HeroAircraft {
     + shoot():List<Bullet>
 }
 
-class MobEnemy {
+class MobEnemy extends AbstractAircraft {
     + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward():void
     + shoot():List<Bullet>
 }
 
-class EliteEnemy {
+class EliteEnemy extends AbstractAircraft {
     + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward():void
     + shoot():List<Bullet>
 }
-AbstractAircraft <|-- EliteEnemy
 
-class HeroBullet {
+class HeroBullet extends AbstractBullet {
     + HeroBullet(int locationX, int locationY, int speedX, int speedY, int power)
 }
 
-class EnemyBullet {
+class EnemyBullet extends AbstractBullet {
     + EnemyBullet(int locationX, int locationY, int speedX, int speedY, int power)
 }
 
-abstract class AbstractProp {
+abstract class AbstractProp extends AbstractFlyingObject {
     - int power
     + AbstractProp(int locationX, int locationY, int speedX, int speedY)
     + forward():void
 	+ {abstract} handleAircrafts(List<AbstractAircraft> enemyAircrafts):void
 }
-AbstractFlyingObject <|-- AbstractProp
 
-class BloodProp {
+class BloodProp extends AbstractProp {
     # int increaseHp
     + BloodProp(int locationX, int locationY, int speedX, int speedY, int increaseHp)
     + handleAircrafts(List<AbstractAircraft> enemyAircrafts):void
 }
-AbstractProp <|-- BloodProp
 
-class BombProp {
+class BombProp extends AbstractProp {
     + BombProp(int locationX, int locationY, int speedX, int speedY)
     + handleAircrafts(List<AbstractAircraft> enemyAircrafts):void
 }
-AbstractProp <|-- BombProp
 
-class BulletProp {
+class BulletProp extends AbstractProp {
     + BulletProp(int locationX, int locationY, int speedX, int speedY)
     + handleAircrafts(List<AbstractAircraft> enemyAircrafts):void
 }
-AbstractProp <|-- BulletProp
+
+
 
 @enduml
