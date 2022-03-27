@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
  *
  * @author hitsz
  */
-public abstract class FlyingObject {
+public abstract class AbstractFlyingObject {
 
     //locationX、locationY为图片中心位置坐标
     /**
@@ -60,10 +60,10 @@ public abstract class FlyingObject {
      */
     protected boolean isValid = true;
 
-    public FlyingObject() {
+    public AbstractFlyingObject() {
     }
 
-    public FlyingObject(int locationX, int locationY, int speedX, int speedY) {
+    public AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY) {
         this.locationX = locationX;
         this.locationY = locationY;
         this.speedX = speedX;
@@ -95,18 +95,18 @@ public abstract class FlyingObject {
      *  横向，[x - width/2, x + width/2]
      *  纵向，[y - height/4, y + height/4]
      *
-     * @param flyingObject 撞击对方
+     * @param abstractFlyingObject 撞击对方
      * @return true: 我方被击中; false 我方未被击中
      */
-    public boolean crash(FlyingObject flyingObject) {
+    public boolean crash(AbstractFlyingObject abstractFlyingObject) {
         // 缩放因子，用于控制 y轴方向区域范围
         int factor = this instanceof AbstractAircraft ? 2 : 1;
-        int fFactor = flyingObject instanceof AbstractAircraft ? 2 : 1;
+        int fFactor = abstractFlyingObject instanceof AbstractAircraft ? 2 : 1;
 
-        int x = flyingObject.getLocationX();
-        int y = flyingObject.getLocationY();
-        int fWidth = flyingObject.getWidth();
-        int fHeight = flyingObject.getHeight();
+        int x = abstractFlyingObject.getLocationX();
+        int y = abstractFlyingObject.getLocationY();
+        int fWidth = abstractFlyingObject.getWidth();
+        int fHeight = abstractFlyingObject.getHeight();
 
         return x + (fWidth+this.getWidth())/2 > locationX
                 && x - (fWidth+this.getWidth())/2 < locationX

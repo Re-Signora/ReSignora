@@ -1,7 +1,7 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-abstract class FlyingObject {
+abstract class AbstractFlyingObject {
     # int locationX
     # int locationY
     # int speedX
@@ -11,9 +11,9 @@ abstract class FlyingObject {
     # int height
     # boolean isValid
 
-    + FlyingObject(int locationX, int locationY, int speedX, int speedY):void
+    + AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY):void
     + forward():void
-    + crash(FlyingObject flyingObject):boolean
+    + crash(AbstractFlyingObject flyingObject):boolean
     + setLocation(double locationX, double locationY):void
     + getLocationX():int
     + getLocationY():int
@@ -40,8 +40,8 @@ abstract class AbstractBullet {
 	+ getPower():int
 }
 
-FlyingObject <|-- AbstractAircraft
-FlyingObject <|-- AbstractBullet
+AbstractFlyingObject <|-- AbstractAircraft
+AbstractFlyingObject <|-- AbstractBullet
 
 AbstractAircraft <|-- HeroAircraft
 AbstractAircraft <|-- MobEnemy
@@ -85,7 +85,7 @@ abstract class AbstractProp {
     + forward():void
 	+ {abstract} handleAircrafts(List<AbstractAircraft> enemyAircrafts):void
 }
-FlyingObject <|-- AbstractProp
+AbstractFlyingObject <|-- AbstractProp
 
 class BloodProp {
     # int increaseHp
