@@ -1,5 +1,9 @@
 mainmenu "AircraftWar Configuration Menu"
 
+config DEBUG
+    bool "Debug switch"
+    default y
+
 menu "Window config"
     config M_WINDOW_WIDTH
         int "Window Width"
@@ -17,18 +21,30 @@ menu "Control config"
 
     config M_CONTROL_KEYCODE_UP
         int "Keycode: up"
-        default 87
+        default 38
 
     config M_CONTROL_KEYCODE_DOWN
         int "Keycode: down"
-        default 83
+        default 40
 
     config M_CONTROL_KEYCODE_LEFT
         int "Keycode: left"
-        default 65
+        default 37
 
     config M_CONTROL_KEYCODE_RIGHT
         int "Keycode: right"
-        default 68
+        default 39
+
+    config M_CONTROL_KEYCODE_SLOW
+        int "Keycode: slow mode"
+        default 16
+
+    config M_CONTROL_KEYCODE_BUFF
+        int "Keycode: use buff"
+        default 90
+
+    config M_CONTROL_KEYCODE_QUIT
+        int "Keycode: quit"
+        default 81
 
 endmenu

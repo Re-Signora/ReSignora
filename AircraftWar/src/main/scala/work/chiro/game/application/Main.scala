@@ -11,7 +11,7 @@ import work.chiro.game.GlobalConfigLoader.config
  */
 object Main {
   def main(args: Array[String]): Unit = {
-    System.out.println("Hello Aircraft War")
+    System.out.println("Hello Aircraft War" + (if (config.isDebug) "[DEBUG MODE]" else ""))
     // 获得屏幕的分辨率，初始化 Frame
     val screenSize = Toolkit.getDefaultToolkit.getScreenSize
     val frame = new JFrame("Aircraft War")

@@ -2,7 +2,7 @@ package work.chiro.game
 
 import java.io.FileNotFoundException
 import scala.collection.mutable
-import scala.io.Source
+import scala.io.{BufferedSource, Source}
 import scala.language.dynamics
 
 
@@ -14,7 +14,7 @@ import scala.language.dynamics
  * 3. /.config:       本地调试的时候使用的文件，保证是最新配置。<br/>
  */
 object GlobalConfigLoader {
-  val debug = false
+  val debugConfig = false
 
   // val debug = true
   // Scala 的动态类型，可以动态设置成员内容
@@ -29,7 +29,7 @@ object GlobalConfigLoader {
     def updateDynamic(key: String)(args: Any): Unit = {
       // Remove CONFIG_ header
       val keyUse: String = if (key.startsWith("CONFIG_")) key.substring("CONFIG_".length) else key
-      if (debug) println(s"Setting $keyUse = $args")
+      if (debugConfig) println(s"Setting $keyUse = $args")
       data(keyUse) = args
     }
 
@@ -66,11 +66,27 @@ object GlobalConfigLoader {
     object control extends ModuleOption("M_CONTROL") {
       def moveSpeed: Double = getValue(d("MOVE_SPEED"), 1000).toDouble / 1000
 
-      val keyUp: Int = getValue(d("KEYCODE_UP"), 87)
-      val keyDown: Int = getValue(d("KEYCODE_DOWN"), 83)
-      val keyLeft: Int = getValue(d("KEYCODE_LEFT"), 65)
-      val keyRight: Int = getValue(d("KEYCODE_RIGHT"), 68)
+      // WARNING: Keycode will not loaded from .config
+      val keyUp: Int = 38
+      val keyDown: Int = 40
+      val keyLeft: Int = 37
+      val keyRight: Int = 39
+      val keySlow: Int = 16
+      val keyBuff: Int = 90
+      val keyQuit: Int = 81
+      def updateFromData() = {
+        // keyUp = getValue(d("KEYCODE_UP"), 38)
+        // keyDown = getValue(d("KEYCODE_DOWN"), 40)
+        // keyLeft = getValue(d("KEYCODE_LEFT"), 37)
+        // keySlow = getValue(d("KEYCODE_RIGHT"), 39)
+        // keySlow = getValue(d("KEYCODE_SLOW"), 16)
+        // keyBuff = getValue(d("KEYCODE_BUFF"), 90)
+        // keyQuit = getValue(d("KEYCODE_QUIT"), 81)
+      }
     }
+
+    def isDebug: Boolean = if (data.contains("DEBUG")) data("DEBUG").asInstanceOf[Boolean] else true
+    def updateFromData() = control.updateFromData()
   }
 
   def generate: GlobalConfig = {
@@ -92,49 +108,60 @@ object GlobalConfigLoader {
     }
     println(s"config root dir: $root")
 
-    def getConfigFile = {
+    def getConfigFile: Option[BufferedSource] = {
       try {
-        Source.fromFile(f"$root/build/.config")
+        Some(Source.fromFile(f"$root/build/.config"))
       } catch {
         case _: FileNotFoundException =>
           try {
             // may in .bloop
-            Source.fromFile(f"$root/../.config")
+            Some(Source.fromFile(f"$root/../.config"))
           } catch {
-            case _: FileNotFoundException => try {
-              Source.fromFile(f"$root/.config")
-            } catch {
-              case _: FileNotFoundException => Source.fromFile(f"$root/.console.config")
+            case _: FileNotFoundException => try
+              Some(Source.fromFile(f"$root/.config"))
+            catch {
+              case _: FileNotFoundException => try {
+                Some(Source.fromFile(f"$root/.console.config"))
+              } catch {
+                case _: FileNotFoundException =>
+                  println("Warning: No config file found! The default configuration value will be used!")
+                  None
+              }
             }
           }
       }
     }
 
     // 非空、非注释行
-    val configLines = getConfigFile.getLines().filter(_.nonEmpty).filter(!_.startsWith("#"))
-    assert(configLines.nonEmpty, "No config data!")
+    val configFileOption = getConfigFile
     val c = new GlobalConfig
-    configLines.foreach(line => {
-      val parsed = line.split("=")
-      assert(parsed.length == 2, s"Config Error format: $line")
-      val key = parsed(0)
-      val valueString = parsed(1)
-      if (valueString.startsWith("\"") && valueString.endsWith("\""))
-        c.updateDynamic(key)(valueString.substring(1, valueString.length - 1))
-      //  y 表示 true，false 则未定义。
-      else if (valueString == "y") c.updateDynamic(key)(true)
-      else try {
-        // 优先转换 HEX
-        if (valueString.startsWith("0x")) {
-          c.updateDynamic(key)(Integer.parseInt(valueString.replace("0x", ""), 16))
-        } else {
-          val valueInt = valueString.toInt
-          c.updateDynamic(key)(valueInt)
+    if (configFileOption.nonEmpty) {
+      val configFile = configFileOption.get
+      val configLines = configFile.getLines().filter(_.nonEmpty).filter(!_.startsWith("#"))
+      assert(configLines.nonEmpty, "No config data!")
+      configLines.foreach(line => {
+        val parsed = line.split("=")
+        assert(parsed.length == 2, s"Config Error format: $line")
+        val key = parsed(0)
+        val valueString = parsed(1)
+        if (valueString.startsWith("\"") && valueString.endsWith("\""))
+          c.updateDynamic(key)(valueString.substring(1, valueString.length - 1))
+        //  y 表示 true，false 则未定义。
+        else if (valueString == "y") c.updateDynamic(key)(true)
+        else try {
+          // 优先转换 HEX
+          if (valueString.startsWith("0x")) {
+            c.updateDynamic(key)(Integer.parseInt(valueString.replace("0x", ""), 16))
+          } else {
+            val valueInt = valueString.toInt
+            c.updateDynamic(key)(valueInt)
+          }
+        } catch {
+          case _: NumberFormatException => c.updateDynamic(key)(valueString)
         }
-      } catch {
-        case _: NumberFormatException => c.updateDynamic(key)(valueString)
-      }
-    })
+      })
+      c.updateFromData()
+    }
     c
   }
 

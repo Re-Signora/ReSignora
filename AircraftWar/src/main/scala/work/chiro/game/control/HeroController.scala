@@ -20,12 +20,9 @@ class HeroController(game: Game, heroAircraft: HeroAircraft) {
   private val mouseAdapter = new MouseAdapter {
     override def mouseDragged(e: MouseEvent): Unit = {
       super.mouseDragged(e)
-      // val x = e.getX
-      // val y = e.getY
+      // 防止超出边界
       val x = setInRangeInt(e.getX, 0, config.window.width)
       val y = setInRangeInt(e.getY, 0, config.window.height - heroAircraft.getHeight / 2)
-      // 防止超出边界
-      // if (x < 0 || x > Main.WINDOW_WIDTH || y < 0 || y > Main.WINDOW_HEIGHT) return
       heroAircraft.setLocation(x, y)
     }
   }
@@ -33,7 +30,10 @@ class HeroController(game: Game, heroAircraft: HeroAircraft) {
   game.addMouseMotionListener(mouseAdapter)
 
   private val keyAdapter = new KeyAdapter {
-    override def keyPressed(e: KeyEvent) = pressedKeys.add(e.getKeyCode)
+    override def keyPressed(e: KeyEvent) = {
+      pressedKeys.add(e.getKeyCode)
+      // println(s"pressed: ${e.getKeyChar} ${e.getKeyCode}")
+    }
 
     override def keyReleased(e: KeyEvent) = pressedKeys.remove(e.getKeyCode)
   }
@@ -41,13 +41,17 @@ class HeroController(game: Game, heroAircraft: HeroAircraft) {
 
   def onFrame() = {
     val next = Vec2Double()
-    val scale = 8.0
+    val scaleFast = 8.0
+    val scaleSlow = 2.0
+    val scale = if (pressedKeys.contains(config.control.keySlow)) scaleSlow else scaleFast
 
     pressedKeys.foreach {
       case config.control.keyUp => next.setY(-scale * config.control.moveSpeed)
       case config.control.keyDown => next.setY(scale * config.control.moveSpeed)
       case config.control.keyLeft => next.setX(-scale * config.control.moveSpeed)
       case config.control.keyRight => next.setX(scale * config.control.moveSpeed)
+      case config.control.keyQuit => System.exit(0)
+      case _ => ()
     }
 
     val newPos = heroAircraft.getPos + next

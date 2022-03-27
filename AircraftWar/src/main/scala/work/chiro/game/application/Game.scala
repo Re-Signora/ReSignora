@@ -96,7 +96,7 @@ class Game extends JPanel {
         //每个时刻重绘界面
         repaint()
         // 游戏结束检查
-        if (heroAircraft.getHp <= 0) { // 游戏结束
+        if (!config.isDebug && heroAircraft.getHp <= 0) { // 游戏结束
           executorService.shutdown()
           gameOverFlag = true
           println("Game Over!")
