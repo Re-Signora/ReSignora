@@ -11,7 +11,7 @@ import work.chiro.game.utils.getTimeMills
  *
  * @author chiro2001
  */
-abstract class BasicObject(posInit: Position, animateContainer: AnimateContainer[Vec2Double], size: Option[Vec2Double] = None)
+abstract class AbstractObject(posInit: Position, animateContainer: AnimateContainer[Vec2Double], size: Option[Vec2Double] = None)
   extends ImageResourceReady {
   // println(s"Object created at $posInit ${getClass.getName}")
   protected var pos = posInit
@@ -61,7 +61,7 @@ abstract class BasicObject(posInit: Position, animateContainer: AnimateContainer
    * @param theObject 撞击对方
    * @return true: 我方被击中; false 我方未被击中
    */
-  def crash(theObject: BasicObject) = {
+  def crash(theObject: AbstractObject) = {
     // 缩放因子，用于控制 y轴方向区域范围
     val factor = if (this.isInstanceOf[AbstractAircraft]) 2 else 1
     val fFactor = if (theObject.isInstanceOf[AbstractAircraft]) 2 else 1

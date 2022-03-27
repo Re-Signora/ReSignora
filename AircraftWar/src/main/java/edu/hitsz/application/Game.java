@@ -2,7 +2,7 @@ package edu.hitsz.application;
 
 import edu.hitsz.aircraft.*;
 import edu.hitsz.basic.AbstractFlyingObject;
-import edu.hitsz.bullet.AbstractBullet;
+import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.prop.BloodProp;
 import edu.hitsz.prop.BombProp;
@@ -36,8 +36,8 @@ public class Game extends JPanel {
 
     private final HeroAircraft heroAircraft;
     private final List<AbstractAircraft> enemyAircrafts;
-    private final List<AbstractBullet> heroBullets;
-    private final List<AbstractBullet> enemyBullets;
+    private final List<BaseBullet> heroBullets;
+    private final List<BaseBullet> enemyBullets;
     private final List<AbstractProp> props;
 
     private int enemyMaxNumber = 5;
@@ -169,10 +169,10 @@ public class Game extends JPanel {
     }
 
     private void bulletsMoveAction() {
-        for (AbstractBullet bullet : heroBullets) {
+        for (BaseBullet bullet : heroBullets) {
             bullet.forward();
         }
-        for (AbstractBullet bullet : enemyBullets) {
+        for (BaseBullet bullet : enemyBullets) {
             bullet.forward();
         }
     }
@@ -198,7 +198,7 @@ public class Game extends JPanel {
      */
     private void crashCheckAction() {
         // 英雄子弹攻击敌机
-        for (AbstractBullet bullet : heroBullets) {
+        for (BaseBullet bullet : heroBullets) {
             if (bullet.notValid()) {
                 continue;
             }
@@ -240,7 +240,7 @@ public class Game extends JPanel {
         }
 
         // 敌机子弹攻击英雄
-        for (AbstractBullet bullet : enemyBullets) {
+        for (BaseBullet bullet : enemyBullets) {
             if (bullet.notValid()) continue;
             if (bullet.crash(heroAircraft)) {
                 heroAircraft.decreaseHp(bullet.getPower());

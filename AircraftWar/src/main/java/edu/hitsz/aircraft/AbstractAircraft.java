@@ -1,7 +1,7 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.basic.AbstractFlyingObject;
-import edu.hitsz.bullet.AbstractBullet;
+import edu.hitsz.bullet.BaseBullet;
 
 import java.util.LinkedList;
 
@@ -43,7 +43,7 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
      * @return 可射击对象需实现，返回子弹
      * 非可射击对象空实现，返回null
      */
-    public abstract LinkedList<AbstractBullet> shoot();
+    public abstract LinkedList<BaseBullet> shoot();
 
 }
 

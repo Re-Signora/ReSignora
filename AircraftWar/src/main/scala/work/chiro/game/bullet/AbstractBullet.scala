@@ -2,9 +2,8 @@ package work.chiro.game.bullet
 
 import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.animate.AnimateContainer
-import work.chiro.game.application.Main
 import work.chiro.game.basic.PositionType.Position
-import work.chiro.game.basic.{BasicObject, Vec2Double}
+import work.chiro.game.basic.{AbstractObject, Vec2Double}
 
 /**
  * 子弹类。
@@ -13,7 +12,7 @@ import work.chiro.game.basic.{BasicObject, Vec2Double}
  * @author chiro2001
  */
 abstract class AbstractBullet(posInit: Position, animateContainer: AnimateContainer[Vec2Double], power: Int)
-  extends BasicObject(posInit, animateContainer) {
+  extends AbstractObject(posInit, animateContainer) {
   override def forward() = {
     super.forward()
     // 判定 x 轴出界

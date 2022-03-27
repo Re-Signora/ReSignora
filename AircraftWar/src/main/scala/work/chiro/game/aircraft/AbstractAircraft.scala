@@ -2,7 +2,7 @@ package work.chiro.game.aircraft
 
 import work.chiro.game.animate.AnimateContainer
 import work.chiro.game.basic.PositionType.Position
-import work.chiro.game.basic.{BasicObject, Vec2Double}
+import work.chiro.game.basic.{AbstractObject, Vec2Double}
 import work.chiro.game.bullet.AbstractBullet
 
 /**
@@ -12,7 +12,7 @@ import work.chiro.game.bullet.AbstractBullet
  * @author chiro2001
  */
 abstract class AbstractAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Double], hpInit: Int)
-  extends BasicObject(posInit, animateContainer) {
+  extends AbstractObject(posInit, animateContainer) {
   // 生命值
   var hp = hpInit
   val hpMax = 300

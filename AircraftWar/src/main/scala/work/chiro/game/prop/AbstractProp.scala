@@ -5,10 +5,10 @@ import work.chiro.game.aircraft.AbstractAircraft
 import work.chiro.game.animate.AnimateContainer
 import work.chiro.game.application.Main
 import work.chiro.game.basic.PositionType.Position
-import work.chiro.game.basic.{BasicObject, Vec2Double}
+import work.chiro.game.basic.{AbstractObject, Vec2Double}
 
 abstract class AbstractProp(posInit: Position, animateContainer: AnimateContainer[Vec2Double])
-  extends BasicObject(posInit, animateContainer) {
+  extends AbstractObject(posInit, animateContainer) {
   override def forward() = {
     super.forward()
     // 判定 x 轴出界

@@ -2,7 +2,7 @@ package work.chiro.game.application
 
 import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.aircraft._
-import work.chiro.game.basic.BasicObject
+import work.chiro.game.basic.AbstractObject
 import work.chiro.game.bullet.AbstractBullet
 import work.chiro.game.control.HeroController
 import work.chiro.game.prop.{AbstractProp, BloodProp, BombProp, BulletProp}
@@ -276,7 +276,7 @@ class Game extends JPanel {
     paintScoreAndLife(g)
   }
 
-  private def paintImageWithPositionRevised(g: Graphics, objects: ListBuffer[_ <: BasicObject]): Unit = {
+  private def paintImageWithPositionRevised(g: Graphics, objects: ListBuffer[_ <: AbstractObject]): Unit = {
     objects.synchronized {
       objects.foreach(obj => {
         val image = obj.getImage
