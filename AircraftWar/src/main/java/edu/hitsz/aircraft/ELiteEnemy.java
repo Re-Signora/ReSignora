@@ -7,14 +7,17 @@ import edu.hitsz.bullet.EnemyBullet;
 import java.util.LinkedList;
 
 /**
- * 普通敌机
+ * 经营敌机
  * 不可射击
  *
  * @author hitsz
  */
-public class MobEnemy extends AbstractAircraft {
+public class ELiteEnemy extends AbstractAircraft {
 
-    public MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
+    int shootDivider = 4;
+    int shootCnt = 0;
+
+    public ELiteEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
     }
 
@@ -29,7 +32,14 @@ public class MobEnemy extends AbstractAircraft {
 
     @Override
     public LinkedList<AbstractBullet> shoot() {
-        return new LinkedList<>();
+        LinkedList<AbstractBullet> ret =  new LinkedList<>();
+        if (shootCnt >= shootDivider) {
+            ret.add(new EnemyBullet(getLocationX(), getLocationY(), 0, 10, 10));
+            shootCnt = 0;
+        } else {
+            shootCnt += 1;
+        }
+        return ret;
     }
 
 }

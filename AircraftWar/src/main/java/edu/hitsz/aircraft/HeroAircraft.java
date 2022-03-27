@@ -1,6 +1,7 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.bullet.AbstractBullet;
+import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.bullet.HeroBullet;
 
 import java.util.LinkedList;
@@ -41,8 +42,8 @@ public class HeroAircraft extends AbstractAircraft {
      * 通过射击产生子弹
      * @return 射击出的子弹List
      */
-    public List<AbstractBullet> shoot() {
-        List<AbstractBullet> res = new LinkedList<>();
+    public LinkedList<AbstractBullet> shoot() {
+        LinkedList<AbstractBullet> res = new LinkedList<>();
         int x = this.getLocationX();
         int y = this.getLocationY() + direction * 2;
         int speedX = 0;
@@ -57,4 +58,20 @@ public class HeroAircraft extends AbstractAircraft {
         return res;
     }
 
+    public void increaseShootNum() {
+        shootNum++;
+    }
+
+    static private HeroAircraft heroInstance = null;
+
+    static public HeroAircraft create(int locationX, int locationY, int speedX, int speedY, int hp) {
+        if (heroInstance == null) {
+            heroInstance = new HeroAircraft(locationX, locationY, speedX, speedY, hp);
+        }
+        return heroInstance;
+    }
+
+    static public HeroAircraft getInstance() {
+        return heroInstance;
+    }
 }

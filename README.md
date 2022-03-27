@@ -2,7 +2,7 @@
 
 ## UML
 
-见 [AicraftWar.puml](uml/AircraftWar.puml)
+见 [AicraftWar.puml](uml/AircraftWar-scala.puml)
 
 *图片不够大...*
 
