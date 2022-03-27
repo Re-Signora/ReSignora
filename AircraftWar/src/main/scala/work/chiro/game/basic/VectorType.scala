@@ -144,4 +144,6 @@ class Vec2Double(xInit: Double = 0, yInit: Double = 0) extends VecDouble(2, Seq(
 
 object Vec2Double {
   implicit def toVec2Double(vecDouble: VecDouble): Vec2Double = new Vec2Double(vecDouble.get.head, vecDouble.get(1))
+
+  def apply(xInit: Double = 0, yInit: Double = 0) = new Vec2Double(xInit, yInit)
 }

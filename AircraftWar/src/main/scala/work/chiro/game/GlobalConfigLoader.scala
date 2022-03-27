@@ -63,7 +63,13 @@ object GlobalConfigLoader {
       def height: Int = getValue(d("HEIGHT"), 768)
     }
 
-    object hero extends ModuleOption("M_HERO") {
+    object control extends ModuleOption("M_CONTROL") {
+      def moveSpeed: Double = getValue(d("MOVE_SPEED"), 1000).toDouble / 1000
+
+      val keyUp: Int = getValue(d("KEYCODE_UP"), 87)
+      val keyDown: Int = getValue(d("KEYCODE_DOWN"), 83)
+      val keyLeft: Int = getValue(d("KEYCODE_LEFT"), 65)
+      val keyRight: Int = getValue(d("KEYCODE_RIGHT"), 68)
     }
   }
 

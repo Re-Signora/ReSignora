@@ -4,6 +4,7 @@ import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.aircraft._
 import work.chiro.game.basic.BasicObject
 import work.chiro.game.bullet.AbstractBullet
+import work.chiro.game.control.HeroController
 import work.chiro.game.prop.{AbstractProp, BloodProp, BombProp, BulletProp}
 import work.chiro.game.scene.Background
 import work.chiro.game.utils.getTimeMills
@@ -30,7 +31,7 @@ class Game extends JPanel {
   // Scheduled 线程池，用于定时任务调度
   val executorService = new ScheduledThreadPoolExecutor(1)
   // 启动英雄机鼠标监听
-  new HeroController(this, heroAircraft)
+  val controller = new HeroController(this, heroAircraft)
   private var backGroundTop = 0
   private val timeInterval = 1
   // private val enemyMaxNumber = 5
@@ -68,6 +69,8 @@ class Game extends JPanel {
         frameCount.append(frameTime)
         frameCount.filterInPlace(_ >= (if (frameTime >= 1000) frameTime - 1000 else 0))
         // 周期性执行（控制频率）
+        // 键盘操作
+        controller.onFrame()
         // 英雄飞机射出子弹
         if (onHeroShootCountCycle) heroShootAction()
         // 敌机射出子弹

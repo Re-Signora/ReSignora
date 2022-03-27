@@ -9,3 +9,26 @@ menu "Window config"
         int "Window Height"
         default 768
 endmenu
+
+menu "Control config"
+    config M_CONTROL_MOVE_SPEED
+        int "Keyboard move speed"
+        default 1000
+
+    config M_CONTROL_KEYCODE_UP
+        int "Keycode: up"
+        default 87
+
+    config M_CONTROL_KEYCODE_DOWN
+        int "Keycode: down"
+        default 83
+
+    config M_CONTROL_KEYCODE_LEFT
+        int "Keycode: left"
+        default 65
+
+    config M_CONTROL_KEYCODE_RIGHT
+        int "Keycode: right"
+        default 68
+
+endmenu

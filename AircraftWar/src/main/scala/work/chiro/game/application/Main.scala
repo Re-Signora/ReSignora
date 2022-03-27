@@ -21,8 +21,9 @@ object Main {
     frame.setBounds((screenSize.getWidth.toInt - config.window.width) / 2, 0, config.window.width, config.window.height)
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
     val game = new Game
-    frame.getContentPane.add(game)
     // frame.add(game)
+    // 使用下面一行使得 JPanel 能够获得键盘焦点
+    frame.getContentPane.add(game)
     frame.setVisible(true)
     game.requestFocus()
     game.action()
