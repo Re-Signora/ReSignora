@@ -54,12 +54,12 @@ public class ImageManager {
         }
     }
 
-    public static BufferedImage get(String className){
+    public static BufferedImage get(String className) {
         return CLASSNAME_IMAGE_MAP.get(className);
     }
 
-    public static BufferedImage get(Object obj){
-        if (obj == null){
+    public static BufferedImage get(Object obj) {
+        if (obj == null) {
             return null;
         }
         return get(obj.getClass().getName());

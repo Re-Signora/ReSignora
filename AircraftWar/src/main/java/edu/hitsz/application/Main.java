@@ -5,6 +5,7 @@ import java.awt.*;
 
 /**
  * 程序入口
+ *
  * @author hitsz
  */
 public class Main {
