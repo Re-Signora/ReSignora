@@ -1,6 +1,7 @@
 package work.chiro.game.aircraft
 
-import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateVectorType}
+import work.chiro.game.GlobalConfigLoader.config
+import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateVectorType}
 import work.chiro.game.application.{ImageResource, Main}
 import work.chiro.game.basic.PositionType.Position
 import work.chiro.game.basic.Vec2Double
@@ -39,7 +40,7 @@ class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Dou
     for {i <- 0 until shootNum} yield {
       val posNew = new Position(x + (i * 2 - shootNum + 1) * 10, y)
       new HeroBullet(posNew, new AnimateContainer[Position](List(
-        new AnimateLinear(posNew, new Position(posNew.getX, 0), AnimateVectorType.PositionLike.id, getTimeMills, 300)
+        new AnimateLinearToTarget(posNew, new Position(posNew.getX, 0), AnimateVectorType.PositionLike.id, getTimeMills, 300)
       )), power)
     }
   }
@@ -61,7 +62,7 @@ object HeroAircraft extends ImageResource {
 
   def create() = {
     if (heroInstance.isEmpty) {
-      heroPositionInstance = Some(new Position(Main.WINDOW_WIDTH / 2, Main.WINDOW_HEIGHT - HeroAircraft.getImage.getHeight))
+      heroPositionInstance = Some(new Position(config.window.width / 2, config.window.height - HeroAircraft.getImage.getHeight))
       heroInstance = Some(new HeroAircraft(heroPositionInstance.get, new AnimateContainer[Position], 100))
     }
     heroInstance.get

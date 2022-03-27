@@ -1,5 +1,6 @@
 package work.chiro.game.application
 
+import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.aircraft.HeroAircraft
 import work.chiro.game.utils.setInRangeInt
 
@@ -17,8 +18,8 @@ class HeroController(game: Game, heroAircraft: HeroAircraft) {
       super.mouseDragged(e)
       // val x = e.getX
       // val y = e.getY
-      val x = setInRangeInt(e.getX, 0, Main.WINDOW_WIDTH)
-      val y = setInRangeInt(e.getY, 0, Main.WINDOW_HEIGHT - heroAircraft.getHeight / 2)
+      val x = setInRangeInt(e.getX, 0, config.window.width)
+      val y = setInRangeInt(e.getY, 0, config.window.height - heroAircraft.getHeight / 2)
       // 防止超出边界
       // if (x < 0 || x > Main.WINDOW_WIDTH || y < 0 || y > Main.WINDOW_HEIGHT) return
       heroAircraft.setLocation(x, y)

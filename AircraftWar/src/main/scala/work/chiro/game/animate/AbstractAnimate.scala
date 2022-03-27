@@ -35,7 +35,7 @@ abstract class AbstractAnimate[V <: VecDouble]
   def getSpeed(timeNow: Double): VecDouble
 }
 
-class AnimateLinear[V <: VecDouble]
+class AnimateLinearToTarget[V <: VecDouble]
 (vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double)
   extends AbstractAnimate(vecSource, vecTarget, AnimateType.Linear.id, animateVectorType, timeStart, timeSpan) {
 
@@ -55,21 +55,21 @@ class AnimateLinear[V <: VecDouble]
     else new VecDouble(getVector.getSize)
 }
 
-class AnimateNonLinear[V <: VecDouble, EV <: AnimateVectorTypeEnumeration#Value]
-(vecSource: V, vecTarget: V, animateVectorType: EV, timeStart: Double, timeSpan: Double, speedInit: V, a: V)
-  extends AbstractAnimate(vecSource, vecTarget, AnimateType.Nonlinear.id, animateVectorType.id, timeStart, timeSpan) {
+class AnimateNonLinearToTarget[V <: VecDouble]
+(vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, speedInit: V, a: V)
+  extends AbstractAnimate(vecSource, vecTarget, AnimateType.Nonlinear.id, animateVectorType, timeStart, timeSpan) {
 
   override def update(timeNow: Double) = {
     // x = x_0 + v_0 * t + 1/2 * a * t^2
     val t = timeNow - timeStart
     val done = isDone(timeNow)
     if (done) vec.set(vecTarget)
-    else vec.set(source + speedInit * t + a * t * t / 2)
+    else vec.set(source + (speedInit * t + a * t * t / 2) * delta / timeSpan)
     done
   }
 
   override def getSpeed(timeNow: Double) =
-    if (animateVectorType == AnimateVectorType.PositionLike) speedInit + a * (timeNow - timeStart)
+    if (animateVectorType == AnimateVectorType.PositionLike.id) speedInit + a * (timeNow - timeStart)
     else new VecDouble(getVector.getSize)
 }
 

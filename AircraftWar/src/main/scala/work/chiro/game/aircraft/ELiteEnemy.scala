@@ -1,6 +1,7 @@
 package work.chiro.game.aircraft
 
-import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateVectorType}
+import work.chiro.game.GlobalConfigLoader.config
+import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateNonLinearToTarget, AnimateVectorType}
 import work.chiro.game.application.{ImageResource, Main}
 import work.chiro.game.basic.PositionType.Position
 import work.chiro.game.basic.Vec2Double
@@ -23,7 +24,7 @@ class ELiteEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Doubl
   override def forward() = {
     super.forward()
     // 判定 y 轴向下飞行出界
-    if (getLocationY >= Main.WINDOW_HEIGHT) vanish()
+    if (getLocationY >= config.window.height) vanish()
   }
 
   override def shoot() = List({
@@ -31,7 +32,10 @@ class ELiteEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Doubl
     val y = getLocationY
     val posNew = new Position(x, y)
     new EnemyBullet(posNew, new AnimateContainer[Position](List(
-      new AnimateLinear(posNew, new Position(posNew.getX, Main.WINDOW_HEIGHT), AnimateVectorType.PositionLike.id, getTimeMills, 3000)
+      // new AnimateLinear(posNew, new Position(posNew.getX, Main.WINDOW_HEIGHT), AnimateVectorType.PositionLike.id, getTimeMills, 3000)
+      // new AnimateLinearToTarget(posNew, HeroAircraft.getHeroPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000)
+      new AnimateNonLinearToTarget(posNew, HeroAircraft.getHeroPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000,
+        new Position(0, 0), new Position(0.002, 0.002))
     )), power)
   })
 
@@ -47,7 +51,7 @@ object ELiteEnemy extends ImageResource {
     val positionEnemyNew = getNewFlightPosition(ELiteEnemy.getImage.getWidth)
     new ELiteEnemy(
       positionEnemyNew, new AnimateContainer[Position](List(
-        new AnimateLinear(positionEnemyNew, new Position(positionEnemyNew.getX, Main.WINDOW_HEIGHT),
+        new AnimateLinearToTarget(positionEnemyNew, new Position(positionEnemyNew.getX, config.window.height),
           AnimateVectorType.PositionLike.id, getTimeMills, 20000)
       )), 30
     )

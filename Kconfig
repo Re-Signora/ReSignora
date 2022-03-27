@@ -1,0 +1,11 @@
+mainmenu "AircraftWar Configuration Menu"
+
+menu "Window config"
+    config M_WINDOW_WIDTH
+        int "Window Width"
+        default 512
+
+    config M_WINDOW_HEIGHT
+        int "Window Height"
+        default 768
+endmenu

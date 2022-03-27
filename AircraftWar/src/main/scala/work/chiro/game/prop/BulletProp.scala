@@ -1,7 +1,8 @@
 package work.chiro.game.prop
 
+import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.aircraft.{AbstractAircraft, HeroAircraft}
-import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateVectorType}
+import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateVectorType}
 import work.chiro.game.application.{ImageResource, Main}
 import work.chiro.game.basic.PositionType.Position
 import work.chiro.game.basic.Vec2Double
@@ -27,7 +28,7 @@ object BulletProp extends ImageResource {
   def create(position: Position) = {
     new BulletProp(
       position, new AnimateContainer[Position](List(
-        new AnimateLinear(position, new Position(position.getX, Main.WINDOW_HEIGHT),
+        new AnimateLinearToTarget(position, new Position(position.getX, config.window.height),
           AnimateVectorType.PositionLike.id, getTimeMills, 20000)
       ))
     )

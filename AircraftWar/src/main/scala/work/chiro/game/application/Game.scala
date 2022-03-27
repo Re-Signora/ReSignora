@@ -1,13 +1,15 @@
 package work.chiro.game.application
 
+import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.aircraft._
-import work.chiro.game.basic.FlyingObject
+import work.chiro.game.basic.BasicObject
 import work.chiro.game.bullet.AbstractBullet
 import work.chiro.game.prop.{AbstractProp, BloodProp, BombProp, BulletProp}
 import work.chiro.game.scene.Background
 import work.chiro.game.utils.getTimeMills
 
-import java.awt.{Color, Font, Graphics}
+import java.awt.geom.AffineTransform
+import java.awt.{Color, Font, Graphics, Graphics2D}
 import java.util.concurrent.{ScheduledThreadPoolExecutor, TimeUnit}
 import javax.swing._
 import scala.collection.mutable.ListBuffer
@@ -18,7 +20,7 @@ import scala.collection.mutable.ListBuffer
  * @author chiro2001
  */
 class Game extends JPanel {
-  println(s"Window(${Main.WINDOW_WIDTH}x${Main.WINDOW_HEIGHT})")
+  println(s"Window(${config.window.width}x${config.window.height})")
   val heroAircraft = HeroAircraft.create()
   val heroPosition = HeroAircraft.getHeroPositionInstance
   val enemyAircrafts = new ListBuffer[AbstractAircraft]
@@ -249,10 +251,10 @@ class Game extends JPanel {
   override def paint(g: Graphics) = {
     super.paint(g)
     // 绘制背景,图片滚动
-    g.drawImage(Background.getImage, 0, backGroundTop - Main.WINDOW_HEIGHT, null)
+    g.drawImage(Background.getImage, 0, backGroundTop - config.window.height, null)
     g.drawImage(Background.getImage, 0, backGroundTop, null)
     backGroundTop += 1
-    if (backGroundTop == Main.WINDOW_HEIGHT) backGroundTop = 0
+    if (backGroundTop == config.window.height) backGroundTop = 0
     // 先绘制子弹，后绘制飞机
     // 这样子弹显示在飞机的下层
     paintImageWithPositionRevised(g, enemyBullets)
@@ -269,12 +271,16 @@ class Game extends JPanel {
     paintScoreAndLife(g)
   }
 
-  private def paintImageWithPositionRevised(g: Graphics, objects: ListBuffer[_ <: FlyingObject]): Unit = {
+  private def paintImageWithPositionRevised(g: Graphics, objects: ListBuffer[_ <: BasicObject]): Unit = {
     objects.synchronized {
       objects.foreach(obj => {
         val image = obj.getImage
         // println(f"paint ${(obj.getLocationX - image.getWidth / 2).toInt}, ${(obj.getLocationY - image.getHeight / 2).toInt} ${obj.getClass.getName}")
-        g.drawImage(image, (obj.getLocationX - image.getWidth / 2).toInt, (obj.getLocationY - image.getHeight / 2).toInt, null)
+        val af = AffineTransform.getTranslateInstance(obj.getLocationX - image.getWidth / 2, obj.getLocationY - image.getHeight / 2)
+        af.rotate(math.toRadians(50), image.getWidth / 2, image.getHeight / 2)
+        // g.drawImage(image, (obj.getLocationX - image.getWidth / 2).toInt, (obj.getLocationY - image.getHeight / 2).toInt, null)
+        val graphics2d = g.asInstanceOf[Graphics2D]
+        graphics2d.drawImage(image, af, null)
       })
     }
   }

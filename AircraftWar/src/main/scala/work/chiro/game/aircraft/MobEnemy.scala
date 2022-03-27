@@ -1,6 +1,7 @@
 package work.chiro.game.aircraft
 
-import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateVectorType}
+import work.chiro.game.GlobalConfigLoader.config
+import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateVectorType}
 import work.chiro.game.application.{ImageResource, Main}
 import work.chiro.game.basic.PositionType.Position
 import work.chiro.game.basic.Vec2Double
@@ -19,7 +20,7 @@ class MobEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Double]
   override def forward() = {
     super.forward()
     // 判定 y 轴向下飞行出界
-    if (getLocationY >= Main.WINDOW_HEIGHT) vanish()
+    if (getLocationY >= config.window.height) vanish()
   }
 
   override def shoot() = List()
@@ -35,7 +36,7 @@ object MobEnemy extends ImageResource {
     val positionEnemyNew = getNewFlightPosition(MobEnemy.getImage.getWidth)
     new MobEnemy(
       positionEnemyNew, new AnimateContainer[Position](List(
-        new AnimateLinear(positionEnemyNew, new Position(positionEnemyNew.getX, Main.WINDOW_HEIGHT),
+        new AnimateLinearToTarget(positionEnemyNew, new Position(positionEnemyNew.getX, config.window.height),
           AnimateVectorType.PositionLike.id, getTimeMills, 2000)
       )), 30
     )
