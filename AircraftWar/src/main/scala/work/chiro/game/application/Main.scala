@@ -10,11 +10,16 @@ import work.chiro.game.GlobalConfigLoader.config
  * @author chiro2001
  */
 object Main {
+  private var frameInstance: Option[JFrame] = None
+
+  def getFrameInstance = frameInstance
+
   def main(args: Array[String]): Unit = {
     System.out.println("Hello Aircraft War" + (if (config.isDebug) "[DEBUG MODE]" else ""))
     // 获得屏幕的分辨率，初始化 Frame
     val screenSize = Toolkit.getDefaultToolkit.getScreenSize
-    val frame = new JFrame("Aircraft War")
+    frameInstance = Some(new JFrame("Aircraft War"))
+    val frame = frameInstance.get
     frame.setSize(config.window.width, config.window.height)
     frame.setResizable(false)
     //设置窗口的大小和位置,居中放置

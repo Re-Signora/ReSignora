@@ -80,8 +80,10 @@ class Game extends JPanel {
         // 产生精英敌机
         if (onELiteCreateCountCycle) enemyAircrafts.synchronized(enemyAircrafts.append(ELiteEnemy.create()))
         if (onFpsCountCycle) {
-          if (frameTime < 1000) println(f"[ ${frameTime.toFloat / 1000}%.3fs ]")
-          else println(f"[ ${frameTime.toFloat / 1000}%.3fs ] ${frameCount.size} fps")
+          val fpsInfo = if (frameTime < 1000) f"[ ${frameTime.toFloat / 1000}%.3fs ]"
+          else f"[ ${frameTime.toFloat / 1000}%.3fs ] ${frameCount.size} fps"
+          if (config.running.showFps) println(fpsInfo)
+          Main.getFrameInstance.get.setTitle(f"Aircraft War $fpsInfo")
         }
         // 子弹移动
         bulletsMoveAction()

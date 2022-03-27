@@ -63,6 +63,10 @@ object GlobalConfigLoader {
       def height: Int = getValue(d("HEIGHT"), 768)
     }
 
+    object running extends ModuleOption("M_RUNNING") {
+      def showFps: Boolean = getValue(d("SHOW_FPS"), false)
+    }
+
     object control extends ModuleOption("M_CONTROL") {
       def moveSpeed: Double = getValue(d("MOVE_SPEED"), 1000).toDouble / 1000
 

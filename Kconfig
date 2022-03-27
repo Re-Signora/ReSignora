@@ -48,3 +48,9 @@ menu "Control config"
         default 81
 
 endmenu
+
+menu "Running config"
+    config M_RUNNING_PRINT_FPS
+        bool "Print fps info in console"
+        default n
+endmenu
