@@ -32,7 +32,7 @@ public class Game extends JPanel {
     /**
      * 时间间隔(ms)，控制刷新频率
      */
-    private int timeInterval = 40;
+    private int timeInterval = 20;
 
     private final HeroAircraft heroAircraft;
     private final List<AbstractAircraft> enemyAircrafts;
@@ -103,6 +103,9 @@ public class Game extends JPanel {
                                 30).create());
                     }
                 }
+                if (score > 0 && BossEnemyFactory.getInstance() == null) {
+                    new BossEnemyFactory(0, 10, 2, 0, 300).create();
+                }
                 // 飞机射出子弹
                 shootAction();
             }
@@ -164,6 +167,7 @@ public class Game extends JPanel {
         // 敌机射击
         for (AbstractAircraft enemy : enemyAircrafts)
             enemyBullets.addAll(enemy.shoot());
+        if (BossEnemyFactory.getInstance() != null) enemyBullets.addAll(BossEnemyFactory.getInstance().shoot());
     }
 
     private void bulletsMoveAction() {
@@ -179,6 +183,7 @@ public class Game extends JPanel {
         for (AbstractAircraft enemyAircraft : enemyAircrafts) {
             enemyAircraft.forward();
         }
+        if (BossEnemyFactory.getInstance() != null) BossEnemyFactory.getInstance().forward();
     }
 
     private void propsMoveAction() {
@@ -199,6 +204,17 @@ public class Game extends JPanel {
         for (BaseBullet bullet : heroBullets) {
             if (bullet.notValid()) {
                 continue;
+            }
+            BossEnemy boss = BossEnemyFactory.getInstance();
+            if (boss != null) {
+                if (bullet.crash(boss)) {
+                    boss.decreaseHp(bullet.getPower());
+                    bullet.vanish();
+                    if (boss.notValid()) {
+                        score += 1000;
+                    }
+                    continue;
+                }
             }
             for (AbstractAircraft enemyAircraft : enemyAircrafts) {
                 if (enemyAircraft.notValid()) {
@@ -304,6 +320,11 @@ public class Game extends JPanel {
 
         g.drawImage(ImageManager.HERO_IMAGE, heroAircraft.getLocationX() - ImageManager.HERO_IMAGE.getWidth() / 2,
                 heroAircraft.getLocationY() - ImageManager.HERO_IMAGE.getHeight() / 2, null);
+        BossEnemy boss = BossEnemyFactory.getInstance();
+        if (boss != null) {
+            g.drawImage(ImageManager.BOSS_ENEMY_IMAGE, boss.getLocationX() - ImageManager.BOSS_ENEMY_IMAGE.getWidth() / 2,
+                    boss.getLocationY() - ImageManager.BOSS_ENEMY_IMAGE.getHeight() / 2, null);
+        }
 
         //绘制得分和生命值
         paintScoreAndLife(g);

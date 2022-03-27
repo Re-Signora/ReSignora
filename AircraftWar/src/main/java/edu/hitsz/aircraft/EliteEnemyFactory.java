@@ -2,6 +2,7 @@ package edu.hitsz.aircraft;
 
 public class EliteEnemyFactory implements AbstractAircraftFactory {
     int locationX, locationY, speedX, speedY, hp;
+
     public EliteEnemyFactory(int locationX, int locationY, int speedX, int speedY, int hp) {
         this.locationX = locationX;
         this.locationY = locationY;
@@ -9,8 +10,9 @@ public class EliteEnemyFactory implements AbstractAircraftFactory {
         this.speedY = speedY;
         this.hp = hp;
     }
+
     @Override
     public AbstractAircraft create() {
-        return new MobEnemy(locationX, locationY, speedX, speedY, hp);
+        return new EliteEnemy(locationX, locationY, speedX, speedY, hp);
     }
 }

@@ -19,7 +19,9 @@ public class HeroAircraftFactory implements AbstractAircraftFactory {
     @Override
     public HeroAircraft create() {
         if (heroInstance == null) {
-            heroInstance = new HeroAircraft(locationX, locationY, speedX, speedY, hp);
+            synchronized (HeroAircraftFactory.class) {
+                heroInstance = new HeroAircraft(locationX, locationY, speedX, speedY, hp);
+            }
         }
         return heroInstance;
     }
