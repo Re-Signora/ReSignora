@@ -59,17 +59,4 @@ public class HeroAircraft extends AbstractAircraft {
     public void increaseShootNum() {
         shootNum++;
     }
-
-    static private HeroAircraft heroInstance = null;
-
-    static public HeroAircraft create(int locationX, int locationY, int speedX, int speedY, int hp) {
-        if (heroInstance == null) {
-            heroInstance = new HeroAircraft(locationX, locationY, speedX, speedY, hp);
-        }
-        return heroInstance;
-    }
-
-    static public HeroAircraft getInstance() {
-        return heroInstance;
-    }
 }

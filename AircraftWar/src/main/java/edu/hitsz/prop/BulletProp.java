@@ -2,6 +2,7 @@ package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.aircraft.HeroAircraftFactory;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +15,6 @@ public class BulletProp extends AbstractProp {
     @Override
     public void handleAircrafts(List<AbstractAircraft> enemyAircrafts) {
         System.out.println("FireSupply active!");
-        HeroAircraft.getInstance().increaseShootNum();
+        HeroAircraftFactory.getInstance().increaseShootNum();
     }
 }

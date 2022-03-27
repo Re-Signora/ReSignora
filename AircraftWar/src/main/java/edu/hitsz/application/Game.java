@@ -54,10 +54,10 @@ public class Game extends JPanel {
 
 
     public Game() {
-        heroAircraft = HeroAircraft.create(
-                Main.WINDOW_WIDTH / 2,
+        HeroAircraftFactory heroAircraftFactory = new HeroAircraftFactory(Main.WINDOW_WIDTH / 2,
                 Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight(),
                 0, 0, 100);
+        heroAircraft = heroAircraftFactory.create();
 
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<>();
@@ -88,21 +88,19 @@ public class Game extends JPanel {
                 // 新敌机产生
                 if (enemyAircrafts.size() < enemyMaxNumber) {
                     if (Math.random() < 0.3) {
-                        enemyAircrafts.add(new EliteEnemy(
-                                (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())) * 1,
-                                (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2) * 1,
+                        enemyAircrafts.add(new EliteEnemyFactory(
+                                (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
+                                (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2),
                                 0,
                                 2,
-                                60
-                        ));
+                                60).create());
                     } else {
-                        enemyAircrafts.add(new MobEnemy(
-                                (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())) * 1,
-                                (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2) * 1,
+                        enemyAircrafts.add(new MobEnemyFactory(
+                                (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
+                                (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2),
                                 0,
                                 10,
-                                30
-                        ));
+                                30).create());
                     }
                 }
                 // 飞机射出子弹
@@ -137,9 +135,9 @@ public class Game extends JPanel {
 
         };
 
-        /**
-         * 以固定延迟时间进行执行
-         * 本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
+        /*
+          以固定延迟时间进行执行
+          本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
          */
         executorService.scheduleWithFixedDelay(task, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
 
@@ -283,7 +281,7 @@ public class Game extends JPanel {
      * 重写paint方法
      * 通过重复调用paint方法，实现游戏动画
      *
-     * @param g
+     * @param g 绘图
      */
     @Override
     public void paint(Graphics g) {

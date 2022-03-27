@@ -7,8 +7,7 @@ import edu.hitsz.bullet.EnemyBullet;
 import java.util.LinkedList;
 
 /**
- * 经营敌机
- * 不可射击
+ * 精英敌机，可以射击
  *
  * @author hitsz
  */

@@ -2,6 +2,7 @@ package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.aircraft.HeroAircraftFactory;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,6 @@ public class BloodProp extends AbstractProp {
 
     @Override
     public void handleAircrafts(List<AbstractAircraft> enemyAircrafts) {
-        HeroAircraft.getInstance().decreaseHp(-increaseHp);
+        HeroAircraftFactory.getInstance().decreaseHp(-increaseHp);
     }
 }
