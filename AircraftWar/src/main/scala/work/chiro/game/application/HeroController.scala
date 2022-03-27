@@ -4,7 +4,7 @@ import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.aircraft.HeroAircraft
 import work.chiro.game.utils.setInRangeInt
 
-import java.awt.event.{MouseAdapter, MouseEvent}
+import java.awt.event.{KeyAdapter, KeyEvent, MouseAdapter, MouseEvent}
 
 /**
  * 英雄机控制类
@@ -13,7 +13,7 @@ import java.awt.event.{MouseAdapter, MouseEvent}
  * @author chiro2001
  */
 class HeroController(game: Game, heroAircraft: HeroAircraft) {
-  private val mouseAdapter = new MouseAdapter() {
+  private val mouseAdapter = new MouseAdapter {
     override def mouseDragged(e: MouseEvent): Unit = {
       super.mouseDragged(e)
       // val x = e.getX
@@ -27,4 +27,12 @@ class HeroController(game: Game, heroAircraft: HeroAircraft) {
   }
   game.addMouseListener(mouseAdapter)
   game.addMouseMotionListener(mouseAdapter)
+
+  private val keyAdapter = new KeyAdapter {
+    override def keyPressed(e: KeyEvent) = {
+      println(s"press done key ${e.getExtendedKeyCode}")
+    }
+  }
+  game.addKeyListener(keyAdapter)
+  // game.requestFocus()
 }
