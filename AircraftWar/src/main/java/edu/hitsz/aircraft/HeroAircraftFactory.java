@@ -1,7 +1,7 @@
 package edu.hitsz.aircraft;
 
 public class HeroAircraftFactory implements AbstractAircraftFactory {
-    int locationX, locationY, speedX, speedY, hp;
+    protected int locationX, locationY, speedX, speedY, hp;
     public HeroAircraftFactory(int locationX, int locationY, int speedX, int speedY, int hp) {
         this.locationX = locationX;
         this.locationY = locationY;

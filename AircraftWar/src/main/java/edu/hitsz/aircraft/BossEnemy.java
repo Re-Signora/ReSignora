@@ -20,16 +20,6 @@ public class BossEnemy extends AbstractAircraft {
         super(locationX, locationY, speedX, speedY, hp);
     }
 
-    // @Override
-    // public void forward() {
-    //     super.forward();
-    //     // 判定 y 轴向下飞行出界
-    //     if (locationY >= Main.WINDOW_HEIGHT) {
-    //         vanish();
-    //     }
-    // }
-
-
     @Override
     public void vanish() {
         super.vanish();

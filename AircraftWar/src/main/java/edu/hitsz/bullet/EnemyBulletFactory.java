@@ -1,7 +1,7 @@
 package edu.hitsz.bullet;
 
 public class EnemyBulletFactory implements BaseBulletFactory {
-    int locationX, locationY, speedX, speedY, power;
+    protected int locationX, locationY, speedX, speedY, power;
 
     public EnemyBulletFactory(int locationX, int locationY, int speedX, int speedY, int power) {
         System.out.println("EnemyBulletFactory created!");

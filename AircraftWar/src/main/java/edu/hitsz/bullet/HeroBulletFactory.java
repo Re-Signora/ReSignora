@@ -1,7 +1,7 @@
 package edu.hitsz.bullet;
 
 public class HeroBulletFactory implements BaseBulletFactory {
-    int locationX, locationY, speedX, speedY, power;
+    protected int locationX, locationY, speedX, speedY, power;
 
     public HeroBulletFactory(int locationX, int locationY, int speedX, int speedY, int power) {
         this.locationX = locationX;
