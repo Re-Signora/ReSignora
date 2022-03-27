@@ -280,12 +280,14 @@ class Game extends JPanel {
     objects.synchronized {
       objects.foreach(obj => {
         val image = obj.getImage
-        // println(f"paint ${(obj.getLocationX - image.getWidth / 2).toInt}, ${(obj.getLocationY - image.getHeight / 2).toInt} ${obj.getClass.getName}")
-        val af = AffineTransform.getTranslateInstance(obj.getLocationX - image.getWidth / 2, obj.getLocationY - image.getHeight / 2)
-        af.rotate(math.toRadians(50), image.getWidth / 2, image.getHeight / 2)
-        // g.drawImage(image, (obj.getLocationX - image.getWidth / 2).toInt, (obj.getLocationY - image.getHeight / 2).toInt, null)
-        val graphics2d = g.asInstanceOf[Graphics2D]
-        graphics2d.drawImage(image, af, null)
+        if (obj.rotation.getX == 0) {
+          g.drawImage(image, (obj.getLocationX - image.getWidth / 2).toInt, (obj.getLocationY - image.getHeight / 2).toInt, null)
+        } else {
+          val af = AffineTransform.getTranslateInstance(obj.getLocationX - image.getWidth / 2, obj.getLocationY - image.getHeight / 2)
+          af.rotate(obj.rotation.getX, image.getWidth / 2, image.getHeight / 2)
+          val graphics2d = g.asInstanceOf[Graphics2D]
+          graphics2d.drawImage(image, af, null)
+        }
       })
     }
   }
