@@ -28,13 +28,20 @@ class Game extends JPanel {
   val heroBullets = new ListBuffer[AbstractBullet]
   val enemyBullets = new ListBuffer[AbstractBullet]
   val props = new ListBuffer[AbstractProp]
+  val allObjectLists = Array(
+    enemyAircrafts,
+    heroBullets,
+    enemyBullets,
+    props
+  )
+  val allAircrafts = Array(enemyAircrafts, List(heroAircraft))
+  val allBullets = Array(heroBullets, enemyBullets)
   // Scheduled 线程池，用于定时任务调度
   val executorService = new ScheduledThreadPoolExecutor(1)
-  // 启动英雄机鼠标监听
+  // 启动英雄机控制监听
   val controller = new HeroController(this, heroAircraft)
   private var backGroundTop = 0
   private val timeInterval = 1
-  // private val enemyMaxNumber = 5
   private var gameOverFlag = false
   private var score = 0
 
@@ -74,7 +81,7 @@ class Game extends JPanel {
         // 英雄飞机射出子弹
         if (onHeroShootCountCycle) heroShootAction()
         // 敌机射出子弹
-        if (onEliteShootCountCycle) eLiteShootAction()
+        if (onEliteShootCountCycle) eliteShootAction()
         // 新敌机产生
         if (onMobCreateCountCycle) enemyAircrafts.synchronized(enemyAircrafts.append(MobEnemy.create()))
         // 产生精英敌机
@@ -85,12 +92,8 @@ class Game extends JPanel {
           if (config.running.showFps) println(fpsInfo)
           Main.getFrameInstance.get.setTitle(f"Aircraft War $fpsInfo")
         }
-        // 子弹移动
-        bulletsMoveAction()
-        // 飞机移动
-        aircraftsMoveAction()
-        // 道具移动
-        props.foreach(_.forward())
+        // 所有物体移动
+        allObjectLists.foreach(_.foreach(_.forward()))
         // 撞击检测
         crashCheckAction()
         // 后处理
@@ -164,18 +167,9 @@ class Game extends JPanel {
     heroBullets.synchronized(heroBullets.addAll(heroAircraft.shoot()))
   }
 
-  private def eLiteShootAction() = {
+  private def eliteShootAction() = {
     // 精英敌机射击
     enemyAircrafts.foreach(enemy => enemyBullets.synchronized(enemyBullets.addAll(enemy.shoot())))
-  }
-
-  private def bulletsMoveAction() = {
-    heroBullets.foreach(_.forward())
-    enemyBullets.foreach(_.forward())
-  }
-
-  private def aircraftsMoveAction() = {
-    enemyAircrafts.foreach(_.forward())
   }
 
   /**
@@ -243,10 +237,7 @@ class Game extends JPanel {
    * 无效的原因可能是撞击或者飞出边界
    */
   private def postProcessAction() = {
-    enemyBullets.synchronized(enemyBullets.filterInPlace(_.isValid))
-    heroBullets.synchronized(heroBullets.filterInPlace(_.isValid))
-    enemyAircrafts.synchronized(enemyAircrafts.filterInPlace(_.isValid))
-    props.synchronized(props.filterInPlace(_.isValid))
+    allObjectLists.foreach(objList => objList.synchronized(objList.filterInPlace(_.isValid)))
   }
 
   /**
