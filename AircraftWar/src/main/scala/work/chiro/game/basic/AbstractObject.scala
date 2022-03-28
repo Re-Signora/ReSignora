@@ -19,7 +19,6 @@ abstract class AbstractObject(posInit: Position,
                               sizeInit: Option[Size] = None,
                               rotationInit: Option[Scale] = None)
   extends ImageResourceReady {
-  // println(s"Object created at $posInit ${getClass.getName}")
   protected var pos = posInit
 
   def getPos = pos
@@ -111,11 +110,7 @@ abstract class AbstractObject(posInit: Position,
    * isValid = false.
    * notValid() => true.
    */
-  // def vanish() = valid = false
-  def vanish() = {
-    // println(s"${getClass.getName} vanish!")
-    valid = false
-  }
+  def vanish() = valid = false
 }
 
 trait AbstractObjectFactory {

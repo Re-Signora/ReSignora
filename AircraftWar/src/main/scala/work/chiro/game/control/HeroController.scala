@@ -46,7 +46,7 @@ class HeroController(frame: JFrame, game: Game, heroAircraft: HeroAircraft) {
   private val keyAdapter = new KeyAdapter {
     override def keyPressed(e: KeyEvent) = {
       pressedKeys.add(e.getKeyCode)
-      // println(s"pressed: ${e.getKeyChar} ${e.getKeyCode}")
+      // logger.info(s"pressed: ${e.getKeyChar} ${e.getKeyCode}")
     }
 
     override def keyReleased(e: KeyEvent) = pressedKeys.remove(e.getKeyCode)
@@ -59,7 +59,7 @@ class HeroController(frame: JFrame, game: Game, heroAircraft: HeroAircraft) {
     val frameTime = getTimeMills - lastFrameTime
     val next = Vec2Double()
     val scaleFast = 0.26
-    val scaleSlow = 0.16
+    val scaleSlow = 0.1
     val scale = if (pressedKeys.contains(config.control.keySlow)) scaleSlow else scaleFast
 
     pressedKeys.foreach {

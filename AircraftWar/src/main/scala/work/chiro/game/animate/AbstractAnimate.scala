@@ -2,6 +2,7 @@ package work.chiro.game.animate
 
 import work.chiro.game.basic.PositionType.Scale
 import work.chiro.game.basic.VecDouble
+import work.chiro.game.logger
 
 class AnimateTypeEnumeration extends Enumeration
 
@@ -38,7 +39,7 @@ abstract class AbstractAnimate[V <: VecDouble]
 
   def isDone(timeNow: Double) = {
     val done = timeNow > timeStart + timeSpan
-    // if (done) println(f"[$timeNow%.3f] ${getClass.getName} done!!")
+    // if (done) logger.info(f"done!!")
     done
   }
 
@@ -49,13 +50,13 @@ class AnimateLinearToTarget[V <: VecDouble]
 (vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, willStop: Boolean = true)
   extends AbstractAnimate(vecSource, vecTarget, AnimateType.Linear.id, animateVectorType, timeStart, timeSpan) {
 
-  // println(s"Animate Linear $vecSource => $vecTarget")
+  // logger.info(s"Animate Linear $vecSource => $vecTarget")
   override def isDone(timeNow: Double) = if (willStop) super.isDone(timeNow) else false
 
   override def update(timeNow: Double) = {
     val done = isDone(timeNow)
     val deltaNew = getDelta * ((timeNow - timeStart) / timeSpan)
-    // println(f"delta = $delta deltaNew = $deltaNew")
+    // logger.info(f"delta = $delta deltaNew = $deltaNew")
     if (done) getVector.set(vecTarget)
     else getVector.set(getSource + deltaNew)
     done
@@ -79,17 +80,9 @@ class AnimateNonLinearToTargetVec[V <: VecDouble]
   val unit = getDelta / getDelta.scale
 
   override def update(timeNow: Double) = {
-    // // x = x_0 + 1/2 * a * t^2
-    // val t = timeNow - timeStart
-    // val done = isDone(timeNow)
-    // // val done = true
-    // if (done) println(f"[$timeNow%.3f] ${getClass.getName} done!!")
-    // if (done) getVector.set(vecTarget)
-    // else getVector.set(getSource + (a * t * t / 2) * getDelta * t / timeSpan)
-    // done
     val t = timeNow - timeStart
     val done = isDone(timeNow)
-    if (done) println(f"[$timeNow%.3f] ${getClass.getName} done!!")
+    if (done) logger.info(f"done!!")
     if (done) getVector.set(vecTarget)
     else {
       if (t < timeNonLinear) getVector.set(getSource + unit * a * (t * t / 2))

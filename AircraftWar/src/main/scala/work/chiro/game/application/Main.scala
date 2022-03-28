@@ -3,6 +3,7 @@ package work.chiro.game.application
 import java.awt.Toolkit
 import javax.swing.{JFrame, WindowConstants}
 import work.chiro.game.GlobalConfigLoader.config
+import work.chiro.game.logger
 
 /**
  * 程序入口
@@ -15,7 +16,7 @@ object Main {
   def getFrameInstance = frameInstance
 
   def main(args: Array[String]): Unit = {
-    System.out.println("Hello Aircraft War" + (if (config.isDebug) " [DEBUG MODE]" else ""))
+    logger.info("Hello Aircraft War" + (if (config.isDebug) " [DEBUG MODE]" else ""))
     // 获得屏幕的分辨率，初始化 Frame
     val screenSize = Toolkit.getDefaultToolkit.getScreenSize
     frameInstance = Some(new JFrame("Aircraft War"))

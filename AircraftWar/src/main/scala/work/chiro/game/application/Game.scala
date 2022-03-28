@@ -5,6 +5,7 @@ import work.chiro.game.aircraft._
 import work.chiro.game.basic.AbstractObject
 import work.chiro.game.bullet.AbstractBullet
 import work.chiro.game.control.HeroController
+import work.chiro.game.logger
 import work.chiro.game.prop.{AbstractProp, BloodProp, BombProp, BulletProp}
 import work.chiro.game.scene.Background
 import work.chiro.game.utils.getTimeMills
@@ -21,7 +22,7 @@ import scala.collection.mutable.ListBuffer
  * @author chiro2001
  */
 class Game(frame: JFrame) extends JPanel {
-  println(s"Window(${config.window.width}x${config.window.height})")
+  logger.info(s"Window(${config.window.width}x${config.window.height})")
   val heroAircraft = HeroAircraft.create()
   val heroPosition = HeroAircraft.getPositionInstance
   val enemyAircrafts = new ListBuffer[AbstractAircraft]
@@ -51,13 +52,13 @@ class Game(frame: JFrame) extends JPanel {
   private val heroShootDuration = 6
   private var heroShootCycleTime: Double = 0
 
-  private val mobCreateDuration = 600
+  private val mobCreateDuration = 6000
   private var mobCreateCycleTime: Double = 0
 
-  private val eLiteCreateDuration = 600
+  private val eLiteCreateDuration = 3000
   private var eLiteCreateCycleTime: Double = 0
 
-  private val eLiteShootDuration = 600
+  private val eLiteShootDuration = 200
   private var eLiteShootCycleTime: Double = 0
 
   private var fpsCycleTime: Double = 0
@@ -89,7 +90,7 @@ class Game(frame: JFrame) extends JPanel {
         if (onFpsCountCycle) {
           val fpsInfo = if (frameTime < 1000) f"[ ${frameTime.toFloat / 1000}%.3fs ]"
           else f"[ ${frameTime.toFloat / 1000}%.3fs ] ${frameCount.size} fps"
-          if (config.running.showFps) println(fpsInfo)
+          if (config.running.showFps) logger.info(fpsInfo)
           Main.getFrameInstance.get.setTitle(f"Aircraft War $fpsInfo")
         }
         // 所有物体移动
@@ -104,7 +105,7 @@ class Game(frame: JFrame) extends JPanel {
         if (!config.isDebug && heroAircraft.getHp <= 0) { // 游戏结束
           executorService.shutdown()
           gameOverFlag = true
-          println("Game Over!")
+          logger.info("Game Over!")
         }
         lastFrameTime = frameTime
       }
@@ -159,7 +160,7 @@ class Game(frame: JFrame) extends JPanel {
     fpsCycleTime += frameTimeDelta
     // 跨越到新的周期
     if (fpsCycleTime >= 1000) {
-      println(f"bullet count: ${allBullets.map(_.size).sum}")
+      logger.info(f"bullet count: ${allBullets.map(_.size).sum}")
       fpsCycleTime %= 1000
       true
     } else false

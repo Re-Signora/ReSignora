@@ -6,6 +6,7 @@ import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, Animate
 import work.chiro.game.application.{ImageResourceFactory, Main}
 import work.chiro.game.basic.PositionType.Position
 import work.chiro.game.basic.Vec2Double
+import work.chiro.game.logger
 import work.chiro.game.utils.getTimeMills
 
 class BulletProp(posInit: Position, animateContainer: AnimateContainer[Vec2Double])
@@ -13,7 +14,7 @@ class BulletProp(posInit: Position, animateContainer: AnimateContainer[Vec2Doubl
   val bloodIncrease = 100
 
   override def handleAircrafts(enemyAircrafts: List[AbstractAircraft]) = {
-    println("FireSupply active!")
+    logger.info("FireSupply active!")
     HeroAircraft.getInstance.increasePower()
   }
 

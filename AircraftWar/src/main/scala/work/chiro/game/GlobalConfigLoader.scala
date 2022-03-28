@@ -29,7 +29,7 @@ object GlobalConfigLoader {
     def updateDynamic(key: String)(args: Any): Unit = {
       // Remove CONFIG_ header
       val keyUse: String = if (key.startsWith("CONFIG_")) key.substring("CONFIG_".length) else key
-      if (debugConfig) println(s"Setting $keyUse = $args")
+      if (debugConfig) logger.info(s"Setting $keyUse = $args")
       data(keyUse) = args
     }
 
@@ -43,7 +43,7 @@ object GlobalConfigLoader {
             use()
           } catch {
             case _: Throwable =>
-              println("Warning: get value failed...")
+              logger.warn("Warning: get value failed...")
               default
           }
         } else
@@ -111,7 +111,6 @@ object GlobalConfigLoader {
     // val resourceURI = ClassLoader.getSystemResource(".")
     val resourceURI = this.getClass.getClassLoader.getResource("/")
     // val resourceURI = new URL("file://./AircraftWar/target/.")
-    // println(s"# resourceURI.toString = ${resourceURI}")
     val root = try {
       val resourcePath = resourceURI.getFile
       // /out/... 是 Mill 指定的编译目录，读取到的 resourcePath 在这下面；
@@ -121,10 +120,9 @@ object GlobalConfigLoader {
       rootSplit(0)
     } catch {
       case _: NullPointerException =>
-        // println(s"resourceURI = $resourceURI")
         "."
     }
-    println(s"config root dir: $root")
+    logger.info(s"config root dir: $root")
 
     def getConfigFile: Option[BufferedSource] = {
       try {
@@ -142,7 +140,7 @@ object GlobalConfigLoader {
                 Some(Source.fromFile(f"$root/.console.config"))
               } catch {
                 case _: FileNotFoundException =>
-                  println("Warning: No config file found! The default configuration value will be used!")
+                  logger.warn("No config file found! The default configuration value will be used!")
                   None
               }
             }

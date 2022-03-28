@@ -15,7 +15,8 @@ lazy val AirCraft = (project in file("AircraftWar"))
     },
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.2.11",
-      "org.scalactic" %% "scalactic" % "3.2.11"
+      "org.scalactic" %% "scalactic" % "3.2.11",
+      "com.lihaoyi" %% "sourcecode" % "0.2.8"
     ),
     scalacOptions ++= Seq(
       "-language:reflectiveCalls",
