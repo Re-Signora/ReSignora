@@ -4,7 +4,7 @@ import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateVectorType}
 import work.chiro.game.application.{ImageResourceFactory, Main}
 import work.chiro.game.basic.PositionType.Position
-import work.chiro.game.basic.{AbstractObjectFactory, Vec2Double}
+import work.chiro.game.basic.{AbstractObjectFactory, Vec1Int, Vec2Double}
 import work.chiro.game.bullet.HeroBullet
 import work.chiro.game.utils.getTimeMills
 
@@ -16,7 +16,7 @@ import work.chiro.game.utils.getTimeMills
  * @param hpInit           初始血量
  */
 class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Double], hpInit: Int)
-  extends AbstractAircraft(posInit, animateContainer, hpInit) {
+  extends AbstractAircraft(posInit, animateContainer, hpInit, dInit = Some(config.hero.box)) {
   // 攻击方式
   private var shootNum = 1 //子弹一次发射数量
   private val power = 30 //子弹伤害
@@ -50,6 +50,9 @@ class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Dou
 }
 
 object HeroAircraft extends ImageResourceFactory with AbstractObjectFactory {
+  object HeroBox extends ImageResourceFactory {
+    override def getImageCachedPath = "images/box_hero.png"
+  }
   override def getImageCachedPath = "images/hero.png"
 
   var heroInstance: Option[HeroAircraft] = None

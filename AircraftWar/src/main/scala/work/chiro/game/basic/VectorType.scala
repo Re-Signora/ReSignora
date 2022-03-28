@@ -110,6 +110,19 @@ class Vec1Double(xInit: Double = 0) extends VecDouble(1, Seq(xInit)) {
   def setX(value: Double) = content(0) = value
 }
 
+class Vec1Int(xInit: Int = 0) extends VecInt(1, Seq(xInit)) {
+  def getX: Int = content.head
+
+  def setX(value: Int) = content(0) = value
+}
+
+object Vec1Int {
+  implicit def toVec1Int(value: Int): Vec1Int = new Vec1Int(value)
+
+  def apply(xInit: Int = 0) = new Vec1Int(xInit)
+}
+
+
 class Vec2Double(xInit: Double = 0, yInit: Double = 0) extends VecDouble(2, Seq(xInit, yInit)) {
   def getX: Double = content.head
 

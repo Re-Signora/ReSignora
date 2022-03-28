@@ -4,4 +4,5 @@ object PositionType {
   type Position = Vec2Double
   type Size = Vec2Int
   type Scale = Vec1Double
+  type ScaleInt = Vec1Int
 }

@@ -227,7 +227,7 @@ class Game extends JPanel {
     })
     // 我方获得道具
     props.foreach(prop => if (prop.isValid) {
-      if (prop.crash(heroAircraft)) {
+      if (prop.crash(heroAircraft, useImageBox = true)) {
         // 道具生效
         prop.handleAircrafts(enemyAircrafts.toList)
         prop.vanish()
@@ -262,14 +262,22 @@ class Game extends JPanel {
     if (backGroundTop == config.window.height) backGroundTop = 0
     // 先绘制子弹，后绘制飞机
     // 这样子弹显示在飞机的下层
-    paintImageWithPositionRevised(g, enemyBullets)
     paintImageWithPositionRevised(g, heroBullets)
     paintImageWithPositionRevised(g, enemyAircrafts)
-    paintImageWithPositionRevised(g, props)
     g.drawImage(
       HeroAircraft.getImage,
       (heroAircraft.getLocationX - HeroAircraft.getImage.getWidth / 2).toInt,
       (heroAircraft.getLocationY - HeroAircraft.getImage.getHeight / 2).toInt,
+      null
+    )
+    paintImageWithPositionRevised(g, enemyBullets)
+    paintImageWithPositionRevised(g, props)
+    g.drawImage(
+      HeroAircraft.HeroBox.getImage,
+      (heroAircraft.getLocationX - config.hero.box / 2).toInt,
+      (heroAircraft.getLocationY - config.hero.box / 2).toInt,
+      config.hero.box,
+      config.hero.box,
       null
     )
     //绘制得分和生命值

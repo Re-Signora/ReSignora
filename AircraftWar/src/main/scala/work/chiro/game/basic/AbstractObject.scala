@@ -39,8 +39,8 @@ abstract class AbstractObject(posInit: Position,
       assert(vec.getSize == 2)
       // new Scale(math.atan(vec.get(1) / (if (vec.get.head != 0.0) vec.get.head else 1e-5)))
       val r = -math.atan(vec.get.head / (if (vec.get(1) != 0.0) vec.get(1) else 1e-5))
-      if (vec.get(1) > -1)
-      // println(s"${getClass.getName} r = $r, vec = $vec")
+      // if (vec.get(1) > -1)
+      //   println(s"${getClass.getName} r = $r, vec = $vec")
       new Scale(r)
     }
   }
@@ -74,14 +74,14 @@ abstract class AbstractObject(posInit: Position,
    * @param theObject 撞击对方
    * @return true: 我方被击中; false 我方未被击中
    */
-  def crash(theObject: AbstractObject) = {
+  def crash(theObject: AbstractObject, useImageBox: Boolean = false) = {
     // 缩放因子，用于控制 y轴方向区域范围
     val factor = if (this.isInstanceOf[AbstractAircraft]) 2 else 1
     val fFactor = if (theObject.isInstanceOf[AbstractAircraft]) 2 else 1
     val x = theObject.getLocationX
     val y = theObject.getLocationY
-    val fWidth = theObject.getWidth
-    val fHeight = theObject.getHeight
+    val fWidth = if (useImageBox) theObject.getImageWidth else theObject.getWidth
+    val fHeight = if (useImageBox) theObject.getImageHeight else theObject.getHeight
     x + (fWidth + getWidth) / 2 > getLocationX &&
       x - (fWidth + getWidth) / 2 < getLocationX &&
       y + (fHeight / fFactor + getHeight / factor) / 2 > getLocationY &&
@@ -107,6 +107,10 @@ abstract class AbstractObject(posInit: Position,
     if (size.getY == -1) size.setY(getImage.getHeight)
     size.getY
   }
+
+  def getImageWidth = getImage.getWidth
+
+  def getImageHeight = getImage.getHeight
 
   def isValid = this.valid
 

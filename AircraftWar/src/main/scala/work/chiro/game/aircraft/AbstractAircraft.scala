@@ -1,7 +1,7 @@
 package work.chiro.game.aircraft
 
 import work.chiro.game.animate.AnimateContainer
-import work.chiro.game.basic.PositionType.Position
+import work.chiro.game.basic.PositionType.{Position, Scale, ScaleInt, Size}
 import work.chiro.game.basic.{AbstractObject, Vec2Double}
 import work.chiro.game.bullet.AbstractBullet
 
@@ -11,8 +11,13 @@ import work.chiro.game.bullet.AbstractBullet
  *
  * @author chiro2001
  */
-abstract class AbstractAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Double], hpInit: Int)
-  extends AbstractObject(posInit, animateContainer) {
+abstract class AbstractAircraft(
+                                 posInit: Position,
+                                 animateContainer: AnimateContainer[Vec2Double],
+                                 hpInit: Int,
+                                 dInit: Option[ScaleInt] = None)
+  extends AbstractObject(posInit, animateContainer,
+    sizeInit = if (dInit.nonEmpty) Some(new Size(dInit.get.getX, dInit.get.getX)) else None) {
   // 生命值
   var hp = hpInit
   val hpMax = 300
@@ -39,4 +44,6 @@ abstract class AbstractAircraft(posInit: Position, animateContainer: AnimateCont
    * 非可射击对象空实现，返回空 Seq
    */
   def shoot(): Seq[AbstractBullet]
+
+  def hasReShape = dInit.nonEmpty
 }
