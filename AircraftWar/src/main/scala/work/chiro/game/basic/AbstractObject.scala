@@ -32,7 +32,18 @@ abstract class AbstractObject(posInit: Position,
   val size = if (sizeInit.nonEmpty) sizeInit.get else new Size(-1, -1)
 
   // 旋转角度（弧度制）
-  val rotation = if (rotationInit.nonEmpty) rotationInit.get else new Scale
+  val rotation = if (rotationInit.nonEmpty) rotationInit.get else {
+    val vec = animateContainer.getDelta
+    if (vec.getSize == 0) new Scale
+    else {
+      assert(vec.getSize == 2)
+      // new Scale(math.atan(vec.get(1) / (if (vec.get.head != 0.0) vec.get.head else 1e-5)))
+      val r = -math.atan(vec.get.head / (if (vec.get(1) != 0.0) vec.get(1) else 1e-5))
+      if (vec.get(1) > -1)
+      // println(s"${getClass.getName} r = $r, vec = $vec")
+      new Scale(r)
+    }
+  }
 
   /**
    * 有效（生存）标记，

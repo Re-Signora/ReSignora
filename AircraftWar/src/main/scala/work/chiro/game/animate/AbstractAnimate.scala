@@ -22,11 +22,16 @@ abstract class AbstractAnimate[V <: VecDouble]
 
   def getVector: V = vec
 
-  val vec = vecSource
-  val source = vecSource.copy
-  val target = vecTarget
-  val delta = target - source
-  // println(s"typeOf T = ${animateType.getClass.getName}")
+  private val vec = vecSource
+  private val source = vecSource.copy
+  private val target = vecTarget
+  private val delta = target - source
+
+  def getSource = source
+
+  def getTarget = target
+
+  def getDelta = delta
 
   def update(timeNow: Double): Boolean
 
@@ -43,15 +48,15 @@ class AnimateLinearToTarget[V <: VecDouble]
 
   override def update(timeNow: Double) = {
     val done = isDone(timeNow)
-    val deltaNew = delta * ((timeNow - timeStart) / timeSpan)
+    val deltaNew = getDelta * ((timeNow - timeStart) / timeSpan)
     // println(f"delta = $delta deltaNew = $deltaNew")
-    if (done) vec.set(vecTarget)
-    else vec.set(source + deltaNew)
+    if (done) getVector.set(vecTarget)
+    else getVector.set(getSource + deltaNew)
     done
   }
 
   override def getSpeed(timeNow: Double) =
-    if (animateVectorType == AnimateVectorType.PositionLike.id) delta / timeSpan
+    if (animateVectorType == AnimateVectorType.PositionLike.id) getDelta / timeSpan
     else new VecDouble(getVector.getSize)
 }
 
@@ -63,8 +68,8 @@ class AnimateNonLinearToTarget[V <: VecDouble]
     // x = x_0 + v_0 * t + 1/2 * a * t^2
     val t = timeNow - timeStart
     val done = isDone(timeNow)
-    if (done) vec.set(vecTarget)
-    else vec.set(source + (speedInit * t + a * t * t / 2) * delta / timeSpan)
+    if (done) getVector.set(vecTarget)
+    else getVector.set(getSource + (speedInit * t + a * t * t / 2) * getDelta / timeSpan)
     done
   }
 
@@ -80,8 +85,19 @@ class AnimateContainer[V <: VecDouble]
   def updateAll(timeNow: Double) = animateSeq.map(_.update(timeNow))
 
   def getSpeed(timeNow: Double): VecDouble = {
-    val positionLikeAnimates = animateSeq.filter(_.getAnimateVectorType == AnimateVectorType.PositionLike.id)
+    if (animateSeq.isEmpty) new VecDouble(0)
+    else {
+      val positionLikeAnimates = animateSeq.filter(_.getAnimateVectorType == AnimateVectorType.PositionLike.id)
       positionLikeAnimates.map(_.getSpeed(timeNow)).reduce(_ + _)
+    }
+  }
+
+  def getDelta: VecDouble = {
+    if (animateSeq.isEmpty) new VecDouble(0)
+    else {
+      val positionLikeAnimates = animateSeq.filter(_.getAnimateVectorType == AnimateVectorType.PositionLike.id)
+      positionLikeAnimates.map(_.getDelta).reduce(_ + _)
+    }
   }
 }
 

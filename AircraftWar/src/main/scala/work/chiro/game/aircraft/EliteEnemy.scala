@@ -28,9 +28,7 @@ class EliteEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Doubl
   }
 
   override def shoot() = List({
-    val x = getLocationX
-    val y = getLocationY
-    val posNew = new Position(x, y)
+    val posNew = new Position(getLocationX, getLocationY)
     new EnemyBullet(posNew, new AnimateContainer[Position](List(
       // new AnimateLinear(posNew, new Position(posNew.getX, Main.WINDOW_HEIGHT), AnimateVectorType.PositionLike.id, getTimeMills, 3000)
       // new AnimateLinearToTarget(posNew, HeroAircraft.getHeroPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000)
