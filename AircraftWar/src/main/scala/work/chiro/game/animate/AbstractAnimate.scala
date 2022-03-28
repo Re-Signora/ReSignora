@@ -1,5 +1,6 @@
 package work.chiro.game.animate
 
+import work.chiro.game.basic.PositionType.Scale
 import work.chiro.game.basic.VecDouble
 
 class AnimateTypeEnumeration extends Enumeration
@@ -97,6 +98,15 @@ class AnimateContainer[V <: VecDouble]
     else {
       val positionLikeAnimates = animateSeq.filter(_.getAnimateVectorType == AnimateVectorType.PositionLike.id)
       positionLikeAnimates.map(_.getDelta).reduce(_ + _)
+    }
+  }
+
+  def getRotation: Scale = {
+    if (getDelta.getSize == 0) new Scale
+    else {
+      assert(getDelta.getSize == 2)
+      val r = -math.atan(getDelta.get.head / (if (getDelta.get(1) != 0.0) getDelta.get(1) else 1e-5))
+      new Scale(r)
     }
   }
 }

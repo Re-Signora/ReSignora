@@ -4,7 +4,7 @@ import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.aircraft.HeroAircraft
 import work.chiro.game.application.Game
 import work.chiro.game.basic.Vec2Double
-import work.chiro.game.utils.setInRangeInt
+import work.chiro.game.utils.{getTimeMills, setInRangeInt}
 
 import java.awt.event.{KeyAdapter, KeyEvent, MouseAdapter, MouseEvent}
 import scala.collection.mutable
@@ -39,17 +39,20 @@ class HeroController(game: Game, heroAircraft: HeroAircraft) {
   }
   game.addKeyListener(keyAdapter)
 
+  var lastFrameTime = getTimeMills
+
   def onFrame() = {
+    val frameTime = getTimeMills - lastFrameTime
     val next = Vec2Double()
-    val scaleFast = 8.0
-    val scaleSlow = 2.0
+    val scaleFast = 0.26
+    val scaleSlow = 0.16
     val scale = if (pressedKeys.contains(config.control.keySlow)) scaleSlow else scaleFast
 
     pressedKeys.foreach {
-      case config.control.keyUp => next.setY(-scale * config.control.moveSpeed)
-      case config.control.keyDown => next.setY(scale * config.control.moveSpeed)
-      case config.control.keyLeft => next.setX(-scale * config.control.moveSpeed)
-      case config.control.keyRight => next.setX(scale * config.control.moveSpeed)
+      case config.control.keyUp => next.setY(-scale * config.control.moveSpeed * frameTime)
+      case config.control.keyDown => next.setY(scale * config.control.moveSpeed * frameTime)
+      case config.control.keyLeft => next.setX(-scale * config.control.moveSpeed * frameTime)
+      case config.control.keyRight => next.setX(scale * config.control.moveSpeed * frameTime)
       case config.control.keyQuit => System.exit(0)
       case _ => ()
     }
@@ -59,5 +62,6 @@ class HeroController(game: Game, heroAircraft: HeroAircraft) {
       setInRangeInt(newPos.getX.toInt, 0, config.window.width),
       setInRangeInt(newPos.getY.toInt, 0, config.window.height - heroAircraft.getHeight / 2)
     )
+    lastFrameTime = getTimeMills
   }
 }

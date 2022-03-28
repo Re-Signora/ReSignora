@@ -31,19 +31,11 @@ abstract class AbstractObject(posInit: Position,
   // 尺寸 -1 表示未设置，等待加载图片后依据图片大小自动设置
   val size = if (sizeInit.nonEmpty) sizeInit.get else new Size(-1, -1)
 
+  def updateRotation(rotationNew: Option[Scale] = None) =
+    if (rotationNew.nonEmpty) rotationNew.get else animateContainer.getRotation
+
   // 旋转角度（弧度制）
-  val rotation = if (rotationInit.nonEmpty) rotationInit.get else {
-    val vec = animateContainer.getDelta
-    if (vec.getSize == 0) new Scale
-    else {
-      assert(vec.getSize == 2)
-      // new Scale(math.atan(vec.get(1) / (if (vec.get.head != 0.0) vec.get.head else 1e-5)))
-      val r = -math.atan(vec.get.head / (if (vec.get(1) != 0.0) vec.get(1) else 1e-5))
-      // if (vec.get(1) > -1)
-      //   println(s"${getClass.getName} r = $r, vec = $vec")
-      new Scale(r)
-    }
-  }
+  val rotation = updateRotation(rotationInit)
 
   /**
    * 有效（生存）标记，
