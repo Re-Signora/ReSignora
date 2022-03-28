@@ -55,11 +55,11 @@ class Game(frame: JFrame) extends JPanel {
   private val mobCreateDuration = 6000
   private var mobCreateCycleTime: Double = 0
 
-  private val eLiteCreateDuration = 3000
-  private var eLiteCreateCycleTime: Double = 0
+  private val eliteCreateDuration = 3000
+  private var eliteCreateCycleTime: Double = 0
 
-  private val eLiteShootDuration = 200
-  private var eLiteShootCycleTime: Double = 0
+  private val eliteShootDuration = 200
+  private var eliteShootCycleTime: Double = 0
 
   private var fpsCycleTime: Double = 0
   private val frameCount = new ListBuffer[Double]
@@ -130,10 +130,10 @@ class Game(frame: JFrame) extends JPanel {
   }
 
   private def onEliteShootCountCycle = {
-    eLiteShootCycleTime += frameTimeDelta
+    eliteShootCycleTime += frameTimeDelta
     // 跨越到新的周期
-    if (eLiteShootCycleTime >= eLiteShootDuration) {
-      eLiteShootCycleTime %= eLiteShootDuration
+    if (eliteShootCycleTime >= eliteShootDuration) {
+      eliteShootCycleTime %= eliteShootDuration
       true
     } else false
   }
@@ -148,10 +148,10 @@ class Game(frame: JFrame) extends JPanel {
   }
 
   private def onEliteCreateCountCycle = {
-    eLiteCreateCycleTime += frameTimeDelta
+    eliteCreateCycleTime += frameTimeDelta
     // 跨越到新的周期
-    if (eLiteCreateCycleTime >= eLiteCreateDuration) {
-      eLiteCreateCycleTime %= eLiteCreateDuration
+    if (eliteCreateCycleTime >= eliteCreateDuration) {
+      eliteCreateCycleTime %= eliteCreateDuration
       true
     } else false
   }
