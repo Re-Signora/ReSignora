@@ -2,9 +2,9 @@ package work.chiro.game.aircraft
 
 import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateVectorType}
-import work.chiro.game.application.{ImageResourceFactory, Main}
+import work.chiro.game.application.ImageResourceFactory
 import work.chiro.game.basic.PositionType.Position
-import work.chiro.game.basic.{AbstractObjectFactory, Vec1Int, Vec2Double}
+import work.chiro.game.basic.{AbstractObjectFactory, Vec2Double}
 import work.chiro.game.bullet.HeroBullet
 import work.chiro.game.utils.getTimeMills
 
@@ -18,17 +18,24 @@ import work.chiro.game.utils.getTimeMills
 class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Double], hpInit: Int)
   extends AbstractAircraft(posInit, animateContainer, hpInit, dInit = Some(config.hero.box)) {
   // 攻击方式
-  private var shootNum = 1 //子弹一次发射数量
-  private val power = 30 //子弹伤害
-  // private val direction = -1 //子弹射击方向 (向上发射：1，向下发射：-1)
+  //子弹一次发射数量
+  private var shootNum = 1
+  //子弹伤害级别
+  private var powerStep = 0
 
-  override def forward() = {
-    // 英雄机由鼠标控制，不通过forward函数移动
-  }
+  // 英雄机由鼠标控制，不通过forward函数移动
+  override def forward() = {}
 
   def setShootNum(num: Int) = shootNum = num
 
   def getShootNum = shootNum
+
+  def increasePower() = {
+    if (getShootNum < 3) setShootNum(getShootNum + 1)
+    else powerStep = math.min(powerStep + 1, config.hero.powerSteps.length - 1)
+  }
+
+  def reachMaxPower = powerStep == config.hero.powerSteps.length - 1
 
   /**
    * 通过射击产生子弹
@@ -42,7 +49,7 @@ class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Dou
       val posNew = new Position(x + (i * 2 - shootNum + 1) * 10, y)
       new HeroBullet(posNew, new AnimateContainer[Position](List(
         new AnimateLinearToTarget(posNew, new Position(posNew.getX, 0), AnimateVectorType.PositionLike.id, getTimeMills, 300)
-      )), power)
+      )), config.hero.powerSteps(powerStep))
     }
   }
 

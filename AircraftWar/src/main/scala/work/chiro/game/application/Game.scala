@@ -20,7 +20,7 @@ import scala.collection.mutable.ListBuffer
  *
  * @author chiro2001
  */
-class Game extends JPanel {
+class Game(frame: JFrame) extends JPanel {
   println(s"Window(${config.window.width}x${config.window.height})")
   val heroAircraft = HeroAircraft.create()
   val heroPosition = HeroAircraft.getPositionInstance
@@ -39,7 +39,7 @@ class Game extends JPanel {
   // Scheduled 线程池，用于定时任务调度
   val executorService = new ScheduledThreadPoolExecutor(1)
   // 启动英雄机控制监听
-  val controller = new HeroController(this, heroAircraft)
+  val controller = new HeroController(frame, this, heroAircraft)
   private var backGroundTop = 0
   private val timeInterval = 1
   private var gameOverFlag = false
@@ -95,7 +95,7 @@ class Game extends JPanel {
         // 所有物体移动
         allObjectLists.foreach(_.foreach(_.forward()))
         // 撞击检测
-        crashCheckAction()
+        // crashCheckAction()
         // 后处理
         postProcessAction()
         //每个时刻重绘界面
@@ -115,6 +115,8 @@ class Game extends JPanel {
      * 本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
      */
     executorService.scheduleWithFixedDelay(task, timeInterval, timeInterval, TimeUnit.MILLISECONDS)
+    // 不管上次执行是否完成也执行
+    // executorService.scheduleAtFixedRate(task, timeInterval, timeInterval, TimeUnit.MILLISECONDS)
   }
 
   private def onHeroShootCountCycle = {
@@ -157,6 +159,7 @@ class Game extends JPanel {
     fpsCycleTime += frameTimeDelta
     // 跨越到新的周期
     if (fpsCycleTime >= 1000) {
+      println(f"bullet count: ${allBullets.map(_.size).sum}")
       fpsCycleTime %= 1000
       true
     } else false
@@ -164,7 +167,8 @@ class Game extends JPanel {
 
   private def heroShootAction() = {
     // 英雄射击
-    heroBullets.synchronized(heroBullets.addAll(heroAircraft.shoot()))
+    if (controller.pressed(config.control.keyShoot))
+      heroBullets.synchronized(heroBullets.addAll(heroAircraft.shoot()))
   }
 
   private def eliteShootAction() = {

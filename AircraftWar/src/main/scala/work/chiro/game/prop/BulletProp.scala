@@ -14,7 +14,7 @@ class BulletProp(posInit: Position, animateContainer: AnimateContainer[Vec2Doubl
 
   override def handleAircrafts(enemyAircrafts: List[AbstractAircraft]) = {
     println("FireSupply active!")
-    HeroAircraft.getInstance.setShootNum(HeroAircraft.getInstance.getShootNum + 1)
+    HeroAircraft.getInstance.increasePower()
   }
 
   override def create(position: Position) = BulletProp.create(position)

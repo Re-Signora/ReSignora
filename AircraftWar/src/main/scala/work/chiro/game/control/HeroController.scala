@@ -7,6 +7,7 @@ import work.chiro.game.basic.Vec2Double
 import work.chiro.game.utils.{getTimeMills, setInRangeInt}
 
 import java.awt.event.{KeyAdapter, KeyEvent, MouseAdapter, MouseEvent}
+import javax.swing.JFrame
 import scala.collection.mutable
 
 /**
@@ -15,8 +16,16 @@ import scala.collection.mutable
  *
  * @author chiro2001
  */
-class HeroController(game: Game, heroAircraft: HeroAircraft) {
+class HeroController(frame: JFrame, game: Game, heroAircraft: HeroAircraft) {
+  // 使得窗口和 JPanel 能够获得键盘输入焦点
+  frame.getContentPane.add(game)
+  frame.setVisible(true)
+  game.requestFocus()
+
   private val pressedKeys = mutable.Set[Int]()
+
+  def pressed(keyCode: Int): Boolean = pressedKeys.contains(keyCode)
+
   private val mouseAdapter = new MouseAdapter {
     override def mouseDragged(e: MouseEvent): Unit = {
       super.mouseDragged(e)
@@ -24,6 +33,11 @@ class HeroController(game: Game, heroAircraft: HeroAircraft) {
       val x = setInRangeInt(e.getX, 0, config.window.width)
       val y = setInRangeInt(e.getY, 0, config.window.height - heroAircraft.getHeight / 2)
       heroAircraft.setLocation(x, y)
+    }
+
+    override def mousePressed(e: MouseEvent) = {
+      super.mousePressed(e)
+      game.requestFocus()
     }
   }
   game.addMouseListener(mouseAdapter)

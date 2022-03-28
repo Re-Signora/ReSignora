@@ -41,6 +41,10 @@ menu "Control config"
 
     config M_CONTROL_KEYCODE_BUFF
         int "Keycode: use buff"
+        default 88
+
+    config M_CONTROL_KEYCODE_SHOOT
+        int "Keycode: shoot"
         default 90
 
     config M_CONTROL_KEYCODE_QUIT
@@ -53,4 +57,14 @@ menu "Running config"
     config M_RUNNING_PRINT_FPS
         bool "Print fps info in console"
         default n
+endmenu
+
+menu "Hero config"
+    config M_HERO_BOX
+       int "Hero judging box size"
+       default 12
+
+    config M_HERO_POWER_STEPS
+        string "Set bullet power steps"
+        default "5,15,30,60"
 endmenu

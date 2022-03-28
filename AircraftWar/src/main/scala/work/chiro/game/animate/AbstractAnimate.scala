@@ -36,16 +36,21 @@ abstract class AbstractAnimate[V <: VecDouble]
 
   def update(timeNow: Double): Boolean
 
-  def isDone(timeNow: Double) = timeNow > timeStart + timeSpan
+  def isDone(timeNow: Double) = {
+    val done = timeNow > timeStart + timeSpan
+    // if (done) println(f"[$timeNow%.3f] ${getClass.getName} done!!")
+    done
+  }
 
   def getSpeed(timeNow: Double): VecDouble
 }
 
 class AnimateLinearToTarget[V <: VecDouble]
-(vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double)
+(vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, willStop: Boolean = true)
   extends AbstractAnimate(vecSource, vecTarget, AnimateType.Linear.id, animateVectorType, timeStart, timeSpan) {
 
   // println(s"Animate Linear $vecSource => $vecTarget")
+  override def isDone(timeNow: Double) = if (willStop) super.isDone(timeNow) else false
 
   override def update(timeNow: Double) = {
     val done = isDone(timeNow)
@@ -61,56 +66,60 @@ class AnimateLinearToTarget[V <: VecDouble]
     else new VecDouble(getVector.getSize)
 }
 
-class AnimateNonLinearToTarget[V <: VecDouble]
-(vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, speedInit: V, a: V)
+class AnimateNonLinearToTargetVec[V <: VecDouble]
+(vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, speedMax: Double, a: Double, softStop: Boolean = true, willStop: Boolean = true)
   extends AbstractAnimate(vecSource, vecTarget, AnimateType.Nonlinear.id, animateVectorType, timeStart, timeSpan) {
 
+  override def isDone(timeNow: Double) = if (willStop) super.isDone(timeNow) else false
+
+  // val timeNonLinear = VecDouble.min(speedMax / a, ((getDelta * (if (softStop) 1 else 2)) / a).sqrt)
+  val timeNonLinear = if (a == 0) 0 else speedMax / a
+  // fixme: 如果达不到最高速度，timeLinear 应该为 0
+  val timeLinear = timeNonLinear * -(if (softStop) 1 else 2) + timeSpan
+  val unit = getDelta / getDelta.scale
+
   override def update(timeNow: Double) = {
-    // x = x_0 + v_0 * t + 1/2 * a * t^2
+    // // x = x_0 + 1/2 * a * t^2
+    // val t = timeNow - timeStart
+    // val done = isDone(timeNow)
+    // // val done = true
+    // if (done) println(f"[$timeNow%.3f] ${getClass.getName} done!!")
+    // if (done) getVector.set(vecTarget)
+    // else getVector.set(getSource + (a * t * t / 2) * getDelta * t / timeSpan)
+    // done
     val t = timeNow - timeStart
     val done = isDone(timeNow)
+    if (done) println(f"[$timeNow%.3f] ${getClass.getName} done!!")
     if (done) getVector.set(vecTarget)
-    else getVector.set(getSource + (speedInit * t + a * t * t / 2) * getDelta / timeSpan)
+    else {
+      if (t < timeNonLinear) getVector.set(getSource + unit * a * (t * t / 2))
+      else if (t < timeNonLinear + timeLinear) {
+        getVector.set(getSource + unit * a * (timeNonLinear * timeNonLinear / 2) +
+          unit * speedMax * (t - timeNonLinear))
+      } else {
+        if (softStop) {
+          getVector.set(getSource + unit * a * (timeNonLinear * timeNonLinear / 2) +
+            unit * speedMax * timeNonLinear +
+            unit * a * (timeNonLinear * timeNonLinear / 2))
+        }
+      }
+    }
     done
   }
 
-  override def getSpeed(timeNow: Double) =
-    if (animateVectorType == AnimateVectorType.PositionLike.id) speedInit + a * (timeNow - timeStart)
+  override def getSpeed(timeNow: Double) = {
+    val t = timeNow - timeStart
+    if (animateVectorType == AnimateVectorType.PositionLike.id && !isDone(timeNow))
+      unit * (
+        if (t < timeNonLinear) t * a
+        else if (t < timeNonLinear + timeLinear) speedMax
+        else if (softStop) (timeNonLinear * 2 + timeLinear - t) * a
+        else speedMax
+        )
     else new VecDouble(getVector.getSize)
-}
-
-class AnimateContainer[V <: VecDouble]
-(animateSeq: List[AbstractAnimate[V]] = List()) {
-  def getAnimateSeq = animateSeq
-
-  def updateAll(timeNow: Double) = animateSeq.map(_.update(timeNow))
-
-  def getSpeed(timeNow: Double): VecDouble = {
-    if (animateSeq.isEmpty) new VecDouble(0)
-    else {
-      val positionLikeAnimates = animateSeq.filter(_.getAnimateVectorType == AnimateVectorType.PositionLike.id)
-      positionLikeAnimates.map(_.getSpeed(timeNow)).reduce(_ + _)
-    }
-  }
-
-  def getDelta: VecDouble = {
-    if (animateSeq.isEmpty) new VecDouble(0)
-    else {
-      val positionLikeAnimates = animateSeq.filter(_.getAnimateVectorType == AnimateVectorType.PositionLike.id)
-      positionLikeAnimates.map(_.getDelta).reduce(_ + _)
-    }
-  }
-
-  def getRotation: Scale = {
-    if (getDelta.getSize == 0) new Scale
-    else {
-      assert(getDelta.getSize == 2)
-      val r = -math.atan(getDelta.get.head / (if (getDelta.get(1) != 0.0) getDelta.get(1) else 1e-5))
-      new Scale(r)
-    }
   }
 }
 
-// object AnimateTestType extends App {
-//   val animate = new AbstractAnimate(new Vec2Double, new Vec2Double, AnimateType.Linear)
-// }
+// class AnimateNonLinearToTargetScale[V <: VecDouble]
+// (vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, speedMax: Double, a: Double)
+//   extends AnimateNonLinearToTargetVec(vecSource, vecTarget, animateVectorType, timeStart, timeSpan, VecDouble.toDirection(vecSource, vecTarget, speedMax), VecDouble.toDirection(vecSource, vecTarget, a))

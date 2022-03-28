@@ -69,6 +69,12 @@ object GlobalConfigLoader {
 
     object hero extends ModuleOption("M_HERO") {
       def box: Int = getValue(d("BOX"), 12)
+
+      def powerSteps: Array[Int] = getValue(
+        () => data(getFullOptionName("POWER_STEPS"))
+          .asInstanceOf[String].split(",").map(s => Integer.parseInt(s)),
+        Array[Int](5, 15, 30, 60)
+      )
     }
 
     object control extends ModuleOption("M_CONTROL") {
@@ -80,20 +86,24 @@ object GlobalConfigLoader {
       val keyLeft: Int = 37
       val keyRight: Int = 39
       val keySlow: Int = 16
-      val keyBuff: Int = 90
+      val keyBuff: Int = 88
+      val keyShoot: Int = 90
       val keyQuit: Int = 81
+
       def updateFromData() = {
         // keyUp = getValue(d("KEYCODE_UP"), 38)
         // keyDown = getValue(d("KEYCODE_DOWN"), 40)
         // keyLeft = getValue(d("KEYCODE_LEFT"), 37)
         // keySlow = getValue(d("KEYCODE_RIGHT"), 39)
         // keySlow = getValue(d("KEYCODE_SLOW"), 16)
-        // keyBuff = getValue(d("KEYCODE_BUFF"), 90)
+        // keyBuff = getValue(d("KEYCODE_BUFF"), 88)
+        // keyShoot = getValue(d("KEYCODE_SHOOT"), 90)
         // keyQuit = getValue(d("KEYCODE_QUIT"), 81)
       }
     }
 
     def isDebug: Boolean = if (data.contains("DEBUG")) data("DEBUG").asInstanceOf[Boolean] else true
+
     def updateFromData() = control.updateFromData()
   }
 

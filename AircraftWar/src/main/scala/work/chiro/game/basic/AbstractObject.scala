@@ -48,7 +48,7 @@ abstract class AbstractObject(posInit: Position,
    * 若飞行对象触碰到横向边界，横向速度反向
    */
   def forward(): Unit = {
-    animateContainer.updateAll(getTimeMills)
+    if (animateContainer.updateAll(getTimeMills)) vanish()
   }
 
   /**

@@ -25,12 +25,13 @@ object Main {
     //设置窗口的大小和位置,居中放置
     frame.setBounds((screenSize.getWidth.toInt - config.window.width) / 2, 0, config.window.width, config.window.height)
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
-    val game = new Game
+    // val game = new Game(frame)
     // frame.add(game)
     // 使用下面一行使得 JPanel 能够获得键盘焦点
-    frame.getContentPane.add(game)
-    frame.setVisible(true)
-    game.requestFocus()
-    game.action()
+    // frame.getContentPane.add(game)
+    // frame.setVisible(true)
+    // game.requestFocus()
+    // game.action()
+    new Game(frame).action()
   }
 }
