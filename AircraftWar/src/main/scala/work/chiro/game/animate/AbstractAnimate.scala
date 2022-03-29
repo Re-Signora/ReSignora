@@ -71,18 +71,27 @@ class AnimateNonLinearToTargetVec[V <: VecDouble]
 (vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, speedMax: Double, a: Double, softStop: Boolean = true, willStop: Boolean = true)
   extends AbstractAnimate(vecSource, vecTarget, AnimateType.Nonlinear.id, animateVectorType, timeStart, timeSpan) {
 
-  override def isDone(timeNow: Double) = if (willStop) super.isDone(timeNow) else false
+  override def isDone(timeNow: Double) =
+    if (willStop)
+      // super.isDone(timeNow) ||
+        timeNow > timeStart + timeNonLinear * (if (softStop) 2 else 1) + timeLinear
+    else false
 
   // val timeNonLinear = VecDouble.min(speedMax / a, ((getDelta * (if (softStop) 1 else 2)) / a).sqrt)
   val timeNonLinear = if (a == 0) 0 else speedMax / a
   // fixme: 如果达不到最高速度，timeLinear 应该为 0
-  val timeLinear = timeNonLinear * -(if (softStop) 1 else 2) + timeSpan
+  def getX1 = a * timeNonLinear * timeNonLinear / 2
+  val timeLinear = timeNonLinear * -(if (softStop) 2 else 1) + getDelta.scale / speedMax
+  def getX2 = timeLinear * speedMax
   val unit = getDelta / getDelta.scale
+
+  // logger.info(f"timeNonLinear = $timeNonLinear, timeLinear = $timeLinear")
+  logger.info(f"distance = ${getDelta.scale}%.3f, x1 = ${a * timeNonLinear * timeNonLinear / 2}, x2 = ${timeLinear * speedMax}")
 
   override def update(timeNow: Double) = {
     val t = timeNow - timeStart
     val done = isDone(timeNow)
-    if (done) logger.info(f"done!!")
+    // if (done) logger.info(f"done!!")
     if (done) getVector.set(vecTarget)
     else {
       if (t < timeNonLinear) getVector.set(getSource + unit * a * (t * t / 2))

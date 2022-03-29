@@ -70,6 +70,7 @@ class Game(frame: JFrame) extends JPanel {
    * 游戏启动入口，执行游戏逻辑
    */
   def action() = {
+    enemyAircrafts.synchronized(enemyAircrafts.append(EliteEnemy.create()))
     // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
     val task = new Runnable {
       override def run() = {
