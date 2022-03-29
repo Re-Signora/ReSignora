@@ -33,7 +33,7 @@ class EliteEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Doubl
       // new AnimateLinear(posNew, new Position(posNew.getX, Main.WINDOW_HEIGHT), AnimateVectorType.PositionLike.id, getTimeMills, 3000)
       // new AnimateLinearToTarget(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 900, willStop = false)
       new AnimateNonLinearToTargetVec(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000,
-        0.1, 0.00006, softStop = true, willStop = false)
+        0.1, 0.0006, willStop = true)
     )), power)
   })
 

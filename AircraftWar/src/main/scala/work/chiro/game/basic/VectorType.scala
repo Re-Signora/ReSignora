@@ -107,10 +107,7 @@ class VecDouble(size: Int, dataInit: Seq[Double] = Seq()) extends Vec[Double](si
 
   override def toString = f"${get.mkString("Vec(", ", ", ")")}"
 
-  def scale: Double = if (getSize == 0) 0 else {
-    val sum = get.map(a => a * a).sum
-    if (sum != 0) math.sqrt(sum) else 0
-  }
+  def scale: Double = if (getSize == 0) 0 else math.sqrt(get.map(a => a * a).sum)
 }
 
 object VecDouble {

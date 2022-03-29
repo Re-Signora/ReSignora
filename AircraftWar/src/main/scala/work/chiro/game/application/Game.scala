@@ -255,7 +255,7 @@ class Game(frame: JFrame) extends JPanel {
     // 绘制背景,图片滚动
     g.drawImage(Background.getImage, 0, backGroundTop - config.window.height, null)
     g.drawImage(Background.getImage, 0, backGroundTop, null)
-    backGroundTop += 1
+    // backGroundTop += 1
     if (backGroundTop == config.window.height) backGroundTop = 0
     // 先绘制子弹，后绘制飞机
     // 这样子弹显示在飞机的下层

@@ -68,25 +68,29 @@ class AnimateLinearToTarget[V <: VecDouble]
 }
 
 class AnimateNonLinearToTargetVec[V <: VecDouble]
-(vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, speedMax: Double, a: Double, softStop: Boolean = true, willStop: Boolean = true)
+(vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, speedMax: Double, a: Double, willStop: Boolean = true, r: Double = 1)
   extends AbstractAnimate(vecSource, vecTarget, AnimateType.Nonlinear.id, animateVectorType, timeStart, timeSpan) {
 
   override def isDone(timeNow: Double) =
     if (willStop)
-      // super.isDone(timeNow) ||
-        timeNow > timeStart + timeNonLinear * (if (softStop) 2 else 1) + timeLinear
+      // super.isDone(timeNow)
+      timeNow - timeStart > timeNonLinear * 2 + timeLinear
     else false
 
-  // val timeNonLinear = VecDouble.min(speedMax / a, ((getDelta * (if (softStop) 1 else 2)) / a).sqrt)
-  val timeNonLinear = if (a == 0) 0 else speedMax / a
-  // fixme: 如果达不到最高速度，timeLinear 应该为 0
-  def getX1 = a * timeNonLinear * timeNonLinear / 2
-  val timeLinear = timeNonLinear * -(if (softStop) 2 else 1) + getDelta.scale / speedMax
-  def getX2 = timeLinear * speedMax
   val unit = getDelta / getDelta.scale
+  val aVec = unit * a
+  val timeNonLinear = math.sqrt(getDelta.scale * r / ((r + 1) * a)) / 2
+  val timeLinear = 2 * math.sqrt(getDelta.scale / (a * r * (r + 1)))
 
-  // logger.info(f"timeNonLinear = $timeNonLinear, timeLinear = $timeLinear")
-  logger.info(f"distance = ${getDelta.scale}%.3f, x1 = ${a * timeNonLinear * timeNonLinear / 2}, x2 = ${timeLinear * speedMax}")
+  def vMax = a * timeNonLinear
+
+  def getX1 = getDelta.scale * (r / (r + 1))
+
+  def getX2 = getDelta.scale / (r + 1)
+
+  // logger.info(f"distance = ${getDelta.scale}%.3f, x1 = $getX1%.3f, x2 = $getX2%.3f")
+  // logger.info(f"t1 = $timeNonLinear, t2 = $timeLinear")
+  // logger.info(s"unit = $unit")
 
   override def update(timeNow: Double) = {
     val t = timeNow - timeStart
@@ -94,15 +98,21 @@ class AnimateNonLinearToTargetVec[V <: VecDouble]
     // if (done) logger.info(f"done!!")
     if (done) getVector.set(vecTarget)
     else {
-      if (t < timeNonLinear) getVector.set(getSource + unit * a * (t * t / 2))
+      if (t < timeNonLinear)
+      // getVector.set(vecSource)
+        getVector.set(getSource + aVec * (t * t / 2))
       else if (t < timeNonLinear + timeLinear) {
-        getVector.set(getSource + unit * a * (timeNonLinear * timeNonLinear / 2) +
-          unit * speedMax * (t - timeNonLinear))
+        getVector.set(getSource + aVec * (timeNonLinear * timeNonLinear / 2) +
+          unit * vMax * (t - timeNonLinear))
+        // getVector.set(vecSource)
       } else {
-        if (softStop) {
-          getVector.set(getSource + unit * a * (timeNonLinear * timeNonLinear / 2) +
-            unit * speedMax * timeNonLinear +
-            unit * a * (timeNonLinear * timeNonLinear / 2))
+        if (t < timeNonLinear * 2 + timeLinear) {
+          getVector.set(getSource + aVec * (timeNonLinear * timeNonLinear) +
+            unit * vMax * timeLinear -
+            aVec * ((timeLinear + 2 * timeNonLinear - t) * (timeLinear + 2 * timeNonLinear - t) / 2)
+          )
+        } else {
+          getVector.set(vecTarget)
         }
       }
     }
@@ -115,7 +125,6 @@ class AnimateNonLinearToTargetVec[V <: VecDouble]
       unit * (
         if (t < timeNonLinear) t * a
         else if (t < timeNonLinear + timeLinear) speedMax
-        else if (softStop) (timeNonLinear * 2 + timeLinear - t) * a
         else speedMax
         )
     else new VecDouble(getVector.getSize)
