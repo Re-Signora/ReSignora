@@ -67,100 +67,39 @@ class AnimateLinearToTarget[V <: VecDouble]
     else new VecDouble(getVector.getSize)
 }
 
-class AnimateSmooth[V <: VecDouble]
-(vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, speedMax: Double, a: Double, willStop: Boolean = true, r: Double = 1)
-  extends AbstractAnimate(vecSource, vecTarget, AnimateType.Smooth.id, animateVectorType, timeStart, timeSpan) {
-
-  override def isDone(timeNow: Double) =
-    if (willStop)
-    // super.isDone(timeNow)
-      timeNow - timeStart > timeNonLinear * 2 + timeLinear
-    else false
-
-  val unit = getDelta / getDelta.scale
-  val aVec = unit * a
-  val timeNonLinear = math.sqrt(getDelta.scale * r / ((r + 1) * a)) / 2
-  val timeLinear = 2 * math.sqrt(getDelta.scale / (a * r * (r + 1)))
-  // val timeLinear = timeSpan - timeNonLinear * 2
-
-  def vMax = a * timeNonLinear
-
-  def getX1 = getDelta.scale * (r / (r + 1))
-
-  def getX2 = getDelta.scale / (r + 1)
-
-  // def vMax = getX2 / timeSpan
-
-  // logger.info(f"distance = ${getDelta.scale}%.3f, x1 = $getX1%.3f, x2 = $getX2%.3f")
-  // logger.info(f"t1 = $timeNonLinear, t2 = $timeLinear")
-  // logger.info(s"unit = $unit")
+class AnimateNonLinear[V <: VecDouble]
+(vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double)
+  extends AbstractAnimate(vecSource, vecTarget, AnimateType.NonLinear.id, animateVectorType, timeStart, timeSpan) {
 
   override def update(timeNow: Double) = {
     val t = timeNow - timeStart
-    // val scale = 1 + r / (r + 1)
-    val scale = 1
     val done = isDone(timeNow)
-    // if (done) logger.info(f"done!!")
     if (done) getVector.set(vecTarget)
-    else {
-      if (t < timeNonLinear)
-      // getVector.set(vecSource)
-        getVector.set(getSource + aVec * (t * t / 2) * scale)
-      else if (t < timeNonLinear + timeLinear) {
-        getVector.set(getSource + (aVec * (timeNonLinear * timeNonLinear / 2) +
-          unit * vMax * (t - timeNonLinear)) * scale)
-        // getVector.set(vecSource)
-      } else {
-        if (t < timeNonLinear * 2 + timeLinear) {
-          getVector.set(getSource + (aVec * (timeNonLinear * timeNonLinear) +
-            unit * vMax * timeLinear -
-            aVec * ((timeLinear + 2 * timeNonLinear - t) * (timeLinear + 2 * timeNonLinear - t) / 2)) * scale
-          )
-        } else {
-          getVector.set(vecTarget)
-        }
-      }
-    }
+    else getVector.set(getSource + getDelta * (t * t / (timeSpan * timeSpan)))
     done
   }
 
   override def getSpeed(timeNow: Double) = {
     val t = timeNow - timeStart
     if (animateVectorType == AnimateVectorType.PositionLike.id && !isDone(timeNow))
-      unit * (
-        if (t < timeNonLinear) t * a
-        else if (t < timeNonLinear + timeLinear) speedMax
-        else speedMax
-        )
+      (getDelta * 2 / timeSpan) * t / timeSpan
     else new VecDouble(getVector.getSize)
   }
 }
 
-class AnimateNonLinear[V <: VecDouble]
-(vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, willStop: Boolean = true)
-  extends AbstractAnimate(vecSource, vecTarget, AnimateType.NonLinear.id, animateVectorType, timeStart, timeSpan) {
 
-  override def isDone(timeNow: Double) =
-    if (willStop)
-      super.isDone(timeNow)
-    else false
-
-  // val unit = getDelta / getDelta.scale
-  val a = getDelta * 2 / (timeSpan * timeSpan)
+class AnimateSmooth[V <: VecDouble]
+(vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double)
+  extends AbstractAnimate(vecSource, vecTarget, AnimateType.Smooth.id, animateVectorType, timeStart, timeSpan) {
 
   override def update(timeNow: Double) = {
     val t = timeNow - timeStart
     val done = isDone(timeNow)
-    if (done) logger.info(f"done!!")
     if (done) getVector.set(vecTarget)
-    else {
-      if (t < timeSpan / 2)
-        getVector.set(getSource + getDelta * (2 * t * t / (timeSpan * timeSpan)))
-      else {
-        getVector.set(getSource + getDelta * (-1 - 2 * t * t / (timeSpan * timeSpan) + 4 * t / timeSpan))
-        // logger.info(f"stage 2: $getVector")
-      }
-    }
+    else if (t < timeSpan / 2)
+      getVector.set(getSource + getDelta * (2 * t * t / (timeSpan * timeSpan)))
+    else
+      getVector.set(getSource + getDelta * (-1 - 2 * t * t / (timeSpan * timeSpan) + 4 * t / timeSpan))
     done
   }
 

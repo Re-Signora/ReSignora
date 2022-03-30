@@ -34,7 +34,8 @@ class EliteEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Doubl
       // new AnimateLinearToTarget(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 900, willStop = false)
       // new AnimateSmooth(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000,
       //   0.1, 0.0006, willStop = true)
-      new AnimateNonLinear(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000, willStop = true)
+      // new AnimateSmooth(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000)
+      new AnimateNonLinear(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000)
     )), power)
   })
 
