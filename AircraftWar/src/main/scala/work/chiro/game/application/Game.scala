@@ -52,10 +52,10 @@ class Game(frame: JFrame) extends JPanel {
   private val heroShootDuration = 1
   private var heroShootCycleTime: Double = 0
 
-  private val mobCreateDuration = 6000
+  private val mobCreateDuration = 1200
   private var mobCreateCycleTime: Double = 0
 
-  private val eliteCreateDuration = 3000
+  private val eliteCreateDuration = 600
   private var eliteCreateCycleTime: Double = 0
 
   private val eliteShootDuration = 200

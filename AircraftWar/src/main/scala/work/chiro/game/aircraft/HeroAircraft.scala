@@ -1,11 +1,13 @@
 package work.chiro.game.aircraft
 
 import work.chiro.game.GlobalConfigLoader.config
+import work.chiro.game.aircraft.HeroAircraft.getPositionInstance
 import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateLinearToTarget, AnimateVectorType}
 import work.chiro.game.application.ImageResourceFactory
 import work.chiro.game.basic.PositionType.Position
 import work.chiro.game.basic.{AbstractObjectFactory, Vec2Double}
 import work.chiro.game.bullet.HeroBullet
+import work.chiro.game.logger
 import work.chiro.game.utils.getTimeMills
 
 /**
@@ -31,8 +33,14 @@ class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Dou
   def getShootNum = shootNum
 
   def increasePower() = {
-    if (getShootNum < 3) setShootNum(getShootNum + 1)
-    else powerStep = math.min(powerStep + 1, config.hero.powerSteps.length - 1)
+    if (getShootNum < 3) {
+      logger.info(s"shootNum increased to $shootNum!")
+      setShootNum(getShootNum + 1)
+    }
+    else {
+      if (powerStep == 1) logger.info("enable bullet scattering!")
+      powerStep = math.min(powerStep + 1, config.hero.powerSteps.length - 1)
+    }
   }
 
   def reachMaxPower = powerStep == config.hero.powerSteps.length - 1
@@ -45,12 +53,20 @@ class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Dou
   override def shoot() = {
     val x = getLocationX
     val y = getLocationY
-    for {i <- 0 until shootNum} yield {
-      val posNew = new Position(x + (i * 2 - shootNum + 1) * 10, y)
-      new HeroBullet(posNew, new AnimateContainer[Position](List(
-        // new AnimateLinearToTarget(posNew, new Position(posNew.getX, 0), AnimateVectorType.PositionLike.id, getTimeMills, 300)
-        new AnimateLinear(posNew, new Position(0, -3), AnimateVectorType.PositionLike.id, getTimeMills, 0)
-      )), config.hero.powerSteps(powerStep))
+    if (powerStep <= 1) {
+      for {i <- 0 until shootNum} yield {
+        val posNew = new Position(x + (i * 2 - shootNum + 1) * 10, y)
+        new HeroBullet(posNew, new AnimateContainer[Position](List(
+          new AnimateLinear(posNew, new Position(0, -3), AnimateVectorType.PositionLike.id, getTimeMills, 0)
+        )), config.hero.powerSteps(powerStep))
+      }
+    } else {
+      for {i <- 0 until 3} yield {
+        val posNew = getPos.copy
+        new HeroBullet(posNew, new AnimateContainer[Position](List(
+          new AnimateLinear(posNew, new Position((i - 1) * 0.3, -3), AnimateVectorType.PositionLike.id, getTimeMills, 0)
+        )), config.hero.powerSteps(powerStep))
+      }
     }
   }
 
