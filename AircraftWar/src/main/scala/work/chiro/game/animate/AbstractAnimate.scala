@@ -7,7 +7,7 @@ import work.chiro.game.logger
 class AnimateTypeEnumeration extends Enumeration
 
 object AnimateType extends AnimateTypeEnumeration {
-  val Unknown, Linear, Nonlinear = Value
+  val Unknown, Linear, NonLinear, Smooth = Value
 }
 
 class AnimateVectorTypeEnumeration extends Enumeration
@@ -67,13 +67,13 @@ class AnimateLinearToTarget[V <: VecDouble]
     else new VecDouble(getVector.getSize)
 }
 
-class AnimateNonLinearToTargetVec[V <: VecDouble]
+class AnimateSmooth[V <: VecDouble]
 (vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, speedMax: Double, a: Double, willStop: Boolean = true, r: Double = 1)
-  extends AbstractAnimate(vecSource, vecTarget, AnimateType.Nonlinear.id, animateVectorType, timeStart, timeSpan) {
+  extends AbstractAnimate(vecSource, vecTarget, AnimateType.Smooth.id, animateVectorType, timeStart, timeSpan) {
 
   override def isDone(timeNow: Double) =
     if (willStop)
-      // super.isDone(timeNow)
+    // super.isDone(timeNow)
       timeNow - timeStart > timeNonLinear * 2 + timeLinear
     else false
 
@@ -81,6 +81,7 @@ class AnimateNonLinearToTargetVec[V <: VecDouble]
   val aVec = unit * a
   val timeNonLinear = math.sqrt(getDelta.scale * r / ((r + 1) * a)) / 2
   val timeLinear = 2 * math.sqrt(getDelta.scale / (a * r * (r + 1)))
+  // val timeLinear = timeSpan - timeNonLinear * 2
 
   def vMax = a * timeNonLinear
 
@@ -88,28 +89,32 @@ class AnimateNonLinearToTargetVec[V <: VecDouble]
 
   def getX2 = getDelta.scale / (r + 1)
 
+  // def vMax = getX2 / timeSpan
+
   // logger.info(f"distance = ${getDelta.scale}%.3f, x1 = $getX1%.3f, x2 = $getX2%.3f")
   // logger.info(f"t1 = $timeNonLinear, t2 = $timeLinear")
   // logger.info(s"unit = $unit")
 
   override def update(timeNow: Double) = {
     val t = timeNow - timeStart
+    // val scale = 1 + r / (r + 1)
+    val scale = 1
     val done = isDone(timeNow)
     // if (done) logger.info(f"done!!")
     if (done) getVector.set(vecTarget)
     else {
       if (t < timeNonLinear)
       // getVector.set(vecSource)
-        getVector.set(getSource + aVec * (t * t / 2))
+        getVector.set(getSource + aVec * (t * t / 2) * scale)
       else if (t < timeNonLinear + timeLinear) {
-        getVector.set(getSource + aVec * (timeNonLinear * timeNonLinear / 2) +
-          unit * vMax * (t - timeNonLinear))
+        getVector.set(getSource + (aVec * (timeNonLinear * timeNonLinear / 2) +
+          unit * vMax * (t - timeNonLinear)) * scale)
         // getVector.set(vecSource)
       } else {
         if (t < timeNonLinear * 2 + timeLinear) {
-          getVector.set(getSource + aVec * (timeNonLinear * timeNonLinear) +
+          getVector.set(getSource + (aVec * (timeNonLinear * timeNonLinear) +
             unit * vMax * timeLinear -
-            aVec * ((timeLinear + 2 * timeNonLinear - t) * (timeLinear + 2 * timeNonLinear - t) / 2)
+            aVec * ((timeLinear + 2 * timeNonLinear - t) * (timeLinear + 2 * timeNonLinear - t) / 2)) * scale
           )
         } else {
           getVector.set(vecTarget)
@@ -130,6 +135,47 @@ class AnimateNonLinearToTargetVec[V <: VecDouble]
     else new VecDouble(getVector.getSize)
   }
 }
+
+class AnimateNonLinear[V <: VecDouble]
+(vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, willStop: Boolean = true)
+  extends AbstractAnimate(vecSource, vecTarget, AnimateType.NonLinear.id, animateVectorType, timeStart, timeSpan) {
+
+  override def isDone(timeNow: Double) =
+    if (willStop)
+      super.isDone(timeNow)
+    else false
+
+  // val unit = getDelta / getDelta.scale
+  val a = getDelta * 2 / (timeSpan * timeSpan)
+
+  override def update(timeNow: Double) = {
+    val t = timeNow - timeStart
+    val done = isDone(timeNow)
+    if (done) logger.info(f"done!!")
+    if (done) getVector.set(vecTarget)
+    else {
+      if (t < timeSpan / 2)
+        getVector.set(getSource + getDelta * (2 * t * t / (timeSpan * timeSpan)))
+      else {
+        getVector.set(getSource + getDelta * (-1 - 2 * t * t / (timeSpan * timeSpan) + 4 * t / timeSpan))
+        // logger.info(f"stage 2: $getVector")
+      }
+    }
+    done
+  }
+
+  override def getSpeed(timeNow: Double) = {
+    val t = timeNow - timeStart
+    if (animateVectorType == AnimateVectorType.PositionLike.id && !isDone(timeNow))
+      (getDelta * 2 / timeSpan) * (
+        if (t < timeSpan / 2) t / timeSpan
+        else 1 - t / timeSpan
+        )
+    else new VecDouble(getVector.getSize)
+  }
+}
+
+
 
 // class AnimateNonLinearToTargetScale[V <: VecDouble]
 // (vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, speedMax: Double, a: Double)

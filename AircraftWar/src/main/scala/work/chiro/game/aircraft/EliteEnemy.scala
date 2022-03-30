@@ -1,7 +1,7 @@
 package work.chiro.game.aircraft
 
 import work.chiro.game.GlobalConfigLoader.config
-import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateNonLinearToTargetVec, AnimateVectorType}
+import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateNonLinear, AnimateSmooth, AnimateVectorType}
 import work.chiro.game.application.{ImageResourceFactory, Main}
 import work.chiro.game.basic.PositionType.Position
 import work.chiro.game.basic.{AbstractObjectFactory, Vec2Double}
@@ -32,8 +32,9 @@ class EliteEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Doubl
     new EnemyBullet(posNew, new AnimateContainer[Position](List(
       // new AnimateLinear(posNew, new Position(posNew.getX, Main.WINDOW_HEIGHT), AnimateVectorType.PositionLike.id, getTimeMills, 3000)
       // new AnimateLinearToTarget(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 900, willStop = false)
-      new AnimateNonLinearToTargetVec(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000,
-        0.1, 0.0006, willStop = true)
+      // new AnimateSmooth(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000,
+      //   0.1, 0.0006, willStop = true)
+      new AnimateNonLinear(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000, willStop = true)
     )), power)
   })
 
