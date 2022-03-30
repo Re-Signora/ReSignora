@@ -73,11 +73,8 @@ class Game(frame: JFrame) extends JPanel {
   def action() = {
     enemyAircrafts.synchronized(enemyAircrafts.append(EliteEnemy.create()))
     // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
-    val task = new Runnable {
+    val calcTask = new Runnable {
       override def run() = {
-        frameTime = getTimeMills
-        frameCount.append(frameTime)
-        frameCount.filterInPlace(_ >= (if (frameTime >= 1000) frameTime - 1000 else 0))
         // 周期性执行（控制频率）
         // 键盘操作
         controller.onFrame()
@@ -90,10 +87,11 @@ class Game(frame: JFrame) extends JPanel {
         // 产生精英敌机
         if (onEliteCreateCountCycle) enemyAircrafts.synchronized(enemyAircrafts.append(EliteEnemy.create()))
         if (onFpsCountCycle) {
-          val fpsInfo = if (frameTime < 1000) f"[ ${frameTime.toFloat / 1000}%.3fs ]"
-          else f"[ ${frameTime.toFloat / 1000}%.3fs ] ${frameCount.size} fps"
-          if (config.running.showFps) logger.info(fpsInfo)
-          Main.getFrameInstance.get.setTitle(f"Aircraft War $fpsInfo")
+          frameCount.synchronized({
+            val fpsInfo = f"[ ${frameTime / 1000}%.3fs ] ${frameCount.size} fps"
+            if (config.running.showFps) logger.info(fpsInfo)
+            Main.getFrameInstance.get.setTitle(f"Aircraft War $fpsInfo")
+          })
         }
         // 所有物体移动
         allObjectLists.foreach(_.foreach(_.forward()))
@@ -101,8 +99,6 @@ class Game(frame: JFrame) extends JPanel {
         crashCheckAction()
         // 后处理
         postProcessAction()
-        //每个时刻重绘界面
-        repaint()
         // 游戏结束检查
         if (!config.isDebug && heroAircraft.getHp <= 0) { // 游戏结束
           executorService.shutdown()
@@ -113,13 +109,26 @@ class Game(frame: JFrame) extends JPanel {
       }
     }
 
+    val renderTask = new Runnable {
+      override def run() = {
+        frameTime = getTimeMills
+        frameCount.synchronized({
+          frameCount.append(frameTime)
+          frameCount.filterInPlace(_ >= (if (frameTime >= 1000) frameTime - 1000 else 0))
+        })
+        // 重绘界面
+        repaint()
+      }
+    }
+
     /**
      * 以固定延迟时间进行执行
      * 本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
      */
-    executorService.scheduleWithFixedDelay(task, timeInterval, timeInterval, TimeUnit.MILLISECONDS)
+    executorService.scheduleWithFixedDelay(calcTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS)
+    executorService.scheduleWithFixedDelay(renderTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS)
     // 不管上次执行是否完成也执行
-    // executorService.scheduleAtFixedRate(task, timeInterval, timeInterval, TimeUnit.MILLISECONDS)
+    // executorService.scheduleAtFixedRate(calcTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS)
   }
 
   private def onHeroShootCountCycle = {
