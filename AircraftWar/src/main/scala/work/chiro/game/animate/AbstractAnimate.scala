@@ -5,7 +5,7 @@ import work.chiro.game.basic.VecDouble
 class AnimateTypeEnumeration extends Enumeration
 
 object AnimateType extends AnimateTypeEnumeration {
-  val Unknown, Linear, LinearToTarget, NonLinear, Smooth = Value
+  val Unknown, Linear, LinearToTarget, NonLinear, SmoothTo = Value
 }
 
 class AnimateVectorTypeEnumeration extends Enumeration
@@ -96,9 +96,11 @@ class AnimateLinear[V <: VecDouble]
 }
 
 class AnimateNonLinear[V <: VecDouble]
-(vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double)
+(vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, willStop: Boolean = true)
   extends AbstractAnimate(vecSource, AnimateType.NonLinear.id, animateVectorType, timeStart, timeSpan)
-  with AnimateWithTarget {
+    with AnimateWithTarget {
+
+  override def isDone(timeNow: Double) = if (willStop) super.isDone(timeNow) else false
 
   override def update(timeNow: Double) = {
     val t = timeNow - timeStart
@@ -121,10 +123,10 @@ class AnimateNonLinear[V <: VecDouble]
 }
 
 
-class AnimateSmooth[V <: VecDouble]
+class AnimateSmoothTo[V <: VecDouble]
 (vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double)
-  extends AbstractAnimate(vecSource, AnimateType.Smooth.id, animateVectorType, timeStart, timeSpan)
-  with AnimateWithTarget {
+  extends AbstractAnimate(vecSource, AnimateType.SmoothTo.id, animateVectorType, timeStart, timeSpan)
+    with AnimateWithTarget {
 
   override def update(timeNow: Double) = {
     val t = timeNow - timeStart

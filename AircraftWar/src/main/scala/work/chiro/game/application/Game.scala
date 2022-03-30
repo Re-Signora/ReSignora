@@ -62,6 +62,7 @@ class Game(frame: JFrame) extends JPanel {
   private var eliteShootCycleTime: Double = 0
 
   private var fpsCycleTime: Double = 0
+  private val fpsCycleDuration = 100
   private val frameCount = new ListBuffer[Double]
 
   def frameTimeDelta = frameTime - lastFrameTime
@@ -160,9 +161,9 @@ class Game(frame: JFrame) extends JPanel {
   private def onFpsCountCycle = {
     fpsCycleTime += frameTimeDelta
     // 跨越到新的周期
-    if (fpsCycleTime >= 1000) {
-      logger.info(f"bullet count: ${allBullets.map(_.size).sum}")
-      fpsCycleTime %= 1000
+    if (fpsCycleTime >= fpsCycleDuration) {
+      // logger.info(f"bullet count: ${allBullets.map(_.size).sum}")
+      fpsCycleTime %= fpsCycleDuration
       true
     } else false
   }

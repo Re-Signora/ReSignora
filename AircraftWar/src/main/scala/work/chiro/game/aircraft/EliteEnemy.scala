@@ -1,7 +1,7 @@
 package work.chiro.game.aircraft
 
 import work.chiro.game.GlobalConfigLoader.config
-import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateNonLinear, AnimateSmooth, AnimateVectorType}
+import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateNonLinear, AnimateSmoothTo, AnimateVectorType}
 import work.chiro.game.application.{ImageResourceFactory, Main}
 import work.chiro.game.basic.PositionType.Position
 import work.chiro.game.basic.{AbstractObjectFactory, Vec2Double}
@@ -30,7 +30,7 @@ class EliteEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Doubl
   override def shoot() = List({
     val posNew = new Position(getLocationX, getLocationY)
     new EnemyBullet(posNew, new AnimateContainer[Position](List(
-      new AnimateNonLinear(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000)
+      new AnimateNonLinear(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000, willStop = false)
     )), power)
   })
 
