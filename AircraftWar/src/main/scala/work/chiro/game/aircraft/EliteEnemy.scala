@@ -30,11 +30,6 @@ class EliteEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Doubl
   override def shoot() = List({
     val posNew = new Position(getLocationX, getLocationY)
     new EnemyBullet(posNew, new AnimateContainer[Position](List(
-      // new AnimateLinear(posNew, new Position(posNew.getX, Main.WINDOW_HEIGHT), AnimateVectorType.PositionLike.id, getTimeMills, 3000)
-      // new AnimateLinearToTarget(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 900, willStop = false)
-      // new AnimateSmooth(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000,
-      //   0.1, 0.0006, willStop = true)
-      // new AnimateSmooth(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000)
       new AnimateNonLinear(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000)
     )), power)
   })

@@ -1,8 +1,6 @@
 package work.chiro.game.animate
 
-import work.chiro.game.basic.PositionType.Scale
 import work.chiro.game.basic.VecDouble
-import work.chiro.game.logger
 
 class AnimateTypeEnumeration extends Enumeration
 
@@ -37,11 +35,7 @@ abstract class AbstractAnimate[V <: VecDouble]
 
   def update(timeNow: Double): Boolean
 
-  def isDone(timeNow: Double) = {
-    val done = timeNow > timeStart + timeSpan
-    // if (done) logger.info(f"done!!")
-    done
-  }
+  def isDone(timeNow: Double) = timeNow > timeStart + timeSpan
 
   def getSpeed(timeNow: Double): VecDouble
 }
@@ -50,13 +44,11 @@ class AnimateLinearToTarget[V <: VecDouble]
 (vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, willStop: Boolean = true)
   extends AbstractAnimate(vecSource, vecTarget, AnimateType.Linear.id, animateVectorType, timeStart, timeSpan) {
 
-  // logger.info(s"Animate Linear $vecSource => $vecTarget")
   override def isDone(timeNow: Double) = if (willStop) super.isDone(timeNow) else false
 
   override def update(timeNow: Double) = {
     val done = isDone(timeNow)
     val deltaNew = getDelta * ((timeNow - timeStart) / timeSpan)
-    // logger.info(f"delta = $delta deltaNew = $deltaNew")
     if (done) getVector.set(vecTarget)
     else getVector.set(getSource + deltaNew)
     done
@@ -113,8 +105,6 @@ class AnimateSmooth[V <: VecDouble]
     else new VecDouble(getVector.getSize)
   }
 }
-
-
 
 // class AnimateNonLinearToTargetScale[V <: VecDouble]
 // (vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, speedMax: Double, a: Double)
