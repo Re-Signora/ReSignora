@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Main (java)" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="edu.hitsz.application.Main" />
+    <module name="base" />
+    <option name="WORKING_DIRECTORY" value="$ProjectFileDir$" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="edu.hitsz.application.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
