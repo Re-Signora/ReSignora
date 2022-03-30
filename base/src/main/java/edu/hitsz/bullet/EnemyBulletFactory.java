@@ -4,7 +4,6 @@ public class EnemyBulletFactory implements BaseBulletFactory {
     protected int locationX, locationY, speedX, speedY, power;
 
     public EnemyBulletFactory(int locationX, int locationY, int speedX, int speedY, int power) {
-        System.out.println("EnemyBulletFactory created!");
         this.locationX = locationX;
         this.locationY = locationY;
         this.speedX = speedX;

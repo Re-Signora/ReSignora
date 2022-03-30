@@ -3,10 +3,7 @@ package edu.hitsz.application;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.prop.AbstractProp;
-import edu.hitsz.prop.BloodProp;
-import edu.hitsz.prop.BombProp;
-import edu.hitsz.prop.BulletProp;
+import edu.hitsz.prop.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -233,11 +230,11 @@ public class Game extends JPanel {
                         if (enemyAircraft.getClass().getName().endsWith("EliteEnemy")) {
                             int select = (int) (Math.random() * 3);
                             if (select == 0) {
-                                props.add(new BloodProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), 0, 2, 100));
+                                props.add(new BloodPropFactory(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), 0, 2, 100).create());
                             } else if (select == 1) {
-                                props.add(new BombProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), 0, 2));
+                                props.add(new BombPropFactory(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), 0, 2).create());
                             } else {
-                                props.add(new BulletProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), 0, 2));
+                                props.add(new BulletPropFactory(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), 0, 2).create());
                             }
                             score += 100;
                         } else {

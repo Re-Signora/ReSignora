@@ -184,4 +184,39 @@ HeroAircraft ..> HeroBullet
 BossEnemy ..> EnemyBullet
 EliteEnemy ..> EnemyBullet
 
+interface AbstractPropFactory {
+    + {abstract} create(): AbstractProp
+}
+
+class BloodPropFactory implements AbstractPropFactory {
+    # int locationX
+    # int locationY
+    # int speedX
+    # int speedY
+    # int increaseHp
+    + BloodPropFactory(int locationX, int locationY, int speedX, int speedY, int increaseHp)
+    + create(): BloodProp
+}
+BloodPropFactory ..> BloodProp
+
+class BombPropFactory implements AbstractPropFactory {
+    # int locationX
+    # int locationY
+    # int speedX
+    # int speedY
+    + BloodPropFactory(int locationX, int locationY, int speedX, int speedY)
+    + create(): BombProp
+}
+BombPropFactory ..> BombProp
+
+class BulletPropFactory implements AbstractPropFactory {
+    # int locationX
+    # int locationY
+    # int speedX
+    # int speedY
+    + BulletPropFactory(int locationX, int locationY, int speedX, int speedY)
+    + create(): BulletProp
+}
+BulletPropFactory ..> BulletProp
+
 @enduml
