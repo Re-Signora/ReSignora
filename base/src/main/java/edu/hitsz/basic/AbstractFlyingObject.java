@@ -60,9 +60,6 @@ public abstract class AbstractFlyingObject {
      */
     protected boolean isValid = true;
 
-    public AbstractFlyingObject() {
-    }
-
     public AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY) {
         this.locationX = locationX;
         this.locationY = locationY;

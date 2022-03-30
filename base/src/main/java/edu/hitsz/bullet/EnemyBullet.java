@@ -1,7 +1,7 @@
 package edu.hitsz.bullet;
 
 /**
- * @Author hitsz
+ * @author hitsz
  */
 public class EnemyBullet extends BaseBullet {
 

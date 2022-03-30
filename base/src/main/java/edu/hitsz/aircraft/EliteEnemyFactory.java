@@ -1,5 +1,8 @@
 package edu.hitsz.aircraft;
 
+/**
+ * @author Chiro
+ */
 public class EliteEnemyFactory implements AbstractAircraftFactory {
     protected int locationX, locationY, speedX, speedY, hp;
 

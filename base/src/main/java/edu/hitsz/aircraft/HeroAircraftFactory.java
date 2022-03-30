@@ -1,5 +1,8 @@
 package edu.hitsz.aircraft;
 
+/**
+ * @author Chiro
+ */
 public class HeroAircraftFactory implements AbstractAircraftFactory {
     protected int locationX, locationY, speedX, speedY, hp;
     public HeroAircraftFactory(int locationX, int locationY, int speedX, int speedY, int hp) {
@@ -10,9 +13,15 @@ public class HeroAircraftFactory implements AbstractAircraftFactory {
         this.hp = hp;
     }
 
-    // 全局唯一的 `HeroAircraft` 对象，由单例模式的双重检查锁定方法创建
+    /**
+     * 全局唯一的 `HeroAircraft` 对象，由单例模式的双重检查锁定方法创建
+     */
     static private HeroAircraft heroInstance = null;
-    // 获取实例
+
+    /**
+     * 获取实例
+     * @return 英雄机实例
+     */
     static public HeroAircraft getInstance() {
         return heroInstance;
     }

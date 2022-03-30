@@ -37,5 +37,9 @@ abstract public class AbstractProp extends AbstractFlyingObject {
         }
     }
 
+    /**
+     * 处理飞机碰到道具的时候的反应
+     * @param enemyAircrafts 所有的敌机
+     */
     abstract public void handleAircrafts(List<AbstractAircraft> enemyAircrafts);
 }

@@ -1,5 +1,8 @@
 package edu.hitsz.bullet;
 
+/**
+ * @author Chiro
+ */
 public class HeroBulletFactory implements BaseBulletFactory {
     protected int locationX, locationY, speedX, speedY, power;
 

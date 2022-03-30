@@ -29,7 +29,7 @@ public class Game extends JPanel {
     /**
      * 时间间隔(ms)，控制刷新频率
      */
-    private int timeInterval = 20;
+    private final int timeInterval = 20;
 
     private final HeroAircraft heroAircraft;
     private final List<AbstractAircraft> enemyAircrafts;
@@ -37,7 +37,7 @@ public class Game extends JPanel {
     private final List<BaseBullet> enemyBullets;
     private final List<AbstractProp> props;
 
-    private int enemyMaxNumber = 5;
+    private final int enemyMaxNumber = 5;
 
     private boolean gameOverFlag = false;
     private int score = 0;
@@ -46,8 +46,10 @@ public class Game extends JPanel {
      * 周期（ms)
      * 指示子弹的发射、敌机的产生频率
      */
-    private int cycleDuration = 600;
+    private final int cycleDuration = 600;
     private int cycleTime = 0;
+
+    final double eliteRate = 0.3;
 
 
     public Game() {
@@ -84,7 +86,7 @@ public class Game extends JPanel {
                 System.out.println(time);
                 // 新敌机产生
                 if (enemyAircrafts.size() < enemyMaxNumber) {
-                    if (Math.random() < 0.3) {
+                    if (Math.random() < eliteRate) {
                         enemyAircrafts.add(new EliteEnemyFactory(
                                 (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
                                 (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2),
@@ -149,7 +151,7 @@ public class Game extends JPanel {
 
     private boolean timeCountAndNewCycleJudge() {
         cycleTime += timeInterval;
-        if (cycleTime >= cycleDuration && cycleTime - timeInterval < cycleTime) {
+        if (cycleTime >= cycleDuration) {
             // 跨越到新的周期
             cycleTime %= cycleDuration;
             return true;
@@ -162,9 +164,12 @@ public class Game extends JPanel {
         // 英雄射击
         heroBullets.addAll(heroAircraft.shoot());
         // 敌机射击
-        for (AbstractAircraft enemy : enemyAircrafts)
+        for (AbstractAircraft enemy : enemyAircrafts) {
             enemyBullets.addAll(enemy.shoot());
-        if (BossEnemyFactory.getInstance() != null) enemyBullets.addAll(BossEnemyFactory.getInstance().shoot());
+        }
+        if (BossEnemyFactory.getInstance() != null) {
+            enemyBullets.addAll(BossEnemyFactory.getInstance().shoot());
+        }
     }
 
     private void bulletsMoveAction() {
@@ -180,7 +185,9 @@ public class Game extends JPanel {
         for (AbstractAircraft enemyAircraft : enemyAircrafts) {
             enemyAircraft.forward();
         }
-        if (BossEnemyFactory.getInstance() != null) BossEnemyFactory.getInstance().forward();
+        if (BossEnemyFactory.getInstance() != null) {
+            BossEnemyFactory.getInstance().forward();
+        }
     }
 
     private void propsMoveAction() {
@@ -226,7 +233,6 @@ public class Game extends JPanel {
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
                         // 获得分数，产生道具补给
-                        // System.out.println(enemyAircraft.getClass().getName());
                         if (enemyAircraft.getClass().getName().endsWith("EliteEnemy")) {
                             int select = (int) (Math.random() * 3);
                             if (select == 0) {
@@ -252,7 +258,9 @@ public class Game extends JPanel {
 
         // 敌机子弹攻击英雄
         for (BaseBullet bullet : enemyBullets) {
-            if (bullet.notValid()) continue;
+            if (bullet.notValid()) {
+                continue;
+            }
             if (bullet.crash(heroAircraft)) {
                 heroAircraft.decreaseHp(bullet.getPower());
                 bullet.vanish();
@@ -261,7 +269,9 @@ public class Game extends JPanel {
 
         // 我方获得道具，道具生效
         for (AbstractProp prop : props) {
-            if (prop.notValid()) continue;
+            if (prop.notValid()) {
+                continue;
+            }
             if (prop.crash(heroAircraft)) {
                 prop.handleAircrafts(enemyAircrafts);
                 prop.vanish();

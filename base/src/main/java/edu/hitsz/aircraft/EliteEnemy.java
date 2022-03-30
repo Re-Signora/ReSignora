@@ -2,8 +2,7 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.bullet.EnemyBullet;
-import edu.hitsz.bullet.EnemyBulletFactory;
+import edu.hitsz.Utils;
 
 import java.util.LinkedList;
 
@@ -32,14 +31,12 @@ public class EliteEnemy extends AbstractAircraft {
 
     @Override
     public LinkedList<BaseBullet> shoot() {
-        LinkedList<BaseBullet> ret = new LinkedList<>();
         if (shootCnt >= shootDivider) {
-            ret.add(new EnemyBulletFactory(getLocationX(), getLocationY(), 0, 10, 10).create());
             shootCnt = 0;
+            return Utils.letEnemyShoot(getLocationX(), getLocationY());
         } else {
             shootCnt += 1;
         }
-        return ret;
+        return new LinkedList<>();
     }
-
 }

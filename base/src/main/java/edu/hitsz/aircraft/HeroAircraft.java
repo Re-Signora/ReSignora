@@ -1,7 +1,6 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.bullet.HeroBullet;
 import edu.hitsz.bullet.HeroBulletFactory;
 
 import java.util.LinkedList;
@@ -14,11 +13,17 @@ import java.util.LinkedList;
 public class HeroAircraft extends AbstractAircraft {
 
     /**
-     * 攻击方式
+     * 子弹一次发射数量
      */
-    private int shootNum = 1;     //子弹一次发射数量
-    private int power = 30;       //子弹伤害
-    private int direction = -1;  //子弹射击方向 (向上发射：1，向下发射：-1)
+    private int shootNum = 1;
+    /**
+     * 子弹伤害
+     */
+    private final int power = 30;
+    /**
+     * 子弹射击方向 (向上发射：1，向下发射：-1)
+     */
+    private final int direction = -1;
 
     /**
      * @param locationX 英雄机位置x坐标
@@ -36,11 +41,11 @@ public class HeroAircraft extends AbstractAircraft {
         // 英雄机由鼠标控制，不通过forward函数移动
     }
 
-    @Override
     /**
      * 通过射击产生子弹
      * @return 射击出的子弹List
      */
+    @Override
     public LinkedList<BaseBullet> shoot() {
         LinkedList<BaseBullet> res = new LinkedList<>();
         int x = this.getLocationX();

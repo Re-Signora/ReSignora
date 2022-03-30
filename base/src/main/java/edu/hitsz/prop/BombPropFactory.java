@@ -1,5 +1,8 @@
 package edu.hitsz.prop;
 
+/**
+ * @author Chiro
+ */
 public class BombPropFactory implements AbstractPropFactory {
     protected int locationX, locationY, speedX, speedY;
 
