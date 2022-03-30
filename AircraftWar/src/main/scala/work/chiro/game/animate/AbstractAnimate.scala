@@ -5,7 +5,7 @@ import work.chiro.game.basic.VecDouble
 class AnimateTypeEnumeration extends Enumeration
 
 object AnimateType extends AnimateTypeEnumeration {
-  val Unknown, Linear, NonLinear, Smooth = Value
+  val Unknown, Linear, LinearToTarget, NonLinear, Smooth = Value
 }
 
 class AnimateVectorTypeEnumeration extends Enumeration
@@ -14,8 +14,23 @@ object AnimateVectorType extends AnimateVectorTypeEnumeration {
   val PositionLike, Others = Value
 }
 
+trait AnimateWithTarget {
+  def getSource: VecDouble
+
+  def getTarget: VecDouble
+
+  var delta: Option[VecDouble] = None
+
+  def getDeltaTarget = {
+    if (delta.isEmpty) delta = Some(getDeltaDynamic)
+    delta.get
+  }
+
+  def getDeltaDynamic = getTarget - getSource
+}
+
 abstract class AbstractAnimate[V <: VecDouble]
-(vecSource: V, vecTarget: V, animateType: Int, animateVectorType: Int, timeStart: Double, timeSpan: Double) {
+(vecSource: V, animateType: Int, animateVectorType: Int, timeStart: Double, timeSpan: Double) {
   def getAnimateType: Int = animateType
 
   def getAnimateVectorType: Int = animateVectorType
@@ -24,25 +39,22 @@ abstract class AbstractAnimate[V <: VecDouble]
 
   private val vec = vecSource
   private val source = vecSource.copy
-  private val target = vecTarget
-  private val delta = target - source
 
   def getSource = source
-
-  def getTarget = target
-
-  def getDelta = delta
 
   def update(timeNow: Double): Boolean
 
   def isDone(timeNow: Double) = timeNow > timeStart + timeSpan
 
   def getSpeed(timeNow: Double): VecDouble
+
+  def getDelta: VecDouble
 }
 
 class AnimateLinearToTarget[V <: VecDouble]
 (vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, willStop: Boolean = true)
-  extends AbstractAnimate(vecSource, vecTarget, AnimateType.Linear.id, animateVectorType, timeStart, timeSpan) {
+  extends AbstractAnimate(vecSource, AnimateType.LinearToTarget.id, animateVectorType, timeStart, timeSpan)
+    with AnimateWithTarget {
 
   override def isDone(timeNow: Double) = if (willStop) super.isDone(timeNow) else false
 
@@ -57,11 +69,36 @@ class AnimateLinearToTarget[V <: VecDouble]
   override def getSpeed(timeNow: Double) =
     if (animateVectorType == AnimateVectorType.PositionLike.id) getDelta / timeSpan
     else new VecDouble(getVector.getSize)
+
+  override def getTarget = vecTarget
+
+  override def getDelta = getDeltaTarget
+}
+
+class AnimateLinear[V <: VecDouble]
+(vecSource: V, speed: V, animateVectorType: Int, timeStart: Double, timeSpan: Double, willStop: Boolean = true)
+  extends AbstractAnimate(vecSource, AnimateType.Linear.id, animateVectorType, timeStart, timeSpan) {
+
+  override def isDone(timeNow: Double) = if (willStop) super.isDone(timeNow) else false
+
+  override def update(timeNow: Double) = {
+    val done = isDone(timeNow)
+    val deltaNew = speed * ((timeNow - timeStart) / timeSpan)
+    getVector.set(getSource + deltaNew)
+    done
+  }
+
+  override def getSpeed(timeNow: Double) =
+    if (animateVectorType == AnimateVectorType.PositionLike.id) speed
+    else new VecDouble(getVector.getSize)
+
+  override def getDelta = new VecDouble(getVector.getSize)
 }
 
 class AnimateNonLinear[V <: VecDouble]
 (vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double)
-  extends AbstractAnimate(vecSource, vecTarget, AnimateType.NonLinear.id, animateVectorType, timeStart, timeSpan) {
+  extends AbstractAnimate(vecSource, AnimateType.NonLinear.id, animateVectorType, timeStart, timeSpan)
+  with AnimateWithTarget {
 
   override def update(timeNow: Double) = {
     val t = timeNow - timeStart
@@ -77,12 +114,17 @@ class AnimateNonLinear[V <: VecDouble]
       (getDelta * 2 / timeSpan) * t / timeSpan
     else new VecDouble(getVector.getSize)
   }
+
+  override def getTarget = vecTarget
+
+  override def getDelta = getDeltaTarget
 }
 
 
 class AnimateSmooth[V <: VecDouble]
 (vecSource: V, vecTarget: V, animateVectorType: Int, timeStart: Double, timeSpan: Double)
-  extends AbstractAnimate(vecSource, vecTarget, AnimateType.Smooth.id, animateVectorType, timeStart, timeSpan) {
+  extends AbstractAnimate(vecSource, AnimateType.Smooth.id, animateVectorType, timeStart, timeSpan)
+  with AnimateWithTarget {
 
   override def update(timeNow: Double) = {
     val t = timeNow - timeStart
@@ -104,6 +146,10 @@ class AnimateSmooth[V <: VecDouble]
         )
     else new VecDouble(getVector.getSize)
   }
+
+  override def getTarget = vecTarget
+
+  override def getDelta = getDeltaTarget
 }
 
 // class AnimateNonLinearToTargetScale[V <: VecDouble]

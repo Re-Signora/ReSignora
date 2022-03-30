@@ -49,7 +49,7 @@ class Game(frame: JFrame) extends JPanel {
   private var frameTime: Double = 0
   private var lastFrameTime: Double = 0
 
-  private val heroShootDuration = 6
+  private val heroShootDuration = 1
   private var heroShootCycleTime: Double = 0
 
   private val mobCreateDuration = 6000
@@ -97,7 +97,7 @@ class Game(frame: JFrame) extends JPanel {
         // 所有物体移动
         allObjectLists.foreach(_.foreach(_.forward()))
         // 撞击检测
-        // crashCheckAction()
+        crashCheckAction()
         // 后处理
         postProcessAction()
         //每个时刻重绘界面

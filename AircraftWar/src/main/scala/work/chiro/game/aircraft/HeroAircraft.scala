@@ -1,7 +1,7 @@
 package work.chiro.game.aircraft
 
 import work.chiro.game.GlobalConfigLoader.config
-import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateVectorType}
+import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateLinearToTarget, AnimateVectorType}
 import work.chiro.game.application.ImageResourceFactory
 import work.chiro.game.basic.PositionType.Position
 import work.chiro.game.basic.{AbstractObjectFactory, Vec2Double}
@@ -48,7 +48,8 @@ class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Dou
     for {i <- 0 until shootNum} yield {
       val posNew = new Position(x + (i * 2 - shootNum + 1) * 10, y)
       new HeroBullet(posNew, new AnimateContainer[Position](List(
-        new AnimateLinearToTarget(posNew, new Position(posNew.getX, 0), AnimateVectorType.PositionLike.id, getTimeMills, 300)
+        // new AnimateLinearToTarget(posNew, new Position(posNew.getX, 0), AnimateVectorType.PositionLike.id, getTimeMills, 300)
+        new AnimateLinear(posNew, new Position(0, -1000), AnimateVectorType.PositionLike.id, getTimeMills, 300)
       )), config.hero.powerSteps(powerStep))
     }
   }
