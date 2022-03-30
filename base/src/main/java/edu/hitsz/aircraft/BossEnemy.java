@@ -12,9 +12,6 @@ import java.util.LinkedList;
  */
 public class BossEnemy extends AbstractAircraft {
 
-    int shootDivider = 2;
-    int shootCnt = 0;
-
     public BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
     }
@@ -27,12 +24,6 @@ public class BossEnemy extends AbstractAircraft {
 
     @Override
     public LinkedList<BaseBullet> shoot() {
-        if (shootCnt >= shootDivider) {
-            shootCnt = 0;
-            return Utils.letEnemyShoot(getLocationX(), getLocationY());
-        } else {
-            shootCnt += 1;
-        }
-        return new LinkedList<>();
+        return Utils.letEnemyShoot(getLocationX(), getLocationY());
     }
 }

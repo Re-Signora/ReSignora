@@ -40,5 +40,9 @@ lazy val base = (project in file("base"))
         .withIncludeScala(true)
         .withIncludeDependency(true)
     },
-    libraryDependencies ++= Seq()
+    libraryDependencies ++= Seq(
+      "junit" % "junit" % "4.13.2" % Test,
+      "org.junit.jupiter" % "junit-jupiter" % "5.8.2" % Test,
+      "com.novocode" % "junit-interface" % "0.11" % Test
+    )
   )
