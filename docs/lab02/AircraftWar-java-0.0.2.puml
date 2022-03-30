@@ -1,0 +1,222 @@
+@startuml
+'https: //plantuml.com/class-diagram
+
+abstract class AbstractFlyingObject {
+    # int locationX
+    # int locationY
+    # int speedX
+    # int speedY
+    # BufferedImage image
+    # int width
+    # int height
+    # boolean isValid
+
+    + AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY)
+    + forward(): void
+    + crash(AbstractFlyingObject flyingObject): boolean
+    + setLocation(double locationX, double locationY): void
+    + getLocationX(): int
+    + getLocationY(): int
+    + getSpeedY(): int
+    + getImage(): BufferedImage
+    + getWidth(): int
+    + getHeight(): int
+    + notValid(): boolean
+    + vanish(): void
+}
+abstract class AbstractAircraft extends AbstractFlyingObject {
+	# int maxHp
+    # int hp
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + decreaseHp(int decrease): void
+    + getHp(): int
+    + {abstract} shoot(): LinkedList<Bullet>
+ }
+
+abstract class BaseBullet extends AbstractFlyingObject {
+    - int power
+    + Bullet(int locationX, int locationY, int speedX, int speedY, int power)
+    + forward(): void
+	+ getPower(): int
+}
+
+class HeroAircraft extends AbstractAircraft {
+    - int shootNum
+    - int power
+    - int direction
+    + HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): LinkedList<Bullet>
+}
+
+class MobEnemy extends AbstractAircraft {
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): LinkedList<Bullet>
+}
+
+class EliteEnemy extends AbstractAircraft {
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): LinkedList<Bullet>
+}
+
+class BossEnemy extends AbstractAircraft {
+    + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + vanish(): void
+    + shoot(): LinkedList<Bullet>
+}
+
+class HeroBullet extends BaseBullet {
+    + HeroBullet(int locationX, int locationY, int speedX, int speedY, int power)
+}
+
+class EnemyBullet extends BaseBullet {
+    + EnemyBullet(int locationX, int locationY, int speedX, int speedY, int power)
+}
+
+abstract class AbstractProp extends AbstractFlyingObject {
+    - int power
+    + AbstractProp(int locationX, int locationY, int speedX, int speedY)
+    + forward(): void
+	+ {abstract} handleAircrafts(List<AbstractAircraft> enemyAircrafts): void
+}
+
+class BloodProp extends AbstractProp {
+    # int increaseHp
+    + BloodProp(int locationX, int locationY, int speedX, int speedY, int increaseHp)
+    + handleAircrafts(List<AbstractAircraft> enemyAircrafts): void
+}
+
+class BombProp extends AbstractProp {
+    + BombProp(int locationX, int locationY, int speedX, int speedY)
+    + handleAircrafts(List<AbstractAircraft> enemyAircrafts): void
+}
+
+class BulletProp extends AbstractProp {
+    + BulletProp(int locationX, int locationY, int speedX, int speedY)
+    + handleAircrafts(List<AbstractAircraft> enemyAircrafts): void
+}
+
+interface AbstractAircraftFactory {
+    + {abstract} create(): AbstractAircraft
+}
+
+class HeroAircraftFactory implements AbstractAircraftFactory {
+    - {static} HeroAircraft heroInstance
+    # int locationX
+    # int locationY
+    # int speedX
+    # int speedY
+    # int hp
+    + HeroAircraftFactory(int locationX, int locationY, int speedX, int speedY, int hp)
+    + getInstance(): HeroAircraft
+    + create(): HeroAircraft
+}
+HeroAircraftFactory ..> HeroAircraft
+
+class BossEnemyFactory implements AbstractAircraftFactory {
+    - {static} BossEnemy instance
+    # int locationX
+    # int locationY
+    # int speedX
+    # int speedY
+    # int hp
+    + BossEnemyFactory(int locationX, int locationY, int speedX, int speedY, int hp)
+    + {static} getInstance(): BossEnemy
+    + {static} clearInstance(): void
+    + create(): BossEnemy
+}
+BossEnemyFactory ..> BossEnemy
+
+class EliteEnemyFactory implements AbstractAircraftFactory {
+    # int locationX
+    # int locationY
+    # int speedX
+    # int speedY
+    # int hp
+    + EliteEnemyFactory(int locationX, int locationY, int speedX, int speedY, int hp)
+    + create(): EliteEnemy
+}
+EliteEnemyFactory ..> EliteEnemy
+
+class MobEnemyFactory implements AbstractAircraftFactory {
+    # int locationX
+    # int locationY
+    # int speedX
+    # int speedY
+    # int hp
+    + MobEnemyFactory(int locationX, int locationY, int speedX, int speedY, int hp)
+    + {static} getInstance(): BossEnemy
+    + {static} clearInstance(): void
+    + create(): MobEnemy
+}
+MobEnemyFactory ..> MobEnemy
+
+interface BaseBulletFactory {
+    + {abstract} create(): BaseBullet
+}
+
+class EnemyBulletFactory implements BaseBulletFactory {
+    # int locationX
+    # int locationY
+    # int speedX
+    # int speedY
+    # int hp
+    + EnemyBulletFactory(int locationX, int locationY, int speedX, int speedY, int power)
+    + create(): BaseBullet
+}
+EnemyBulletFactory ..> EnemyBullet
+
+class HeroBulletFactory implements BaseBulletFactory {
+    # int locationX
+    # int locationY
+    # int speedX
+    # int speedY
+    # int hp
+    + HeroBulletFactory(int locationX, int locationY, int speedX, int speedY, int power)
+    + create(): BaseBullet
+}
+HeroBulletFactory ..> HeroBullet
+
+' 飞机射击子弹，有关联关系
+HeroAircraft ..> HeroBullet
+BossEnemy ..> EnemyBullet
+EliteEnemy ..> EnemyBullet
+
+interface AbstractPropFactory {
+    + {abstract} create(): AbstractProp
+}
+
+class BloodPropFactory implements AbstractPropFactory {
+    # int locationX
+    # int locationY
+    # int speedX
+    # int speedY
+    # int increaseHp
+    + BloodPropFactory(int locationX, int locationY, int speedX, int speedY, int increaseHp)
+    + create(): BloodProp
+}
+BloodPropFactory ..> BloodProp
+
+class BombPropFactory implements AbstractPropFactory {
+    # int locationX
+    # int locationY
+    # int speedX
+    # int speedY
+    + BloodPropFactory(int locationX, int locationY, int speedX, int speedY)
+    + create(): BombProp
+}
+BombPropFactory ..> BombProp
+
+class BulletPropFactory implements AbstractPropFactory {
+    # int locationX
+    # int locationY
+    # int speedX
+    # int speedY
+    + BulletPropFactory(int locationX, int locationY, int speedX, int speedY)
+    + create(): BulletProp
+}
+BulletPropFactory ..> BulletProp
+
+@enduml

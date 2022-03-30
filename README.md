@@ -12,12 +12,17 @@ Scala 项目的 UML 图见 [AircraftWar-scala.puml](uml/AircraftWar-scala.puml)�
 
 *图片不够大...*
 
-![img](README.assets/uml_0_0_2.png)
-
-![uml_svg](README.assets/uml_0_0_2.svg)
-
+![uml_svg](README.assets/AircraftWar-java-0.0.2.svg)
 
 ## 运行
+
+**操作说明：**
+
+1. Java version: 鼠标拖动移动英雄机
+2. Scala version:
+   1. 鼠标拖动或者方向键（`↑/↓/←/→`）移动英雄机
+   2. `z`键发射子弹
+   3. 按下`shift`可以减慢移动速度（微操）
 
 ### 直接运行编译好的 Jar 文件
 
