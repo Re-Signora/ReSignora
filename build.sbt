@@ -4,8 +4,9 @@ ThisBuild / scalaVersion     := "2.13.8"
 ThisBuild / version          := projectVersion
 ThisBuild / organization     := "work.chiro.game"
 
-lazy val AirCraft = (project in file("AircraftWar"))
+lazy val AircraftWar = (project in file("AircraftWar"))
   .settings(
+    name := "AircraftWar",
     assembly / mainClass := Some("work.chiro.game.application.Main"),
     assembly / assemblyJarName := f"aircraft-war-$projectVersion.jar",
     assembly / assemblyOption ~= {
@@ -27,4 +28,17 @@ lazy val AirCraft = (project in file("AircraftWar"))
       "-Yrangepos"
     ),
     addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.5.0" cross CrossVersion.full)
+  )
+
+lazy val base = (project in file("base"))
+  .settings(
+    name := "base",
+    assembly / mainClass := Some("edu.hitsz.application.Main"),
+    assembly / assemblyJarName := f"aircraft-war-base-$projectVersion.jar",
+    assembly / assemblyOption ~= {
+      _.withIncludeBin(true)
+        .withIncludeScala(true)
+        .withIncludeDependency(true)
+    },
+    libraryDependencies ++= Seq()
   )
