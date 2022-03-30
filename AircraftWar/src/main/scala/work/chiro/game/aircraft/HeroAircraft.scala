@@ -49,7 +49,7 @@ class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Dou
       val posNew = new Position(x + (i * 2 - shootNum + 1) * 10, y)
       new HeroBullet(posNew, new AnimateContainer[Position](List(
         // new AnimateLinearToTarget(posNew, new Position(posNew.getX, 0), AnimateVectorType.PositionLike.id, getTimeMills, 300)
-        new AnimateLinear(posNew, new Position(0, -1000), AnimateVectorType.PositionLike.id, getTimeMills, 300)
+        new AnimateLinear(posNew, new Position(0, -3), AnimateVectorType.PositionLike.id, getTimeMills, 0)
       )), config.hero.powerSteps(powerStep))
     }
   }

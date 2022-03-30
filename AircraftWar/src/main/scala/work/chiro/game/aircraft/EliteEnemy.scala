@@ -1,8 +1,8 @@
 package work.chiro.game.aircraft
 
 import work.chiro.game.GlobalConfigLoader.config
-import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateNonLinear, AnimateSmoothTo, AnimateVectorType}
-import work.chiro.game.application.{ImageResourceFactory, Main}
+import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateNonLinear, AnimateVectorType}
+import work.chiro.game.application.ImageResourceFactory
 import work.chiro.game.basic.PositionType.Position
 import work.chiro.game.basic.{AbstractObjectFactory, Vec2Double}
 import work.chiro.game.bullet.EnemyBullet
@@ -44,8 +44,8 @@ object EliteEnemy extends ImageResourceFactory with AbstractObjectFactory {
     val positionEnemyNew = getNewFlightPosition(EliteEnemy.getImage.getWidth)
     new EliteEnemy(
       positionEnemyNew, new AnimateContainer[Position](List(
-        new AnimateLinearToTarget(positionEnemyNew, new Position(positionEnemyNew.getX, config.window.height),
-          AnimateVectorType.PositionLike.id, getTimeMills, 20000)
+        new AnimateLinear(positionEnemyNew, new Position(0, 0.1),
+          AnimateVectorType.PositionLike.id, getTimeMills, 0)
       )), 30
     )
   }

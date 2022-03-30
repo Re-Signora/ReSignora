@@ -1,10 +1,11 @@
 package work.chiro.game.aircraft
 
 import work.chiro.game.GlobalConfigLoader.config
-import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateVectorType}
-import work.chiro.game.application.{ImageResourceFactory, Main}
+import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateVectorType}
+import work.chiro.game.application.ImageResourceFactory
 import work.chiro.game.basic.PositionType.Position
 import work.chiro.game.basic.{AbstractObjectFactory, Vec2Double}
+import work.chiro.game.logger
 import work.chiro.game.utils.{getNewFlightPosition, getTimeMills}
 
 /**
@@ -35,8 +36,8 @@ object MobEnemy extends ImageResourceFactory with AbstractObjectFactory {
     val positionEnemyNew = getNewFlightPosition(MobEnemy.getImage.getWidth)
     new MobEnemy(
       positionEnemyNew, new AnimateContainer[Position](List(
-        new AnimateLinearToTarget(positionEnemyNew, new Position(positionEnemyNew.getX, config.window.height),
-          AnimateVectorType.PositionLike.id, getTimeMills, 2000)
+        new AnimateLinear(positionEnemyNew, new Position(0, 0.2),
+          AnimateVectorType.PositionLike.id, getTimeMills, 0)
       )), 30
     )
   }
