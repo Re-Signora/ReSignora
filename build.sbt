@@ -4,7 +4,7 @@ ThisBuild / scalaVersion     := "2.13.8"
 ThisBuild / version          := projectVersion
 ThisBuild / organization     := "work.chiro.game"
 
-lazy val AircraftWar = (project in file("AircraftWar"))
+lazy val AircraftWar = (project in file("."))
   .settings(
     name := "AircraftWar",
     assembly / mainClass := Some("work.chiro.game.application.Main"),

@@ -46,17 +46,17 @@ public class ImageManager {
     static {
         try {
 
-            BACKGROUND_IMAGE = ImageIO.read(new FileInputStream("AircraftWar/src/main/resources/images/bg.jpg"));
+            BACKGROUND_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/bg.jpg"));
 
-            HERO_IMAGE = ImageIO.read(new FileInputStream("AircraftWar/src/main/resources/images/hero.png"));
-            MOB_ENEMY_IMAGE = ImageIO.read(new FileInputStream("AircraftWar/src/main/resources/images/mob.png"));
-            ELITE_ENEMY_IMAGE = ImageIO.read(new FileInputStream("AircraftWar/src/main/resources/images/elite.png"));
-            BOSS_ENEMY_IMAGE = ImageIO.read(new FileInputStream("AircraftWar/src/main/resources/images/boss.png"));
-            HERO_BULLET_IMAGE = ImageIO.read(new FileInputStream("AircraftWar/src/main/resources/images/bullet_hero.png"));
-            ENEMY_BULLET_IMAGE = ImageIO.read(new FileInputStream("AircraftWar/src/main/resources/images/bullet_enemy.png"));
-            BLOOD_PROP_IMAGE = ImageIO.read(new FileInputStream("AircraftWar/src/main/resources/images/prop_blood.png"));
-            BOMB_PROP_IMAGE = ImageIO.read(new FileInputStream("AircraftWar/src/main/resources/images/prop_bomb.png"));
-            BULLET_PROP_IMAGE = ImageIO.read(new FileInputStream("AircraftWar/src/main/resources/images/prop_bullet.png"));
+            HERO_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/hero.png"));
+            MOB_ENEMY_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/mob.png"));
+            ELITE_ENEMY_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/elite.png"));
+            BOSS_ENEMY_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/boss.png"));
+            HERO_BULLET_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/bullet_hero.png"));
+            ENEMY_BULLET_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/bullet_enemy.png"));
+            BLOOD_PROP_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/prop_blood.png"));
+            BOMB_PROP_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/prop_bomb.png"));
+            BULLET_PROP_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/prop_bullet.png"));
 
             CLASSNAME_IMAGE_MAP.put(HeroAircraft.class.getName(), HERO_IMAGE);
             CLASSNAME_IMAGE_MAP.put(MobEnemy.class.getName(), MOB_ENEMY_IMAGE);
