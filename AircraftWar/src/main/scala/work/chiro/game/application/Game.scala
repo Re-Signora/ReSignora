@@ -46,8 +46,11 @@ class Game(frame: JFrame) extends JPanel {
   private var gameOverFlag = false
   private var score = 0
 
-  private var frameTime: Double = 0
-  private var lastFrameTime: Double = 0
+  private var frameRenderTime: Double = 0
+  private var lastFrameRenderTime: Double = 0
+
+  private var frameCalcTime: Double = 0
+  private var lastFrameCalcTime: Double = 0
 
   private val heroShootDuration = 1
   private var heroShootCycleTime: Double = 0
@@ -63,18 +66,26 @@ class Game(frame: JFrame) extends JPanel {
 
   private var fpsCycleTime: Double = 0
   private val fpsCycleDuration = 100
-  private val frameCount = new ListBuffer[Double]
+  private val frameRenderCount = new ListBuffer[Double]
+  private val frameCalcCount = new ListBuffer[Double]
 
-  def frameTimeDelta = frameTime - lastFrameTime
+  def frameCalcTimeDelta = frameCalcTime - lastFrameCalcTime
 
   /**
    * 游戏启动入口，执行游戏逻辑
    */
   def action() = {
     enemyAircrafts.synchronized(enemyAircrafts.append(EliteEnemy.create()))
-    // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
+    // 定时任务：对象产生、碰撞判定、击毁及结束判定
     val calcTask = new Runnable {
       override def run() = {
+        frameCalcTime = getTimeMills
+        // frameCalcCount.synchronized({
+        //   frameCalcCount.append(frameCalcTime)
+        //   frameCalcCount.filterInPlace(_ >= (if (frameRenderTime >= 1000) frameCalcTime - 1000 else 0))
+        // })
+        frameCalcCount.append(frameCalcTime)
+        frameCalcCount.filterInPlace(_ >= (if (frameRenderTime >= 1000) frameCalcTime - 1000 else 0))
         // 周期性执行（控制频率）
         // 键盘操作
         controller.onFrame()
@@ -87,11 +98,13 @@ class Game(frame: JFrame) extends JPanel {
         // 产生精英敌机
         if (onEliteCreateCountCycle) enemyAircrafts.synchronized(enemyAircrafts.append(EliteEnemy.create()))
         if (onFpsCountCycle) {
-          frameCount.synchronized({
-            val fpsInfo = f"[ ${frameTime / 1000}%.3fs ] ${frameCount.size} fps"
-            if (config.running.showFps) logger.info(fpsInfo)
-            Main.getFrameInstance.get.setTitle(f"Aircraft War $fpsInfo")
-          })
+          // frameCalcCount.synchronized({
+          //
+          // })
+          // val fpsInfo = f"[ ${frameCalcTime / 1000}%.3fs ] [ Calc ${frameCalcCount.size} fps | Render ${frameRenderCount.size} fps ]"
+          val fpsInfo = f"[ Calc ${frameCalcCount.size} fps | Render ${frameRenderCount.size} fps ]"
+          if (config.running.showFps) logger.info(fpsInfo)
+          Main.getFrameInstance.get.setTitle(f"Aircraft War $fpsInfo")
         }
         // 所有物体移动
         allObjectLists.foreach(_.foreach(_.forward()))
@@ -105,19 +118,21 @@ class Game(frame: JFrame) extends JPanel {
           gameOverFlag = true
           logger.info("Game Over!")
         }
-        lastFrameTime = frameTime
+        lastFrameCalcTime = frameCalcTime
       }
     }
 
     val renderTask = new Runnable {
       override def run() = {
-        frameTime = getTimeMills
-        frameCount.synchronized({
-          frameCount.append(frameTime)
-          frameCount.filterInPlace(_ >= (if (frameTime >= 1000) frameTime - 1000 else 0))
-        })
+        frameRenderTime = getTimeMills
+        // frameRenderCount.synchronized({
+        frameRenderCount.append(frameRenderTime)
+        frameRenderCount.filterInPlace(_ >= (if (frameRenderTime >= 1000) frameRenderTime - 1000 else 0))
+        // })
         // 重绘界面
         repaint()
+        // logger.info(s"lastFrame delta = $frameTimeDelta")
+        lastFrameRenderTime = frameRenderTime
       }
     }
 
@@ -132,7 +147,7 @@ class Game(frame: JFrame) extends JPanel {
   }
 
   private def onHeroShootCountCycle = {
-    heroShootCycleTime += frameTimeDelta
+    heroShootCycleTime += frameCalcTimeDelta
     // 跨越到新的周期
     if (heroShootCycleTime >= heroShootDuration) {
       heroShootCycleTime %= heroShootDuration
@@ -141,7 +156,7 @@ class Game(frame: JFrame) extends JPanel {
   }
 
   private def onEliteShootCountCycle = {
-    eliteShootCycleTime += frameTimeDelta
+    eliteShootCycleTime += frameCalcTimeDelta
     // 跨越到新的周期
     if (eliteShootCycleTime >= eliteShootDuration) {
       eliteShootCycleTime %= eliteShootDuration
@@ -150,7 +165,7 @@ class Game(frame: JFrame) extends JPanel {
   }
 
   private def onMobCreateCountCycle = {
-    mobCreateCycleTime += frameTimeDelta
+    mobCreateCycleTime += frameCalcTimeDelta
     // 跨越到新的周期
     if (mobCreateCycleTime >= mobCreateDuration) {
       mobCreateCycleTime %= mobCreateDuration
@@ -159,7 +174,7 @@ class Game(frame: JFrame) extends JPanel {
   }
 
   private def onEliteCreateCountCycle = {
-    eliteCreateCycleTime += frameTimeDelta
+    eliteCreateCycleTime += frameCalcTimeDelta
     // 跨越到新的周期
     if (eliteCreateCycleTime >= eliteCreateDuration) {
       eliteCreateCycleTime %= eliteCreateDuration
@@ -168,7 +183,7 @@ class Game(frame: JFrame) extends JPanel {
   }
 
   private def onFpsCountCycle = {
-    fpsCycleTime += frameTimeDelta
+    fpsCycleTime += frameCalcTimeDelta
     // 跨越到新的周期
     if (fpsCycleTime >= fpsCycleDuration) {
       // logger.info(f"bullet count: ${allBullets.map(_.size).sum}")
