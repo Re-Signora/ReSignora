@@ -15,8 +15,8 @@ lazy val AircraftWar = (project in file("."))
         .withIncludeDependency(true)
     },
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "3.2.11",
       "org.scalactic" %% "scalactic" % "3.2.11",
+      "org.scalatest" %% "scalatest" % "3.2.11" % "test",
       // for logger
       "com.lihaoyi" %% "sourcecode" % "0.2.8",
       // for game scripts

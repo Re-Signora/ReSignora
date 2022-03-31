@@ -16,13 +16,27 @@ Scala 项目的 UML 图见 [AircraftWar-scala.puml](uml/AircraftWar-scala.puml)�
 
 ## 运行
 
-**注意：加载 SBT 项目需要稳定的互联网连接以加载外部依赖！**
+### 注意事项
 
-详见：[(44条消息) sbt卡住的解决办法，sbt设置代理_ArkFallen的博客-CSDN博客_sbt 代理](https://blog.csdn.net/baidu_33340703/article/details/105548180)
+1. **加载本 SBT 项目需要 IDEA 安装 Scala 插件！**
 
-如果您没有稳定的网络代理的话，删除 `build.sbt`再用 IDEA 打开也可以加载项目；或者直接运行 `.jar` 文件也可以。
+2. **加载 SBT 项目需要稳定的互联网连接以加载外部依赖！**
 
-**操作说明：**
+   详见：[(44条消息) sbt卡住的解决办法，sbt设置代理_ArkFallen的博客-CSDN博客_sbt 代理](https://blog.csdn.net/baidu_33340703/article/details/105548180)
+
+   如果您没有稳定的网络代理的话，删除 `build.sbt`再用 IDEA 打开也可以加载项目；或者直接运行 `.jar` 文件也可以。
+
+3. **加载 SBT 项目的时候需要改动/添加`~/.sbt/1.0/global.sbt`（Windows上是`C:\Users\用户名称\.sbt\1.0\global.sbt`）以实现 ScalaTest！**
+
+   在上述文件中添加此行：
+
+   ```scala
+   resolvers += "Artima Maven Repository" at "https://repo.artima.com/releases"
+   ```
+
+如果您需要从源代码运行本 Scala 项目请一定要执行上面的步骤！
+
+### 操作说明
 
 1. Java version: 鼠标拖动移动英雄机
 2. Scala version:
