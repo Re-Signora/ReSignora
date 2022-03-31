@@ -1,5 +1,9 @@
 mainmenu "AircraftWar Configuration Menu"
 
+config M_CONFIG_TEST_READ
+    string
+    default "OK"
+
 config DEBUG
     bool "Debug switch"
     default y
@@ -54,7 +58,7 @@ menu "Control config"
 endmenu
 
 menu "Running config"
-    config M_RUNNING_PRINT_FPS
+    config M_RUNNING_SHOW_FPS
         bool "Print fps info in console"
         default n
 endmenu

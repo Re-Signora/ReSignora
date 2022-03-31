@@ -6,7 +6,7 @@ import org.luaj.vm2.lib.jse.JsePlatform
 import java.awt.{Robot, Toolkit}
 import javax.swing.{JFrame, WindowConstants}
 import work.chiro.game.GlobalConfigLoader.config
-import work.chiro.game.logger
+import work.chiro.game.{GlobalConfigLoader, logger}
 
 /**
  * 程序入口
@@ -21,6 +21,7 @@ object Main {
   def getLuaGlobals = luaGlobals.get
 
   def main(args: Array[String]): Unit = {
+    GlobalConfigLoader.init
     logger.info("Hello Aircraft War" + (if (config.isDebug) " [DEBUG MODE]" else ""))
     // 获得屏幕的分辨率，初始化 Frame
     val screenSize = Toolkit.getDefaultToolkit.getScreenSize

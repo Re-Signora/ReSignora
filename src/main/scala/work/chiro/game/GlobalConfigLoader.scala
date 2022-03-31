@@ -142,9 +142,20 @@ object GlobalConfigLoader {
       inverseUpdateAll()
     }
 
+    object readTest extends ModuleOption("M_CONFIG_TEST") {
+      def read: String = getValue(d("READ"), "OK")
+
+      override val inverseUpdateTable = Array(f("READ") -> "OK")
+
+      inverseUpdateAll()
+    }
+
     def isDebug: Boolean = if (data.contains("DEBUG")) data("DEBUG").asInstanceOf[Boolean] else true
 
     def updateFromData() = control.updateFromData()
+
+    // invoke all
+    List(window, hero, running, control, background, readTest)
   }
 
   def generate: GlobalConfig = {
@@ -221,9 +232,14 @@ object GlobalConfigLoader {
     c
   }
 
-  implicit val config: GlobalConfig = generate
+  private var configInstance: Option[GlobalConfig] = None
 
-  def testValue(value: String) = {
-    logger.info(value)
+  implicit def config: GlobalConfig = getInstance
+
+  def getInstance = {
+    if (configInstance.isEmpty) configInstance = Some(generate)
+    configInstance.get
   }
+
+  def init = getInstance
 }

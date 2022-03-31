@@ -24,32 +24,14 @@ class LuaGame extends TwoArgFunction {
 
       override def call(name: LuaValue) = {
         val key = name.checkjstring()
-        logger.info(s"call: $name")
         if (config.contains(key)) convert(key)
-        NONE
+        else NONE
       }
     }
 
-    class GetString extends OneArgFunction {
-      override def call(name: LuaValue) = {
-        val key = name.checkjstring()
-        logger.info(s"call: $name")
-        val value = config.selectDynamic(key).asInstanceOf[String]
-        logger.info(s"\tconfig.$name = $value")
-        if (config.contains(key)) LuaValue.valueOf(value)
-        NONE
-      }
+    class GetString extends Get {
+      override def convert(key: String) = LuaValue.valueOf(config.selectDynamic(key).asInstanceOf[String])
     }
-
-    // class GetString extends Get {
-    //   override def convert(key: String) = {
-    //     val value = config.selectDynamic(key).asInstanceOf[String]
-    //     logger.info(s"value = $value")
-    //     LuaValue.valueOf(value)
-    //   }
-    //
-    //   // override def call(name: LuaValue) = name
-    // }
 
     class GetInt extends Get {
       override def convert(key: String) = LuaValue.valueOf(config.selectDynamic(key).asInstanceOf[Int])
