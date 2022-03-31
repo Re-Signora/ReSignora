@@ -2,7 +2,7 @@ package work.chiro.game.test.luaj
 
 import org.luaj.vm2.lib.jse.JsePlatform
 import org.scalatest.flatspec.AnyFlatSpec
-import work.chiro.game.libraries.Libraries
+import work.chiro.game.libraries.LibrariesLoader
 import work.chiro.game.logger
 import work.chiro.game.utils.tryGetFile
 
@@ -37,7 +37,7 @@ class LuaJTest extends AnyFlatSpec {
     val script = "luaj-libs-test.lua"
     println(s"execute file $script:")
     val globals = JsePlatform.standardGlobals()
-    Libraries.loadAllLibraries(globals = globals)
+    LibrariesLoader.loadAllLibraries(globals = globals)
     val chunk = globals.loadfile(script)
     chunk.call()
     logger.info("test done.")

@@ -33,8 +33,10 @@ object GlobalConfigLoader {
       data(keyUse) = args
     }
 
+    def contains(key: String): Boolean = data.contains(key)
+
     // 用这样的方式把储存的 `Any` 类型转换为指定类型。
-    class ModuleOption(moduleConfigName: String) {
+    abstract class ModuleOption(moduleConfigName: String) {
       def enabled: Boolean = data.contains(moduleConfigName)
 
       def getValue[T](use: () => T, default: T): T = {
@@ -52,19 +54,36 @@ object GlobalConfigLoader {
 
       def getFullOptionName(optionName: String) = moduleConfigName + "_" + optionName
 
+      def f(optionName: String) = getFullOptionName(optionName)
+
       def d[T](optionName: String): () => T = () => data(getFullOptionName(optionName)).asInstanceOf[T]
 
       def contains(optionName: String): Boolean = if (enabled) data.contains(getFullOptionName(optionName)) else false
+
+      val inverseUpdateTable: IndexedSeq[(String, Any)]
+
+      def inverseUpdateAll(): Unit = data.addAll(inverseUpdateTable)
     }
 
     object window extends ModuleOption("M_WINDOW") {
       def width: Int = getValue(d("WIDTH"), 512)
 
       def height: Int = getValue(d("HEIGHT"), 768)
+
+      override val inverseUpdateTable = Array(
+        f("WIDTH") -> width,
+        f("HEIGHT") -> height
+      )
+
+      inverseUpdateAll()
     }
 
     object running extends ModuleOption("M_RUNNING") {
       def showFps: Boolean = getValue(d("SHOW_FPS"), false)
+
+      override val inverseUpdateTable = Array(f("SHOW_FPS") -> showFps)
+
+      inverseUpdateAll()
     }
 
     object hero extends ModuleOption("M_HERO") {
@@ -75,6 +94,13 @@ object GlobalConfigLoader {
           .asInstanceOf[String].split(",").map(s => Integer.parseInt(s)),
         Array[Int](5, 15, 30, 60)
       )
+
+      override val inverseUpdateTable = Array(
+        f("BOX") -> box,
+        f("POWER_STEPS") -> powerSteps.mkString(",")
+      )
+
+      inverseUpdateAll()
     }
 
     object control extends ModuleOption("M_CONTROL") {
@@ -100,10 +126,20 @@ object GlobalConfigLoader {
         // keyShoot = getValue(d("KEYCODE_SHOOT"), 90)
         // keyQuit = getValue(d("KEYCODE_QUIT"), 81)
       }
+
+      override val inverseUpdateTable = Array(
+        f("MOVE_SPEED") -> 1000
+      )
+
+      inverseUpdateAll()
     }
 
     object background extends ModuleOption("M_BACKGROUND") {
       def imagePath: String = getValue(d("IMAGE_PATH"), "images/bg.jpg")
+
+      override val inverseUpdateTable = Array(f("IMAGE_PATH") -> imagePath)
+
+      inverseUpdateAll()
     }
 
     def isDebug: Boolean = if (data.contains("DEBUG")) data("DEBUG").asInstanceOf[Boolean] else true

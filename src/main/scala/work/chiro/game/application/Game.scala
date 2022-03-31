@@ -10,7 +10,7 @@ import work.chiro.game.application.Main.getLuaGlobals
 import work.chiro.game.basic.AbstractObject
 import work.chiro.game.bullet.AbstractBullet
 import work.chiro.game.control.HeroController
-import work.chiro.game.libraries.Libraries
+import work.chiro.game.libraries.LibrariesLoader
 import work.chiro.game.logger
 import work.chiro.game.prop.{AbstractProp, BloodProp, BombProp, BulletProp}
 import work.chiro.game.scene.Background
@@ -156,7 +156,7 @@ class Game(frame: JFrame) extends JPanel {
     // 不管上次执行是否完成也执行
     // executorService.scheduleAtFixedRate(calcTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS)
     // 加载自定义库
-    Libraries.loadAllLibraries()
+    LibrariesLoader.loadAllLibraries()
     LoadState.install(getLuaGlobals)
     LuaC.install(getLuaGlobals)
     getLuaGlobals.loadfile("scripts/init.lua").call()
