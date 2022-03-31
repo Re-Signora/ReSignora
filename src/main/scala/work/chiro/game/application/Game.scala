@@ -13,7 +13,7 @@ import work.chiro.game.control.HeroController
 import work.chiro.game.libraries.LibrariesLoader
 import work.chiro.game.logger
 import work.chiro.game.prop.{AbstractProp, BloodProp, BombProp, BulletProp}
-import work.chiro.game.scene.Background
+import work.chiro.game.layer.Background
 import work.chiro.game.utils.getTimeMills
 
 import java.awt.{Color, Font, Graphics}

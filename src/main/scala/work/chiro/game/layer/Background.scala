@@ -1,4 +1,4 @@
-package work.chiro.game.scene
+package work.chiro.game.layer
 
 import work.chiro.game.animate.{AnimateContainer, AnimateLinearLoop, AnimateVectorType}
 import work.chiro.game.application.ImageResourceFactory
