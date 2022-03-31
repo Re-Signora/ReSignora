@@ -1,10 +1,16 @@
 package work.chiro.game.application
 
+import org.luaj.vm2.LoadState
+import org.luaj.vm2.compiler.LuaC
+import org.luaj.vm2.lib.{Bit32Lib, CoroutineLib, PackageLib, StringLib, TableLib}
+import org.luaj.vm2.lib.jse.{JseBaseLib, JseIoLib, JseMathLib, JseOsLib, LuajavaLib}
 import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.aircraft._
+import work.chiro.game.application.Main.getLuaGlobals
 import work.chiro.game.basic.AbstractObject
 import work.chiro.game.bullet.AbstractBullet
 import work.chiro.game.control.HeroController
+import work.chiro.game.libraries.Libraries
 import work.chiro.game.logger
 import work.chiro.game.prop.{AbstractProp, BloodProp, BombProp, BulletProp}
 import work.chiro.game.scene.Background
@@ -112,7 +118,7 @@ class Game(frame: JFrame) extends JPanel {
         if (onFpsCountCycle) {
           val fpsInfo = f"[ Calc ${frameCalcCount.size} fps | Render ${frameRenderCount.size} fps ]"
           if (config.running.showFps) logger.info(fpsInfo)
-          Main.getFrameInstance.get.setTitle(f"Aircraft War $fpsInfo")
+          Main.getFrameInstance.setTitle(f"Aircraft War $fpsInfo")
         }
         // 所有物体移动
         allObjectLists.foreach(_.foreach(_.forward()))
@@ -149,6 +155,14 @@ class Game(frame: JFrame) extends JPanel {
     executorService.scheduleWithFixedDelay(renderTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS)
     // 不管上次执行是否完成也执行
     // executorService.scheduleAtFixedRate(calcTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS)
+    // 加载自定义库
+    Libraries.loadAllLibraries()
+    LoadState.install(getLuaGlobals)
+    LuaC.install(getLuaGlobals)
+    getLuaGlobals.loadfile("scripts/init.lua").call()
+    logger.info("init.lua launched.")
+    getLuaGlobals.loadfile("scripts/game.lua").call()
+    logger.info("game.lua launched.")
   }
 
   private def onHeroShootCountCycle = {

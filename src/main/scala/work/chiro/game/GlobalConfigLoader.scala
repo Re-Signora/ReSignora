@@ -186,4 +186,8 @@ object GlobalConfigLoader {
   }
 
   implicit val config: GlobalConfig = generate
+
+  def testValue(value: String) = {
+    logger.info(value)
+  }
 }

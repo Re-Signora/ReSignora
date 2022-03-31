@@ -1,6 +1,9 @@
 package work.chiro.game.application
 
-import java.awt.Toolkit
+import org.luaj.vm2.Globals
+import org.luaj.vm2.lib.jse.JsePlatform
+
+import java.awt.{Robot, Toolkit}
 import javax.swing.{JFrame, WindowConstants}
 import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.logger
@@ -12,8 +15,10 @@ import work.chiro.game.logger
  */
 object Main {
   private var frameInstance: Option[JFrame] = None
+  private var luaGlobals: Option[Globals] = None
 
-  def getFrameInstance = frameInstance
+  def getFrameInstance = frameInstance.get
+  def getLuaGlobals = luaGlobals.get
 
   def main(args: Array[String]): Unit = {
     logger.info("Hello Aircraft War" + (if (config.isDebug) " [DEBUG MODE]" else ""))
@@ -26,13 +31,8 @@ object Main {
     //设置窗口的大小和位置,居中放置
     frame.setBounds((screenSize.getWidth.toInt - config.window.width) / 2, 0, config.window.width, config.window.height)
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
-    // val game = new Game(frame)
-    // frame.add(game)
-    // 使用下面一行使得 JPanel 能够获得键盘焦点
-    // frame.getContentPane.add(game)
-    // frame.setVisible(true)
-    // game.requestFocus()
-    // game.action()
+    luaGlobals = Some(JsePlatform.standardGlobals())
+    getLuaGlobals.loadfile("scripts/lang-test.lua").call()
     new Game(frame).action()
   }
 }
