@@ -18,6 +18,7 @@ class BossEnemyTest {
         BossEnemy dut = getBossNewInstance();
         dut.vanish();
         assumeTrue(dut.notValid());
+        System.out.println("Test pass.");
     }
 
     @Test
@@ -28,6 +29,7 @@ class BossEnemyTest {
         BaseBullet bullet = bullets.get(0);
         assumeTrue(bullet.getLocationX() == 0);
         assumeTrue(bullet.getLocationY() == 0);
+        System.out.println("Test pass.");
     }
 
     @Test
@@ -39,5 +41,6 @@ class BossEnemyTest {
         BossEnemyFactory.clearInstance();
         dut2 = getBossNewInstance();
         assumeFalse(dut1 == dut2);
+        System.out.println("Test pass.");
     }
 }

@@ -19,6 +19,7 @@ class BulletPropTest {
     void crash() {
         BulletProp bulletProp = bulletPropFactory.create();
         assumeTrue(bulletProp.crash(HeroAircraftFactory.getInstance()));
+        System.out.println("Test pass.");
     }
 
     @Test
@@ -31,5 +32,6 @@ class BulletPropTest {
         BulletProp bulletProp = bulletPropFactory.create();
         bulletProp.handleAircrafts(enemyAircrafts);
         assumeTrue(HeroAircraftFactory.getInstance().shoot().size() == 2);
+        System.out.println("Test pass.");
     }
 }

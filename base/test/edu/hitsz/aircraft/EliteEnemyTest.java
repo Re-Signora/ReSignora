@@ -18,6 +18,7 @@ class EliteEnemyTest {
         EliteEnemy dut = getNewInstance();
         dut.forward();
         assumeTrue(dut.getLocationY() == 10);
+        System.out.println("Test pass.");
     }
 
     @Test
@@ -29,5 +30,6 @@ class EliteEnemyTest {
         bullet.forward();
         assumeTrue(bullet.getLocationX() == 0);
         assumeTrue(bullet.getLocationY() == 10);
+        System.out.println("Test pass.");
     }
 }
