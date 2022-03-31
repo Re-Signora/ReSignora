@@ -1,16 +1,16 @@
 package work.chiro.game.layer
 
+import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.animate.{AnimateContainer, AnimateLinearLoop, AnimateVectorType}
 import work.chiro.game.application.ImageResourceFactory
-import work.chiro.game.basic.{AbstractObject, AbstractObjectFactory, Vec2Double}
 import work.chiro.game.basic.PositionType.{Position, Size, SizeDouble}
-import work.chiro.game.GlobalConfigLoader.config
+import work.chiro.game.basic.Vec2Double
 import work.chiro.game.utils.getTimeMills
 
 import java.awt.Graphics
 
 class Background(posInit: Position, animateContainer: AnimateContainer[Vec2Double])
-  extends AbstractObject(
+  extends AbstractLayer(
     posInit,
     animateContainer,
     sizeInit = Some(new Size(config.window.width, config.window.height))) {
@@ -24,7 +24,7 @@ class Background(posInit: Position, animateContainer: AnimateContainer[Vec2Doubl
   }
 }
 
-object Background extends ImageResourceFactory with AbstractObjectFactory {
+object Background extends ImageResourceFactory with AbstractLayerFactory {
   override def getImageCachedPath = "images/bg.jpg"
 
   private var backgroundInstance: Option[Background] = None

@@ -13,7 +13,7 @@ import work.chiro.game.control.HeroController
 import work.chiro.game.libraries.LibrariesLoader
 import work.chiro.game.logger
 import work.chiro.game.prop.{AbstractProp, BloodProp, BombProp, BulletProp}
-import work.chiro.game.layer.Background
+import work.chiro.game.layer.{AbstractLayer, Background}
 import work.chiro.game.utils.getTimeMills
 
 import java.awt.{Color, Font, Graphics}
@@ -38,12 +38,14 @@ class Game(frame: JFrame) extends JPanel {
   val backgrounds = new ListBuffer[AbstractObject].addOne(gameBackground)
   val heroAircrafts = new ListBuffer[AbstractAircraft].addOne(heroAircraft)
   val aircraftBoxes = new ListBuffer[AbstractObject].addOne(HeroAircraft.getInstance.box)
+  val layers = new ListBuffer[AbstractLayer]
   val allObjectLists = Array(
     enemyAircrafts,
     heroBullets,
     enemyBullets,
     props,
-    backgrounds
+    backgrounds,
+    layers
   )
   val allObjectsToDraw = Array(
     backgrounds,
@@ -52,7 +54,8 @@ class Game(frame: JFrame) extends JPanel {
     heroAircrafts,
     enemyBullets,
     props,
-    aircraftBoxes
+    aircraftBoxes,
+    layers
   )
   val allAircrafts = Array(enemyAircrafts, List(heroAircraft))
   val allBullets = Array(heroBullets, enemyBullets)
