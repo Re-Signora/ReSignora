@@ -14,7 +14,7 @@ public class BulletPropFactory implements AbstractPropFactory {
     }
 
     @Override
-    public AbstractProp create() {
+    public BulletProp create() {
         return new BulletProp(locationX, locationY, speedX, speedY);
     }
 }

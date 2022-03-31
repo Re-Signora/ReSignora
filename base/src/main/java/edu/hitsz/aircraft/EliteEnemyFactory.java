@@ -15,7 +15,7 @@ public class EliteEnemyFactory implements AbstractAircraftFactory {
     }
 
     @Override
-    public AbstractAircraft create() {
+    public EliteEnemy create() {
         return new EliteEnemy(locationX, locationY, speedX, speedY, hp);
     }
 }

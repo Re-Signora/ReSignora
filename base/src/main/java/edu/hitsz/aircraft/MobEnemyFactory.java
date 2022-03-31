@@ -15,7 +15,7 @@ public class MobEnemyFactory implements AbstractAircraftFactory {
     }
 
     @Override
-    public AbstractAircraft create() {
+    public MobEnemy create() {
         return new MobEnemy(locationX, locationY, speedX, speedY, hp);
     }
 }

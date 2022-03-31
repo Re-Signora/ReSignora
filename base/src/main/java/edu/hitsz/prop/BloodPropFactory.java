@@ -15,7 +15,7 @@ public class BloodPropFactory implements AbstractPropFactory {
     }
 
     @Override
-    public AbstractProp create() {
+    public BloodProp create() {
         return new BloodProp(locationX, locationY, speedX, speedY, increaseHp);
     }
 }
