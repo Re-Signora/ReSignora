@@ -5,12 +5,19 @@ import work.chiro.game.basic.PositionType.Position
 
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
+import scala.io.Source
 
 object utils {
   def tryGetImageFile(filename: String): BufferedImage = {
     def getImage(path: String) = ImageIO.read(getClass.getClassLoader.getResource(path).openStream())
 
     getImage(f"$filename")
+  }
+
+  def tryGetFile(filename: String) = {
+    def getFile(path: String) = Source.fromFile(getClass.getClassLoader.getResource(path).getFile, "UTF-8")
+
+    getFile(f"$filename")
   }
 
   val timeStartGlobal: Long = System.currentTimeMillis
