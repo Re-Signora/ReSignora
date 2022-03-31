@@ -17,7 +17,10 @@ lazy val AircraftWar = (project in file("."))
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.2.11",
       "org.scalactic" %% "scalactic" % "3.2.11",
-      "com.lihaoyi" %% "sourcecode" % "0.2.8"
+      // for logger
+      "com.lihaoyi" %% "sourcecode" % "0.2.8",
+      // for game scripts
+      "org.luaj" % "luaj-jse" % "3.0.1"
     ),
     scalacOptions ++= Seq(
       "-language:reflectiveCalls",
