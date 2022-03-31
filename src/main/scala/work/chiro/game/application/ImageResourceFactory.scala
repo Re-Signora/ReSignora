@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage
  * @author chiro2001
  */
 trait ImageResourceFactory extends ImageResourceReady {
+  // 缓存上次加载的路径，变化的时候再重新加载
   private var imagePathCached: Option[String] = None
   def getImageCachedPath: String
 

@@ -96,10 +96,6 @@ class Game(frame: JFrame) extends JPanel {
     val calcTask = new Runnable {
       override def run() = {
         frameCalcTime = getTimeMills
-        // frameCalcCount.synchronized({
-        //   frameCalcCount.append(frameCalcTime)
-        //   frameCalcCount.filterInPlace(_ >= (if (frameRenderTime >= 1000) frameCalcTime - 1000 else 0))
-        // })
         frameCalcCount.append(frameCalcTime)
         frameCalcCount.filterInPlace(_ >= (if (frameRenderTime >= 1000) frameCalcTime - 1000 else 0))
         // 周期性执行（控制频率）
@@ -114,10 +110,6 @@ class Game(frame: JFrame) extends JPanel {
         // 产生精英敌机
         if (onEliteCreateCountCycle) enemyAircrafts.synchronized(enemyAircrafts.append(EliteEnemy.create()))
         if (onFpsCountCycle) {
-          // frameCalcCount.synchronized({
-          //
-          // })
-          // val fpsInfo = f"[ ${frameCalcTime / 1000}%.3fs ] [ Calc ${frameCalcCount.size} fps | Render ${frameRenderCount.size} fps ]"
           val fpsInfo = f"[ Calc ${frameCalcCount.size} fps | Render ${frameRenderCount.size} fps ]"
           if (config.running.showFps) logger.info(fpsInfo)
           Main.getFrameInstance.get.setTitle(f"Aircraft War $fpsInfo")
@@ -141,13 +133,10 @@ class Game(frame: JFrame) extends JPanel {
     val renderTask = new Runnable {
       override def run() = {
         frameRenderTime = getTimeMills
-        // frameRenderCount.synchronized({
         frameRenderCount.append(frameRenderTime)
         frameRenderCount.filterInPlace(_ >= (if (frameRenderTime >= 1000) frameRenderTime - 1000 else 0))
-        // })
         // 重绘界面
         repaint()
-        // logger.info(s"lastFrame delta = $frameTimeDelta")
         lastFrameRenderTime = frameRenderTime
       }
     }
@@ -296,28 +285,6 @@ class Game(frame: JFrame) extends JPanel {
 
     // 绘制所有物体
     allObjectsToDraw.foreach(objList => objList.synchronized(objList.foreach(_.draw(g))))
-    // // 绘制背景
-    // gameBackground.draw(g)
-    // // 先绘制子弹，后绘制飞机
-    // // 这样子弹显示在飞机的下层
-    // paintImageWithPositionRevised(g, heroBullets)
-    // paintImageWithPositionRevised(g, enemyAircrafts)
-    // g.drawImage(
-    //   HeroAircraft.getImage,
-    //   (heroAircraft.getLocationX - HeroAircraft.getImage.getWidth / 2).toInt,
-    //   (heroAircraft.getLocationY - HeroAircraft.getImage.getHeight / 2).toInt,
-    //   null
-    // )
-    // paintImageWithPositionRevised(g, enemyBullets)
-    // paintImageWithPositionRevised(g, props)
-    // g.drawImage(
-    //   HeroAircraft.HeroBox.getImage,
-    //   (heroAircraft.getLocationX - config.hero.box / 2).toInt,
-    //   (heroAircraft.getLocationY - config.hero.box / 2).toInt,
-    //   config.hero.box,
-    //   config.hero.box,
-    //   null
-    // )
     //绘制得分和生命值
     paintScoreAndLife(g)
   }

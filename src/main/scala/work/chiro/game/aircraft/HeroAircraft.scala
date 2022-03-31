@@ -1,8 +1,7 @@
 package work.chiro.game.aircraft
 
 import work.chiro.game.GlobalConfigLoader.config
-import work.chiro.game.aircraft.HeroAircraft.getPositionInstance
-import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateLinearToTarget, AnimateVectorType}
+import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateVectorType}
 import work.chiro.game.application.ImageResourceFactory
 import work.chiro.game.basic.PositionType.{Position, Size}
 import work.chiro.game.basic.{AbstractObject, AbstractObjectFactory, Vec2Double}
@@ -79,6 +78,10 @@ class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Dou
   override def draw(g: Graphics) = super.draw(g, sizeDraw = Some(new Size(getImage.getWidth, getImage.getHeight)))
 }
 
+/**
+ * 英雄机碰撞盒
+ * @param posInit          初始位置
+ */
 class HeroAircraftBox(posInit: Position)
   extends AbstractObject(posInit, new AnimateContainer[Position](), sizeInit = Some(new Size(config.hero.box, config.hero.box))) {
   override def getImage = HeroAircraftBox.getImage
