@@ -9,7 +9,8 @@ import work.chiro.game.application.Main
 object LibrariesLoader {
   def get = Array(
     () => new LuaGame,
-    () => new HyperbolicTest
+    () => new HyperbolicTest,
+    () => new LuaLogger
   )
 
   def loadAllLibraries(globals: Globals = Main.getLuaGlobals): Unit = get.foreach(getLib => globals.load(getLib()))

@@ -53,5 +53,16 @@ class LuaJTest extends AnyFlatSpec {
     chunk.call()
     logger.info("test done.")
   }
+
+  "Lua logger test" should "pass the test" in {
+    GlobalConfigLoader.init
+    val script = "luaj-logger-test.lua"
+    println(s"execute file $script:")
+    val globals = JsePlatform.standardGlobals()
+    LibrariesLoader.loadAllLibraries(globals = globals)
+    val chunk = globals.loadfile(script)
+    chunk.call()
+    logger.info("test done.")
+  }
 }
 

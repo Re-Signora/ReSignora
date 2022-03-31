@@ -1,4 +1,6 @@
-print("Lua game")
+require "logger"
+
+logger.info("Lua game")
 if initDone then
-    print("lua init done")
+    logger.info("lua init done")
 end

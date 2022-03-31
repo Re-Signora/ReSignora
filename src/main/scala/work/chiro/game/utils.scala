@@ -40,21 +40,31 @@ object logger {
   val LOG_LEVER_ERROR = 4
   val LOG_LEVER_FATAL = 5
   var logLevel = 0
+  val levelText = Seq(
+    "DEBUG",
+    "VERB",
+    "INFO",
+    "WARN",
+    "ERROR",
+    "FATAL"
+  )
 
   protected def logIt(foo: String, level: Int)(implicit line: sourcecode.Line, file: sourcecode.File, name: sourcecode.Name) = {
     if (level >= logLevel)
-      println(s"${file.value}:${line.value} [${name.value}] $foo")
+      println(f"${levelText(level)}%5s ${file.value}:${line.value} [${name.value}] $foo")
   }
+
+  def setLevel(level: Int) = logLevel = level
 
   def log(msg: => String)(implicit line: sourcecode.Line, file: sourcecode.File, name: sourcecode.Name): Unit = logIt(msg, LOG_LEVER_VERBOSE)
 
-  def debug(msg: => String)(implicit line: sourcecode.Line, file: sourcecode.File, name: sourcecode.Name): Unit = logIt(f"DEBUG - $msg", LOG_LEVER_DEBUG)
+  def debug(msg: => String)(implicit line: sourcecode.Line, file: sourcecode.File, name: sourcecode.Name): Unit = logIt(msg, LOG_LEVER_DEBUG)
 
-  def info(msg: => String)(implicit line: sourcecode.Line, file: sourcecode.File, name: sourcecode.Name): Unit = logIt(f"INFO - $msg", LOG_LEVER_INFO)
+  def info(msg: => String)(implicit line: sourcecode.Line, file: sourcecode.File, name: sourcecode.Name): Unit = logIt(msg, LOG_LEVER_INFO)
 
-  def warn(msg: => String)(implicit line: sourcecode.Line, file: sourcecode.File, name: sourcecode.Name): Unit = logIt(f"WARN - $msg", LOG_LEVER_WARN)
+  def warn(msg: => String)(implicit line: sourcecode.Line, file: sourcecode.File, name: sourcecode.Name): Unit = logIt(msg, LOG_LEVER_WARN)
 
-  def error(msg: => String)(implicit line: sourcecode.Line, file: sourcecode.File, name: sourcecode.Name): Unit = logIt(f"ERROR - $msg", LOG_LEVER_ERROR)
+  def error(msg: => String)(implicit line: sourcecode.Line, file: sourcecode.File, name: sourcecode.Name): Unit = logIt(msg, LOG_LEVER_ERROR)
 
-  def fatal(msg: => String)(implicit line: sourcecode.Line, file: sourcecode.File, name: sourcecode.Name): Unit = logIt(f"FATAL - $msg", LOG_LEVER_FATAL)
+  def fatal(msg: => String)(implicit line: sourcecode.Line, file: sourcecode.File, name: sourcecode.Name): Unit = logIt(msg, LOG_LEVER_FATAL)
 }

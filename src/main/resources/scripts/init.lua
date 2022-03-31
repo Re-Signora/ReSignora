@@ -1,9 +1,6 @@
 require "game"
+require "logger"
 
-print("Lua init...")
-print("config: ", game.config)
-print("config.getString: ", game.config.getString)
-print("config.getString(M_HERO_POWER_STEPS): ", game.config.getString("M_HERO_POWER_STEPS"))
-print("config.getBoolean(M_RUNNING_SHOW_FPS): ", game.config.getBoolean("M_RUNNING_SHOW_FPS"))
-assert(game.config.getString("M_CONFIG_TEST_READ") == "OK", "Error reading config")
+logger.info("Lua init...")
 initDone = true
+logger.info("Lua init done")
