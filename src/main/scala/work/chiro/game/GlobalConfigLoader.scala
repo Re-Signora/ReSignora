@@ -102,6 +102,10 @@ object GlobalConfigLoader {
       }
     }
 
+    object background extends ModuleOption("M_BACKGROUND") {
+      def imagePath: String = getValue(d("IMAGE_PATH"), "images/bg.jpg")
+    }
+
     def isDebug: Boolean = if (data.contains("DEBUG")) data("DEBUG").asInstanceOf[Boolean] else true
 
     def updateFromData() = control.updateFromData()

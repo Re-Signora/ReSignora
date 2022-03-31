@@ -5,7 +5,7 @@ import work.chiro.game.basic.VecDouble
 class AnimateTypeEnumeration extends Enumeration
 
 object AnimateType extends AnimateTypeEnumeration {
-  val Unknown, Linear, LinearToTarget, NonLinear, SmoothTo = Value
+  val Unknown, Linear, LinearToTarget, NonLinear, SmoothTo, LinearLoop = Value
 }
 
 class AnimateVectorTypeEnumeration extends Enumeration
@@ -91,6 +91,24 @@ class AnimateLinear[V <: VecDouble]
   override def getSpeed(timeNow: Double) =
     if (animateVectorType == AnimateVectorType.PositionLike.id) speed
     else new VecDouble(getVector.getSize)
+
+  override def getDelta = new VecDouble(getVector.getSize)
+}
+
+class AnimateLinearLoop[V <: VecDouble]
+(vecSource: V, speed: V, animateVectorType: Int, timeStart: Double, posRange: V)
+  extends AbstractAnimate(vecSource, AnimateType.LinearLoop.id, animateVectorType) {
+  override def update(timeNow: Double) = {
+    getVector.set(getSource + speed * (timeNow - timeStart))
+    getVector.set(for {i <- 0 until getVector.getSize} yield {
+      getVector.get(i) % posRange.get(i)
+    })
+    false
+  }
+
+  override def isDone(timeNow: Double) = false
+
+  override def getSpeed(timeNow: Double) = speed
 
   override def getDelta = new VecDouble(getVector.getSize)
 }

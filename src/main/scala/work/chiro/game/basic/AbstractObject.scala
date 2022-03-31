@@ -4,7 +4,12 @@ import work.chiro.game.aircraft.AbstractAircraft
 import work.chiro.game.animate.AnimateContainer
 import work.chiro.game.application.ImageResourceReady
 import work.chiro.game.basic.PositionType.{Position, Scale, Size}
+import work.chiro.game.logger
 import work.chiro.game.utils.getTimeMills
+
+import java.awt.{Graphics, Graphics2D}
+import java.awt.geom.AffineTransform
+import java.awt.image.BufferedImage
 
 /**
  * 所有对象的基类
@@ -28,13 +33,28 @@ abstract class AbstractObject(posInit: Position,
   def setPos(posX: Double, posY: Double) = pos.set(new Position(posX, posY))
 
   // 尺寸 -1 表示未设置，等待加载图片后依据图片大小自动设置
-  val size = if (sizeInit.nonEmpty) sizeInit.get else new Size(-1, -1)
+  private val size = if (sizeInit.nonEmpty) sizeInit.get else new Size(-1, -1)
+
+  def getSize = {
+    getWidth
+    getHeight
+    size
+  }
 
   def updateRotation(rotationNew: Option[Scale] = None) =
     if (rotationNew.nonEmpty) rotationNew.get else animateContainer.getRotation
 
   // 旋转角度（弧度制）
-  val rotation = updateRotation(rotationInit)
+  private var rotation = updateRotation(rotationInit)
+
+  def getRotation(update: Boolean = false): Scale = {
+    if (update) {
+      rotation = updateRotation()
+      rotation
+    } else {
+      rotation
+    }
+  }
 
   /**
    * 有效（生存）标记，
@@ -42,10 +62,6 @@ abstract class AbstractObject(posInit: Position,
    */
   protected var valid = true
 
-  /**
-   * 可飞行对象根据速度移动
-   * 若飞行对象触碰到横向边界，横向速度反向
-   */
   def forward(): Unit = {
     if (animateContainer.updateAll(getTimeMills)) vanish()
   }
@@ -111,6 +127,35 @@ abstract class AbstractObject(posInit: Position,
    * notValid() => true.
    */
   def vanish() = valid = false
+
+  def draw(g: Graphics,
+           img: Option[BufferedImage] = None,
+           position: Option[Position] = None,
+           sizeDraw: Option[Size] = None,
+           alignCenter: Boolean = true
+          ): Unit = {
+    val image = if (img.isEmpty) getImage else img.get
+    val pos = if (position.isEmpty) getPos else position.get
+    val sizeUse = if (sizeDraw.nonEmpty) sizeDraw.get else getSize
+    if (getRotation().getX == 0) {
+      g.drawImage(
+        image,
+        (pos.getX - (if (alignCenter) sizeUse.getX / 2 else 0)).toInt,
+        (pos.getY - (if (alignCenter) sizeUse.getY / 2 else 0)).toInt,
+        sizeUse.getX,
+        sizeUse.getY,
+        null)
+    } else {
+      val af = AffineTransform.getTranslateInstance(
+        pos.getX - (if (alignCenter) sizeUse.getX / 2 else 0),
+        pos.getY - (if (alignCenter) sizeUse.getY / 2 else 0))
+      af.rotate(rotation.getX, sizeUse.getX / 2, sizeUse.getY / 2)
+      val graphics2d = g.asInstanceOf[Graphics2D]
+      graphics2d.drawImage(image, af, null)
+    }
+  }
+
+  def draw(g: Graphics): Unit = draw(g, img = None, position = None, sizeDraw = None)
 }
 
 trait AbstractObjectFactory {

@@ -4,11 +4,13 @@ import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.aircraft.HeroAircraft.getPositionInstance
 import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateLinearToTarget, AnimateVectorType}
 import work.chiro.game.application.ImageResourceFactory
-import work.chiro.game.basic.PositionType.Position
-import work.chiro.game.basic.{AbstractObjectFactory, Vec2Double}
+import work.chiro.game.basic.PositionType.{Position, Size}
+import work.chiro.game.basic.{AbstractObject, AbstractObjectFactory, Vec2Double}
 import work.chiro.game.bullet.HeroBullet
 import work.chiro.game.logger
 import work.chiro.game.utils.getTimeMills
+
+import java.awt.Graphics
 
 /**
  * 英雄飞机，游戏玩家操控
@@ -71,12 +73,24 @@ class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Dou
   }
 
   override def getImage = HeroAircraft.getImage
+
+  val box = new HeroAircraftBox(getPos)
+
+  override def draw(g: Graphics) = super.draw(g, sizeDraw = Some(new Size(getImage.getWidth, getImage.getHeight)))
+}
+
+class HeroAircraftBox(posInit: Position)
+  extends AbstractObject(posInit, new AnimateContainer[Position](), sizeInit = Some(new Size(config.hero.box, config.hero.box))) {
+  override def getImage = HeroAircraftBox.getImage
+
+  override def draw(g: Graphics) = super.draw(g, position = Some(getPos - new Position(config.hero.box / 2, config.hero.box / 2)), alignCenter = false)
+}
+
+object HeroAircraftBox extends ImageResourceFactory {
+  override def getImageCachedPath = "images/box_hero.png"
 }
 
 object HeroAircraft extends ImageResourceFactory with AbstractObjectFactory {
-  object HeroBox extends ImageResourceFactory {
-    override def getImageCachedPath = "images/box_hero.png"
-  }
   override def getImageCachedPath = "images/hero.png"
 
   var heroInstance: Option[HeroAircraft] = None

@@ -10,8 +10,7 @@ import work.chiro.game.prop.{AbstractProp, BloodProp, BombProp, BulletProp}
 import work.chiro.game.scene.Background
 import work.chiro.game.utils.getTimeMills
 
-import java.awt.geom.AffineTransform
-import java.awt.{Color, Font, Graphics, Graphics2D}
+import java.awt.{Color, Font, Graphics}
 import java.util.concurrent.{ScheduledThreadPoolExecutor, TimeUnit}
 import javax.swing._
 import scala.collection.mutable.ListBuffer
@@ -25,15 +24,32 @@ class Game(frame: JFrame) extends JPanel {
   logger.info(s"Window(${config.window.width}x${config.window.height})")
   val heroAircraft = HeroAircraft.create()
   val heroPosition = HeroAircraft.getPositionInstance
+  val gameBackground = Background.create()
   val enemyAircrafts = new ListBuffer[AbstractAircraft]
   val heroBullets = new ListBuffer[AbstractBullet]
   val enemyBullets = new ListBuffer[AbstractBullet]
   val props = new ListBuffer[AbstractProp]
+  val backgrounds = new ListBuffer[AbstractObject]
+  backgrounds.addOne(gameBackground)
+  val heroAircrafts = new ListBuffer[AbstractAircraft]
+  heroAircrafts.addOne(heroAircraft)
+  val aircraftBoxes = new ListBuffer[AbstractObject]
+  aircraftBoxes.addOne(HeroAircraft.getInstance.box)
   val allObjectLists = Array(
     enemyAircrafts,
     heroBullets,
     enemyBullets,
-    props
+    props,
+    backgrounds
+  )
+  val allObjectsToDraw = Array(
+    backgrounds,
+    heroBullets,
+    enemyAircrafts,
+    heroAircrafts,
+    enemyBullets,
+    props,
+    aircraftBoxes
   )
   val allAircrafts = Array(enemyAircrafts, List(heroAircraft))
   val allBullets = Array(heroBullets, enemyBullets)
@@ -41,7 +57,7 @@ class Game(frame: JFrame) extends JPanel {
   val executorService = new ScheduledThreadPoolExecutor(1)
   // 启动英雄机控制监听
   val controller = new HeroController(frame, this, heroAircraft)
-  private var backGroundTop = 0
+  // private var backGroundTop = 0
   private val timeInterval = 1
   private var gameOverFlag = false
   private var score = 0
@@ -277,50 +293,37 @@ class Game(frame: JFrame) extends JPanel {
    */
   override def paint(g: Graphics) = {
     super.paint(g)
-    // 绘制背景,图片滚动
-    g.drawImage(Background.getImage, 0, backGroundTop - config.window.height, null)
-    g.drawImage(Background.getImage, 0, backGroundTop, null)
-    // backGroundTop += 1
-    if (backGroundTop == config.window.height) backGroundTop = 0
-    // 先绘制子弹，后绘制飞机
-    // 这样子弹显示在飞机的下层
-    paintImageWithPositionRevised(g, heroBullets)
-    paintImageWithPositionRevised(g, enemyAircrafts)
-    g.drawImage(
-      HeroAircraft.getImage,
-      (heroAircraft.getLocationX - HeroAircraft.getImage.getWidth / 2).toInt,
-      (heroAircraft.getLocationY - HeroAircraft.getImage.getHeight / 2).toInt,
-      null
-    )
-    paintImageWithPositionRevised(g, enemyBullets)
-    paintImageWithPositionRevised(g, props)
-    g.drawImage(
-      HeroAircraft.HeroBox.getImage,
-      (heroAircraft.getLocationX - config.hero.box / 2).toInt,
-      (heroAircraft.getLocationY - config.hero.box / 2).toInt,
-      config.hero.box,
-      config.hero.box,
-      null
-    )
+
+    // 绘制所有物体
+    allObjectsToDraw.foreach(objList => objList.synchronized(objList.foreach(_.draw(g))))
+    // // 绘制背景
+    // gameBackground.draw(g)
+    // // 先绘制子弹，后绘制飞机
+    // // 这样子弹显示在飞机的下层
+    // paintImageWithPositionRevised(g, heroBullets)
+    // paintImageWithPositionRevised(g, enemyAircrafts)
+    // g.drawImage(
+    //   HeroAircraft.getImage,
+    //   (heroAircraft.getLocationX - HeroAircraft.getImage.getWidth / 2).toInt,
+    //   (heroAircraft.getLocationY - HeroAircraft.getImage.getHeight / 2).toInt,
+    //   null
+    // )
+    // paintImageWithPositionRevised(g, enemyBullets)
+    // paintImageWithPositionRevised(g, props)
+    // g.drawImage(
+    //   HeroAircraft.HeroBox.getImage,
+    //   (heroAircraft.getLocationX - config.hero.box / 2).toInt,
+    //   (heroAircraft.getLocationY - config.hero.box / 2).toInt,
+    //   config.hero.box,
+    //   config.hero.box,
+    //   null
+    // )
     //绘制得分和生命值
     paintScoreAndLife(g)
   }
 
-  private def paintImageWithPositionRevised(g: Graphics, objects: ListBuffer[_ <: AbstractObject]): Unit = {
-    objects.synchronized {
-      objects.foreach(obj => {
-        val image = obj.getImage
-        if (obj.rotation.getX == 0) {
-          g.drawImage(image, (obj.getLocationX - image.getWidth / 2).toInt, (obj.getLocationY - image.getHeight / 2).toInt, null)
-        } else {
-          val af = AffineTransform.getTranslateInstance(obj.getLocationX - image.getWidth / 2, obj.getLocationY - image.getHeight / 2)
-          af.rotate(obj.rotation.getX, image.getWidth / 2, image.getHeight / 2)
-          val graphics2d = g.asInstanceOf[Graphics2D]
-          graphics2d.drawImage(image, af, null)
-        }
-      })
-    }
-  }
+  private def paintImageWithPositionRevised(g: Graphics, objects: ListBuffer[_ <: AbstractObject]): Unit =
+    objects.synchronized(objects.foreach(_.draw(g)))
 
   private def paintScoreAndLife(g: Graphics) = {
     val x = 10

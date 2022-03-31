@@ -10,18 +10,27 @@ import java.awt.image.BufferedImage
  * @author chiro2001
  */
 trait ImageResourceFactory extends ImageResourceReady {
+  private var imagePathCached: Option[String] = None
   def getImageCachedPath: String
 
-  def getImage: BufferedImage = if (imageCache.isEmpty) {
-    imageCache.synchronized({
-      imageCache = Some(tryGetImageFile(getImageCachedPath))
+  def getImage: BufferedImage = if (imageCached.isEmpty || imagePathCached.isEmpty) {
+    imageCached.synchronized({
+      imageCached = Some(tryGetImageFile(getImageCachedPath))
     })
-    imageCache.get
-  } else imageCache.get
+    imagePathCached = Some(new String(getImageCachedPath))
+    imageCached.get
+  } else {
+    if (imagePathCached.get == getImageCachedPath) {
+      imageCached.get
+    } else {
+      imagePathCached = None
+      getImage
+    }
+  }
 }
 
 trait ImageResourceReady {
   def getImage: BufferedImage
-  def hasImage = imageCache.isDefined
-  var imageCache: Option[BufferedImage] = None
+  def hasImage = imageCached.isDefined
+  var imageCached: Option[BufferedImage] = None
 }
