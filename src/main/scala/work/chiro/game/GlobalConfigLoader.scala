@@ -234,7 +234,9 @@ object GlobalConfigLoader {
 
   private var configInstance: Option[GlobalConfig] = None
 
-  implicit def config: GlobalConfig = getInstance
+  // implicit def config: GlobalConfig = getInstance
+  // Disable dynamic loading when packing
+  implicit val config: GlobalConfig = getInstance
 
   def getInstance = {
     if (configInstance.isEmpty) configInstance = Some(generate)
