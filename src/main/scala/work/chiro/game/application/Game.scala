@@ -35,12 +35,9 @@ class Game(frame: JFrame) extends JPanel {
   val heroBullets = new ListBuffer[AbstractBullet]
   val enemyBullets = new ListBuffer[AbstractBullet]
   val props = new ListBuffer[AbstractProp]
-  val backgrounds = new ListBuffer[AbstractObject]
-  backgrounds.addOne(gameBackground)
-  val heroAircrafts = new ListBuffer[AbstractAircraft]
-  heroAircrafts.addOne(heroAircraft)
-  val aircraftBoxes = new ListBuffer[AbstractObject]
-  aircraftBoxes.addOne(HeroAircraft.getInstance.box)
+  val backgrounds = new ListBuffer[AbstractObject].addOne(gameBackground)
+  val heroAircrafts = new ListBuffer[AbstractAircraft].addOne(heroAircraft)
+  val aircraftBoxes = new ListBuffer[AbstractObject].addOne(HeroAircraft.getInstance.box)
   val allObjectLists = Array(
     enemyAircrafts,
     heroBullets,
@@ -231,7 +228,7 @@ class Game(frame: JFrame) extends JPanel {
   private def crashCheckAction() = {
     // 敌机子弹攻击英雄
     enemyBullets.foreach(bullet => if (bullet.isValid) {
-      if (heroAircraft.crash(bullet)) {
+      if (bullet.crash(heroAircraft)) {
         heroAircraft.decreaseHp(bullet.getPower)
         bullet.vanish()
       }
@@ -262,7 +259,7 @@ class Game(frame: JFrame) extends JPanel {
               }
             }
             // 英雄机 与 敌机 相撞，均损毁
-            if (enemyAircraft.crash(heroAircraft) || heroAircraft.crash(enemyAircraft)) {
+            if (enemyAircraft.crash(heroAircraft)) {
               enemyAircraft.vanish()
               heroAircraft.decreaseHp(Integer.MAX_VALUE)
             }
@@ -271,7 +268,7 @@ class Game(frame: JFrame) extends JPanel {
     })
     // 我方获得道具
     props.foreach(prop => if (prop.isValid) {
-      if (prop.crash(heroAircraft, useImageBox = true)) {
+      if (prop.crash(heroAircraft)) {
         // 道具生效
         prop.handleAircrafts(enemyAircrafts.toList)
         prop.vanish()

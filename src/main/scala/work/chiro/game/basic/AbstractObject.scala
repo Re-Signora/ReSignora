@@ -81,18 +81,19 @@ abstract class AbstractObject(posInit: Position,
    * @param theObject 撞击对方
    * @return true: 我方被击中; false 我方未被击中
    */
-  def crash(theObject: AbstractObject, useImageBox: Boolean = false) = {
+  def crash(theObject: AbstractObject) = {
     // 缩放因子，用于控制 y轴方向区域范围
     val factor = if (this.isInstanceOf[AbstractAircraft]) 2 else 1
     val fFactor = if (theObject.isInstanceOf[AbstractAircraft]) 2 else 1
     val x = theObject.getLocationX
     val y = theObject.getLocationY
-    val fWidth = if (useImageBox) theObject.getImageWidth else theObject.getWidth
-    val fHeight = if (useImageBox) theObject.getImageHeight else theObject.getHeight
-    x + (fWidth + getWidth) / 2 > getLocationX &&
-      x - (fWidth + getWidth) / 2 < getLocationX &&
-      y + (fHeight / fFactor + getHeight / factor) / 2 > getLocationY &&
-      y - (fHeight / fFactor + getHeight / factor) / 2 < getLocationY
+    val boxUse = theObject.getBoxSize
+    // val fWidth = if (useImageBox) theObject.getImageWidth else theObject.getWidth
+    // val fHeight = if (useImageBox) theObject.getImageHeight else theObject.getHeight
+    x + (boxUse.getX + getWidth) / 2 > getLocationX &&
+      x - (boxUse.getX + getWidth) / 2 < getLocationX &&
+      y + (boxUse.getY / fFactor + getHeight / factor) / 2 > getLocationY &&
+      y - (boxUse.getY / fFactor + getHeight / factor) / 2 < getLocationY
   }
 
   def getLocationX = getPos.getX
@@ -156,6 +157,8 @@ abstract class AbstractObject(posInit: Position,
   }
 
   def draw(g: Graphics): Unit = draw(g, img = None, position = None, sizeDraw = None)
+
+  def getBoxSize = getSize
 }
 
 trait AbstractObjectFactory {

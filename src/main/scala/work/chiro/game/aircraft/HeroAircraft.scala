@@ -19,7 +19,7 @@ import java.awt.Graphics
  * @param hpInit           初始血量
  */
 class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Double], hpInit: Int)
-  extends AbstractAircraft(posInit, animateContainer, hpInit, dInit = Some(config.hero.box)) {
+  extends AbstractAircraft(posInit, animateContainer, hpInit) {
   // 攻击方式
   //子弹一次发射数量
   private var shootNum = 1
@@ -76,6 +76,8 @@ class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Dou
   val box = new HeroAircraftBox(getPos)
 
   override def draw(g: Graphics) = super.draw(g, sizeDraw = Some(new Size(getImage.getWidth, getImage.getHeight)))
+
+  override def getBoxSize = box.getSize
 }
 
 /**
