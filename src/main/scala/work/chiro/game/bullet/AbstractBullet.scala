@@ -11,7 +11,7 @@ import work.chiro.game.basic.{AbstractObject, Vec2Double}
  *
  * @author chiro2001
  */
-abstract class AbstractBullet(posInit: Position, animateContainer: AnimateContainer[Vec2Double], power: Int)
+abstract class AbstractBullet(posInit: Position, animateContainer: AnimateContainer, power: Int)
   extends AbstractObject(posInit, animateContainer) {
   override def forward() = {
     super.forward()

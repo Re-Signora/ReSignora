@@ -3,8 +3,8 @@ package work.chiro.game.animate
 import work.chiro.game.basic.PositionType.Scale
 import work.chiro.game.basic.VecDouble
 
-class AnimateContainer[V <: VecDouble]
-(animateSeq: List[AbstractAnimate[V]] = List()) {
+class AnimateContainer
+(animateSeq: List[AbstractAnimate[VecDouble]] = List()) {
   def getAnimateSeq = animateSeq
 
   protected def updateAllInner(timeNow: Double) = animateSeq.map(_.update(timeNow))

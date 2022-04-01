@@ -12,7 +12,7 @@ import work.chiro.game.bullet.AbstractBullet
  * @author chiro2001
  */
 abstract class AbstractAircraft(posInit: Position,
-                                animateContainer: AnimateContainer[Vec2Double],
+                                animateContainer: AnimateContainer,
                                 hpInit: Int,
                                 sizeInit: Option[SizeDouble] = None,
                                 rotationInit: Option[Scale] = None)

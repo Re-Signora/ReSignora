@@ -9,7 +9,7 @@ import work.chiro.game.basic.Vec2Double
 import work.chiro.game.logger
 import work.chiro.game.utils.getTimeMills
 
-class BombProp(posInit: Position, animateContainer: AnimateContainer[Vec2Double])
+class BombProp(posInit: Position, animateContainer: AnimateContainer)
   extends AbstractProp(posInit, animateContainer) {
   override def handleAircrafts(enemyAircrafts: List[AbstractAircraft]) = {
     logger.info("BombSupply active!")
@@ -26,7 +26,7 @@ object BombProp extends ImageResourceFactory {
 
   def create(position: Position) = {
     new BombProp(
-      position, new AnimateContainer[Position](List(
+      position, new AnimateContainer(List(
         new AnimateLinearToTarget(position, new Position(position.getX, config.window.playHeight),
           AnimateVectorType.PositionLike.id, getTimeMills, 20000)
       ))

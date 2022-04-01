@@ -6,7 +6,7 @@ import work.chiro.game.animate.AnimateContainer
 import work.chiro.game.basic.PositionType.Position
 import work.chiro.game.basic.{AbstractObject, Vec2Double}
 
-abstract class AbstractProp(posInit: Position, animateContainer: AnimateContainer[Vec2Double])
+abstract class AbstractProp(posInit: Position, animateContainer: AnimateContainer)
   extends AbstractObject(posInit, animateContainer) {
   override def forward() = {
     super.forward()

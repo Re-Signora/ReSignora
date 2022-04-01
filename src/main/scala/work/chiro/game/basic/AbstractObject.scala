@@ -20,7 +20,7 @@ import java.awt.{Graphics, Graphics2D}
  * @param sizeInit         初始化大小，不设置则使用图片大小
  */
 abstract class AbstractObject(posInit: Position,
-                              animateContainer: AnimateContainer[Vec2Double],
+                              animateContainer: AnimateContainer,
                               sizeInit: Option[SizeDouble] = None,
                               rotationInit: Option[Scale] = None)
   extends ImageResourceReady {

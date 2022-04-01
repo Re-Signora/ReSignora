@@ -8,7 +8,7 @@ import work.chiro.game.basic.Vec2Double
 /**
  * @author chiro2001
  */
-class HeroBullet(posInit: Position, animateContainer: AnimateContainer[Vec2Double], power: Int)
+class HeroBullet(posInit: Position, animateContainer: AnimateContainer, power: Int)
   extends AbstractBullet(posInit, animateContainer, power)
   with ImageResourceFactory {
   override def getImageCachedPath = "images/bullet_hero.png"

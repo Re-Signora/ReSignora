@@ -16,7 +16,7 @@ import work.chiro.game.utils.{getNewFlightPosition, getTimeMills}
  * @param hpInit           初始血量
  */
 class MobEnemy(posInit: Position,
-               animateContainer: AnimateContainer[Vec2Double],
+               animateContainer: AnimateContainer,
                hpInit: Int,
                sizeInit: Option[SizeDouble] = None,
                rotationInit: Option[Scale] = None)
@@ -38,7 +38,7 @@ object MobEnemy extends ImageResourceFactory with AbstractObjectFactory {
   def create() = {
     val positionEnemyNew = getNewFlightPosition(MobEnemy.getImage.getWidth)
     new MobEnemy(
-      positionEnemyNew, new AnimateContainer[Position](List(
+      positionEnemyNew, new AnimateContainer(List(
         new AnimateLinear(positionEnemyNew, new Position(0, 0.2),
           AnimateVectorType.PositionLike.id, getTimeMills, 0)
       )), 30

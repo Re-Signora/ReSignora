@@ -9,7 +9,7 @@ import work.chiro.game.utils.getTimeMills
 
 import java.awt.Graphics
 
-class Background(posInit: Position, animateContainer: AnimateContainer[Vec2Double])
+class Background(posInit: Position, animateContainer: AnimateContainer)
   extends AbstractLayer(
     posInit,
     animateContainer,

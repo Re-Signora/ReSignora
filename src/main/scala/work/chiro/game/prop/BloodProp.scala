@@ -8,7 +8,7 @@ import work.chiro.game.basic.PositionType.Position
 import work.chiro.game.basic.Vec2Double
 import work.chiro.game.utils.{getNewFlightPosition, getTimeMills}
 
-class BloodProp(posInit: Position, animateContainer: AnimateContainer[Vec2Double])
+class BloodProp(posInit: Position, animateContainer: AnimateContainer)
   extends AbstractProp(posInit, animateContainer) {
   val bloodIncrease = 100
 
@@ -25,7 +25,7 @@ object BloodProp extends ImageResourceFactory {
 
   def create(position: Position) = {
     new BloodProp(
-      position, new AnimateContainer[Position](List(
+      position, new AnimateContainer(List(
         new AnimateLinearToTarget(position, new Position(position.getX, config.window.playHeight),
           AnimateVectorType.PositionLike.id, getTimeMills, 20000)
       ))

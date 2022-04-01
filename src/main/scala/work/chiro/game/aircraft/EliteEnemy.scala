@@ -17,7 +17,7 @@ import work.chiro.game.utils.{getNewFlightPosition, getTimeMills}
  * @param hpInit           初始血量
  */
 class EliteEnemy(posInit: Position,
-                 animateContainer: AnimateContainer[Vec2Double],
+                 animateContainer: AnimateContainer,
                  hpInit: Int,
                  sizeInit: Option[SizeDouble] = None,
                  rotationInit: Option[Scale] = None)
@@ -33,7 +33,7 @@ class EliteEnemy(posInit: Position,
 
   override def shoot() = List({
     val posNew = new Position(getLocationX, getLocationY)
-    new EnemyBullet(posNew, new AnimateContainer[Position](List(
+    new EnemyBullet(posNew, new AnimateContainer(List(
       new AnimateNonLinear(posNew, HeroAircraft.getPositionInstance, AnimateVectorType.PositionLike.id, getTimeMills, 3000, willStop = false)
     )), power)
   })
@@ -46,11 +46,12 @@ object EliteEnemy extends ImageResourceFactory with AbstractObjectFactory {
 
   def create() = {
     val positionEnemyNew = getNewFlightPosition(EliteEnemy.getImage.getWidth)
+    val newRotation = new Scale
     new EliteEnemy(
-      positionEnemyNew, new AnimateContainer[Position](List(
+      positionEnemyNew, new AnimateContainer(List(
         new AnimateLinear(positionEnemyNew, new Position(0, 0.1),
           AnimateVectorType.PositionLike.id, getTimeMills, 0)
-      )), 30
+      )), 30, rotationInit = Some(newRotation)
     )
   }
 }

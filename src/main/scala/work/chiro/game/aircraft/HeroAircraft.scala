@@ -20,7 +20,7 @@ import java.awt.Graphics
  * @param hpInit           初始血量
  */
 class HeroAircraft(posInit: Position,
-                   animateContainer: AnimateContainer[Vec2Double],
+                   animateContainer: AnimateContainer,
                    hpInit: Int,
                    sizeInit: Option[SizeDouble] = None,
                    rotationInit: Option[Scale] = None)
@@ -62,14 +62,14 @@ class HeroAircraft(posInit: Position,
     if (powerStep <= 1) {
       for {i <- 0 until shootNum} yield {
         val posNew = new Position(x + (i * 2 - shootNum + 1) * 10, y)
-        new HeroBullet(posNew, new AnimateContainer[Position](List(
+        new HeroBullet(posNew, new AnimateContainer(List(
           new AnimateLinear(posNew, new Position(0, -3), AnimateVectorType.PositionLike.id, getTimeMills, 0)
         )), config.hero.powerSteps(powerStep))
       }
     } else {
       for {i <- 0 until 3} yield {
         val posNew = getPos.copy
-        new HeroBullet(posNew, new AnimateContainer[Position](List(
+        new HeroBullet(posNew, new AnimateContainer(List(
           new AnimateLinear(posNew, new Position((i - 1) * 0.3, -3), AnimateVectorType.PositionLike.id, getTimeMills, 0)
         )), config.hero.powerSteps(powerStep))
       }
@@ -90,7 +90,7 @@ class HeroAircraft(posInit: Position,
  * @param posInit          初始位置
  */
 class HeroAircraftBox(posInit: Position)
-  extends AbstractObject(posInit, new AnimateContainer[Position](), sizeInit = Some(new Size(config.hero.box, config.hero.box))) {
+  extends AbstractObject(posInit, new AnimateContainer(), sizeInit = Some(new Size(config.hero.box, config.hero.box))) {
   override def getImage = HeroAircraftBox.getImage
 
   override def draw(g: Graphics) = {
@@ -117,7 +117,7 @@ object HeroAircraft extends ImageResourceFactory with AbstractObjectFactory {
     if (heroInstance.isEmpty) {
       heroPositionInstance = Some(new Position(config.window.playWidth / 2, config.window.playHeight - HeroAircraft.getImage.getHeight))
       heroInstance.synchronized({
-        heroInstance = Some(new HeroAircraft(heroPositionInstance.get, new AnimateContainer[Position], 100))
+        heroInstance = Some(new HeroAircraft(heroPositionInstance.get, new AnimateContainer, 100))
       })
     }
     heroInstance.get

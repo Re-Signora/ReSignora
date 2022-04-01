@@ -8,7 +8,7 @@ import work.chiro.game.basic.{AbstractObject, AbstractObjectFactory, Vec2Double}
 import java.awt.Graphics
 
 abstract class AbstractLayer(posInit: Position,
-                             animateContainer: AnimateContainer[Vec2Double],
+                             animateContainer: AnimateContainer,
                              sizeInit: Option[SizeDouble] = None)
   extends AbstractObject(
     posInit,
