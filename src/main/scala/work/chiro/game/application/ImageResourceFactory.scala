@@ -1,6 +1,5 @@
 package work.chiro.game.application
 
-import work.chiro.game.logger
 import work.chiro.game.utils.tryGetImageFile
 
 import java.awt.image.BufferedImage

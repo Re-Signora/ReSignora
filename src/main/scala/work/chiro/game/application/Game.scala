@@ -62,7 +62,7 @@ class Game(frame: JFrame) extends JPanel {
   // 启动英雄机控制监听
   val controller = HeroController.create(frame, this)
   // private var backGroundTop = 0
-  private val timeInterval = 1
+  private val timeInterval = 10
   private var gameOverFlag = false
   private var score = 0
 
