@@ -1,5 +1,4 @@
 require "game"
-require "logger"
 
 logger.info("Lua init...")
 initDone = true

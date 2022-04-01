@@ -10,7 +10,7 @@ object LibrariesLoader {
   def get = Array(
     () => new LuaGame,
     () => new HyperbolicTest,
-    () => new LuaLogger
+    () => new LuaLogging
   )
 
   def loadAllLibraries(globals: Globals = Main.getLuaGlobals): Unit = get.foreach(getLib => globals.load(getLib()))

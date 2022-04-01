@@ -158,10 +158,6 @@ class Game(frame: JFrame) extends JPanel {
     executorService.scheduleWithFixedDelay(renderTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS)
     // 不管上次执行是否完成也执行
     // executorService.scheduleAtFixedRate(calcTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS)
-    // 加载自定义库
-    LibrariesLoader.loadAllLibraries()
-    LoadState.install(getLuaGlobals)
-    LuaC.install(getLuaGlobals)
     getLuaGlobals.loadfile("scripts/init.lua").call()
     logger.info("init.lua launched.")
     getLuaGlobals.loadfile("scripts/game.lua").call()

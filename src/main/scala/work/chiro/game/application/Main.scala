@@ -1,8 +1,10 @@
 package work.chiro.game.application
 
-import org.luaj.vm2.Globals
+import org.luaj.vm2.compiler.LuaC
+import org.luaj.vm2.{Globals, LoadState}
 import org.luaj.vm2.lib.jse.JsePlatform
 import work.chiro.game.GlobalConfigLoader.config
+import work.chiro.game.libraries.LibrariesLoader
 import work.chiro.game.{GlobalConfigLoader, logger}
 
 import java.awt.Toolkit
@@ -45,7 +47,13 @@ object Main {
       if (gd.isFullScreenSupported) gd.setFullScreenWindow(frame)
       else logger.warn("Unsupported full screen!")
     }
-    luaGlobals = Some(JsePlatform.standardGlobals())
+    // use debug lib for logging
+    luaGlobals = Some(JsePlatform.debugGlobals())
+    // 加载自定义库
+    LibrariesLoader.loadAllLibraries()
+    LoadState.install(getLuaGlobals)
+    LuaC.install(getLuaGlobals)
+    getLuaGlobals.loadfile("scripts/logger.lua").call()
     getLuaGlobals.loadfile("scripts/lang-test.lua").call()
     new Game(frame).action()
   }

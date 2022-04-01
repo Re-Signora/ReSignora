@@ -1,1 +1,1 @@
-print("Lua Engine Launched!")
+logger.info("Lua Engine Launched!")

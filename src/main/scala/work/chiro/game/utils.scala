@@ -56,6 +56,11 @@ object logger {
       println(f"${levelText(level)}%5s ${file.value}:${line.value} [${name.value}] $foo")
   }
 
+  def logItInfo(foo: String, level: Int, line: Int, file: String, name: String) = {
+    if (level >= logLevel)
+      println(f"${levelText(level)}%5s $file:$line [$name] $foo")
+  }
+
   def setLevel(level: Int) = logLevel = level
 
   def log(msg: => String)(implicit line: sourcecode.Line, file: sourcecode.File, name: sourcecode.Name): Unit = logIt(msg, LOG_LEVER_VERBOSE)
