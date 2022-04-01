@@ -60,7 +60,7 @@ object GlobalConfigLoader {
 
       def contains(optionName: String): Boolean = if (enabled) data.contains(getFullOptionName(optionName)) else false
 
-      val inverseUpdateTable: IndexedSeq[(String, Any)]
+      val inverseUpdateTable: Array[(String, Any)]
 
       def inverseUpdateAll(): Unit = data.addAll(inverseUpdateTable)
     }
