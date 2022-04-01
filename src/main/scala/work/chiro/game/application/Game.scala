@@ -28,6 +28,7 @@ class Game(frame: JFrame) extends JPanel {
   logger.info(s"Window(${config.window.width}x${config.window.height}), Playground(${config.window.playWidth}x${config.window.playHeight})")
 
   var myFontBase: Option[Font] = None
+  val fontColor = new Color(config.window.fontColor)
   val heroAircraft = HeroAircraft.create()
   val heroPosition = HeroAircraft.getPositionInstance
   val gameBackground = Background.create()
@@ -298,13 +299,14 @@ class Game(frame: JFrame) extends JPanel {
    */
   override def paint(g: Graphics) = {
     super.paint(g)
-
     // 绘制所有物体
     allObjectsToDraw.foreach(objList => objList.synchronized(objList.foreach(_.draw(g))))
     // 绘制边框防止图像溢出
     paintOuterMask(g)
     // 绘制得分和生命值等信息
     paintInfo(g)
+    // 绘制 fps
+    paintFps(g)
   }
 
   private def paintOuterMask(g: Graphics) = {
@@ -331,12 +333,22 @@ class Game(frame: JFrame) extends JPanel {
   private def paintInfo(g: Graphics) = {
     val x = 10 + config.window.playOffsetX + config.window.playWidth
     var y = 25 + config.window.playOffsetY
-    g.setColor(new Color(config.window.fontColor))
+    g.setColor(fontColor)
     g.setFont(myFontBase.get)
     g.drawString(String.format("%20s", f"Score: ${this.score}%09d"), x, y)
     y = y + 20
     g.drawString(String.format("%20s", f"HiScore: ${this.score}%09d"), x, y)
     y = y + 20
     g.drawString(String.format("%20s", f"Life: ${this.heroAircraft.getHp}"), x, y)
+  }
+
+  private def paintFps(g: Graphics) = {
+    g.setColor(fontColor)
+    g.setFont(myFontBase.get)
+    g.drawString(
+      f"${frameRenderCount.size}fps",
+      config.window.width - 100,
+      config.window.playOffsetY + config.window.playHeight - 24
+    )
   }
 }
