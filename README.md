@@ -30,7 +30,7 @@ Scala 项目的 UML 图见 [AircraftWar-scala.puml](uml/AircraftWar-scala.puml)�
 
    在上述文件中添加此行：
 
-   ```scala
+   ```
    resolvers += "Artima Maven Repository" at "https://repo.artima.com/releases"
    ```
 
@@ -47,6 +47,8 @@ Scala 项目的 UML 图见 [AircraftWar-scala.puml](uml/AircraftWar-scala.puml)�
 ### 直接运行编译好的 Jar 文件
 
 如果您是助教，我已经将 Scala 的程序编译打包为单个`.jar`文件，直接双击 `run_jar.bat`即可运行。
+
+编译好的 Jar 文件放在 `/target/scala-2.13/aircraft-war-${version}.jar`。
 
 ### 运行 Scala
 
