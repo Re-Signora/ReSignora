@@ -50,11 +50,11 @@ class Game(frame: JFrame) extends JPanel {
   )
   val allObjectsToDraw = Array(
     backgrounds,
-    heroBullets,
+    props,
     enemyAircrafts,
+    heroBullets,
     heroAircrafts,
     enemyBullets,
-    props,
     aircraftBoxes,
     layers
   )
