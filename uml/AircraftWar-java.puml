@@ -179,11 +179,6 @@ class HeroBulletFactory implements BaseBulletFactory {
 }
 HeroBulletFactory ..> HeroBullet
 
-' 飞机射击子弹，有关联关系
-HeroAircraft ..> HeroBullet
-BossEnemy ..> EnemyBullet
-EliteEnemy ..> EnemyBullet
-
 interface AbstractPropFactory {
     + {abstract} create(): AbstractProp
 }
