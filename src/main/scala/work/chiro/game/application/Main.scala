@@ -2,11 +2,12 @@ package work.chiro.game.application
 
 import org.luaj.vm2.Globals
 import org.luaj.vm2.lib.jse.JsePlatform
-
-import java.awt.{Robot, Toolkit}
-import javax.swing.{JFrame, WindowConstants}
 import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.{GlobalConfigLoader, logger}
+
+import java.awt.Toolkit
+import javax.swing.{JFrame, WindowConstants}
+import java.awt.GraphicsEnvironment
 
 /**
  * 程序入口
@@ -18,6 +19,7 @@ object Main {
   private var luaGlobals: Option[Globals] = None
 
   def getFrameInstance = frameInstance.get
+
   def getLuaGlobals = luaGlobals.get
 
   def main(args: Array[String]): Unit = {
@@ -29,9 +31,20 @@ object Main {
     val frame = frameInstance.get
     frame.setSize(config.window.width, config.window.height)
     frame.setResizable(false)
-    //设置窗口的大小和位置,居中放置
+    // 设置窗口的大小和位置,居中放置
     frame.setBounds((screenSize.getWidth.toInt - config.window.width) / 2, 0, config.window.width, config.window.height)
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
+    // 进入全屏模式
+    if (config.window.fullScreen) {
+      // 去除边框
+      frame.setUndecorated(true)
+      // 始终最前
+      frame.setAlwaysOnTop(true)
+      val ge = GraphicsEnvironment.getLocalGraphicsEnvironment
+      val gd = ge.getDefaultScreenDevice
+      if (gd.isFullScreenSupported) gd.setFullScreenWindow(frame)
+      else logger.warn("Unsupported full screen!")
+    }
     luaGlobals = Some(JsePlatform.standardGlobals())
     getLuaGlobals.loadfile("scripts/lang-test.lua").call()
     new Game(frame).action()

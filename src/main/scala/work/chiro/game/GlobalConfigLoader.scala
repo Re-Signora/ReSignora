@@ -70,9 +70,12 @@ object GlobalConfigLoader {
 
       def height: Int = getValue(d("HEIGHT"), 768)
 
+      def fullScreen: Boolean = getValue(d("FULL_SCREEN"), false)
+
       override val inverseUpdateTable = Array(
         f("WIDTH") -> width,
-        f("HEIGHT") -> height
+        f("HEIGHT") -> height,
+        f("FULL_SCREEN") -> fullScreen
       )
 
       inverseUpdateAll()
