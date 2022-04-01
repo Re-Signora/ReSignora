@@ -8,7 +8,7 @@
 
 ## UML
 
-Scala 项目的 UML 图见 [AircraftWar-scala.puml](uml/AircraftWar-scala.puml)，Java 项目的 UML 图见 [AircraftWa-java.puml](uml/AircraftWar-java.puml)。
+Scala 项目的 UML 图见 [AircraftWar-scala.puml](uml/AircraftWar-scala.puml)，Java 项目的 UML 图见 [AircraftWar-java.puml](uml/AircraftWar-java.puml)。
 
 *图片不够大...*
 
