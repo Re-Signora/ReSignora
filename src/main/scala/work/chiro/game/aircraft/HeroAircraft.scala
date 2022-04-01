@@ -3,7 +3,7 @@ package work.chiro.game.aircraft
 import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateVectorType}
 import work.chiro.game.application.ImageResourceFactory
-import work.chiro.game.basic.PositionType.{Position, Size}
+import work.chiro.game.basic.PositionType.{Position, Scale, Size, SizeDouble}
 import work.chiro.game.basic.{AbstractObject, AbstractObjectFactory, Vec2Double}
 import work.chiro.game.bullet.HeroBullet
 import work.chiro.game.control.HeroController
@@ -19,8 +19,12 @@ import java.awt.Graphics
  * @param animateContainer 动画容器
  * @param hpInit           初始血量
  */
-class HeroAircraft(posInit: Position, animateContainer: AnimateContainer[Vec2Double], hpInit: Int)
-  extends AbstractAircraft(posInit, animateContainer, hpInit) {
+class HeroAircraft(posInit: Position,
+                   animateContainer: AnimateContainer[Vec2Double],
+                   hpInit: Int,
+                   sizeInit: Option[SizeDouble] = None,
+                   rotationInit: Option[Scale] = None)
+  extends AbstractAircraft(posInit, animateContainer, hpInit, sizeInit = sizeInit, rotationInit = rotationInit) {
   // 攻击方式
   //子弹一次发射数量
   private var shootNum = 1

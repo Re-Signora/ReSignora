@@ -4,7 +4,7 @@ import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.aircraft.HeroAircraft
 import work.chiro.game.application.Game
 import work.chiro.game.basic.Vec2Double
-import work.chiro.game.utils.{getTimeMills, setInRangeInt}
+import work.chiro.game.utils.{getTimeMills, setInRangeDouble, setInRangeInt}
 
 import java.awt.event.{KeyAdapter, KeyEvent, MouseAdapter, MouseEvent}
 import javax.swing.JFrame
@@ -30,8 +30,8 @@ class HeroController(frame: JFrame, game: Game) {
     override def mouseDragged(e: MouseEvent): Unit = {
       super.mouseDragged(e)
       // 防止超出边界
-      val x = setInRangeInt(e.getX - config.window.playOffsetX, 0, config.window.playWidth)
-      val y = setInRangeInt(e.getY - config.window.playOffsetY, 0, config.window.playHeight - HeroAircraft.getInstance.getHeight / 2)
+      val x = setInRangeDouble(e.getX - config.window.playOffsetX, 0, config.window.playWidth)
+      val y = setInRangeDouble(e.getY - config.window.playOffsetY, 0, config.window.playHeight - HeroAircraft.getInstance.getHeight / 2)
       HeroAircraft.getInstance.setLocation(x, y)
     }
 
@@ -73,8 +73,8 @@ class HeroController(frame: JFrame, game: Game) {
 
     val newPos = HeroAircraft.getInstance.getPos + next
     HeroAircraft.getInstance.setLocation(
-      setInRangeInt(newPos.getX.toInt, 0, config.window.playWidth),
-      setInRangeInt(newPos.getY.toInt, 0, config.window.playHeight - HeroAircraft.getInstance.getHeight / 2)
+      setInRangeDouble(newPos.getX.toInt, 0, config.window.playWidth),
+      setInRangeDouble(newPos.getY.toInt, 0, config.window.playHeight - HeroAircraft.getInstance.getHeight / 2)
     )
     lastFrameTime = getTimeMills
   }

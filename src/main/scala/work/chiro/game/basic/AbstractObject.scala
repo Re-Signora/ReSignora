@@ -3,7 +3,7 @@ package work.chiro.game.basic
 import work.chiro.game.aircraft.AbstractAircraft
 import work.chiro.game.animate.AnimateContainer
 import work.chiro.game.application.ImageResourceReady
-import work.chiro.game.basic.PositionType.{Position, Scale, Size}
+import work.chiro.game.basic.PositionType.{Position, Scale, Size, SizeDouble}
 import work.chiro.game.utils.getTimeMills
 import work.chiro.game.GlobalConfigLoader.config
 
@@ -21,7 +21,7 @@ import java.awt.{Graphics, Graphics2D}
  */
 abstract class AbstractObject(posInit: Position,
                               animateContainer: AnimateContainer[Vec2Double],
-                              sizeInit: Option[Size] = None,
+                              sizeInit: Option[SizeDouble] = None,
                               rotationInit: Option[Scale] = None)
   extends ImageResourceReady {
   protected var pos = posInit
@@ -33,7 +33,7 @@ abstract class AbstractObject(posInit: Position,
   def setPos(posX: Double, posY: Double) = pos.set(new Position(posX, posY))
 
   // 尺寸 -1 表示未设置，等待加载图片后依据图片大小自动设置
-  private val size = if (sizeInit.nonEmpty) sizeInit.get else new Size(-1, -1)
+  private val size = if (sizeInit.nonEmpty) sizeInit.get else new SizeDouble(-1, -1)
 
   def getSize = {
     getWidth
@@ -132,7 +132,7 @@ abstract class AbstractObject(posInit: Position,
   def draw(g: Graphics,
            img: Option[BufferedImage] = None,
            position: Option[Position] = None,
-           sizeDraw: Option[Size] = None,
+           sizeDraw: Option[SizeDouble] = None,
            alignCenter: Boolean = true
           ): Unit = {
     val image = if (img.isEmpty) getImage else img.get
@@ -143,8 +143,8 @@ abstract class AbstractObject(posInit: Position,
         image,
         (pos.getX - (if (alignCenter) sizeUse.getX / 2 else 0)).toInt + config.window.playOffsetX,
         (pos.getY - (if (alignCenter) sizeUse.getY / 2 else 0)).toInt + config.window.playOffsetY,
-        sizeUse.getX,
-        sizeUse.getY,
+        sizeUse.getX.toInt,
+        sizeUse.getY.toInt,
         null)
     } else {
       val af = AffineTransform.getTranslateInstance(

@@ -3,9 +3,8 @@ package work.chiro.game.aircraft
 import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateVectorType}
 import work.chiro.game.application.ImageResourceFactory
-import work.chiro.game.basic.PositionType.Position
+import work.chiro.game.basic.PositionType.{Position, Scale, SizeDouble}
 import work.chiro.game.basic.{AbstractObjectFactory, Vec2Double}
-import work.chiro.game.logger
 import work.chiro.game.utils.{getNewFlightPosition, getTimeMills}
 
 /**
@@ -16,8 +15,12 @@ import work.chiro.game.utils.{getNewFlightPosition, getTimeMills}
  * @param animateContainer 动画容器
  * @param hpInit           初始血量
  */
-class MobEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Double], hpInit: Int)
-  extends AbstractAircraft(posInit, animateContainer, hpInit) {
+class MobEnemy(posInit: Position,
+               animateContainer: AnimateContainer[Vec2Double],
+               hpInit: Int,
+               sizeInit: Option[SizeDouble] = None,
+               rotationInit: Option[Scale] = None)
+  extends AbstractAircraft(posInit, animateContainer, hpInit, sizeInit = sizeInit, rotationInit = rotationInit) {
   override def forward() = {
     super.forward()
     // 判定 y 轴向下飞行出界
