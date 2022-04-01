@@ -21,7 +21,7 @@ class MobEnemy(posInit: Position, animateContainer: AnimateContainer[Vec2Double]
   override def forward() = {
     super.forward()
     // 判定 y 轴向下飞行出界
-    if (getLocationY >= config.window.height) vanish()
+    if (getLocationY >= config.window.playHeight) vanish()
   }
 
   override def shoot() = List()

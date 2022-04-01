@@ -25,7 +25,7 @@ import scala.collection.mutable.ListBuffer
  * @author chiro2001
  */
 class Game(frame: JFrame) extends JPanel {
-  logger.info(s"Window(${config.window.width}x${config.window.height})")
+  logger.info(s"Window(${config.window.playWidth}x${config.window.playHeight})")
   val heroAircraft = HeroAircraft.create()
   val heroPosition = HeroAircraft.getPositionInstance
   val gameBackground = Background.create()

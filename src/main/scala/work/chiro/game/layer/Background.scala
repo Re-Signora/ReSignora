@@ -13,13 +13,13 @@ class Background(posInit: Position, animateContainer: AnimateContainer[Vec2Doubl
   extends AbstractLayer(
     posInit,
     animateContainer,
-    sizeInit = Some(new Size(config.window.width, config.window.height))) {
+    sizeInit = Some(new Size(config.window.playWidth, config.window.playHeight))) {
   override def getImage = Background.getImage
 
   override def draw(g: Graphics) = {
     super.draw(g, alignCenter = false)
-    val newPos = getPos + new Position(0, -config.window.height)
-    newPos.setY(newPos.getY % config.window.height)
+    val newPos = getPos + new Position(0, -config.window.playHeight)
+    newPos.setY(newPos.getY % config.window.playHeight)
     super.draw(g, img = Some(getImage), position = Some(newPos), alignCenter = false)
   }
 }
@@ -29,7 +29,7 @@ object Background extends ImageResourceFactory with AbstractLayerFactory {
 
   private var backgroundInstance: Option[Background] = None
   private var backgroundPositionInstance: Option[Position] = None
-  private val windowRange = new SizeDouble(config.window.width, config.window.height)
+  private val windowRange = new SizeDouble(config.window.playWidth, config.window.playHeight)
 
   def getInstance = backgroundInstance.get
 

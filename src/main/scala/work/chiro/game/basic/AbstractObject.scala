@@ -4,12 +4,12 @@ import work.chiro.game.aircraft.AbstractAircraft
 import work.chiro.game.animate.AnimateContainer
 import work.chiro.game.application.ImageResourceReady
 import work.chiro.game.basic.PositionType.{Position, Scale, Size}
-import work.chiro.game.logger
 import work.chiro.game.utils.getTimeMills
+import work.chiro.game.GlobalConfigLoader.config
 
-import java.awt.{Graphics, Graphics2D}
 import java.awt.geom.AffineTransform
 import java.awt.image.BufferedImage
+import java.awt.{Graphics, Graphics2D}
 
 /**
  * 所有对象的基类
@@ -141,15 +141,15 @@ abstract class AbstractObject(posInit: Position,
     if (getRotation().getX == 0) {
       g.drawImage(
         image,
-        (pos.getX - (if (alignCenter) sizeUse.getX / 2 else 0)).toInt,
-        (pos.getY - (if (alignCenter) sizeUse.getY / 2 else 0)).toInt,
+        (pos.getX - (if (alignCenter) sizeUse.getX / 2 else 0)).toInt + config.window.playOffsetX,
+        (pos.getY - (if (alignCenter) sizeUse.getY / 2 else 0)).toInt + config.window.playOffsetY,
         sizeUse.getX,
         sizeUse.getY,
         null)
     } else {
       val af = AffineTransform.getTranslateInstance(
-        pos.getX - (if (alignCenter) sizeUse.getX / 2 else 0),
-        pos.getY - (if (alignCenter) sizeUse.getY / 2 else 0))
+        pos.getX - (if (alignCenter) sizeUse.getX / 2 else 0) + config.window.playOffsetX,
+        pos.getY - (if (alignCenter) sizeUse.getY / 2 else 0) + config.window.playOffsetY)
       af.rotate(rotation.getX, sizeUse.getX / 2, sizeUse.getY / 2)
       val graphics2d = g.asInstanceOf[Graphics2D]
       graphics2d.drawImage(image, af, null)

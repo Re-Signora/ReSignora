@@ -12,9 +12,9 @@ abstract class AbstractProp(posInit: Position, animateContainer: AnimateContaine
   override def forward() = {
     super.forward()
     // 判定 x 轴出界
-    if (getLocationX <= 0 || getLocationY >= config.window.height) vanish()
+    if (getLocationX <= 0 || getLocationY >= config.window.playHeight) vanish()
     // 判定 y 轴出界
-    if (getSpeedY > 0 && getLocationY >= config.window.height) {
+    if (getSpeedY > 0 && getLocationY >= config.window.playHeight) {
       // 向下飞行出界
       vanish()
     }

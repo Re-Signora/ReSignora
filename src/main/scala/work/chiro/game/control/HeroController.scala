@@ -30,8 +30,8 @@ class HeroController(frame: JFrame, game: Game, heroAircraft: HeroAircraft) {
     override def mouseDragged(e: MouseEvent): Unit = {
       super.mouseDragged(e)
       // 防止超出边界
-      val x = setInRangeInt(e.getX, 0, config.window.width)
-      val y = setInRangeInt(e.getY, 0, config.window.height - heroAircraft.getHeight / 2)
+      val x = setInRangeInt(e.getX, 0, config.window.playWidth)
+      val y = setInRangeInt(e.getY, 0, config.window.playHeight - heroAircraft.getHeight / 2)
       heroAircraft.setLocation(x, y)
     }
 
@@ -73,8 +73,8 @@ class HeroController(frame: JFrame, game: Game, heroAircraft: HeroAircraft) {
 
     val newPos = heroAircraft.getPos + next
     heroAircraft.setLocation(
-      setInRangeInt(newPos.getX.toInt, 0, config.window.width),
-      setInRangeInt(newPos.getY.toInt, 0, config.window.height - heroAircraft.getHeight / 2)
+      setInRangeInt(newPos.getX.toInt, 0, config.window.playWidth),
+      setInRangeInt(newPos.getY.toInt, 0, config.window.playHeight - heroAircraft.getHeight / 2)
     )
     lastFrameTime = getTimeMills
   }

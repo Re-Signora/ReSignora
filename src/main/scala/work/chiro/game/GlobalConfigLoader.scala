@@ -66,16 +66,28 @@ object GlobalConfigLoader {
     }
 
     object window extends ModuleOption("M_WINDOW") {
-      def width: Int = getValue(d("WIDTH"), 512)
+      def width: Int = getValue(d("WIDTH"), 1280)
 
-      def height: Int = getValue(d("HEIGHT"), 768)
+      def height: Int = getValue(d("HEIGHT"), 960)
+
+      def playWidth: Int = getValue(d("PLAY_WIDTH"), 760)
+
+      def playHeight: Int = getValue(d("PLAY_HEIGHT"), 900)
+
+      def playOffsetX: Int = getValue(d("PLAY_OFFSET_X"), 64)
+
+      def playOffsetY: Int = getValue(d("PLAY_OFFSET_Y"), 28)
 
       def fullScreen: Boolean = getValue(d("FULL_SCREEN"), false)
 
       override val inverseUpdateTable = Array(
         f("WIDTH") -> width,
         f("HEIGHT") -> height,
-        f("FULL_SCREEN") -> fullScreen
+        f("FULL_SCREEN") -> fullScreen,
+        f("PLAY_WIDTH") -> playWidth,
+        f("PLAY_HEIGHT") -> playHeight,
+        f("PLAY_OFFSET_X") -> playOffsetX,
+        f("PLAY_OFFSET_Y") -> playOffsetY
       )
 
       inverseUpdateAll()

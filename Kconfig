@@ -16,6 +16,27 @@ menu "Window config"
     config M_WINDOW_HEIGHT
         int "Window Height"
         default 768
+
+    config M_WINDOW_FULL_SCREEN
+        bool "Launch in fullscreen"
+        default n
+
+    config M_WINDOW_PLAY_WIDTH
+        int "Playground Width"
+        default 512
+
+    config M_WINDOW_PLAY_HEIGHT
+        int "Playground Height"
+        default 768
+
+    config M_WINDOW_PLAY_OFFSET_X
+        int "Playground Offset X"
+        default 64
+
+    config M_WINDOW_PLAY_OFFSET_Y
+        int "Playground Offset Y"
+        default 28
+
 endmenu
 
 menu "Control config"

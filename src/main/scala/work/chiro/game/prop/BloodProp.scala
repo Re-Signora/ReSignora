@@ -26,7 +26,7 @@ object BloodProp extends ImageResourceFactory {
   def create(position: Position) = {
     new BloodProp(
       position, new AnimateContainer[Position](List(
-        new AnimateLinearToTarget(position, new Position(position.getX, config.window.height),
+        new AnimateLinearToTarget(position, new Position(position.getX, config.window.playHeight),
           AnimateVectorType.PositionLike.id, getTimeMills, 20000)
       ))
     )

@@ -107,7 +107,7 @@ object HeroAircraft extends ImageResourceFactory with AbstractObjectFactory {
 
   def create() = {
     if (heroInstance.isEmpty) {
-      heroPositionInstance = Some(new Position(config.window.width / 2, config.window.height - HeroAircraft.getImage.getHeight))
+      heroPositionInstance = Some(new Position(config.window.playWidth / 2, config.window.playHeight - HeroAircraft.getImage.getHeight))
       heroInstance.synchronized({
         heroInstance = Some(new HeroAircraft(heroPositionInstance.get, new AnimateContainer[Position], 100))
       })
