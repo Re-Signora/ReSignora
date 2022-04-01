@@ -1,7 +1,7 @@
 package work.chiro.game.aircraft
 
 import work.chiro.game.animate.AnimateContainer
-import work.chiro.game.basic.PositionType.{Position, Scale, ScaleInt, Size, SizeDouble}
+import work.chiro.game.basic.ScaleType.{Position, Scale, ScaleInt, Size, SizeDouble}
 import work.chiro.game.basic.{AbstractObject, Vec2Double}
 import work.chiro.game.bullet.AbstractBullet
 

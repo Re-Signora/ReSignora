@@ -1,7 +1,7 @@
 package work.chiro.game
 
 import work.chiro.game.GlobalConfigLoader.config
-import work.chiro.game.basic.PositionType.Position
+import work.chiro.game.basic.ScaleType.Position
 
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO

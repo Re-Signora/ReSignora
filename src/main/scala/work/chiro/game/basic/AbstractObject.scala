@@ -3,7 +3,7 @@ package work.chiro.game.basic
 import work.chiro.game.aircraft.AbstractAircraft
 import work.chiro.game.animate.AnimateContainer
 import work.chiro.game.application.ImageResourceReady
-import work.chiro.game.basic.PositionType.{Position, Scale, Size, SizeDouble}
+import work.chiro.game.basic.ScaleType.{Position, Scale, Size, SizeDouble}
 import work.chiro.game.utils.getTimeMills
 import work.chiro.game.GlobalConfigLoader.config
 
@@ -40,6 +40,8 @@ abstract class AbstractObject(posInit: Position,
     getHeight
     size
   }
+
+  def getImageSize = new Size(getImage.getWidth, getImage.getHeight)
 
   def updateRotation(rotationNew: Option[Scale] = None) =
     if (rotationNew.nonEmpty) rotationNew.get else animateContainer.getRotation
@@ -81,13 +83,13 @@ abstract class AbstractObject(posInit: Position,
    * @param theObject 撞击对方
    * @return true: 我方被击中; false 我方未被击中
    */
-  def crash(theObject: AbstractObject) = {
+  def crash(theObject: AbstractObject, boxToUse: Option[SizeDouble] = None) = {
     // 缩放因子，用于控制 y轴方向区域范围
     val factor = if (this.isInstanceOf[AbstractAircraft]) 2 else 1
     val fFactor = if (theObject.isInstanceOf[AbstractAircraft]) 2 else 1
     val x = theObject.getLocationX
     val y = theObject.getLocationY
-    val boxUse = theObject.getBoxSize
+    val boxUse = if (boxToUse.nonEmpty) boxToUse.get else theObject.getBoxSize
     // val fWidth = if (useImageBox) theObject.getImageWidth else theObject.getWidth
     // val fHeight = if (useImageBox) theObject.getImageHeight else theObject.getHeight
     x + (boxUse.getX + getWidth) / 2 > getLocationX &&

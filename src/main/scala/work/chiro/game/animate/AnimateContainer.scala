@@ -1,6 +1,6 @@
 package work.chiro.game.animate
 
-import work.chiro.game.basic.PositionType.Scale
+import work.chiro.game.basic.ScaleType.Scale
 import work.chiro.game.basic.VecDouble
 
 class AnimateContainer

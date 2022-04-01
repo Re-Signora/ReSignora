@@ -4,7 +4,7 @@ import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.aircraft.{AbstractAircraft, HeroAircraft, MobEnemy}
 import work.chiro.game.animate.{AnimateContainer, AnimateLinearToTarget, AnimateVectorType}
 import work.chiro.game.application.{ImageResourceFactory, Main}
-import work.chiro.game.basic.PositionType.Position
+import work.chiro.game.basic.ScaleType.Position
 import work.chiro.game.basic.Vec2Double
 import work.chiro.game.utils.{getNewFlightPosition, getTimeMills}
 

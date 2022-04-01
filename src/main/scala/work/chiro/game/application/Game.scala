@@ -270,7 +270,7 @@ class Game(frame: JFrame) extends JPanel {
     })
     // 我方获得道具
     props.foreach(prop => if (prop.isValid) {
-      if (prop.crash(heroAircraft)) {
+      if (prop.crash(heroAircraft, boxToUse = Some(heroAircraft.getImageSize))) {
         // 道具生效
         prop.handleAircrafts(enemyAircrafts.toList)
         prop.vanish()

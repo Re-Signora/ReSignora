@@ -1,7 +1,7 @@
 package work.chiro.game.basic
 
 import work.chiro.game.animate.AnimateContainer
-import work.chiro.game.basic.PositionType.{Position, Scale, SizeDouble}
+import work.chiro.game.basic.ScaleType.{Position, Scale, SizeDouble}
 
 abstract class AbstractFlyingObject(posInit: Position,
                                     animateContainer: AnimateContainer,

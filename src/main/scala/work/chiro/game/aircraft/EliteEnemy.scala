@@ -3,7 +3,7 @@ package work.chiro.game.aircraft
 import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateNonLinear, AnimateVectorType}
 import work.chiro.game.application.ImageResourceFactory
-import work.chiro.game.basic.PositionType.{Position, Scale, Size, SizeDouble}
+import work.chiro.game.basic.ScaleType.{Position, Scale, Size, SizeDouble}
 import work.chiro.game.basic.{AbstractObjectFactory, Vec2Double, VecDouble}
 import work.chiro.game.bullet.EnemyBullet
 import work.chiro.game.utils.{getNewFlightPosition, getTimeMills}

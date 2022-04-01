@@ -196,7 +196,7 @@ class Vec2Double(xInit: Double = 0, yInit: Double = 0) extends VecDouble(2, Seq(
 }
 
 object Vec2Double {
-  implicit def toVec2Double(vecInt: VecInt): Vec2Double = new Vec2Double(vecInt.get.head, vecInt.get(1))
+  implicit def toVec2Double(vec2Int: Vec2Int): Vec2Double = new Vec2Double(vec2Int.getX, vec2Int.getY)
 
   implicit def toVec2Double(vecDouble: VecDouble): Vec2Double = {
     assert(vecDouble.getSize == 2)

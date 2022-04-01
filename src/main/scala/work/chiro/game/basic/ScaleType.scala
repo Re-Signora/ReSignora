@@ -1,6 +1,6 @@
 package work.chiro.game.basic
 
-object PositionType {
+object ScaleType {
   type Position = Vec2Double
   type Size = Vec2Int
   type SizeDouble = Vec2Double
