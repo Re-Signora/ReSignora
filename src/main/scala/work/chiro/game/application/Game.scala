@@ -26,6 +26,8 @@ import scala.collection.mutable.ListBuffer
  */
 class Game(frame: JFrame) extends JPanel {
   logger.info(s"Window(${config.window.width}x${config.window.height}), Playground(${config.window.playWidth}x${config.window.playHeight})")
+
+  var myFontBase: Option[Font] = None
   val heroAircraft = HeroAircraft.create()
   val heroPosition = HeroAircraft.getPositionInstance
   val gameBackground = Background.create()
@@ -90,6 +92,8 @@ class Game(frame: JFrame) extends JPanel {
   private val frameCalcCount = new ListBuffer[Double]
 
   def frameCalcTimeDelta = frameCalcTime - lastFrameCalcTime
+
+  loadFont()
 
   /**
    * 游戏启动入口，执行游戏逻辑
@@ -297,10 +301,10 @@ class Game(frame: JFrame) extends JPanel {
 
     // 绘制所有物体
     allObjectsToDraw.foreach(objList => objList.synchronized(objList.foreach(_.draw(g))))
-    // 绘制得分和生命值
-    paintScoreAndLife(g)
     // 绘制边框防止图像溢出
     paintOuterMask(g)
+    // 绘制得分和生命值等信息
+    paintInfo(g)
   }
 
   private def paintOuterMask(g: Graphics) = {
@@ -311,13 +315,28 @@ class Game(frame: JFrame) extends JPanel {
     g.fillRect(config.window.playOffsetX, config.window.playHeight, config.window.playWidth, config.window.height)
   }
 
-  private def paintScoreAndLife(g: Graphics) = {
-    val x = 10 + config.window.playOffsetX
+  private def loadFont(fontType: String = "", fallback: String = "SansSerif") = {
+    val myFontUri = getClass.getClassLoader.getResource(if (fontType.isEmpty) config.window.font else fontType)
+    try {
+      val myFontInputStream = myFontUri.openStream()
+      val myFont = Font.createFont(Font.TRUETYPE_FONT, myFontInputStream)
+      myFontBase = Some(myFont.deriveFont(22f))
+    } catch {
+      case _: NullPointerException =>
+        logger.warn("No font file found!")
+        myFontBase = Some(new Font(fallback, Font.PLAIN, 22))
+    }
+  }
+
+  private def paintInfo(g: Graphics) = {
+    val x = 10 + config.window.playOffsetX + config.window.playWidth
     var y = 25 + config.window.playOffsetY
-    g.setColor(new Color(16711680))
-    g.setFont(new Font("SansSerif", Font.BOLD, 22))
-    g.drawString("SCORE:" + this.score, x, y)
+    g.setColor(new Color(config.window.fontColor))
+    g.setFont(myFontBase.get)
+    g.drawString(String.format("%20s", f"Score: ${this.score}%09d"), x, y)
     y = y + 20
-    g.drawString("LIFE:" + this.heroAircraft.getHp, x, y)
+    g.drawString(String.format("%20s", f"HiScore: ${this.score}%09d"), x, y)
+    y = y + 20
+    g.drawString(String.format("%20s", f"Life: ${this.heroAircraft.getHp}"), x, y)
   }
 }

@@ -41,6 +41,14 @@ menu "Window config"
         hex "Window background color"
         default 0x3f3f3f3f
 
+    config M_WINDOW_FONT_COLOR
+        hex "Window background color"
+        default 0xffffffff
+
+    config M_WINDOW_FONT
+        string "Font"
+        default "fonts/Genshin.ttf"
+
 endmenu
 
 menu "Control config"

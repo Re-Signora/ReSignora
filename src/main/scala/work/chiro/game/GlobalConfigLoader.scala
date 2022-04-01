@@ -82,6 +82,10 @@ object GlobalConfigLoader {
 
       def bgColor: Int = getValue(d("BG_COLOR"), 0x3f3f3f3f)
 
+      def font: String = getValue(d("FONT"), "fonts/Genshin.ttf")
+
+      def fontColor: Int = getValue(d("FONT_COLOR"), 0xffffffff)
+
       override val inverseUpdateTable = Array(
         f("WIDTH") -> width,
         f("HEIGHT") -> height,
@@ -90,7 +94,9 @@ object GlobalConfigLoader {
         f("PLAY_HEIGHT") -> playHeight,
         f("PLAY_OFFSET_X") -> playOffsetX,
         f("PLAY_OFFSET_Y") -> playOffsetY,
-        f("BG_COLOR") -> bgColor
+        f("BG_COLOR") -> bgColor,
+        f("FONT") -> font,
+        f("FONT_COLOR") -> fontColor,
       )
 
       inverseUpdateAll()
