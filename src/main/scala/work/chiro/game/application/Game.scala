@@ -115,11 +115,11 @@ class Game(frame: JFrame) extends JPanel {
         if (onMobCreateCountCycle) enemyAircrafts.synchronized(enemyAircrafts.append(MobEnemy.create()))
         // 产生精英敌机
         if (onEliteCreateCountCycle) enemyAircrafts.synchronized(enemyAircrafts.append(EliteEnemy.create()))
-        if (onFpsCountCycle) {
-          val fpsInfo = f"[ Calc ${frameCalcCount.size} fps | Render ${frameRenderCount.size} fps ]"
-          if (config.running.showFps) logger.info(fpsInfo)
-          Main.getFrameInstance.setTitle(f"Aircraft War $fpsInfo")
-        }
+        // if (onFpsCountCycle) {
+        //   val fpsInfo = f"[ Calc ${frameCalcCount.size} fps | Render ${frameRenderCount.size} fps ]"
+        //   if (config.running.showFps) logger.info(fpsInfo)
+        //   Main.getFrameInstance.setTitle(f"Aircraft War $fpsInfo")
+        // }
         // 所有物体移动
         allObjectLists.foreach(_.foreach(_.forward()))
         // 撞击检测
@@ -339,9 +339,14 @@ class Game(frame: JFrame) extends JPanel {
     g.setColor(fontColor)
     g.setFont(myFontBase.get)
     g.drawString(
-      f"${frameRenderCount.size}fps",
-      config.window.width - 100,
-      config.window.playOffsetY + config.window.playHeight - 24
+      f"render ${frameRenderCount.size}fps",
+      config.window.width - 180,
+      config.window.playOffsetY + config.window.playHeight - 22 * 2
+    )
+    g.drawString(
+      f"calc ${frameCalcCount.size}fps",
+      config.window.width - 150,
+      config.window.playOffsetY + config.window.playHeight - 22
     )
   }
 }
