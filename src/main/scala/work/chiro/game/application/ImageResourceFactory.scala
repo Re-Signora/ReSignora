@@ -1,6 +1,8 @@
 package work.chiro.game.application
 
+import work.chiro.game.logger
 import work.chiro.game.utils.tryGetImageFile
+
 import java.awt.image.BufferedImage
 
 /**
@@ -12,26 +14,34 @@ import java.awt.image.BufferedImage
 trait ImageResourceFactory extends ImageResourceReady {
   // 缓存上次加载的路径，变化的时候再重新加载
   private var imagePathCached: Option[String] = None
+
   def getImageCachedPath: String
 
-  def getImage: BufferedImage = if (imageCached.isEmpty || imagePathCached.isEmpty) {
-    imageCached.synchronized({
-      imageCached = Some(tryGetImageFile(getImageCachedPath))
-    })
-    imagePathCached = Some(new String(getImageCachedPath))
-    imageCached.get
-  } else {
-    if (imagePathCached.get == getImageCachedPath) {
+  def getImage: BufferedImage =
+    if (imageCached.isEmpty || imagePathCached.isEmpty) {
+      // logger.warn(s"load image: ${getImageCachedPath} (imageCached.isEmpty = ${imageCached.isEmpty}, imagePathCached.isEmpty = ${imagePathCached.isEmpty})")
+      imageCached.synchronized({
+        imageCached = Some(tryGetImageFile(getImageCachedPath))
+      })
+      imagePathCached.synchronized({
+        imagePathCached = Some(new String(getImageCachedPath))
+      })
       imageCached.get
     } else {
-      imagePathCached = None
-      getImage
+      if (imagePathCached.get == getImageCachedPath) {
+        imageCached.get
+      } else {
+        // logger.warn(s"imagePathCached.get(${imagePathCached.get}) != getImageCachedPath(${getImageCachedPath})! reload image: ${getImageCachedPath}")
+        imagePathCached = None
+        getImage
+      }
     }
-  }
 }
 
 trait ImageResourceReady {
   def getImage: BufferedImage
-  def hasImage = imageCached.isDefined
+
+  def hasImage = imageCached.nonEmpty
+
   var imageCached: Option[BufferedImage] = None
 }

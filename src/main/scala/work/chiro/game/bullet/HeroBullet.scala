@@ -8,7 +8,10 @@ import work.chiro.game.basic.ScaleType.Position
  * @author chiro2001
  */
 class HeroBullet(posInit: Position, animateContainer: AnimateContainer, power: Int)
-  extends AbstractBullet(posInit, animateContainer, power)
-  with ImageResourceFactory {
+  extends AbstractBullet(posInit, animateContainer, power) {
+  override def getImage = HeroBullet.getImage
+}
+
+object HeroBullet extends ImageResourceFactory {
   override def getImageCachedPath = "images/bullet_hero.png"
 }
