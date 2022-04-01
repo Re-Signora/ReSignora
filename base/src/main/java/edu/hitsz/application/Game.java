@@ -22,9 +22,13 @@ public class Game extends JPanel {
     private int backGroundTop = 0;
 
     /**
-     * Scheduled 线程池，用于任务调度
+     * 创建线程的工厂函数
      */
-    private final ScheduledExecutorService executorService;
+    private final MyThreadFactory threadFactory = new MyThreadFactory("AircraftWar");
+    /**
+     * 线程池，自动管理
+     */
+    private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1, threadFactory);
 
     /**
      * 时间间隔(ms)，控制刷新频率
@@ -50,6 +54,7 @@ public class Game extends JPanel {
     private int cycleTime = 0;
 
     final double eliteRate = 0.3;
+    final Random random = new Random();
 
 
     public Game() {
@@ -62,9 +67,6 @@ public class Game extends JPanel {
         heroBullets = new LinkedList<>();
         enemyBullets = new LinkedList<>();
         props = new LinkedList<>();
-
-        //Scheduled 线程池，用于定时任务调度
-        executorService = new ScheduledThreadPoolExecutor(1);
 
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
@@ -130,7 +132,7 @@ public class Game extends JPanel {
             // 游戏结束检查
             if (heroAircraft.getHp() <= 0) {
                 // 游戏结束
-                executorService.shutdown();
+                threadFactory.shutdown();
                 gameOverFlag = true;
                 System.out.println("Game Over!");
             }
@@ -234,7 +236,7 @@ public class Game extends JPanel {
                     if (enemyAircraft.notValid()) {
                         // 获得分数，产生道具补给
                         if (enemyAircraft.getClass().getName().endsWith("EliteEnemy")) {
-                            int select = (int) (Math.random() * 3);
+                            int select = random.nextInt(3);
                             if (select == 0) {
                                 props.add(new BloodPropFactory(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), 0, 2, 100).create());
                             } else if (select == 1) {
