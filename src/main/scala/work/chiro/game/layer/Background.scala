@@ -17,7 +17,7 @@ class Background(posInit: Position, animateContainer: AnimateContainer)
 
   override def draw(g: Graphics) = {
     super.draw(g, alignCenter = false)
-    val newPos = getPos + new Position(0, -config.window.playHeight)
+    val newPos = getPos + new Position(0, -config.window.playHeight + 1)
     newPos.setY(newPos.getY % config.window.playHeight)
     super.draw(g, img = Some(getImage), position = Some(newPos), alignCenter = false)
   }
