@@ -2,28 +2,22 @@ require "logging"
 
 logger = {
     log = function(value)
-        local debugInfo = debug.getinfo(2)
-        logging.log(value, debugInfo)
+        logging.log(value, debug.getinfo(2))
     end,
     debug = function(value)
-        local debugInfo = debug.getinfo(2)
-        logging.debug(value, debugInfo)
+        logging.debug(value, debug.getinfo(2))
     end,
     info = function(value)
-        local debugInfo = debug.getinfo(2)
-        logging.info(value, debugInfo)
+        logging.info(value, debug.getinfo(2))
     end,
     warn = function(value)
-        local debugInfo = debug.getinfo(2)
-        logging.warn(value, debugInfo)
+        logging.warn(value, debug.getinfo(2))
     end,
     error = function(value)
-        local debugInfo = debug.getinfo(2)
-        logging.error(value, debugInfo)
+        logging.error(value, debug.getinfo(2))
     end,
     fatal = function(value)
-        local debugInfo = debug.getinfo(2)
-        logging.fatal(value, debugInfo)
+        logging.fatal(value, debug.getinfo(2))
     end,
 
 }
