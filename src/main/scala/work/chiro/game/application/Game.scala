@@ -61,7 +61,7 @@ class Game(frame: JFrame) extends JPanel {
   val allAircrafts = Array(enemyAircrafts, List(heroAircraft))
   val allBullets = Array(heroBullets, enemyBullets)
   // Scheduled 线程池，用于定时任务调度
-  val executorService = new ScheduledThreadPoolExecutor(1)
+  val executorService = new ScheduledThreadPoolExecutor(4)
   // 启动英雄机控制监听
   val controller = HeroController.create(frame, this)
   // private var backGroundTop = 0
