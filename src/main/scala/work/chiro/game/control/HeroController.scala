@@ -30,8 +30,8 @@ class HeroController(frame: JFrame, game: Game, heroAircraft: HeroAircraft) {
     override def mouseDragged(e: MouseEvent): Unit = {
       super.mouseDragged(e)
       // 防止超出边界
-      val x = setInRangeInt(e.getX, 0, config.window.playWidth)
-      val y = setInRangeInt(e.getY, 0, config.window.playHeight - heroAircraft.getHeight / 2)
+      val x = setInRangeInt(e.getX - config.window.playOffsetX, 0, config.window.playWidth)
+      val y = setInRangeInt(e.getY - config.window.playOffsetY, 0, config.window.playHeight - heroAircraft.getHeight / 2)
       heroAircraft.setLocation(x, y)
     }
 

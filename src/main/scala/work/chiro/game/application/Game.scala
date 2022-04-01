@@ -25,7 +25,7 @@ import scala.collection.mutable.ListBuffer
  * @author chiro2001
  */
 class Game(frame: JFrame) extends JPanel {
-  logger.info(s"Window(${config.window.playWidth}x${config.window.playHeight})")
+  logger.info(s"Window(${config.window.width}x${config.window.height}), Playground(${config.window.playWidth}x${config.window.playHeight})")
   val heroAircraft = HeroAircraft.create()
   val heroPosition = HeroAircraft.getPositionInstance
   val gameBackground = Background.create()
@@ -297,16 +297,23 @@ class Game(frame: JFrame) extends JPanel {
 
     // 绘制所有物体
     allObjectsToDraw.foreach(objList => objList.synchronized(objList.foreach(_.draw(g))))
-    //绘制得分和生命值
+    // 绘制得分和生命值
     paintScoreAndLife(g)
+    // 绘制边框防止图像溢出
+    paintOuterMask(g)
   }
 
-  private def paintImageWithPositionRevised(g: Graphics, objects: ListBuffer[_ <: AbstractObject]): Unit =
-    objects.synchronized(objects.foreach(_.draw(g)))
+  private def paintOuterMask(g: Graphics) = {
+    g.setColor(new Color(0x3f3f3f3f))
+    g.fillRect(0, 0, config.window.playOffsetX, config.window.height)
+    g.fillRect(config.window.playOffsetX, 0, config.window.playWidth, config.window.playOffsetY)
+    g.fillRect(config.window.playOffsetX + config.window.playWidth, 0, config.window.width, config.window.height)
+    g.fillRect(config.window.playOffsetX, config.window.playHeight, config.window.playWidth, config.window.height)
+  }
 
   private def paintScoreAndLife(g: Graphics) = {
-    val x = 10
-    var y = 25
+    val x = 10 + config.window.playOffsetX
+    var y = 25 + config.window.playOffsetY
     g.setColor(new Color(16711680))
     g.setFont(new Font("SansSerif", Font.BOLD, 22))
     g.drawString("SCORE:" + this.score, x, y)

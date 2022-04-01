@@ -16,16 +16,17 @@ abstract class AbstractBullet(posInit: Position, animateContainer: AnimateContai
   override def forward() = {
     super.forward()
     // 判定 x 轴出界
-    if (getLocationX <= 0 || getLocationY >= config.window.playHeight) vanish()
+    if (getLocationX <= 0 || getLocationX >= config.window.playWidth) vanish()
     // 判定 y 轴出界
-    if (getSpeedY > 0 && getLocationY >= config.window.playHeight) {
-      // 向下飞行出界
-      vanish()
-    }
-    else if (getLocationY <= 0) {
-      // 向上飞行出界
-      vanish()
-    }
+    if (getLocationY <= 0 || getLocationY >= config.window.playHeight) vanish()
+    // if (getSpeedY > 0 && getLocationY >= config.window.playHeight) {
+    //   // 向下飞行出界
+    //   vanish()
+    // }
+    // else if (getLocationY <= 0) {
+    //   // 向上飞行出界
+    //   vanish()
+    // }
   }
 
   def getPower = power
