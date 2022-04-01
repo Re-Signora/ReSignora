@@ -4,7 +4,7 @@ import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateNonLinear, AnimateVectorType}
 import work.chiro.game.application.ImageResourceFactory
 import work.chiro.game.basic.PositionType.{Position, Scale, Size, SizeDouble}
-import work.chiro.game.basic.{AbstractObjectFactory, Vec2Double}
+import work.chiro.game.basic.{AbstractObjectFactory, Vec2Double, VecDouble}
 import work.chiro.game.bullet.EnemyBullet
 import work.chiro.game.utils.{getNewFlightPosition, getTimeMills}
 
@@ -50,7 +50,8 @@ object EliteEnemy extends ImageResourceFactory with AbstractObjectFactory {
     new EliteEnemy(
       positionEnemyNew, new AnimateContainer(List(
         new AnimateLinear(positionEnemyNew, new Position(0, 0.1),
-          AnimateVectorType.PositionLike.id, getTimeMills, 0)
+          AnimateVectorType.PositionLike.id, getTimeMills, 0),
+        new AnimateLinear(newRotation, new Scale(0.01), AnimateVectorType.Others.id, getTimeMills, 0)
       )), 30, rotationInit = Some(newRotation)
     )
   }
