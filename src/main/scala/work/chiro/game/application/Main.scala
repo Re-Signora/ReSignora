@@ -22,7 +22,17 @@ object Main {
 
   def getFrameInstance = frameInstance.get
 
-  def getLuaGlobals = luaGlobals.get
+  def getLuaGlobals = {
+    if (luaGlobals.isEmpty) {
+      // use debug lib for logging
+      luaGlobals = Some(JsePlatform.debugGlobals())
+      // 加载自定义库
+      LibrariesLoader.loadAllLibraries()
+      LoadState.install(luaGlobals.get)
+      LuaC.install(luaGlobals.get)
+    }
+    luaGlobals.get
+  }
 
   def main(args: Array[String]): Unit = {
     GlobalConfigLoader.init
@@ -47,13 +57,6 @@ object Main {
       if (gd.isFullScreenSupported) gd.setFullScreenWindow(frame)
       else logger.warn("Unsupported full screen!")
     }
-    // use debug lib for logging
-    luaGlobals = Some(JsePlatform.debugGlobals())
-    // 加载自定义库
-    LibrariesLoader.loadAllLibraries()
-    LoadState.install(getLuaGlobals)
-    LuaC.install(getLuaGlobals)
-    getLuaGlobals.loadfile("scripts/logger.lua").call()
     getLuaGlobals.loadfile("scripts/lang-test.lua").call()
     new Game(frame).action()
   }

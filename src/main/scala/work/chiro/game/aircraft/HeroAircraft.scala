@@ -4,7 +4,7 @@ import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.animate.{AnimateContainer, AnimateLinear, AnimateVectorType}
 import work.chiro.game.application.ImageResourceFactory
 import work.chiro.game.basic.ScaleType.{Position, Scale, Size, SizeDouble}
-import work.chiro.game.basic.{AbstractObject, AbstractObjectFactory, Vec2Double}
+import work.chiro.game.basic.{AbstractObject, AbstractObjectFactory}
 import work.chiro.game.bullet.HeroBullet
 import work.chiro.game.control.HeroController
 import work.chiro.game.logger

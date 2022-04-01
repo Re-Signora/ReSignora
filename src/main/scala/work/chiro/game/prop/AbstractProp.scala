@@ -3,8 +3,8 @@ package work.chiro.game.prop
 import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.aircraft.AbstractAircraft
 import work.chiro.game.animate.AnimateContainer
+import work.chiro.game.basic.AbstractObject
 import work.chiro.game.basic.ScaleType.Position
-import work.chiro.game.basic.{AbstractObject, Vec2Double}
 
 abstract class AbstractProp(posInit: Position, animateContainer: AnimateContainer)
   extends AbstractObject(posInit, animateContainer) {

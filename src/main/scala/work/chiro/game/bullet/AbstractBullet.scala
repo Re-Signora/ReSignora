@@ -2,8 +2,8 @@ package work.chiro.game.bullet
 
 import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.animate.AnimateContainer
+import work.chiro.game.basic.AbstractObject
 import work.chiro.game.basic.ScaleType.Position
-import work.chiro.game.basic.{AbstractObject, Vec2Double}
 
 /**
  * 子弹类。

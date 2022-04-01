@@ -2,6 +2,7 @@ package work.chiro.game.test.luaj
 
 import org.luaj.vm2.lib.jse.JsePlatform
 import org.scalatest.flatspec.AnyFlatSpec
+import work.chiro.game.application.Main.getLuaGlobals
 import work.chiro.game.libraries.LibrariesLoader
 import work.chiro.game.{GlobalConfigLoader, logger}
 import work.chiro.game.utils.tryGetFile
@@ -16,8 +17,7 @@ class LuaJTest extends AnyFlatSpec {
     println("file content:")
     println(fileContent)
     println("execute:")
-    val globals = JsePlatform.standardGlobals()
-    val chunk = globals.load(fileContent)
+    val chunk = getLuaGlobals.load(fileContent)
     chunk.call
     logger.info("test done.")
   }
@@ -25,8 +25,7 @@ class LuaJTest extends AnyFlatSpec {
   "Lua swing test" should "pass the test" in {
     val script = "luaj-swing-test.lua"
     println(s"execute file $script:")
-    val globals = JsePlatform.standardGlobals()
-    val chunk = globals.loadfile(script)
+    val chunk = getLuaGlobals.loadfile(script)
     chunk.call()
     val r = new Robot
     r.delay(5000)
@@ -36,9 +35,7 @@ class LuaJTest extends AnyFlatSpec {
   "Lua libraries test" should "pass the test" in {
     val script = "luaj-libs-test.lua"
     println(s"execute file $script:")
-    val globals = JsePlatform.standardGlobals()
-    LibrariesLoader.loadAllLibraries(globals = globals)
-    val chunk = globals.loadfile(script)
+    val chunk = getLuaGlobals.loadfile(script)
     chunk.call()
     logger.info("test done.")
   }
@@ -47,7 +44,7 @@ class LuaJTest extends AnyFlatSpec {
     GlobalConfigLoader.init
     val script = "game-config-test.lua"
     println(s"execute file $script:")
-    val globals = JsePlatform.standardGlobals()
+    val globals = JsePlatform.debugGlobals()
     LibrariesLoader.loadAllLibraries(globals = globals)
     val chunk = globals.loadfile(script)
     chunk.call()
@@ -58,9 +55,7 @@ class LuaJTest extends AnyFlatSpec {
     GlobalConfigLoader.init
     val script = "luaj-logger-test.lua"
     println(s"execute file $script:")
-    val globals = JsePlatform.standardGlobals()
-    LibrariesLoader.loadAllLibraries(globals = globals)
-    val chunk = globals.loadfile(script)
+    val chunk = getLuaGlobals.loadfile(script)
     chunk.call()
     logger.info("test done.")
   }

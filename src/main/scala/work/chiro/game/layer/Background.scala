@@ -4,7 +4,6 @@ import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.animate.{AnimateContainer, AnimateLinearLoop, AnimateVectorType}
 import work.chiro.game.application.ImageResourceFactory
 import work.chiro.game.basic.ScaleType.{Position, Size, SizeDouble}
-import work.chiro.game.basic.Vec2Double
 import work.chiro.game.utils.getTimeMills
 
 import java.awt.Graphics

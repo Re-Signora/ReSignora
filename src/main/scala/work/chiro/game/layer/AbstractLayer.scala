@@ -3,7 +3,7 @@ package work.chiro.game.layer
 import work.chiro.game.animate.AnimateContainer
 import work.chiro.game.application.ImageResourceFactory
 import work.chiro.game.basic.ScaleType.{Position, SizeDouble}
-import work.chiro.game.basic.{AbstractObject, AbstractObjectFactory, Vec2Double}
+import work.chiro.game.basic.{AbstractObject, AbstractObjectFactory}
 
 import java.awt.Graphics
 

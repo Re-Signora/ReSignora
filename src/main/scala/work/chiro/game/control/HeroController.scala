@@ -4,7 +4,7 @@ import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.aircraft.HeroAircraft
 import work.chiro.game.application.Game
 import work.chiro.game.basic.Vec2Double
-import work.chiro.game.utils.{getTimeMills, setInRangeDouble, setInRangeInt}
+import work.chiro.game.utils.{getTimeMills, setInRangeDouble}
 
 import java.awt.event.{KeyAdapter, KeyEvent, MouseAdapter, MouseEvent}
 import javax.swing.JFrame

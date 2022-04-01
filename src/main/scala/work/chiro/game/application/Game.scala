@@ -1,7 +1,5 @@
 package work.chiro.game.application
 
-import org.luaj.vm2.LoadState
-import org.luaj.vm2.compiler.LuaC
 import work.chiro.game.GlobalConfigLoader.config
 import work.chiro.game.aircraft._
 import work.chiro.game.application.Main.getLuaGlobals
@@ -9,7 +7,6 @@ import work.chiro.game.basic.AbstractObject
 import work.chiro.game.bullet.AbstractBullet
 import work.chiro.game.control.HeroController
 import work.chiro.game.layer.{AbstractLayer, Background}
-import work.chiro.game.libraries.LibrariesLoader
 import work.chiro.game.logger
 import work.chiro.game.prop.{AbstractProp, BloodProp, BombProp, BulletProp}
 import work.chiro.game.utils.getTimeMills

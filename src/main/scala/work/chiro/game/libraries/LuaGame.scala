@@ -4,7 +4,6 @@ import org.luaj.vm2.LuaValue
 import org.luaj.vm2.LuaValue.{NONE, tableOf}
 import org.luaj.vm2.lib._
 import work.chiro.game.GlobalConfigLoader.config
-import work.chiro.game.logger
 
 /**
  * 以 Lua Library 的形式完成 Lua 和 Java 之间数据的连接
