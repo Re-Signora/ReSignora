@@ -63,7 +63,7 @@ class Game(frame: JFrame) extends JPanel {
   // Scheduled 线程池，用于定时任务调度
   val executorService = new ScheduledThreadPoolExecutor(1)
   // 启动英雄机控制监听
-  val controller = new HeroController(frame, this, heroAircraft)
+  val controller = HeroController.create(frame, this)
   // private var backGroundTop = 0
   private val timeInterval = 1
   private var gameOverFlag = false

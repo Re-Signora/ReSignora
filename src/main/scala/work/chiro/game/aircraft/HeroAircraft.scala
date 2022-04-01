@@ -6,6 +6,7 @@ import work.chiro.game.application.ImageResourceFactory
 import work.chiro.game.basic.PositionType.{Position, Size}
 import work.chiro.game.basic.{AbstractObject, AbstractObjectFactory, Vec2Double}
 import work.chiro.game.bullet.HeroBullet
+import work.chiro.game.control.HeroController
 import work.chiro.game.logger
 import work.chiro.game.utils.getTimeMills
 
@@ -88,7 +89,10 @@ class HeroAircraftBox(posInit: Position)
   extends AbstractObject(posInit, new AnimateContainer[Position](), sizeInit = Some(new Size(config.hero.box, config.hero.box))) {
   override def getImage = HeroAircraftBox.getImage
 
-  override def draw(g: Graphics) = super.draw(g, position = Some(getPos - new Position(config.hero.box / 2, config.hero.box / 2)), alignCenter = false)
+  override def draw(g: Graphics) = {
+    if (HeroController.getInstance.pressed(config.control.keySlow))
+      super.draw(g, position = Some(getPos - new Position(config.hero.box / 2, config.hero.box / 2)), alignCenter = false)
+  }
 }
 
 object HeroAircraftBox extends ImageResourceFactory {

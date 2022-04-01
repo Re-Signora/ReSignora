@@ -16,7 +16,7 @@ import scala.collection.mutable
  *
  * @author chiro2001
  */
-class HeroController(frame: JFrame, game: Game, heroAircraft: HeroAircraft) {
+class HeroController(frame: JFrame, game: Game) {
   // 使得窗口和 JPanel 能够获得键盘输入焦点
   frame.getContentPane.add(game)
   frame.setVisible(true)
@@ -31,8 +31,8 @@ class HeroController(frame: JFrame, game: Game, heroAircraft: HeroAircraft) {
       super.mouseDragged(e)
       // 防止超出边界
       val x = setInRangeInt(e.getX - config.window.playOffsetX, 0, config.window.playWidth)
-      val y = setInRangeInt(e.getY - config.window.playOffsetY, 0, config.window.playHeight - heroAircraft.getHeight / 2)
-      heroAircraft.setLocation(x, y)
+      val y = setInRangeInt(e.getY - config.window.playOffsetY, 0, config.window.playHeight - HeroAircraft.getInstance.getHeight / 2)
+      HeroAircraft.getInstance.setLocation(x, y)
     }
 
     override def mousePressed(e: MouseEvent) = {
@@ -71,11 +71,22 @@ class HeroController(frame: JFrame, game: Game, heroAircraft: HeroAircraft) {
       case _ => ()
     }
 
-    val newPos = heroAircraft.getPos + next
-    heroAircraft.setLocation(
+    val newPos = HeroAircraft.getInstance.getPos + next
+    HeroAircraft.getInstance.setLocation(
       setInRangeInt(newPos.getX.toInt, 0, config.window.playWidth),
-      setInRangeInt(newPos.getY.toInt, 0, config.window.playHeight - heroAircraft.getHeight / 2)
+      setInRangeInt(newPos.getY.toInt, 0, config.window.playHeight - HeroAircraft.getInstance.getHeight / 2)
     )
     lastFrameTime = getTimeMills
+  }
+}
+
+object HeroController {
+  var heroControllerInstance: Option[HeroController] = None
+
+  def getInstance = heroControllerInstance.get
+
+  def create(frame: JFrame, game: Game): HeroController = {
+    if (heroControllerInstance.isEmpty) heroControllerInstance = Some(new HeroController(frame, game))
+    heroControllerInstance.get
   }
 }
