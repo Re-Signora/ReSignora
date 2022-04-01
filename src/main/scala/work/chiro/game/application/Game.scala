@@ -304,7 +304,7 @@ class Game(frame: JFrame) extends JPanel {
   }
 
   private def paintOuterMask(g: Graphics) = {
-    g.setColor(new Color(0x3f3f3f3f))
+    g.setColor(new Color(config.window.bgColor))
     g.fillRect(0, 0, config.window.playOffsetX, config.window.height)
     g.fillRect(config.window.playOffsetX, 0, config.window.playWidth, config.window.playOffsetY)
     g.fillRect(config.window.playOffsetX + config.window.playWidth, 0, config.window.width, config.window.height)

@@ -80,6 +80,8 @@ object GlobalConfigLoader {
 
       def fullScreen: Boolean = getValue(d("FULL_SCREEN"), false)
 
+      def bgColor: Int = getValue(d("BG_COLOR"), 0x3f3f3f3f)
+
       override val inverseUpdateTable = Array(
         f("WIDTH") -> width,
         f("HEIGHT") -> height,
@@ -87,7 +89,8 @@ object GlobalConfigLoader {
         f("PLAY_WIDTH") -> playWidth,
         f("PLAY_HEIGHT") -> playHeight,
         f("PLAY_OFFSET_X") -> playOffsetX,
-        f("PLAY_OFFSET_Y") -> playOffsetY
+        f("PLAY_OFFSET_Y") -> playOffsetY,
+        f("BG_COLOR") -> bgColor
       )
 
       inverseUpdateAll()

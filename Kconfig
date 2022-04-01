@@ -37,6 +37,10 @@ menu "Window config"
         int "Playground Offset Y"
         default 28
 
+    config M_WINDOW_BG_COLOR
+        hex "Window background color"
+        default 0x3f3f3f3f
+
 endmenu
 
 menu "Control config"
