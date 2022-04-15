@@ -8,8 +8,8 @@ import java.util.List;
  * @author Chiro
  */
 public class BombProp extends AbstractProp {
-    public BombProp(int locationX, int locationY, int speedX, int speedY) {
-        super(locationX, locationY, speedX, speedY);
+    public BombProp(int locationX, int locationY) {
+        super(locationX, locationY);
     }
 
     @Override

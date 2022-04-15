@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class BloodProp extends AbstractProp {
     int increaseHp;
-    public BloodProp(int locationX, int locationY, int speedX, int speedY, int increaseHp) {
-        super(locationX, locationY, speedX, speedY);
+    public BloodProp(int locationX, int locationY, int increaseHp) {
+        super(locationX, locationY);
         this.increaseHp = increaseHp;
     }
 

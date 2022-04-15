@@ -14,8 +14,8 @@ import java.util.List;
  */
 abstract public class AbstractProp extends AbstractFlyingObject {
 
-    public AbstractProp(int locationX, int locationY, int speedX, int speedY) {
-        super(locationX, locationY, speedX, speedY);
+    public AbstractProp(int locationX, int locationY) {
+        super(locationX, locationY, 0, 2);
     }
 
     @Override

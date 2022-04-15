@@ -36,6 +36,15 @@ public class Game extends JPanel {
     private final int timeInterval = 20;
 
     private final HeroAircraft heroAircraft;
+
+    public List<AbstractAircraft> getEnemyAircrafts() {
+        return enemyAircrafts;
+    }
+
+    public List<AbstractProp> getProps() {
+        return props;
+    }
+
     private final List<AbstractAircraft> enemyAircrafts;
     private final List<BaseBullet> heroBullets;
     private final List<BaseBullet> enemyBullets;
@@ -58,10 +67,7 @@ public class Game extends JPanel {
 
 
     public Game() {
-        HeroAircraftFactory heroAircraftFactory = new HeroAircraftFactory(Main.WINDOW_WIDTH / 2,
-                Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight(),
-                0, 0, 100);
-        heroAircraft = heroAircraftFactory.create();
+        heroAircraft = new HeroAircraftFactory().create();
 
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<>();
@@ -89,23 +95,13 @@ public class Game extends JPanel {
                 // 新敌机产生
                 if (enemyAircrafts.size() < enemyMaxNumber) {
                     if (Math.random() < eliteRate) {
-                        enemyAircrafts.add(new EliteEnemyFactory(
-                                (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
-                                (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2),
-                                0,
-                                2,
-                                60).create());
+                        enemyAircrafts.add(new EliteEnemyFactory().create());
                     } else {
-                        enemyAircrafts.add(new MobEnemyFactory(
-                                (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
-                                (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2),
-                                0,
-                                10,
-                                30).create());
+                        enemyAircrafts.add(new MobEnemyFactory().create());
                     }
                 }
                 if (score > 0 && BossEnemyFactory.getInstance() == null) {
-                    new BossEnemyFactory(0, 10, 2, 0, 300).create();
+                    new BossEnemyFactory().create();
                 }
                 // 飞机射出子弹
                 shootAction();
@@ -238,11 +234,11 @@ public class Game extends JPanel {
                         if (enemyAircraft.getClass().getName().endsWith("EliteEnemy")) {
                             int select = random.nextInt(3);
                             if (select == 0) {
-                                props.add(new BloodPropFactory(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), 0, 2, 100).create());
+                                props.add(new BloodPropFactory(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()).create());
                             } else if (select == 1) {
-                                props.add(new BombPropFactory(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), 0, 2).create());
+                                props.add(new BombPropFactory(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()).create());
                             } else {
-                                props.add(new BulletPropFactory(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), 0, 2).create());
+                                props.add(new BulletPropFactory(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()).create());
                             }
                             score += 100;
                         } else {

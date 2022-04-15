@@ -30,4 +30,10 @@ public class EliteEnemy extends AbstractAircraft {
     public LinkedList<BaseBullet> shoot() {
         return Utils.letEnemyShoot(getLocationX(), getLocationY());
     }
+
+    @Override
+    public void vanish() {
+        super.vanish();
+
+    }
 }

@@ -9,8 +9,8 @@ import java.util.List;
  * @author Chiro
  */
 public class BulletProp extends AbstractProp {
-    public BulletProp(int locationX, int locationY, int speedX, int speedY) {
-        super(locationX, locationY, speedX, speedY);
+    public BulletProp(int locationX, int locationY) {
+        super(locationX, locationY);
     }
 
     @Override

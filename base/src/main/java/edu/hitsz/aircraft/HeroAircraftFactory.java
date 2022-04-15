@@ -1,16 +1,13 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.application.ImageManager;
+import edu.hitsz.application.Main;
+
 /**
  * @author Chiro
  */
 public class HeroAircraftFactory implements AbstractAircraftFactory {
-    protected int locationX, locationY, speedX, speedY, hp;
-    public HeroAircraftFactory(int locationX, int locationY, int speedX, int speedY, int hp) {
-        this.locationX = locationX;
-        this.locationY = locationY;
-        this.speedX = speedX;
-        this.speedY = speedY;
-        this.hp = hp;
+    public HeroAircraftFactory() {
     }
 
     /**
@@ -20,6 +17,7 @@ public class HeroAircraftFactory implements AbstractAircraftFactory {
 
     /**
      * 获取实例
+     *
      * @return 英雄机实例
      */
     static public HeroAircraft getInstance() {
@@ -31,7 +29,9 @@ public class HeroAircraftFactory implements AbstractAircraftFactory {
         // Double-checked locking
         if (heroInstance == null) {
             synchronized (HeroAircraftFactory.class) {
-                heroInstance = new HeroAircraft(locationX, locationY, speedX, speedY, hp);
+                heroInstance = new HeroAircraft(Main.WINDOW_WIDTH / 2,
+                        Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight(),
+                        0, 0, 100);
             }
         }
         return heroInstance;

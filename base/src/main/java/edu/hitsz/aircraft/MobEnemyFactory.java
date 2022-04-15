@@ -1,21 +1,22 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.application.ImageManager;
+import edu.hitsz.application.Main;
+
 /**
  * @author Chiro
  */
 public class MobEnemyFactory implements AbstractAircraftFactory {
-    protected int locationX, locationY, speedX, speedY, hp;
-
-    public MobEnemyFactory(int locationX, int locationY, int speedX, int speedY, int hp) {
-        this.locationX = locationX;
-        this.locationY = locationY;
-        this.speedX = speedX;
-        this.speedY = speedY;
-        this.hp = hp;
+    public MobEnemyFactory() {
     }
 
     @Override
     public MobEnemy create() {
-        return new MobEnemy(locationX, locationY, speedX, speedY, hp);
+        return new MobEnemy(
+                (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
+                (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2),
+                0,
+                10,
+                30);
     }
 }

@@ -4,15 +4,7 @@ package edu.hitsz.aircraft;
  * @author Chiro
  */
 public class BossEnemyFactory implements AbstractAircraftFactory {
-    protected int locationX, locationY, speedX, speedY, hp;
-
-    public BossEnemyFactory(int locationX, int locationY, int speedX, int speedY, int hp) {
-        this.locationX = locationX;
-        this.locationY = locationY;
-        this.speedX = speedX;
-        this.speedY = speedY;
-        this.hp = hp;
-    }
+    public BossEnemyFactory() {}
 
     static private BossEnemy instance = null;
 
@@ -29,7 +21,7 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
         if (instance == null) {
             System.out.println("Boss created!");
             synchronized (BossEnemyFactory.class) {
-                instance = new BossEnemy(locationX, locationY, speedX, speedY, hp);
+                instance = new BossEnemy(0, 10, 2, 0, 300);
             }
         }
         return instance;
