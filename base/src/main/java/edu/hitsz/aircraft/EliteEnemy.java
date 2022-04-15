@@ -4,6 +4,7 @@ import edu.hitsz.application.Game;
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.Utils;
+import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.prop.BloodPropFactory;
 import edu.hitsz.prop.BombPropFactory;
 import edu.hitsz.prop.BulletPropFactory;
@@ -39,18 +40,18 @@ public class EliteEnemy extends AbstractAircraft {
     }
 
     @Override
-    public void vanish() {
-        super.vanish();
-        System.out.println("vanish!");
+    public LinkedList<AbstractProp> dropProps() {
         double select = random.nextDouble();
         double probability = 0.3;
+        LinkedList <AbstractProp> props = new LinkedList<>();
         if (Utils.isInRange(select, 0, probability)) {
-            Game.getProps().add(new BloodPropFactory(getLocationX(), getLocationY()).create());
+            props.add(new BloodPropFactory(getLocationX(), getLocationY()).create());
         } else if (Utils.isInRange(select, probability, probability * 2)) {
-            Game.getProps().add(new BombPropFactory(getLocationX(), getLocationY()).create());
+            props.add(new BombPropFactory(getLocationX(), getLocationY()).create());
         } else if (Utils.isInRange(select, probability * 2, probability * 3)) {
-            Game.getProps().add(new BulletPropFactory(getLocationX(), getLocationY()).create());
+            props.add(new BulletPropFactory(getLocationX(), getLocationY()).create());
         }
         // else no props.
+        return props;
     }
 }

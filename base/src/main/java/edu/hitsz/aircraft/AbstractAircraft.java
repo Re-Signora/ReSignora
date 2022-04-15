@@ -2,6 +2,7 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.prop.AbstractProp;
 
 import java.util.LinkedList;
 
@@ -51,6 +52,11 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
      */
     public abstract LinkedList<BaseBullet> shoot();
 
+    /**
+     * 飞机掉落道具
+     * @return 返回所有的道具
+     */
+    public abstract LinkedList<AbstractProp> dropProps();
 }
 
 
