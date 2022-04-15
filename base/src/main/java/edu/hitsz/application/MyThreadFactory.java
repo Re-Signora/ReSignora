@@ -62,8 +62,4 @@ public class MyThreadFactory implements ThreadFactory {
         }
         return buffer.toString();
     }
-
-    public void shutdown() {
-
-    }
 }

@@ -15,4 +15,7 @@ public class Utils {
         ret.add(new EnemyBulletFactory(x, y, 0, 10, 10).create());
         return ret;
     }
+    public static Boolean isInRange(double value, double down, double up) {
+        return down <= value && value < up;
+    }
 }
