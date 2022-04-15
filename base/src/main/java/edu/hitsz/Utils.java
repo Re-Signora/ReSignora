@@ -12,7 +12,7 @@ import java.util.LinkedList;
 public class Utils {
     public static LinkedList<BaseBullet> letEnemyShoot(int x, int y) {
         LinkedList<BaseBullet> ret = new LinkedList<>();
-        ret.add(new EnemyBulletFactory(x, y, 0, 10, 10).create());
+        ret.add(new EnemyBulletFactory(x, y, 0, 6, 10).create());
         return ret;
     }
     public static Boolean isInRange(double value, double down, double up) {
