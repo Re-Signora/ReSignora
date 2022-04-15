@@ -13,7 +13,7 @@ import java.util.LinkedList;
 public class BossEnemy extends AbstractAircraft {
 
     public BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
-        super(locationX, locationY, speedX, speedY, hp);
+        super(locationX, locationY, speedX, speedY, hp, 1000);
     }
 
     @Override

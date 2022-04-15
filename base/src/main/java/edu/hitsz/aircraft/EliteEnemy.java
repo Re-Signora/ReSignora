@@ -21,7 +21,7 @@ public class EliteEnemy extends AbstractAircraft {
     final Random random = new Random();
 
     public EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
-        super(locationX, locationY, speedX, speedY, hp);
+        super(locationX, locationY, speedX, speedY, hp, 100);
     }
 
     @Override

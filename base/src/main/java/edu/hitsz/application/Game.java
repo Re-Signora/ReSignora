@@ -210,7 +210,7 @@ public class Game extends JPanel {
                     boss.decreaseHp(bullet.getPower());
                     bullet.vanish();
                     if (boss.notValid()) {
-                        score += 1000;
+                        score += boss.getScore();
                     }
                     continue;
                 }
@@ -227,12 +227,8 @@ public class Game extends JPanel {
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
-                        // 获得分数，产生道具补给
-                        if (enemyAircraft.getClass().getName().endsWith("EliteEnemy")) {
-                            score += 100;
-                        } else {
-                            score += 10;
-                        }
+                        // 获得分数
+                        score += enemyAircraft.getScore();
                     }
                 }
                 // 英雄机 与 敌机 相撞，均损毁

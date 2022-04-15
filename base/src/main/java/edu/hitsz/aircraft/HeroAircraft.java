@@ -33,7 +33,7 @@ public class HeroAircraft extends AbstractAircraft {
      * @param hp        初始生命值
      */
     public HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
-        super(locationX, locationY, speedX, speedY, hp);
+        super(locationX, locationY, speedX, speedY, hp, 0);
     }
 
     @Override
