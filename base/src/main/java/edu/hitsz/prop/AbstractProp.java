@@ -1,6 +1,8 @@
 package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.AbstractAircraft;
+import edu.hitsz.animate.AnimateContainer;
+import edu.hitsz.animate.AnimateContainerFactory;
 import edu.hitsz.application.Main;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.vector.Vec2;
@@ -15,8 +17,8 @@ import java.util.List;
  */
 abstract public class AbstractProp extends AbstractFlyingObject {
 
-    public AbstractProp(Vec2 posInit) {
-        super(posInit, 0, 2);
+    public AbstractProp(Vec2 posInit, AnimateContainer animateContainer) {
+        super(posInit, animateContainer);
     }
 
     @Override
@@ -29,7 +31,7 @@ abstract public class AbstractProp extends AbstractFlyingObject {
         }
 
         // 判定 y 轴出界
-        if (speedY > 0 && getLocationY() >= Main.WINDOW_HEIGHT) {
+        if (getSpeedY() > 0 && getLocationY() >= Main.WINDOW_HEIGHT) {
             // 向下飞行出界
             vanish();
         } else if (getLocationY() <= 0) {
@@ -40,6 +42,7 @@ abstract public class AbstractProp extends AbstractFlyingObject {
 
     /**
      * 处理飞机碰到道具的时候的反应
+     *
      * @param enemyAircrafts 所有的敌机
      */
     abstract public void handleAircrafts(List<AbstractAircraft> enemyAircrafts);

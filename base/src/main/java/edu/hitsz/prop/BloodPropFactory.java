@@ -12,6 +12,6 @@ public class BloodPropFactory extends AbstractPropFactory {
 
     @Override
     public BloodProp create() {
-        return new BloodProp(getPosition(), 100);
+        return new BloodProp(getPosition(), getAnimateContainer(), 100);
     }
 }

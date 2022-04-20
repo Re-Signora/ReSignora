@@ -2,6 +2,7 @@ package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.aircraft.HeroAircraftFactory;
+import edu.hitsz.animate.AnimateContainer;
 import edu.hitsz.vector.Vec2;
 
 import java.util.List;
@@ -11,8 +12,8 @@ import java.util.List;
  */
 public class BloodProp extends AbstractProp {
     int increaseHp;
-    public BloodProp(Vec2 posInit, int increaseHp) {
-        super(posInit);
+    public BloodProp(Vec2 posInit, AnimateContainer animateContainer, int increaseHp) {
+        super(posInit, animateContainer);
         this.increaseHp = increaseHp;
     }
 

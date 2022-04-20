@@ -1,7 +1,9 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.animate.AnimateContainer;
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
+import edu.hitsz.vector.Vec2;
 
 /**
  * @author Chiro
@@ -29,9 +31,9 @@ public class HeroAircraftFactory implements AbstractAircraftFactory {
         // Double-checked locking
         if (heroInstance == null) {
             synchronized (HeroAircraftFactory.class) {
-                heroInstance = new HeroAircraft(Main.WINDOW_WIDTH / 2,
-                        Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight(),
-                        0, 0, 1000);
+                heroInstance = new HeroAircraft(new Vec2(Main.WINDOW_WIDTH / 2.0,
+                        Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight()),
+                        new AnimateContainer(), 1000);
             }
         }
         return heroInstance;

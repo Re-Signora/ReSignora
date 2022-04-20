@@ -1,19 +1,26 @@
 package edu.hitsz.bullet;
 
+import edu.hitsz.animate.AnimateContainer;
+import edu.hitsz.animate.AnimateContainerFactory;
 import edu.hitsz.vector.Vec2;
 
 /**
  * @author Chiro
  */
 public class HeroBulletFactory extends BaseBulletFactory {
-    protected int power;
-    HeroBulletFactory(Vec2 posInit, int power) {
+    public HeroBulletFactory(Vec2 posInit) {
         super(posInit);
-        this.power = power;
     }
 
     @Override
     public BaseBullet create() {
-        return new HeroBullet(locationX, locationY, speedX, speedY, power);
+        return new HeroBullet(
+                getPosition(),
+                new AnimateContainerFactory(
+                        AnimateContainerFactory.ContainerType.ConstSpeed,
+                        getPosition())
+                        .setup(new Vec2(0, -5))
+                        .create(),
+                30);
     }
 }

@@ -12,14 +12,10 @@ import java.util.LinkedList;
  * @author Chiro
  */
 public class Utils {
-    public static LinkedList<BaseBullet> letEnemyShoot(double x, double y) {
-        LinkedList<BaseBullet> ret = new LinkedList<>();
-        ret.add(new EnemyBulletFactory(x, y, 0, 6, 10).create());
-        return ret;
-    }
-
     public static LinkedList<BaseBullet> letEnemyShoot(Vec2 position) {
-        return letEnemyShoot(position.getX(), position.getY());
+        LinkedList<BaseBullet> ret = new LinkedList<>();
+        ret.add(new EnemyBulletFactory(position).create());
+        return ret;
     }
 
     public static Boolean isInRange(double value, double down, double up) {

@@ -1,5 +1,6 @@
 package edu.hitsz.bullet;
 
+import edu.hitsz.animate.AnimateContainer;
 import edu.hitsz.application.Main;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.vector.Vec2;
@@ -14,8 +15,8 @@ public class BaseBullet extends AbstractFlyingObject {
 
     private final int power;
 
-    public BaseBullet(Vec2 posInit, int speedX, int speedY, int power) {
-        super(posInit, speedX, speedY);
+    public BaseBullet(Vec2 posInit, AnimateContainer animateContainer, int power) {
+        super(posInit, animateContainer);
         this.power = power;
     }
 
@@ -29,7 +30,7 @@ public class BaseBullet extends AbstractFlyingObject {
         }
 
         // 判定 y 轴出界
-        if (speedY > 0 && getLocationY() >= Main.WINDOW_HEIGHT) {
+        if (getSpeedY() > 0 && getLocationY() >= Main.WINDOW_HEIGHT) {
             // 向下飞行出界
             vanish();
         } else if (getLocationY() <= 0) {

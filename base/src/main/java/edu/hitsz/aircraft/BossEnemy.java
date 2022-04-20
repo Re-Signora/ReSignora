@@ -1,5 +1,6 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.animate.AnimateContainer;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.Utils;
 import edu.hitsz.prop.AbstractProp;
@@ -13,9 +14,8 @@ import java.util.LinkedList;
  * @author hitsz
  */
 public class BossEnemy extends AbstractAircraft {
-
-    public BossEnemy(Vec2 posInit, int speedX, int speedY, int hp) {
-        super(posInit, speedX, speedY, hp, 1000);
+    public BossEnemy(Vec2 posInit, AnimateContainer animateContainer, int hp) {
+        super(posInit, animateContainer, hp, 1000);
     }
 
     @Override

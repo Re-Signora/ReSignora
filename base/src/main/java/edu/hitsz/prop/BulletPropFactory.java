@@ -12,6 +12,6 @@ public class BulletPropFactory extends AbstractPropFactory {
 
     @Override
     public BulletProp create() {
-        return new BulletProp(getPosition());
+        return new BulletProp(getPosition(), getAnimateContainer());
     }
 }

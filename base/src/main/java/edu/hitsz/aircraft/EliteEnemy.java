@@ -1,5 +1,6 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.animate.AnimateContainer;
 import edu.hitsz.application.Game;
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
@@ -22,15 +23,15 @@ public class EliteEnemy extends AbstractAircraft {
 
     final Random random = new Random();
 
-    public EliteEnemy(Vec2 posInit, int speedX, int speedY, int hp) {
-        super(posInit, speedX, speedY, hp, 100);
+    public EliteEnemy(Vec2 posInit, AnimateContainer animateContainer, int hp) {
+        super(posInit, animateContainer, hp, 100);
     }
 
     @Override
     public void forward() {
         super.forward();
         // 判定 y 轴向下飞行出界
-        if (locationY >= Main.WINDOW_HEIGHT) {
+        if (getLocationY() >= Main.WINDOW_HEIGHT) {
             vanish();
         }
     }

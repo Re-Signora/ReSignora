@@ -1,5 +1,6 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.animate.AnimateContainerFactory;
 import edu.hitsz.vector.Vec2;
 
 /**
@@ -25,7 +26,11 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
             System.out.println("Boss created!");
             synchronized (BossEnemyFactory.class) {
                 Vec2 posNew = new Vec2(0, 10);
-                instance = new BossEnemy(posNew, 2, 0, 300);
+                instance = new BossEnemy(
+                        posNew,
+                        new AnimateContainerFactory(AnimateContainerFactory.ContainerType.ConstSpeed, posNew)
+                                .setup(new Vec2(0, 2))
+                                .create(), 300);
             }
         }
         return instance;

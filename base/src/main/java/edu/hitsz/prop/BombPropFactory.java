@@ -12,6 +12,6 @@ public class BombPropFactory extends AbstractPropFactory {
 
     @Override
     public BombProp create() {
-        return new BombProp(getPosition());
+        return new BombProp(getPosition(), getAnimateContainer());
     }
 }

@@ -1,6 +1,7 @@
 package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.AbstractAircraft;
+import edu.hitsz.animate.AnimateContainer;
 import edu.hitsz.vector.Vec2;
 
 import java.util.List;
@@ -9,8 +10,8 @@ import java.util.List;
  * @author Chiro
  */
 public class BombProp extends AbstractProp {
-    public BombProp(Vec2 posInit) {
-        super(posInit);
+    public BombProp(Vec2 posInit, AnimateContainer animateContainer) {
+        super(posInit, animateContainer);
     }
 
     @Override

@@ -181,5 +181,12 @@ public abstract class AbstractFlyingObject {
         isValid = false;
     }
 
+    public Vec2 getSize() {
+        return size;
+    }
+
+    public Scale getRotation() {
+        return rotation;
+    }
 }
 

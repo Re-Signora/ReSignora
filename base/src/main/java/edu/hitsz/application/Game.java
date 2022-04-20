@@ -324,8 +324,8 @@ public class Game extends JPanel {
         for (AbstractFlyingObject object : objects) {
             BufferedImage image = object.getImage();
             assert image != null : objects.getClass().getName() + " has no image! ";
-            g.drawImage(image, object.getLocationX() - image.getWidth() / 2,
-                    object.getLocationY() - image.getHeight() / 2, null);
+            g.drawImage(image, (int) (object.getLocationX() - image.getWidth() / 2),
+                    (int) (object.getLocationY() - image.getHeight() / 2), null);
         }
     }
 

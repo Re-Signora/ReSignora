@@ -2,7 +2,6 @@ package edu.hitsz.animate;
 
 import edu.hitsz.vector.Scale;
 import edu.hitsz.vector.Vec;
-import edu.hitsz.vector.VectorType;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +20,7 @@ public class AnimateContainer {
         this(new LinkedList<>());
     }
 
-    AnimateContainer(List<AbstractAnimate<Vec>> animateList) {
+    public AnimateContainer(List<AbstractAnimate<Vec>> animateList) {
         this.animateList = animateList;
     }
 

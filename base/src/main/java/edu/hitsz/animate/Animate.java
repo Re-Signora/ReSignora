@@ -1,5 +1,6 @@
 package edu.hitsz.animate;
 
+import edu.hitsz.vector.Vec;
 import edu.hitsz.vector.VectorFactory;
 import edu.hitsz.vector.VectorType;
 
