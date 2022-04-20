@@ -1,10 +1,13 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.vector.Vec2;
+
 /**
  * @author Chiro
  */
 public class BossEnemyFactory implements AbstractAircraftFactory {
-    public BossEnemyFactory() {}
+    public BossEnemyFactory() {
+    }
 
     static private BossEnemy instance = null;
 
@@ -21,7 +24,8 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
         if (instance == null) {
             System.out.println("Boss created!");
             synchronized (BossEnemyFactory.class) {
-                instance = new BossEnemy(0, 10, 2, 0, 300);
+                Vec2 posNew = new Vec2(0, 10);
+                instance = new BossEnemy(posNew, 2, 0, 300);
             }
         }
         return instance;

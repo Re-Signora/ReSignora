@@ -1,21 +1,19 @@
 package edu.hitsz.bullet;
 
+import edu.hitsz.vector.Vec2;
+
 /**
  * @author Chiro
  */
-public class EnemyBulletFactory implements BaseBulletFactory {
-    protected int locationX, locationY, speedX, speedY, power;
+public class EnemyBulletFactory extends BaseBulletFactory {
+    protected int power;
 
-    public EnemyBulletFactory(int locationX, int locationY, int speedX, int speedY, int power) {
-        this.locationX = locationX;
-        this.locationY = locationY;
-        this.speedX = speedX;
-        this.speedY = speedY;
-        this.power = power;
+    EnemyBulletFactory(Vec2 posInit) {
+        super(posInit);
     }
 
     @Override
     public BaseBullet create() {
-        return new EnemyBullet(locationX, locationY, speedX, speedY, power);
+        return new EnemyBullet(getPosition());
     }
 }

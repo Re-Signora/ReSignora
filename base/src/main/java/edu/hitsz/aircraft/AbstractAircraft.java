@@ -1,8 +1,10 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.animate.AnimateContainer;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.prop.AbstractProp;
+import edu.hitsz.vector.Vec2;
 
 import java.util.LinkedList;
 
@@ -24,8 +26,12 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
         return score;
     }
 
-    public AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp, int score) {
-        super(locationX, locationY, speedX, speedY);
+    public AbstractAircraft(
+            Vec2 posInit,
+            AnimateContainer animateContainer,
+            int hp,
+            int score) {
+        super(posInit, animateContainer);
         this.hp = hp;
         this.maxHp = hp;
         this.score = score;

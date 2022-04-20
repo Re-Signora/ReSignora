@@ -303,12 +303,12 @@ public class Game extends JPanel {
         paintImageWithPositionRevised(g, enemyAircrafts);
         paintImageWithPositionRevised(g, props);
 
-        g.drawImage(ImageManager.HERO_IMAGE, heroAircraft.getLocationX() - ImageManager.HERO_IMAGE.getWidth() / 2,
-                heroAircraft.getLocationY() - ImageManager.HERO_IMAGE.getHeight() / 2, null);
+        g.drawImage(ImageManager.HERO_IMAGE, (int) (heroAircraft.getLocationX() - ImageManager.HERO_IMAGE.getWidth() / 2),
+                (int) (heroAircraft.getLocationY() - ImageManager.HERO_IMAGE.getHeight() / 2), null);
         BossEnemy boss = BossEnemyFactory.getInstance();
         if (boss != null) {
-            g.drawImage(ImageManager.BOSS_ENEMY_IMAGE, boss.getLocationX() - ImageManager.BOSS_ENEMY_IMAGE.getWidth() / 2,
-                    boss.getLocationY() - ImageManager.BOSS_ENEMY_IMAGE.getHeight() / 2, null);
+            g.drawImage(ImageManager.BOSS_ENEMY_IMAGE, (int) (boss.getLocationX() - ImageManager.BOSS_ENEMY_IMAGE.getWidth() / 2),
+                    (int) (boss.getLocationY() - ImageManager.BOSS_ENEMY_IMAGE.getHeight() / 2), null);
         }
 
         //绘制得分和生命值

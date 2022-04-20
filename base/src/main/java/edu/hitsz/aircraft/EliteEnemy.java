@@ -8,6 +8,7 @@ import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.prop.BloodPropFactory;
 import edu.hitsz.prop.BombPropFactory;
 import edu.hitsz.prop.BulletPropFactory;
+import edu.hitsz.vector.Vec2;
 
 import java.util.LinkedList;
 import java.util.Random;
@@ -21,8 +22,8 @@ public class EliteEnemy extends AbstractAircraft {
 
     final Random random = new Random();
 
-    public EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
-        super(locationX, locationY, speedX, speedY, hp, 100);
+    public EliteEnemy(Vec2 posInit, int speedX, int speedY, int hp) {
+        super(posInit, speedX, speedY, hp, 100);
     }
 
     @Override
@@ -36,7 +37,7 @@ public class EliteEnemy extends AbstractAircraft {
 
     @Override
     public LinkedList<BaseBullet> shoot() {
-        return Utils.letEnemyShoot(getLocationX(), getLocationY());
+        return Utils.letEnemyShoot(getPosition());
     }
 
     @Override
@@ -45,11 +46,11 @@ public class EliteEnemy extends AbstractAircraft {
         double probability = 0.3;
         LinkedList <AbstractProp> props = new LinkedList<>();
         if (Utils.isInRange(select, 0, probability)) {
-            props.add(new BloodPropFactory(getLocationX(), getLocationY()).create());
+            props.add(new BloodPropFactory(getPosition()).create());
         } else if (Utils.isInRange(select, probability, probability * 2)) {
-            props.add(new BombPropFactory(getLocationX(), getLocationY()).create());
+            props.add(new BombPropFactory(getPosition()).create());
         } else if (Utils.isInRange(select, probability * 2, probability * 3)) {
-            props.add(new BulletPropFactory(getLocationX(), getLocationY()).create());
+            props.add(new BulletPropFactory(getPosition()).create());
         }
         // else no props.
         return props;

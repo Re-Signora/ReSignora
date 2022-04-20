@@ -3,11 +3,20 @@ package edu.hitsz.vector;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 多维向量类型
+ *
+ * @author Chiro
+ */
 public class VectorType {
     private final int size;
     private final LinkedList<Double> content = new LinkedList<>();
 
-    VectorType(int size, List<Double> dataInit) {
+    public VectorType() {
+        this(0, new LinkedList<>());
+    }
+
+    public VectorType(int size, List<Double> dataInit) {
         this.size = size;
         if (dataInit != null) {
             content.addAll(dataInit);
@@ -25,7 +34,6 @@ public class VectorType {
     public int getSize() {
         return size;
     }
-
 
     public void set(List<Double> values) {
         for (int i = 0; i < size; i++) {
@@ -88,5 +96,20 @@ public class VectorType {
         return calc(that, Operator.DIVIDE);
     }
 
+    public VectorType plus(double that) {
+        return calc(VectorTypeFactory.fromDouble(getSize(), that), Operator.PLUS);
+    }
+
+    public VectorType minus(double that) {
+        return calc(VectorTypeFactory.fromDouble(getSize(), that), Operator.MINUS);
+    }
+
+    public VectorType times(double that) {
+        return calc(VectorTypeFactory.fromDouble(getSize(), that), Operator.TIMES);
+    }
+
+    public VectorType divide(double that) {
+        return calc(VectorTypeFactory.fromDouble(getSize(), that), Operator.DIVIDE);
+    }
 }
 

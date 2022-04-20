@@ -3,6 +3,7 @@ package edu.hitsz.aircraft;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.Utils;
 import edu.hitsz.prop.AbstractProp;
+import edu.hitsz.vector.Vec2;
 
 import java.util.LinkedList;
 
@@ -13,8 +14,8 @@ import java.util.LinkedList;
  */
 public class BossEnemy extends AbstractAircraft {
 
-    public BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
-        super(locationX, locationY, speedX, speedY, hp, 1000);
+    public BossEnemy(Vec2 posInit, int speedX, int speedY, int hp) {
+        super(posInit, speedX, speedY, hp, 1000);
     }
 
     @Override
@@ -25,7 +26,7 @@ public class BossEnemy extends AbstractAircraft {
 
     @Override
     public LinkedList<BaseBullet> shoot() {
-        return Utils.letEnemyShoot(getLocationX(), getLocationY());
+        return Utils.letEnemyShoot(getPosition());
     }
 
     @Override

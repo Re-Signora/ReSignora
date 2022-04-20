@@ -1,10 +1,15 @@
 package edu.hitsz.basic;
 
+import edu.hitsz.Utils;
 import edu.hitsz.aircraft.AbstractAircraft;
+import edu.hitsz.animate.AnimateContainer;
 import edu.hitsz.application.ImageManager;
-import edu.hitsz.application.Main;
+import edu.hitsz.vector.Scale;
+import edu.hitsz.vector.Vec;
+import edu.hitsz.vector.Vec2;
 
 import java.awt.image.BufferedImage;
+import java.util.Optional;
 
 /**
  * 可飞行对象的父类
@@ -13,27 +18,18 @@ import java.awt.image.BufferedImage;
  */
 public abstract class AbstractFlyingObject {
 
-    //locationX、locationY为图片中心位置坐标
-    /**
-     * x 轴坐标
-     */
-    protected int locationX;
+    public Vec2 getPosition() {
+        return position;
+    }
 
     /**
-     * y 轴坐标
+     * 物体当前位置
      */
-    protected int locationY;
+    private final Vec2 position;
 
-
-    /**
-     * x 轴移动速度
-     */
-    protected int speedX;
-
-    /**
-     * y 轴移动速度
-     */
-    protected int speedY;
+    private final AnimateContainer animateContainer;
+    private final Vec2 size;
+    private final Scale rotation;
 
     /**
      * 图片,
@@ -45,13 +41,13 @@ public abstract class AbstractFlyingObject {
      * x 轴长度，根据图片尺寸获得
      * -1 表示未设置
      */
-    protected int width = -1;
+    protected double width = -1;
 
     /**
      * y 轴长度，根据图片尺寸获得
      * -1 表示未设置
      */
-    protected int height = -1;
+    protected double height = -1;
 
 
     /**
@@ -60,11 +56,32 @@ public abstract class AbstractFlyingObject {
      */
     protected boolean isValid = true;
 
-    public AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY) {
-        this.locationX = locationX;
-        this.locationY = locationY;
-        this.speedX = speedX;
-        this.speedY = speedY;
+    public AbstractFlyingObject(
+            Vec2 posInit,
+            AnimateContainer animateContainer,
+            Vec2 sizeInit,
+            Scale rotationInit) {
+        this.position = posInit;
+        this.animateContainer = animateContainer;
+        this.size = sizeInit;
+        this.rotation = rotationInit;
+    }
+
+    public AbstractFlyingObject(
+            Vec2 posInit,
+            AnimateContainer animateContainer,
+            Vec2 sizeInit) {
+        this(posInit, animateContainer, sizeInit, null);
+    }
+
+    public AbstractFlyingObject(
+            Vec2 posInit,
+            AnimateContainer animateContainer) {
+        this(posInit, animateContainer, null, null);
+    }
+
+    public AbstractFlyingObject(Vec2 posInit) {
+        this(posInit, new AnimateContainer(), null, null);
     }
 
     /**
@@ -72,25 +89,22 @@ public abstract class AbstractFlyingObject {
      * 若飞行对象触碰到横向边界，横向速度反向
      */
     public void forward() {
-        locationX += speedX;
-        locationY += speedY;
-        if (locationX <= 0 || locationX >= Main.WINDOW_WIDTH) {
-            // 横向超出边界后反向
-            speedX = -speedX;
+        if (animateContainer.updateAll(Utils.getTimeMills())) {
+            vanish();
         }
     }
 
     /**
      * 碰撞检测，当对方坐标进入我方范围，判定我方击中<br>
      * 对方与我方覆盖区域有交叉即判定撞击。
-     *  <br>
+     * <br>
      * 非飞机对象区域：
-     *  横向，[x - width/2, x + width/2]
-     *  纵向，[y - height/2, y + height/2]
-     *  <br>
+     * 横向，[x - width/2, x + width/2]
+     * 纵向，[y - height/2, y + height/2]
+     * <br>
      * 飞机对象区域：
-     *  横向，[x - width/2, x + width/2]
-     *  纵向，[y - height/4, y + height/4]
+     * 横向，[x - width/2, x + width/2]
+     * 纵向，[y - height/4, y + height/4]
      *
      * @param abstractFlyingObject 撞击对方
      * @return true: 我方被击中; false 我方未被击中
@@ -100,56 +114,60 @@ public abstract class AbstractFlyingObject {
         int factor = this instanceof AbstractAircraft ? 2 : 1;
         int fFactor = abstractFlyingObject instanceof AbstractAircraft ? 2 : 1;
 
-        int x = abstractFlyingObject.getLocationX();
-        int y = abstractFlyingObject.getLocationY();
-        int fWidth = abstractFlyingObject.getWidth();
-        int fHeight = abstractFlyingObject.getHeight();
+        double x = abstractFlyingObject.getLocationX();
+        double y = abstractFlyingObject.getLocationY();
+        double fWidth = abstractFlyingObject.getWidth();
+        double fHeight = abstractFlyingObject.getHeight();
 
-        return x + (fWidth+this.getWidth())/2 > locationX
-                && x - (fWidth+this.getWidth())/2 < locationX
-                && y + ( fHeight/fFactor+this.getHeight()/factor )/2 > locationY
-                && y - ( fHeight/fFactor+this.getHeight()/factor )/2 < locationY;
+        return x + (fWidth + this.getWidth()) / 2 > getLocationX()
+                && x - (fWidth + this.getWidth()) / 2 < getLocationX()
+                && y + (fHeight / fFactor + this.getHeight() / factor) / 2 > getLocationY()
+                && y - (fHeight / fFactor + this.getHeight() / factor) / 2 < getLocationY();
     }
 
-    public int getLocationX() {
-        return locationX;
+    public double getLocationX() {
+        return getPosition().getX();
     }
 
-    public int getLocationY() {
-        return locationY;
+    public double getLocationY() {
+        return getPosition().getY();
     }
 
-    public void setLocation(double locationX, double locationY){
-        this.locationX = (int) locationX;
-        this.locationY = (int) locationY;
+    public void setPosition(double x, double y) {
+        this.position.set(x, y);
     }
 
-    public int getSpeedY() {
-        return speedY;
+    public Vec getSpeed() {
+        return animateContainer.getSpeed(Utils.getTimeMills());
+    }
+
+    public double getSpeedY() {
+        return getSpeed().get().get(1);
     }
 
     public BufferedImage getImage() {
-        if (image == null){
+        if (image == null) {
             image = ImageManager.get(this);
         }
         return image;
     }
 
-    public int getWidth() {
-        if (width == -1){
+    public double getWidth() {
+        if (width == -1) {
             // 若未设置，则查询图片宽度并设置
             width = ImageManager.get(this).getWidth();
         }
         return width;
     }
 
-    public int getHeight() {
-        if (height == -1){
+    public double getHeight() {
+        if (height == -1) {
             // 若未设置，则查询图片高度并设置
             height = ImageManager.get(this).getHeight();
         }
         return height;
     }
+
     public boolean notValid() {
         return !this.isValid;
     }

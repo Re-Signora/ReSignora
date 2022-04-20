@@ -30,7 +30,7 @@ public class HeroController {
                     // 防止超出边界
                     return;
                 }
-                heroAircraft.setLocation(x, y);
+                heroAircraft.setPosition(x, y);
             }
         };
 
