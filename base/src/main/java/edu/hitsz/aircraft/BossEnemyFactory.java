@@ -29,7 +29,7 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
                 instance = new BossEnemy(
                         posNew,
                         new AnimateContainerFactory(AnimateContainerFactory.ContainerType.ConstSpeed, posNew)
-                                .setup(new Vec2(0, 2))
+                                .setupSpeed(new Vec2(0, 2))
                                 .create(), 300);
             }
         }

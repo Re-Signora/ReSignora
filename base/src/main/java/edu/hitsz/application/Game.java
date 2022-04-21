@@ -1,18 +1,22 @@
 package edu.hitsz.application;
 
-import edu.hitsz.timer.Timer;
-import edu.hitsz.timer.TimerController;
-import edu.hitsz.utils.Utils;
 import edu.hitsz.aircraft.*;
+import edu.hitsz.background.AbstractBackground;
+import edu.hitsz.background.BasicBackgroundFactory;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.prop.*;
+import edu.hitsz.prop.AbstractProp;
+import edu.hitsz.timer.Timer;
+import edu.hitsz.timer.TimerController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 游戏主面板，游戏启动
@@ -21,8 +25,6 @@ import java.util.concurrent.*;
  */
 public class Game extends JPanel {
 
-    private int backGroundTop = 0;
-
     /**
      * 创建线程的工厂函数
      */
@@ -30,17 +32,19 @@ public class Game extends JPanel {
     /**
      * 线程池，自动管理
      */
+    @SuppressWarnings("AlibabaThreadPoolCreation")
     private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1, threadFactory);
 
     private final HeroAircraft heroAircraft = new HeroAircraftFactory().create();
     private final List<AbstractAircraft> heroAircrafts = new LinkedList<>();
+    private final List<AbstractBackground> backgrounds = new LinkedList<>();
 
     private final List<AbstractAircraft> enemyAircrafts = new LinkedList<>();
     private final List<BaseBullet> heroBullets = new LinkedList<>();
     private final List<BaseBullet> enemyBullets = new LinkedList<>();
     private final List<AbstractProp> props = new LinkedList<>();
     private final List<List<? extends AbstractFlyingObject>> allObjects = Arrays.asList(
-            heroBullets, enemyBullets, heroAircrafts, enemyAircrafts, props
+            backgrounds, heroBullets, enemyBullets, heroAircrafts, enemyAircrafts, props
     );
 
     private boolean gameOverFlag = false;
@@ -53,6 +57,7 @@ public class Game extends JPanel {
     @SuppressWarnings("FieldCanBeLocal")
     public Game() {
         heroAircrafts.add(heroAircraft);
+        backgrounds.add(new BasicBackgroundFactory().create());
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
     }
@@ -98,7 +103,6 @@ public class Game extends JPanel {
             synchronized (allObjects) {
                 allObjects.forEach(objList -> objList.removeIf(AbstractFlyingObject::notValid));
             }
-            // postProcessAction();
             // 每个时刻重绘界面
             repaint();
 
@@ -200,14 +204,6 @@ public class Game extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-
-        // 绘制背景,图片滚动
-        g.drawImage(ImageManager.BACKGROUND_IMAGE, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
-        g.drawImage(ImageManager.BACKGROUND_IMAGE, 0, this.backGroundTop, null);
-        this.backGroundTop += 1;
-        if (this.backGroundTop == Main.WINDOW_HEIGHT) {
-            this.backGroundTop = 0;
-        }
 
         // 绘制所有物体
         allObjects.forEach(objList -> objList.forEach(obj -> obj.draw(g)));

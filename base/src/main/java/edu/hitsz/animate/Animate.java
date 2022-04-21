@@ -1,11 +1,13 @@
 package edu.hitsz.animate;
 
 import edu.hitsz.vector.Vec;
+import edu.hitsz.vector.Vec2;
 import edu.hitsz.vector.VectorFactory;
 import edu.hitsz.vector.VectorType;
 
 /**
  * 动画
+ *
  * @author Chiro
  */
 public class Animate {
@@ -57,6 +59,29 @@ public class Animate {
         @Override
         public T getDelta() {
             return getNewVecInstance();
+        }
+    }
+
+    public static class LinearLoop<T extends VectorType & VectorFactory<T>> extends Linear<T> {
+        private final Vec2 range;
+
+        LinearLoop(T vecSource, T speed, AnimateVectorType animateVectorType, double timeStart, Vec2 range) {
+            super(vecSource, speed, animateVectorType, timeStart);
+            this.range = range;
+        }
+
+        @Override
+        public Boolean isDone(double timeNow) {
+            return false;
+        }
+
+        @Override
+        public Boolean update(double timeNow) {
+            super.update(timeNow);
+            for (int i = 0; i < getVector().getSize(); i++) {
+                getVector().get().set(i, getVector().get().get(i) > range.get().get(i) ? getVector().get().get(i) - range.get().get(i) : getVector().get().get(i));
+            }
+            return false;
         }
     }
 }

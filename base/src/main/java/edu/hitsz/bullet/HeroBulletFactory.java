@@ -1,6 +1,5 @@
 package edu.hitsz.bullet;
 
-import edu.hitsz.animate.AnimateContainer;
 import edu.hitsz.animate.AnimateContainerFactory;
 import edu.hitsz.vector.Vec2;
 
@@ -19,7 +18,7 @@ public class HeroBulletFactory extends BaseBulletFactory {
                 new AnimateContainerFactory(
                         AnimateContainerFactory.ContainerType.ConstSpeed,
                         getPosition())
-                        .setup(new Vec2(0, -2))
+                        .setupSpeed(new Vec2(0, -2))
                         .create(),
                 30);
     }
