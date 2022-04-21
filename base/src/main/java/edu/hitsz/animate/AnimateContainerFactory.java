@@ -1,10 +1,8 @@
 package edu.hitsz.animate;
 
-import edu.hitsz.Utils;
-import edu.hitsz.vector.Vec;
+import edu.hitsz.utils.Utils;
 import edu.hitsz.vector.Vec2;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**

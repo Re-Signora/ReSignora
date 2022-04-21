@@ -2,7 +2,7 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.animate.AnimateContainer;
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.Utils;
+import edu.hitsz.utils.Utils;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.vector.Vec2;
 

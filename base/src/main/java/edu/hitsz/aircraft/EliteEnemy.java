@@ -1,10 +1,8 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.animate.AnimateContainer;
-import edu.hitsz.application.Game;
-import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.Utils;
+import edu.hitsz.utils.Utils;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.prop.BloodPropFactory;
 import edu.hitsz.prop.BombPropFactory;

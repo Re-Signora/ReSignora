@@ -1,6 +1,6 @@
 package edu.hitsz.basic;
 
-import edu.hitsz.Utils;
+import edu.hitsz.utils.Utils;
 import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.animate.AnimateContainer;
 import edu.hitsz.application.ImageManager;
@@ -10,7 +10,6 @@ import edu.hitsz.vector.Vec2;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Optional;
 
 /**
  * 可飞行对象的父类

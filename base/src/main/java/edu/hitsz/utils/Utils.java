@@ -1,10 +1,11 @@
-package edu.hitsz;
+package edu.hitsz.utils;
 
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBulletFactory;
 import edu.hitsz.vector.Vec2;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 工具类

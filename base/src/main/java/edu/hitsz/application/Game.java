@@ -1,6 +1,8 @@
 package edu.hitsz.application;
 
-import edu.hitsz.Utils;
+import edu.hitsz.timer.Timer;
+import edu.hitsz.timer.TimerController;
+import edu.hitsz.utils.Utils;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
@@ -31,82 +33,18 @@ public class Game extends JPanel {
     private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1, threadFactory);
 
     private final HeroAircraft heroAircraft = new HeroAircraftFactory().create();
+    private final List<AbstractAircraft> heroAircrafts = new LinkedList<>();
 
     private final List<AbstractAircraft> enemyAircrafts = new LinkedList<>();
     private final List<BaseBullet> heroBullets = new LinkedList<>();
     private final List<BaseBullet> enemyBullets = new LinkedList<>();
     private final List<AbstractProp> props = new LinkedList<>();
     private final List<List<? extends AbstractFlyingObject>> allObjects = Arrays.asList(
-            heroBullets, enemyBullets, List.of(heroAircraft), enemyAircrafts, props
+            heroBullets, enemyBullets, heroAircrafts, enemyAircrafts, props
     );
 
     private boolean gameOverFlag = false;
     private int score = 0;
-
-    private static class TimerController {
-        private static double frameTime = 0;
-        private static double lastFrameTime = 0;
-        private static final List<Double> FRAME_COUNTER = new LinkedList<>();
-        private static final List<TimerController> TIMER_CONTROLLERS = new LinkedList<>();
-
-        public static void init(double startTime) {
-            frameTime = startTime;
-        }
-
-        public static void add(TimerController c) {
-            TIMER_CONTROLLERS.add(c);
-        }
-
-        public static void executeAll(double now) {
-            TIMER_CONTROLLERS.forEach(c -> c.execute(now));
-        }
-
-        public static List<TimerController> getTimerControllers() {
-            return TIMER_CONTROLLERS;
-        }
-
-        public static void update() {
-            frameTime = Utils.getTimeMills();
-            FRAME_COUNTER.add(frameTime);
-            FRAME_COUNTER.removeIf(t -> t < ((frameTime >= 1000) ? (frameTime - 1000) : 0));
-        }
-
-        public static void done() {
-            lastFrameTime = frameTime;
-        }
-
-        public static int getFps() {
-            return FRAME_COUNTER.size();
-        }
-
-        interface TimerCallback {
-            /**
-             * 当满足定时器需求时调用。
-             */
-            void run();
-        }
-
-        public final double duration;
-        private final TimerCallback callback;
-        public double time = 0;
-
-        private static double getTimeDelta() {
-            return frameTime - lastFrameTime;
-        }
-
-        public TimerController(double duration, TimerCallback callback) {
-            this.duration = duration;
-            this.callback = callback;
-        }
-
-        void execute(double now) {
-            time += getTimeDelta();
-            if (time >= duration) {
-                time %= duration;
-                callback.run();
-            }
-        }
-    }
 
     /**
      * 周期（ms)
@@ -114,6 +52,7 @@ public class Game extends JPanel {
      */
     @SuppressWarnings("FieldCanBeLocal")
     public Game() {
+        heroAircrafts.add(heroAircraft);
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
     }
@@ -124,44 +63,43 @@ public class Game extends JPanel {
     public void action() {
         TimerController.init(0);
         // 英雄射击事件
-        TimerController.add(new TimerController(1, () -> heroBullets.addAll(heroAircraft.shoot())));
+        TimerController.add(new Timer(1, () -> heroBullets.addAll(heroAircraft.shoot())));
         // 产生精英敌机事件
-        TimerController.add(new TimerController(1200, () -> {
+        TimerController.add(new Timer(1200, () -> {
             synchronized (enemyAircrafts) {
                 enemyAircrafts.add(new EliteEnemyFactory().create());
             }
         }));
         // 产生普通敌机事件
-        TimerController.add(new TimerController(700, () -> {
+        TimerController.add(new Timer(700, () -> {
             synchronized (enemyAircrafts) {
                 enemyAircrafts.add(new MobEnemyFactory().create());
             }
         }));
         // 敌机射击事件
-        TimerController.add(new TimerController(1000, () -> {
+        TimerController.add(new Timer(1000, () -> {
             synchronized (enemyBullets) {
                 enemyAircrafts.forEach(enemyAircraft -> enemyBullets.addAll(enemyAircraft.shoot()));
             }
         }));
         // fps 输出事件
-        TimerController.add(new TimerController(1000, () -> System.out.println("fps: " + TimerController.getFps())));
-
+        TimerController.add(new Timer(1000, () -> System.out.println("fps: " + TimerController.getFps())));
 
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable task = () -> {
             TimerController.update();
             // execute all
-            TimerController.executeAll(Utils.getTimeMills());
+            TimerController.execute();
             // 所有物体移动
             allObjects.forEach(objList -> objList.forEach(AbstractFlyingObject::forward));
             // 撞击检测
             crashCheckAction();
             // 后处理
-            // synchronized (allObjects) {
-            //     // allObjects.forEach(objList -> objList.removeIf(AbstractFlyingObject::notValid));
-            // }
-            postProcessAction();
-            //每个时刻重绘界面
+            synchronized (allObjects) {
+                allObjects.forEach(objList -> objList.removeIf(AbstractFlyingObject::notValid));
+            }
+            // postProcessAction();
+            // 每个时刻重绘界面
             repaint();
 
             // 游戏结束检查
@@ -180,31 +118,6 @@ public class Game extends JPanel {
         executorService.scheduleWithFixedDelay(task, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
 
     }
-
-    private void bulletsMoveAction() {
-        for (BaseBullet bullet : heroBullets) {
-            bullet.forward();
-        }
-        for (BaseBullet bullet : enemyBullets) {
-            bullet.forward();
-        }
-    }
-
-    private void aircraftsMoveAction() {
-        for (AbstractAircraft enemyAircraft : enemyAircrafts) {
-            enemyAircraft.forward();
-        }
-        if (BossEnemyFactory.getInstance() != null) {
-            BossEnemyFactory.getInstance().forward();
-        }
-    }
-
-    private void propsMoveAction() {
-        for (AbstractProp prop : props) {
-            prop.forward();
-        }
-    }
-
 
     /**
      * 碰撞检测：
@@ -277,30 +190,6 @@ public class Game extends JPanel {
         }
 
     }
-
-    /**
-     * 后处理：
-     * 1. 删除无效的子弹
-     * 2. 删除无效的敌机
-     * 3. 检查英雄机生存
-     * <p>
-     * 无效的原因可能是撞击或者飞出边界
-     */
-    private void postProcessAction() {
-        synchronized (enemyBullets) {
-            enemyBullets.removeIf(AbstractFlyingObject::notValid);
-        }
-        synchronized (heroBullets) {
-            heroBullets.removeIf(AbstractFlyingObject::notValid);
-        }
-        synchronized (enemyAircrafts) {
-            enemyAircrafts.removeIf(AbstractFlyingObject::notValid);
-        }
-        synchronized (props) {
-            props.removeIf(AbstractFlyingObject::notValid);
-        }
-    }
-
 
     /**
      * 重写paint方法
