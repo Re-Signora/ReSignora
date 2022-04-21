@@ -20,7 +20,7 @@ public class EnemyBulletFactory extends BaseBulletFactory {
                 new AnimateContainerFactory(
                         AnimateContainerFactory.ContainerType.ConstSpeed,
                         getPosition())
-                        .setup(new Vec2(0, 5))
+                        .setup(new Vec2(0, 0.5))
                         .create(),
                 10);
     }

@@ -38,7 +38,7 @@ public class EliteEnemy extends AbstractAircraft {
 
     @Override
     public LinkedList<BaseBullet> shoot() {
-        return Utils.letEnemyShoot(getPosition());
+        return Utils.letEnemyShoot(getPosition().copy());
     }
 
     @SuppressWarnings("AlibabaUndefineMagicConstant")
