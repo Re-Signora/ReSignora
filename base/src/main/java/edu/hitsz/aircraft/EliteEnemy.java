@@ -41,17 +41,18 @@ public class EliteEnemy extends AbstractAircraft {
         return Utils.letEnemyShoot(getPosition());
     }
 
+    @SuppressWarnings("AlibabaUndefineMagicConstant")
     @Override
     public LinkedList<AbstractProp> dropProps() {
         double select = random.nextDouble();
         double probability = 0.3;
         LinkedList <AbstractProp> props = new LinkedList<>();
         if (Utils.isInRange(select, 0, probability)) {
-            props.add(new BloodPropFactory(getPosition()).create());
+            props.add(new BloodPropFactory(getPosition().copy()).create());
         } else if (Utils.isInRange(select, probability, probability * 2)) {
-            props.add(new BombPropFactory(getPosition()).create());
+            props.add(new BombPropFactory(getPosition().copy()).create());
         } else if (Utils.isInRange(select, probability * 2, probability * 3)) {
-            props.add(new BulletPropFactory(getPosition()).create());
+            props.add(new BulletPropFactory(getPosition().copy()).create());
         }
         // else no props.
         return props;

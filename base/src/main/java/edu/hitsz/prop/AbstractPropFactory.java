@@ -30,6 +30,6 @@ public abstract class AbstractPropFactory {
     protected AnimateContainer getAnimateContainer() {
         return new AnimateContainerFactory(
                 AnimateContainerFactory.ContainerType.ConstSpeed,
-                getPosition()).setup(new Vec2(0, 2)).create();
+                getPosition()).setup(new Vec2(0, 0.02)).create();
     }
 }

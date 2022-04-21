@@ -51,6 +51,7 @@ public class Game extends JPanel {
      * 周期（ms)
      * 指示子弹的发射、敌机的产生频率
      */
+    @SuppressWarnings("FieldCanBeLocal")
     private final int cycleDuration = 200;
     private int cycleTime = 0;
 
@@ -84,16 +85,16 @@ public class Game extends JPanel {
             if (timeCountAndNewCycleJudge()) {
                 System.out.println(time);
                 // 新敌机产生
-                // if (enemyAircrafts.size() < enemyMaxNumber) {
-                //     if (Math.random() < eliteRate) {
-                //         enemyAircrafts.add(new EliteEnemyFactory().create());
-                //     } else {
-                //         enemyAircrafts.add(new MobEnemyFactory().create());
-                //     }
-                // }
-                // if (score > 0 && BossEnemyFactory.getInstance() == null) {
-                //     new BossEnemyFactory().create();
-                // }
+                if (enemyAircrafts.size() < enemyMaxNumber) {
+                    if (Math.random() < eliteRate) {
+                        enemyAircrafts.add(new EliteEnemyFactory().create());
+                    } else {
+                        enemyAircrafts.add(new MobEnemyFactory().create());
+                    }
+                }
+                if (score > 0 && BossEnemyFactory.getInstance() == null) {
+                    new BossEnemyFactory().create();
+                }
                 // 飞机射出子弹
                 shootAction();
             }
@@ -153,12 +154,12 @@ public class Game extends JPanel {
         // 英雄射击
         heroBullets.addAll(heroAircraft.shoot());
         // 敌机射击
-        // for (AbstractAircraft enemy : enemyAircrafts) {
-        //     enemyBullets.addAll(enemy.shoot());
-        // }
-        // if (BossEnemyFactory.getInstance() != null) {
-        //     enemyBullets.addAll(BossEnemyFactory.getInstance().shoot());
-        // }
+        for (AbstractAircraft enemy : enemyAircrafts) {
+            enemyBullets.addAll(enemy.shoot());
+        }
+        if (BossEnemyFactory.getInstance() != null) {
+            enemyBullets.addAll(BossEnemyFactory.getInstance().shoot());
+        }
     }
 
     private void bulletsMoveAction() {
@@ -324,7 +325,6 @@ public class Game extends JPanel {
         for (AbstractFlyingObject object : objects) {
             BufferedImage image = object.getImage();
             assert image != null : objects.getClass().getName() + " has no image! ";
-            // System.out.println("draw at " + (int) (object.getLocationX() - image.getWidth() / 2) + ", " + (int) (object.getLocationY() - image.getHeight() / 2));
             g.drawImage(image, (int) (object.getLocationX() - image.getWidth() / 2),
                     (int) (object.getLocationY() - image.getHeight() / 2), null);
         }

@@ -20,7 +20,7 @@ public class EliteEnemyFactory implements AbstractAircraftFactory {
                 newPos,
                 new AnimateContainerFactory(
                         AnimateContainerFactory.ContainerType.ConstSpeed, newPos)
-                        .setup(new Vec2(0, 2))
+                        .setup(new Vec2(0, 0.08))
                         .create(),
                 60
         );

@@ -26,7 +26,7 @@ public class BossEnemy extends AbstractAircraft {
 
     @Override
     public LinkedList<BaseBullet> shoot() {
-        return Utils.letEnemyShoot(getPosition());
+        return Utils.letEnemyShoot(getPosition().copy());
     }
 
     @Override
