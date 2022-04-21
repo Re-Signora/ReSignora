@@ -8,7 +8,6 @@ import edu.hitsz.prop.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.*;
@@ -37,7 +36,6 @@ public class Game extends JPanel {
     private final List<BaseBullet> heroBullets = new LinkedList<>();
     private final List<BaseBullet> enemyBullets = new LinkedList<>();
     private final List<AbstractProp> props = new LinkedList<>();
-    private final List<TimerController> timerControllers = new LinkedList<>();
     private final List<List<? extends AbstractFlyingObject>> allObjects = Arrays.asList(
             heroBullets, enemyBullets, List.of(heroAircraft), enemyAircrafts, props
     );
@@ -49,9 +47,22 @@ public class Game extends JPanel {
         private static double frameTime = 0;
         private static double lastFrameTime = 0;
         private static final List<Double> FRAME_COUNTER = new LinkedList<>();
+        private static final List<TimerController> TIMER_CONTROLLERS = new LinkedList<>();
 
         public static void init(double startTime) {
             frameTime = startTime;
+        }
+
+        public static void add(TimerController c) {
+            TIMER_CONTROLLERS.add(c);
+        }
+
+        public static void executeAll(double now) {
+            TIMER_CONTROLLERS.forEach(c -> c.execute(now));
+        }
+
+        public static List<TimerController> getTimerControllers() {
+            return TIMER_CONTROLLERS;
         }
 
         public static void update() {
@@ -113,35 +124,34 @@ public class Game extends JPanel {
     public void action() {
         TimerController.init(0);
         // 英雄射击事件
-        timerControllers.add(new TimerController(1, () -> heroBullets.addAll(heroAircraft.shoot())));
+        TimerController.add(new TimerController(1, () -> heroBullets.addAll(heroAircraft.shoot())));
         // 产生精英敌机事件
-        timerControllers.add(new TimerController(1200, () -> {
+        TimerController.add(new TimerController(1200, () -> {
             synchronized (enemyAircrafts) {
                 enemyAircrafts.add(new EliteEnemyFactory().create());
             }
         }));
         // 产生普通敌机事件
-        timerControllers.add(new TimerController(700, () -> {
+        TimerController.add(new TimerController(700, () -> {
             synchronized (enemyAircrafts) {
                 enemyAircrafts.add(new MobEnemyFactory().create());
             }
         }));
         // 敌机射击事件
-        timerControllers.add(new TimerController(1000, () -> {
+        TimerController.add(new TimerController(1000, () -> {
             synchronized (enemyBullets) {
                 enemyAircrafts.forEach(enemyAircraft -> enemyBullets.addAll(enemyAircraft.shoot()));
             }
         }));
         // fps 输出事件
-        timerControllers.add(new TimerController(1000, () -> System.out.println("fps: " + TimerController.getFps())));
+        TimerController.add(new TimerController(1000, () -> System.out.println("fps: " + TimerController.getFps())));
 
 
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable task = () -> {
             TimerController.update();
             // execute all
-            double now = Utils.getTimeMills();
-            timerControllers.forEach(c -> c.execute(now));
+            TimerController.executeAll(Utils.getTimeMills());
             // 所有物体移动
             allObjects.forEach(objList -> objList.forEach(AbstractFlyingObject::forward));
             // 撞击检测
