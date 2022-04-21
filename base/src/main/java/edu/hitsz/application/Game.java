@@ -31,17 +31,19 @@ public class Game extends JPanel {
      */
     private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1, threadFactory);
 
-    private final HeroAircraft heroAircraft;
+    private final HeroAircraft heroAircraft = new HeroAircraftFactory().create();
 
     private final List<AbstractAircraft> enemyAircrafts = new LinkedList<>();
     private final List<BaseBullet> heroBullets = new LinkedList<>();
     private final List<BaseBullet> enemyBullets = new LinkedList<>();
     private final List<AbstractProp> props = new LinkedList<>();
     private final List<TimerController> timerControllers = new LinkedList<>();
+    private final List<List<? extends AbstractFlyingObject>> allObjects = Arrays.asList(
+            heroBullets, enemyBullets, List.of(heroAircraft), enemyAircrafts, props
+    );
 
     private boolean gameOverFlag = false;
     private int score = 0;
-    // private int time = 0;
 
     private static class TimerController {
         private static double frameTime = 0;
@@ -66,11 +68,10 @@ public class Game extends JPanel {
             return FRAME_COUNTER.size();
         }
 
-        public static double getFrameTime() {
-            return frameTime;
-        }
-
         interface TimerCallback {
+            /**
+             * 当满足定时器需求时调用。
+             */
             void run();
         }
 
@@ -102,7 +103,6 @@ public class Game extends JPanel {
      */
     @SuppressWarnings("FieldCanBeLocal")
     public Game() {
-        heroAircraft = new HeroAircraftFactory().create();
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
     }
@@ -142,22 +142,15 @@ public class Game extends JPanel {
             // execute all
             double now = Utils.getTimeMills();
             timerControllers.forEach(c -> c.execute(now));
-
-            // 子弹移动
-            bulletsMoveAction();
-
-            // 飞机移动
-            aircraftsMoveAction();
-
-            // 道具移动
-            propsMoveAction();
-
+            // 所有物体移动
+            allObjects.forEach(objList -> objList.forEach(AbstractFlyingObject::forward));
             // 撞击检测
             crashCheckAction();
-
             // 后处理
+            // synchronized (allObjects) {
+            //     // allObjects.forEach(objList -> objList.removeIf(AbstractFlyingObject::notValid));
+            // }
             postProcessAction();
-
             //每个时刻重绘界面
             repaint();
 
@@ -171,7 +164,7 @@ public class Game extends JPanel {
             TimerController.done();
         };
 
-         // 时间间隔(ms)，控制刷新频率
+        // 时间间隔(ms)，控制刷新频率
         int timeInterval = 1;
         // 以固定延迟时间进行执行本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
         executorService.scheduleWithFixedDelay(task, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
@@ -284,10 +277,18 @@ public class Game extends JPanel {
      * 无效的原因可能是撞击或者飞出边界
      */
     private void postProcessAction() {
-        enemyBullets.removeIf(AbstractFlyingObject::notValid);
-        heroBullets.removeIf(AbstractFlyingObject::notValid);
-        enemyAircrafts.removeIf(AbstractFlyingObject::notValid);
-        props.removeIf(AbstractFlyingObject::notValid);
+        synchronized (enemyBullets) {
+            enemyBullets.removeIf(AbstractFlyingObject::notValid);
+        }
+        synchronized (heroBullets) {
+            heroBullets.removeIf(AbstractFlyingObject::notValid);
+        }
+        synchronized (enemyAircrafts) {
+            enemyAircrafts.removeIf(AbstractFlyingObject::notValid);
+        }
+        synchronized (props) {
+            props.removeIf(AbstractFlyingObject::notValid);
+        }
     }
 
 
@@ -309,37 +310,12 @@ public class Game extends JPanel {
             this.backGroundTop = 0;
         }
 
-        // 先绘制子弹，后绘制飞机
-        // 这样子弹显示在飞机的下层
-        paintImageWithPositionRevised(g, enemyBullets);
-        paintImageWithPositionRevised(g, heroBullets);
-        paintImageWithPositionRevised(g, enemyAircrafts);
-        paintImageWithPositionRevised(g, props);
-
-        g.drawImage(ImageManager.HERO_IMAGE, (int) (heroAircraft.getLocationX() - ImageManager.HERO_IMAGE.getWidth() / 2),
-                (int) (heroAircraft.getLocationY() - ImageManager.HERO_IMAGE.getHeight() / 2), null);
-        BossEnemy boss = BossEnemyFactory.getInstance();
-        if (boss != null) {
-            g.drawImage(ImageManager.BOSS_ENEMY_IMAGE, (int) (boss.getLocationX() - ImageManager.BOSS_ENEMY_IMAGE.getWidth() / 2),
-                    (int) (boss.getLocationY() - ImageManager.BOSS_ENEMY_IMAGE.getHeight() / 2), null);
-        }
+        // 绘制所有物体
+        allObjects.forEach(objList -> objList.forEach(obj -> obj.draw(g)));
 
         //绘制得分和生命值
         paintScoreAndLife(g);
 
-    }
-
-    private void paintImageWithPositionRevised(Graphics g, List<? extends AbstractFlyingObject> objects) {
-        if (objects.size() == 0) {
-            return;
-        }
-
-        for (AbstractFlyingObject object : objects) {
-            BufferedImage image = object.getImage();
-            assert image != null : objects.getClass().getName() + " has no image! ";
-            g.drawImage(image, (int) (object.getLocationX() - image.getWidth() / 2),
-                    (int) (object.getLocationY() - image.getHeight() / 2), null);
-        }
     }
 
     private void paintScoreAndLife(Graphics g) {

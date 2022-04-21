@@ -35,4 +35,20 @@ public class Scale extends Vec {
     public Scale getNewInstance() {
         return new Scale();
     }
+
+    public Scale plus(Scale that) {
+        return fromVector(super.plus(that));
+    }
+
+    public Scale minus(Scale that) {
+        return fromVector(super.minus(that));
+    }
+
+    public Scale times(Scale that) {
+        return fromVector(super.times(that));
+    }
+
+    public Scale divide(Scale that) {
+        return fromVector(super.divide(that));
+    }
 }

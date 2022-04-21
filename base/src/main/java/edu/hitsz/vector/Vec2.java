@@ -43,4 +43,20 @@ public class Vec2 extends Vec {
     public Vec2 getNewInstance() {
         return new Vec2();
     }
+
+    public Vec2 plus(Vec2 that) {
+        return fromVector(super.plus(that));
+    }
+
+    public Vec2 minus(Vec2 that) {
+        return fromVector(super.minus(that));
+    }
+
+    public Vec2 times(Vec2 that) {
+        return fromVector(super.times(that));
+    }
+
+    public Vec2 divide(Vec2 that) {
+        return fromVector(super.divide(that));
+    }
 }

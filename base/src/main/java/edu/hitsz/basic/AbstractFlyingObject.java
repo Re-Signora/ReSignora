@@ -8,6 +8,7 @@ import edu.hitsz.vector.Scale;
 import edu.hitsz.vector.Vec;
 import edu.hitsz.vector.Vec2;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Optional;
 
@@ -187,6 +188,12 @@ public abstract class AbstractFlyingObject {
 
     public Scale getRotation() {
         return rotation;
+    }
+
+    public void draw(Graphics g) {
+        g.drawImage(getImage(),
+                (int) (getLocationX() - image.getWidth() / 2), (int) (getLocationY() - image.getHeight() / 2),
+                null);
     }
 }
 
