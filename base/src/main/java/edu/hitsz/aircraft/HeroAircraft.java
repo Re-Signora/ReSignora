@@ -58,7 +58,7 @@ public class HeroAircraft extends AbstractAircraft {
         for (int i = 0; i < shootNum; i++) {
             // 子弹发射位置相对飞机位置向前偏移
             // 多个子弹横向分散
-            BaseBullet baseBullet = new HeroBulletFactory(getPosition()).create();
+            BaseBullet baseBullet = new HeroBulletFactory(getPosition().copy()).create();
             res.add(baseBullet);
         }
         return res;

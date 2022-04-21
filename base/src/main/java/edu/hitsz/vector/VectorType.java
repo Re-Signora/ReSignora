@@ -45,6 +45,10 @@ public class VectorType {
         }
     }
 
+    public void set(VectorType that) {
+        set(that.get());
+    }
+
     public Boolean equals(VectorType that) {
         assert getSize() == that.getSize();
         for (int i = 0; i < size; i++) {

@@ -32,7 +32,7 @@ public class Animate {
             Boolean done = isDone(timeNow);
             // System.out.println("timeNow - timeStart = " + (timeNow - timeStart));
             T deltaNew = getSource().fromVector(speed.times(timeNow - timeStart));
-            getVector().fromVector(getSource().plus(deltaNew));
+            getVector().set(getSource().plus(deltaNew));
             return done;
         }
 
