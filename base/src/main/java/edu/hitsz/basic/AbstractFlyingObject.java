@@ -178,7 +178,6 @@ public abstract class AbstractFlyingObject {
      * notValid() => true.
      */
     public void vanish() {
-        System.out.println("vanish!");
         isValid = false;
     }
 

@@ -103,7 +103,7 @@ class Game(frame: JFrame) extends JPanel {
       override def run() = {
         frameCalcTime = getTimeMills
         frameCalcCount.append(frameCalcTime)
-        frameCalcCount.filterInPlace(_ >= (if (frameRenderTime >= 1000) frameCalcTime - 1000 else 0))
+        frameCalcCount.filterInPlace(_ >= (if (frameCalcTime >= 1000) frameCalcTime - 1000 else 0))
         // 周期性执行（控制频率）
         // 键盘操作
         controller.onFrame()

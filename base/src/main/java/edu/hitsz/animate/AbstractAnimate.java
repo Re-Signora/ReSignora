@@ -23,7 +23,6 @@ public abstract class AbstractAnimate<T extends VectorType & VectorFactory<T>> {
         this.source = vecSource.copy();
         this.timeStart = timeStart;
         this.timeSpan = timeSpan;
-        System.out.println("start at " + timeStart);
     }
 
     public AnimateType getAnimateType() {
@@ -42,6 +41,11 @@ public abstract class AbstractAnimate<T extends VectorType & VectorFactory<T>> {
         return source;
     }
 
+    /**
+     * 当动画需要被更新时调用，更新该动画所管理的随时间变化的变量。
+     * @param timeNow 当前时间
+     * @return 是否更新
+     */
     abstract public Boolean update(double timeNow);
 
     // abstract public Boolean isDone(double timeNow);
@@ -50,8 +54,17 @@ public abstract class AbstractAnimate<T extends VectorType & VectorFactory<T>> {
         return timeNow > timeStart + timeSpan;
     }
 
+    /**
+     * 得到当前动画的变化速度的向量，一位或者二维
+     * @param timeNow 当前时间
+     * @return 速度向量
+     */
     abstract public T getSpeed(double timeNow);
 
+    /**
+     * 得到当前动画的位置变化矢量，一维或者二维
+     * @return 变化矢量
+     */
     abstract public T getDelta();
 
     protected T getNewVecInstance() {
