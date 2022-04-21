@@ -22,7 +22,7 @@ public class HeroAircraft extends AbstractAircraft {
     /**
      * 子弹射击方向 (向上发射：1，向下发射：-1)
      */
-    private final int direction = -1;
+    // private final int direction = -1;
 
     public HeroAircraft(Vec2 posInit, AnimateContainer animateContainer, int hp) {
         super(posInit, animateContainer, hp, 0);
@@ -51,10 +51,10 @@ public class HeroAircraft extends AbstractAircraft {
     @Override
     public LinkedList<BaseBullet> shoot() {
         LinkedList<BaseBullet> res = new LinkedList<>();
-        double x = this.getLocationX();
-        double y = this.getLocationY() + direction * 2;
-        double speedX = 0;
-        double speedY = this.getSpeedY() + direction * 5;
+        // double x = this.getLocationX();
+        // double y = this.getLocationY() + direction * 2;
+        // double speedX = 0;
+        // double speedY = this.getSpeedY() + direction * 5;
         for (int i = 0; i < shootNum; i++) {
             // 子弹发射位置相对飞机位置向前偏移
             // 多个子弹横向分散

@@ -22,9 +22,12 @@ public class Utils {
         return down <= value && value < up;
     }
 
-    static long timeStartGlobal = System.currentTimeMillis();
+    static long timeStartGlobal = 0;
 
     public static double getTimeMills() {
+        if (timeStartGlobal == 0) {
+            timeStartGlobal = System.currentTimeMillis();
+        }
         return (double) (System.currentTimeMillis() - timeStartGlobal);
     }
 }

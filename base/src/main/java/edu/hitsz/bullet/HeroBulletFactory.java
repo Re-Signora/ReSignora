@@ -19,7 +19,7 @@ public class HeroBulletFactory extends BaseBulletFactory {
                 new AnimateContainerFactory(
                         AnimateContainerFactory.ContainerType.ConstSpeed,
                         getPosition())
-                        .setup(new Vec2(0, -5))
+                        .setup(new Vec2(0, -0.000005))
                         .create(),
                 30);
     }

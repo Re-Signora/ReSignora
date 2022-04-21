@@ -21,24 +21,24 @@ abstract public class AbstractProp extends AbstractFlyingObject {
         super(posInit, animateContainer);
     }
 
-    @Override
-    public void forward() {
-        super.forward();
-
-        // 判定 x 轴出界
-        if (getLocationX() <= 0 || getLocationX() >= Main.WINDOW_WIDTH) {
-            vanish();
-        }
-
-        // 判定 y 轴出界
-        if (getSpeedY() > 0 && getLocationY() >= Main.WINDOW_HEIGHT) {
-            // 向下飞行出界
-            vanish();
-        } else if (getLocationY() <= 0) {
-            // 向上飞行出界
-            vanish();
-        }
-    }
+    // @Override
+    // public void forward() {
+    //     super.forward();
+    //
+    //     // 判定 x 轴出界
+    //     if (getLocationX() <= 0 || getLocationX() >= Main.WINDOW_WIDTH) {
+    //         vanish();
+    //     }
+    //
+    //     // 判定 y 轴出界
+    //     if (getSpeedY() > 0 && getLocationY() >= Main.WINDOW_HEIGHT) {
+    //         // 向下飞行出界
+    //         vanish();
+    //     } else if (getLocationY() <= 0) {
+    //         // 向上飞行出界
+    //         vanish();
+    //     }
+    // }
 
     /**
      * 处理飞机碰到道具的时候的反应

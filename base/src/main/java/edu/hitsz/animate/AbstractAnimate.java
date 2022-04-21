@@ -23,6 +23,7 @@ public abstract class AbstractAnimate<T extends VectorType & VectorFactory<T>> {
         this.source = vecSource.copy();
         this.timeStart = timeStart;
         this.timeSpan = timeSpan;
+        System.out.println("start at " + timeStart);
     }
 
     public AnimateType getAnimateType() {

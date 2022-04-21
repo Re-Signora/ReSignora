@@ -33,7 +33,9 @@ public class AnimateContainer {
     }
 
     public Boolean updateAll(double timeNow) {
-        return updateAllInner(timeNow).stream().mapToInt(res -> res ? 1 : 0).sum() == 0;
+        List<Boolean> innerRes = updateAllInner(timeNow);
+        Boolean r = innerRes.stream().mapToInt(res -> res ? 0 : 1).sum() == 0;
+        return r;
     }
 
     public Vec getSpeed(double timeNow) {
