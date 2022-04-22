@@ -1,7 +1,13 @@
 package edu.hitsz.application;
 
+import edu.hitsz.scene.Scene;
+import edu.hitsz.scene.SceneClient;
+import edu.hitsz.scene.SceneRun;
+import edu.hitsz.scene.SceneRunnable;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * 程序入口
@@ -27,9 +33,35 @@ public class Main {
                 WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Game game = new Game();
-        frame.add(game);
-        frame.setVisible(true);
-        game.action();
+        // Game game = new Game();
+        // frame.add(game);
+        // frame.setContentPane(new MainWindow().getMainPanel());
+        // frame.setVisible(true);
+        // game.action();
+
+        new SceneRun(frame, Arrays.asList(
+                new Scene("Main Window", new SceneRunnable() {
+                    MainWindow mainWindow = null;
+                    @Override
+                    public SceneClient getClient() {
+                        mainWindow = new MainWindow();
+                        return mainWindow;
+                    }
+
+                    @Override
+                    public void run() {
+                        synchronized (this) {
+                            System.out.println("main window in");
+                            try {
+                                mainWindow.getWaitObject().wait();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println("main window out");
+                            this.notify();
+                        }
+                    }
+                })
+        )).run();
     }
 }
