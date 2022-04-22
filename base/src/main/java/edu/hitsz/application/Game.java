@@ -5,6 +5,8 @@ import edu.hitsz.background.AbstractBackground;
 import edu.hitsz.background.BasicBackgroundFactory;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.dao.HistoryImpl;
+import edu.hitsz.dao.HistoryObjectFactory;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.timer.Timer;
 import edu.hitsz.timer.TimerController;
@@ -12,7 +14,6 @@ import edu.hitsz.timer.TimerController;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
-import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -50,6 +51,8 @@ public class Game extends JPanel {
 
     private boolean gameOverFlag = false;
     private int score = 0;
+
+    private final HistoryImpl history = new HistoryImpl();
 
     /**
      * 周期（ms)
@@ -119,6 +122,9 @@ public class Game extends JPanel {
                 executorService.shutdown();
                 gameOverFlag = true;
                 System.out.println("Game Over!");
+                // 保存游戏结果
+                history.addOne(new HistoryObjectFactory("NONAME", score, "Easy!").create());
+                history.display();
             }
             TimerController.done();
         };
