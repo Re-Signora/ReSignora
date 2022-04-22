@@ -105,7 +105,10 @@ public class Game extends JPanel {
         TimerController.add(new Timer(100, () -> {
             if (score > nextBossScore && bossAircrafts.isEmpty()) {
                 synchronized (bossAircrafts) {
-                    bossAircrafts.add(new BossEnemyFactory(() -> nextBossScore = bossScoreThreshold + score).create());
+                    bossAircrafts.add(new BossEnemyFactory(() -> {
+                        nextBossScore = bossScoreThreshold + score;
+                        BossEnemyFactory.clearInstance();
+                    }).create());
                 }
             }
         }));
@@ -253,5 +256,12 @@ public class Game extends JPanel {
         g.drawString("SCORE:" + this.score, x, y);
         y = y + 20;
         g.drawString("LIFE:" + this.heroAircraft.getHp(), x, y);
+        y = y + 20;
+        BossEnemy boss = BossEnemyFactory.getInstance();
+        if (boss == null) {
+            g.drawString("Before Boss:" + (nextBossScore - score), x, y);
+        } else {
+            g.drawString("BOSS LIFE:" + boss.getHp(), x, y);
+        }
     }
 }
