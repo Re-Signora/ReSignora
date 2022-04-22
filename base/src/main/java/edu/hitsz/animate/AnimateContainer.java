@@ -32,10 +32,14 @@ public class AnimateContainer {
         return animateList.stream().map(animate -> animate.update(timeNow)).collect(Collectors.toList());
     }
 
+    /**
+     * 调用所有动画，更新当前时间下的所有动画控制的所有变量。
+     * @param timeNow 当前时间
+     * @return 所有动画都结束了？
+     */
     public Boolean updateAll(double timeNow) {
         List<Boolean> innerRes = updateAllInner(timeNow);
-        Boolean r = innerRes.stream().mapToInt(res -> res ? 0 : 1).sum() == 0;
-        return r;
+        return innerRes.stream().mapToInt(res -> res ? 0 : 1).sum() == 0;
     }
 
     public Vec getSpeed(double timeNow) {
