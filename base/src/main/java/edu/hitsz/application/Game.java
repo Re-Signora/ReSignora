@@ -70,6 +70,7 @@ public class Game extends JPanel {
      * 游戏启动入口，执行游戏逻辑
      */
     public void action() {
+        history.display();
         TimerController.init(0);
         // 英雄射击事件
         TimerController.add(new Timer(1, () -> {

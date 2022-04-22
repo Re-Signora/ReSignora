@@ -1,10 +1,7 @@
 package edu.hitsz.dao;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -105,6 +102,7 @@ public class HistoryImpl implements HistoryDAO {
 
     public void display() {
         System.out.println("[ ======= HISTORY ======= ]");
+        data.sort(Comparator.comparing(HistoryObject::getScore).reversed());
         for (HistoryObject historyObject : data) {
             System.out.println(historyObject.toString());
         }
