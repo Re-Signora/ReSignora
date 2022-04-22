@@ -49,4 +49,9 @@ public class Vec extends VectorType implements VectorFactory<Vec> {
     public Vec divide(Vec that) {
         return fromVector(super.divide(that));
     }
+
+    @Override
+    public String toString() {
+        return get().toString();
+    }
 }

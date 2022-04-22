@@ -1,6 +1,7 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.animate.AnimateContainerFactory;
+import edu.hitsz.application.Main;
 import edu.hitsz.vector.Vec2;
 
 /**
@@ -28,9 +29,11 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
                 Vec2 posNew = new Vec2(0, 10);
                 instance = new BossEnemy(
                         posNew,
-                        new AnimateContainerFactory(AnimateContainerFactory.ContainerType.ConstSpeed, posNew)
-                                .setupSpeed(new Vec2(0, 2))
-                                .create(), 300);
+                        new AnimateContainerFactory(AnimateContainerFactory.ContainerType.ConstSpeedRebound, posNew)
+                                .setupSpeed(new Vec2(1, 0))
+                                .setupRange(new Vec2(0, 0))
+                                .setupRange2(new Vec2(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT))
+                                .create(), 3000);
             }
         }
         return instance;

@@ -13,7 +13,7 @@ public abstract class AbstractAnimate<T extends VectorType & VectorFactory<T>> {
     private final AnimateVectorType animateVectorType;
     private final T vec;
     private final T source;
-    protected final double timeStart;
+    protected double timeStart;
     protected final double timeSpan;
 
     AbstractAnimate(T vecSource, AnimateType animateType, AnimateVectorType animateVectorType, double timeStart, double timeSpan) {

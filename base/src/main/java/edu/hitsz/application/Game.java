@@ -40,17 +40,19 @@ public class Game extends JPanel {
     private final HeroAircraft heroAircraft = new HeroAircraftFactory().create();
     private final List<AbstractAircraft> heroAircrafts = new LinkedList<>();
     private final List<AbstractBackground> backgrounds = new LinkedList<>();
-
+    private final List<BossEnemy> bossAircrafts = new LinkedList<>();
     private final List<AbstractAircraft> enemyAircrafts = new LinkedList<>();
     private final List<BaseBullet> heroBullets = new LinkedList<>();
     private final List<BaseBullet> enemyBullets = new LinkedList<>();
     private final List<AbstractProp> props = new LinkedList<>();
     private final List<List<? extends AbstractFlyingObject>> allObjects = Arrays.asList(
-            backgrounds, heroBullets, enemyBullets, heroAircrafts, enemyAircrafts, props
+            backgrounds, heroBullets, enemyBullets, enemyAircrafts, bossAircrafts, heroAircrafts, props
     );
 
     private boolean gameOverFlag = false;
     private int score = 0;
+    private final int bossScoreThreshold = 10;
+    private int nextBossScore = score + bossScoreThreshold;
 
     private final HistoryImpl history = new HistoryImpl();
 
@@ -98,6 +100,15 @@ public class Game extends JPanel {
         }));
         // fps 输出事件
         TimerController.add(new Timer(1000, () -> System.out.println("fps: " + TimerController.getFps())));
+        // boss 生成事件
+        TimerController.add(new Timer(100, () -> {
+            if (score > nextBossScore && bossAircrafts.isEmpty()) {
+                synchronized (bossAircrafts) {
+                    bossAircrafts.add(new BossEnemyFactory().create());
+                }
+                nextBossScore = bossScoreThreshold + score;
+            }
+        }));
 
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable task = () -> {

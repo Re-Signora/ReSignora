@@ -1,6 +1,6 @@
 package edu.hitsz.animate;
 
-import edu.hitsz.vector.Vec;
+import edu.hitsz.utils.Utils;
 import edu.hitsz.vector.Vec2;
 import edu.hitsz.vector.VectorFactory;
 import edu.hitsz.vector.VectorType;
@@ -81,6 +81,41 @@ public class Animate {
             for (int i = 0; i < getVector().getSize(); i++) {
                 if (getVector().get().get(i) > range.get().get(i)) {
                     getVector().get().set(i, getVector().get().get(i) % range.get().get(i));
+                }
+            }
+            return false;
+        }
+    }
+
+    public static class LinearRebound<T extends VectorType & VectorFactory<T>> extends Linear<T> {
+        private final Vec2 rangeLeft;
+        private final Vec2 rangeRight;
+
+        LinearRebound(T vecSource, T speed, double timeStart, Vec2 rangeLeft, Vec2 rangeRight) {
+            super(vecSource, speed, AnimateVectorType.PositionLike, timeStart);
+            this.rangeLeft = rangeLeft;
+            this.rangeRight = rangeRight;
+        }
+
+        @Override
+        public Boolean isDone(double timeNow) {
+            return false;
+        }
+
+        @Override
+        public Boolean update(double timeNow) {
+            T speed = getSpeed(timeNow);
+            super.update(timeNow);
+            for (int i = 0; i < getVector().getSize(); i++) {
+                if (getVector().get().get(i) < rangeLeft.get().get(i)) {
+                    speed.get().set(i, Math.abs(speed.get().get(i)));
+                    getSource().get().set(i, rangeLeft.get().get(i));
+                    timeStart = timeNow;
+                }
+                if (getVector().get().get(i) > rangeRight.get().get(i)) {
+                    speed.get().set(i, -Math.abs(speed.get().get(i)));
+                    getSource().get().set(i, rangeRight.get().get(i));
+                    timeStart = timeNow;
                 }
             }
             return false;

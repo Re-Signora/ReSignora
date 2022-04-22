@@ -47,7 +47,7 @@ public class HistoryObject implements Serializable {
 
     @Override
     public String toString() {
-        return "HistoryObject{" +
+        return "{" +
                 "name='" + name + '\'' +
                 ", score=" + score +
                 ", time=" + getTimeString() +
