@@ -179,6 +179,9 @@ public abstract class AbstractFlyingObject {
      */
     public void vanish() {
         isValid = false;
+        if (onVanish != null) {
+            onVanish.run();
+        }
     }
 
     public Vec2 getSize() {
@@ -193,6 +196,12 @@ public abstract class AbstractFlyingObject {
         g.drawImage(getImage(),
                 (int) (getLocationX() - image.getWidth() / 2), (int) (getLocationY() - image.getHeight() / 2),
                 null);
+    }
+
+    protected BasicCallback onVanish = null;
+
+    public void setOnVanish(BasicCallback onVanish) {
+        this.onVanish = onVanish;
     }
 }
 

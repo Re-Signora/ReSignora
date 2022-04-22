@@ -51,7 +51,7 @@ public class Game extends JPanel {
 
     private boolean gameOverFlag = false;
     private int score = 0;
-    private final int bossScoreThreshold = 10;
+    private final int bossScoreThreshold = 1000;
     private int nextBossScore = score + bossScoreThreshold;
 
     private final HistoryImpl history = new HistoryImpl();
@@ -105,9 +105,8 @@ public class Game extends JPanel {
         TimerController.add(new Timer(100, () -> {
             if (score > nextBossScore && bossAircrafts.isEmpty()) {
                 synchronized (bossAircrafts) {
-                    bossAircrafts.add(new BossEnemyFactory().create());
+                    bossAircrafts.add(new BossEnemyFactory(() -> nextBossScore = bossScoreThreshold + score).create());
                 }
-                nextBossScore = bossScoreThreshold + score;
             }
         }));
 

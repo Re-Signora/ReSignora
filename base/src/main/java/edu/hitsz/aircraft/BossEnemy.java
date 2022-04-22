@@ -16,7 +16,7 @@ import java.util.LinkedList;
  */
 public class BossEnemy extends AbstractAircraft {
     public BossEnemy(Vec2 posInit, AnimateContainer animateContainer, int hp) {
-        super(posInit, animateContainer, hp, 1000);
+        super(posInit, animateContainer, hp, 500);
     }
 
     @Override
