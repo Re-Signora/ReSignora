@@ -79,7 +79,9 @@ public class Animate {
         public Boolean update(double timeNow) {
             super.update(timeNow);
             for (int i = 0; i < getVector().getSize(); i++) {
-                getVector().get().set(i, getVector().get().get(i) > range.get().get(i) ? getVector().get().get(i) - range.get().get(i) : getVector().get().get(i));
+                if (getVector().get().get(i) > range.get().get(i)) {
+                    getVector().get().set(i, getVector().get().get(i) % range.get().get(i));
+                }
             }
             return false;
         }
