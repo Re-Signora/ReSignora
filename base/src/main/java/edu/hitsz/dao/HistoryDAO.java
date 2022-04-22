@@ -1,6 +1,5 @@
 package edu.hitsz.dao;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,19 +22,19 @@ public interface HistoryDAO {
     Optional<HistoryObject> getByName(String name);
 
     /**
-     * 使用 utc 为主键更新，newHistory 的 utc 会被更新
-     * @param utc 指定的 utc
+     * 使用 time 为主键更新，newHistory 的 time 会被更新
+     * @param time 指定的 time
      * @param newHistory 新的数据
      * @return 是否更新成功
      */
-    Boolean updateByUtc(int utc, HistoryObject newHistory);
+    Boolean updateByTime(long time, HistoryObject newHistory);
 
     /**
-     * 使用 utc 为主键删除对应项目
-     * @param utc 指定的 utc
+     * 使用 time 为主键删除对应项目
+     * @param time 指定的 time
      * @return 是否删除成功
      */
-    Boolean deleteByUtc(int utc);
+    Boolean deleteByTime(long time);
 
     /**
      * 删除所有项目

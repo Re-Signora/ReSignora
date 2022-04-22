@@ -362,4 +362,51 @@ class AnimateContainerFactory {
 }
 AnimateContainerFactory ..> AnimateContainer
 
+interface HistoryDAO {
+    + load(): void
+    + dump(): void
+    + updateByTime(int, HistoryObject): Boolean
+    + deleteByTime(): Boolean
+    + getByName(String): HistoryObject
+    + addOne(HistoryObject): void
+    + getAll(): List<HistoryObject>
+    + deleteAll(): void
+}
+
+class HistoryObject {
+    - String name
+    - int score
+    - long time
+    - String message
+    + HistoryObject(String, int, long, String)
+    + copy(long): HistoryObject
+    + toString(): String
+    + getTimeString(): String
+    + getName(): String
+    + getScore(): int
+    + getTime(): long
+    + getMessage(): String
+}
+
+class HistoryImpl implements HistoryDAO {
+    - {static} String FILENAME
+    - List<HistoryObject> data
+    + HistoryImpl()
+    + load(): void
+    + dump(): void
+    + updateByTime(int, HistoryObject): Boolean
+    + deleteByTime(): Boolean
+    + getByName(String): HistoryObject
+    + addOne(HistoryObject): void
+    + getAll(): List<HistoryObject>
+    + deleteAll(): void
+    + display(): void
+}
+
+class HistoryObjectFactory {
+    + HistoryObjectFactory(String, int, String)
+    + create(): HistoryObject
+}
+HistoryObjectFactory ..> HistoryObject
+
 @enduml

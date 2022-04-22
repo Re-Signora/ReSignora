@@ -37,8 +37,8 @@ public class HistoryObject implements Serializable {
         return message;
     }
 
-    public HistoryObject copy(int newUtc) {
-        return new HistoryObject(getName(), getScore(), newUtc, getMessage());
+    public HistoryObject copy(long newTime) {
+        return new HistoryObject(getName(), getScore(), newTime, getMessage());
     }
 
     public String getTimeString() {

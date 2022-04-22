@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
  * @author Chiro
  */
 public class HistoryImpl implements HistoryDAO {
-    final static String FILENAME = "save.ser";
+    private final static String FILENAME = "save.ser";
     private List<HistoryObject> data;
 
     public HistoryImpl() {
@@ -28,10 +28,10 @@ public class HistoryImpl implements HistoryDAO {
     }
 
     @Override
-    public Boolean updateByUtc(int utc, HistoryObject newHistory) {
-        List<HistoryObject> dataNew = data.stream().filter(item -> item.getTime() == utc).collect(Collectors.toList());
+    public Boolean updateByTime(long time, HistoryObject newHistory) {
+        List<HistoryObject> dataNew = data.stream().filter(item -> item.getTime() == time).collect(Collectors.toList());
         if (!dataNew.isEmpty()) {
-            boolean r = Collections.replaceAll(data, dataNew.get(0), newHistory.copy(utc));
+            boolean r = Collections.replaceAll(data, dataNew.get(0), newHistory.copy(time));
             dump();
             return r;
         }
@@ -39,8 +39,8 @@ public class HistoryImpl implements HistoryDAO {
     }
 
     @Override
-    public Boolean deleteByUtc(int utc) {
-        boolean r = data.removeIf(item -> item.getTime() == utc);
+    public Boolean deleteByTime(long time) {
+        boolean r = data.removeIf(item -> item.getTime() == time);
         dump();
         return r;
     }
