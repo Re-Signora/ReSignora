@@ -189,8 +189,6 @@ interface BasicCallback {
     + run(): void
 }
 
-interface TimerCallback extends BasicCallback
-
 class VectorType {
     - int size
     + VectorType()
@@ -265,5 +263,28 @@ class Scale extends Vec {
     + getX(): double
     + getNewInstance(): Scale
 }
+
+interface TimerCallback extends BasicCallback
+
+class Timer {
+    - double duration
+    - double time
+    - TimerCallback callback
+    + Timer(double, TimerCallback)
+    + execute(): void
+}
+
+class TimerController {
+    - {static} List<Timer> TIMERS
+    + TimerController()
+    + getTimers(): List<Timer>
+    + {static} done(): void
+    + {static} init(double): void
+    + {static} update(): void
+    + {static} add(Timer): void
+    + {static} getFps(): int
+    + {static} getTimeDelta(): double
+}
+Timer ..+ TimerController
 
 @enduml

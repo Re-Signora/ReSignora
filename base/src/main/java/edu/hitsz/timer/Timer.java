@@ -5,9 +5,9 @@ package edu.hitsz.timer;
  * @author Chiro
  */
 public class Timer {
-    public final double duration;
+    private final double duration;
     private final TimerCallback callback;
-    public double time = 0;
+    private double time = 0;
 
     public Timer(double duration, TimerCallback callback) {
         this.duration = duration;
