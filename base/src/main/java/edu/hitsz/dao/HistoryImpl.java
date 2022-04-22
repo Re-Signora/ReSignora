@@ -101,11 +101,12 @@ public class HistoryImpl implements HistoryDAO {
     }
 
     public void display() {
-        System.out.println("[ ======= HISTORY ======= ]");
+        System.out.println("\t\t[ ======= HISTORY ======= ]");
+        System.out.println("  Name\t   Score\t\t   Time\t\t   Message");
         data.sort(Comparator.comparing(HistoryObject::getScore).reversed());
         for (HistoryObject historyObject : data) {
             System.out.println(historyObject.toString());
         }
-        System.out.println("[ ======= ------- ======= ]");
+        System.out.println("\t\t[ ======= ------- ======= ]");
     }
 }

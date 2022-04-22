@@ -47,11 +47,12 @@ public class HistoryObject implements Serializable {
 
     @Override
     public String toString() {
-        return "{" +
-                "name='" + name + '\'' +
-                ", score=" + score +
-                ", time=" + getTimeString() +
-                ", message='" + message + '\'' +
-                '}';
+        // return "{" +
+        //         "name='" + name + '\'' +
+        //         ", score=" + score +
+        //         ", time=" + getTimeString() +
+        //         ", message='" + message + '\'' +
+        //         '}';
+        return "" + name + "\t" + String.format("%9d", score) + "\t" + getTimeString() + "\t" + message;
     }
 }
