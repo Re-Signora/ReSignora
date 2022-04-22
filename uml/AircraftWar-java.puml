@@ -287,4 +287,79 @@ class TimerController {
 }
 Timer ..+ TimerController
 
+class Animate
+
+enum AnimateVectorType
+
+enum AnimateType
+
+abstract class AbstractAnimate<T> {
+    - AnimateType animateType
+    - AnimateVectorType animateVectorType
+    - T source
+    + AbstractAnimate(T, AnimateType, AnimateVectorType, double, double)
+    + update(double): Boolean
+    + isDone(double): Boolean
+    + getSpeed(double): T
+    + getDelta(): T
+    + getAnimateVectorType(): AnimateVectorType
+    + getAnimateType(): AnimateType
+    + getSource(): T
+    # getNewVecInstance(): T
+}
+
+class Linear<T> extends AbstractAnimate {
+    - T speed
+    - Boolean willStop
+    + Linear(T, T, AnimateVectorType, double)
+    + Linear(T, T, AnimateVectorType, double, double)
+    + Linear(T, T, AnimateVectorType, double, double, Boolean)
+    + update(double): Boolean
+    + isDone(double): Boolean
+    + getSpeed(): T
+    + getDelta(): T
+}
+Linear ..+ Animate
+
+class LinearLoop<T> extends Linear {
+    - Vec2 range
+    + LinearLoop(T, T, AnimateVectorType, double, Vec2)
+    + update(double): Boolean
+    + isDone(double): Boolean
+}
+LinearLoop ..+ Animate
+
+class LinearRebound<T> extends Linear {
+    - Vec2 rangeLeft
+    - Vec2 rangeRight
+    + LinearRebound(T, T, double, Vec2, Vec2)
+    + LinearRebound(T, T, double, Vec2, Vec2, double)
+    + isDone(double): Boolean
+    + update(double): Boolean
+}
+LinearRebound ..+ Animate
+
+class AnimateContainer {
+    - List<AbstractAnimate<Vec>> animateList
+    + AnimateContainer()
+    + AnimateContainer(List<AbstractAnimate<Vec>>)
+    # updateAllInner(double): List<Boolean>
+    + updateAll(double): Boolean
+    + getSpeed(double): Vec
+    + getRotation(): Scale
+    + getDelta(): Vec
+    + getAnimateList(): ListL<AbstractAnimate<Vec>>
+}
+
+class AnimateContainerFactory {
+    + enum ContainerType
+    + AnimateContainerFactory(ContainerType, Vec2)
+    + setupTimeSpan(double): AnimateContainerFactory
+    + setupSpeed(Vec2): AnimateContainerFactory
+    + setupRange(Vec2): AnimateContainerFactory
+    + setupRange2(Vec2): AnimateContainerFactory
+    + create(): AnimateContainer
+}
+AnimateContainerFactory ..> AnimateContainer
+
 @enduml
