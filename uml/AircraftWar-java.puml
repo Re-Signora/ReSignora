@@ -185,4 +185,85 @@ class BulletPropFactory implements AbstractPropFactory {
 }
 BulletPropFactory ..> BulletProp
 
+interface BasicCallback {
+    + run(): void
+}
+
+interface TimerCallback extends BasicCallback
+
+class VectorType {
+    - int size
+    + VectorType()
+    + VectorType(int, List<Double>)
+    + get(): List<Double>
+    + set(VectorType): void
+    + set(List<Double>): void
+    + getSize(): int
+    + calc(VectorType, Operator): VectorType
+    + enum Operator
+    + plus(double): VectorType
+    + minus(double): VectorType
+    + times(double): VectorType
+    + divide(double): VectorType
+    + plus(VectorType): VectorType
+    + minus(VectorType): VectorType
+    + times(VectorType): VectorType
+    + divide(VectorType): VectorType
+    + equals(VectorType): Boolean
+}
+
+class VectorTypeFactory {
+    + VectorTypeFactory()
+    + {static} fromDouble(int, double): VectorType
+}
+VectorTypeFactory ..> VectorType
+
+interface VectorFactory<T> {
+    + fromVector(VectorType): T
+    + copy(): T
+    + getNewInstance(): T
+}
+
+class Vec extends VectorType implements VectorFactory {
+    + Vec()
+    + Vec(int, List<Double>)
+    + copy(): Vec
+    + fromVector(VectorType): Vec
+    + getNewInstance(): Vec
+    + toString(): String
+    + plus(Vec): Vec
+    + minus(Vec): Vec
+    + times(Vec): Vec
+    + divide(Vec): Vec
+}
+
+class Vec2 extends Vec {
+    + Vec2()
+    + Vec2(double, double)
+    + fromVector(VectorType): Vec2
+    + copy(): Vec2
+    + set(double, double): void
+    + plus(Vec2): Vec2
+    + minus(Vec2): Vec2
+    + times(Vec2): Vec2
+    + divide(Vec2): Vec2
+    + getX(): double
+    + getY(): double
+    + getNewInstance(): Vec2
+}
+
+class Scale extends Vec {
+    + Scale()
+    + Scale(double)
+    + fromVector(VectorType): Scale
+    + copy(): Scale
+    + set(double, double): void
+    + plus(Scale): Scale
+    + minus(Scale): Scale
+    + times(Scale): Scale
+    + divide(Scale): Scale
+    + getX(): double
+    + getNewInstance(): Scale
+}
+
 @enduml
