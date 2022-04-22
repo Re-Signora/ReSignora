@@ -2,6 +2,7 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.animate.AnimateContainer;
 import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.bullet.EnemyBulletFactory;
 import edu.hitsz.utils.Utils;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.vector.Vec2;
@@ -26,7 +27,9 @@ public class BossEnemy extends AbstractAircraft {
 
     @Override
     public LinkedList<BaseBullet> shoot() {
-        return Utils.letEnemyShoot(getPosition().copy());
+        LinkedList<BaseBullet> ret = new LinkedList<>();
+        ret.add(new EnemyBulletFactory(getPosition().copy(), EnemyBulletFactory.BulletType.Scatter).create());
+        return ret;
     }
 
     @Override

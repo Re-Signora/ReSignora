@@ -24,7 +24,6 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
     @Override
     public BossEnemy create() {
         if (instance == null) {
-            System.out.println("Boss created!");
             synchronized (BossEnemyFactory.class) {
                 Vec2 posNew = new Vec2(0, 10);
                 instance = new BossEnemy(

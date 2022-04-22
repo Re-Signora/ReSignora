@@ -15,7 +15,7 @@ import java.util.List;
 public class Utils {
     public static LinkedList<BaseBullet> letEnemyShoot(Vec2 position) {
         LinkedList<BaseBullet> ret = new LinkedList<>();
-        ret.add(new EnemyBulletFactory(position).create());
+        ret.add(new EnemyBulletFactory(position, EnemyBulletFactory.BulletType.Direct).create());
         return ret;
     }
 

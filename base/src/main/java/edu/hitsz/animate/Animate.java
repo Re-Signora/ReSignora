@@ -1,6 +1,5 @@
 package edu.hitsz.animate;
 
-import edu.hitsz.utils.Utils;
 import edu.hitsz.vector.Vec2;
 import edu.hitsz.vector.VectorFactory;
 import edu.hitsz.vector.VectorType;
@@ -92,7 +91,11 @@ public class Animate {
         private final Vec2 rangeRight;
 
         LinearRebound(T vecSource, T speed, double timeStart, Vec2 rangeLeft, Vec2 rangeRight) {
-            super(vecSource, speed, AnimateVectorType.PositionLike, timeStart);
+            this(vecSource, speed, timeStart, rangeLeft, rangeRight, 0);
+        }
+
+        LinearRebound(T vecSource, T speed, double timeStart, Vec2 rangeLeft, Vec2 rangeRight, double timeSpan) {
+            super(vecSource, speed, AnimateVectorType.PositionLike, timeStart, timeSpan, true);
             this.rangeLeft = rangeLeft;
             this.rangeRight = rangeRight;
         }

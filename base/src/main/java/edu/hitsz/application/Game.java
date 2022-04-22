@@ -93,9 +93,10 @@ public class Game extends JPanel {
             }
         }));
         // 敌机射击事件
-        TimerController.add(new Timer(1000, () -> {
+        TimerController.add(new Timer(200, () -> {
             synchronized (enemyBullets) {
                 enemyAircrafts.forEach(enemyAircraft -> enemyBullets.addAll(enemyAircraft.shoot()));
+                bossAircrafts.forEach(bossEnemy -> enemyBullets.addAll(bossEnemy.shoot()));
             }
         }));
         // fps 输出事件

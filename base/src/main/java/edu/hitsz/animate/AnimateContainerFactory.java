@@ -55,6 +55,14 @@ public class AnimateContainerFactory {
         return this;
     }
 
+    private double timeSpan = 0;
+
+    public AnimateContainerFactory setupTimeSpan(double timeSpan) {
+        assert containerType == ContainerType.ConstSpeedRebound;
+        this.timeSpan = timeSpan;
+        return this;
+    }
+
     public AnimateContainer create() {
         switch (containerType) {
             case ConstSpeed:
@@ -65,7 +73,7 @@ public class AnimateContainerFactory {
                 return new AnimateContainer(List.of(new Animate.LinearLoop<>(position, speed2d, AnimateVectorType.PositionLike, Utils.getTimeMills(), range)));
             case ConstSpeedRebound:
                 assert range != null && range2 != null && speed2d != null;
-                return new AnimateContainer(List.of(new Animate.LinearRebound<>(position, speed2d, Utils.getTimeMills(), range, range2)));
+                return new AnimateContainer(List.of(new Animate.LinearRebound<>(position, speed2d, Utils.getTimeMills(), range, range2, timeSpan)));
             default:
                 break;
         }
