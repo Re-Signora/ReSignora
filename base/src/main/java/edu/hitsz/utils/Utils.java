@@ -1,11 +1,13 @@
 package edu.hitsz.utils;
 
+import edu.hitsz.application.Game;
+import edu.hitsz.application.MusicManager;
+import edu.hitsz.application.MusicThread;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBulletFactory;
 import edu.hitsz.vector.Vec2;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * 工具类
@@ -30,5 +32,9 @@ public class Utils {
             timeStartGlobal = System.currentTimeMillis();
         }
         return (double) (System.currentTimeMillis() - timeStartGlobal);
+    }
+
+    public static void startMusic(MusicManager.MusicType type) {
+        Game.getThreadFactory().newThread(new MusicThread(MusicManager.get(type))).start();
     }
 }

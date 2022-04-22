@@ -12,7 +12,7 @@ public class MusicThread extends Thread {
     private byte[] samples;
 
     public MusicThread(String filename) {
-        // 初始化filename
+        // 初始化 filename
         this.filename = filename;
         reverseMusic();
     }
@@ -20,7 +20,8 @@ public class MusicThread extends Thread {
     public void reverseMusic() {
         try {
             // 定义一个 AudioInputStream 用于接收输入的音频数据，使用 AudioSystem 来获取音频的音频输入流
-            AudioInputStream stream = AudioSystem.getAudioInputStream(new File(filename));
+            String path = "src/main/resources/sounds/";
+            AudioInputStream stream = AudioSystem.getAudioInputStream(new File(path + filename));
             // 用 AudioFormat 来获取 AudioInputStream 的格式
             audioFormat = stream.getFormat();
             samples = getSamples(stream);

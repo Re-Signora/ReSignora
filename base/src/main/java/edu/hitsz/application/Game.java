@@ -10,6 +10,7 @@ import edu.hitsz.dao.HistoryObjectFactory;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.timer.Timer;
 import edu.hitsz.timer.TimerController;
+import edu.hitsz.utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,12 +31,16 @@ public class Game extends JPanel {
     /**
      * 创建线程的工厂函数
      */
-    private final MyThreadFactory threadFactory = new MyThreadFactory("AircraftWar");
+    static private final MyThreadFactory THREAD_FACTORY = new MyThreadFactory("AircraftWar");
     /**
      * 线程池，自动管理
      */
     @SuppressWarnings("AlibabaThreadPoolCreation")
-    private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1, threadFactory);
+    static private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(100, THREAD_FACTORY);
+
+    public static MyThreadFactory getThreadFactory() {
+        return THREAD_FACTORY;
+    }
 
     private final HeroAircraft heroAircraft = new HeroAircraftFactory().create();
     private final List<AbstractAircraft> heroAircrafts = new LinkedList<>();
@@ -48,12 +53,10 @@ public class Game extends JPanel {
     private final List<List<? extends AbstractFlyingObject>> allObjects = Arrays.asList(
             backgrounds, heroBullets, enemyBullets, enemyAircrafts, bossAircrafts, heroAircrafts, props
     );
-
     private boolean gameOverFlag = false;
     private int score = 0;
     private final int bossScoreThreshold = 1000;
     private int nextBossScore = score + bossScoreThreshold;
-
     private final HistoryImpl history = new HistoryImpl();
 
     /**
@@ -112,7 +115,7 @@ public class Game extends JPanel {
                 }
             }
         }));
-
+        Utils.startMusic(MusicManager.MusicType.BGM);
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable task = () -> {
             TimerController.update();
