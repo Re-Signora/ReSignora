@@ -12,6 +12,7 @@ import edu.hitsz.timer.TimerController;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -68,7 +69,11 @@ public class Game extends JPanel {
     public void action() {
         TimerController.init(0);
         // 英雄射击事件
-        TimerController.add(new Timer(1, () -> heroBullets.addAll(heroAircraft.shoot())));
+        TimerController.add(new Timer(1, () -> {
+            synchronized (heroBullets) {
+                heroBullets.addAll(heroAircraft.shoot());
+            }
+        }));
         // 产生精英敌机事件
         TimerController.add(new Timer(1200, () -> {
             synchronized (enemyAircrafts) {
@@ -96,7 +101,9 @@ public class Game extends JPanel {
             // execute all
             TimerController.execute();
             // 所有物体移动
-            allObjects.forEach(objList -> objList.forEach(AbstractFlyingObject::forward));
+            synchronized (allObjects) {
+                allObjects.forEach(objList -> objList.forEach(AbstractFlyingObject::forward));
+            }
             // 撞击检测
             crashCheckAction();
             // 后处理
@@ -206,7 +213,14 @@ public class Game extends JPanel {
         super.paint(g);
 
         // 绘制所有物体
-        allObjects.forEach(objList -> objList.forEach(obj -> obj.draw(g)));
+        synchronized (allObjects) {
+            allObjects.forEach(objList -> {
+                //noinspection SynchronizationOnLocalVariableOrMethodParameter
+                synchronized (objList) {
+                    objList.forEach(obj -> obj.draw(g));
+                }
+            });
+        }
 
         //绘制得分和生命值
         paintScoreAndLife(g);
