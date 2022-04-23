@@ -3,7 +3,7 @@ package edu.hitsz.application;
 import edu.hitsz.scene.Scene;
 import edu.hitsz.scene.SceneClient;
 import edu.hitsz.scene.SceneRun;
-import edu.hitsz.scene.SceneRunnable;
+import edu.hitsz.scene.AbstractSceneRunnable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,36 +32,27 @@ public class Main {
         frame.setBounds(((int) screenSize.getWidth() - WINDOW_WIDTH) / 2, 0,
                 WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        while (true) {
+            try {
+                new SceneRun(frame, Arrays.asList(
+                        new Scene("Main Window", new AbstractSceneRunnable() {
+                            MainWindow mainWindow = null;
 
-        // Game game = new Game();
-        // frame.add(game);
-        // frame.setContentPane(new MainWindow().getMainPanel());
-        // frame.setVisible(true);
-        // game.action();
-
-        new SceneRun(frame, Arrays.asList(
-                new Scene("Main Window", new SceneRunnable() {
-                    MainWindow mainWindow = null;
-                    @Override
-                    public SceneClient getClient() {
-                        mainWindow = new MainWindow();
-                        return mainWindow;
-                    }
-
-                    @Override
-                    public void run() {
-                        synchronized (this) {
-                            System.out.println("main window in");
-                            try {
-                                mainWindow.getWaitObject().wait();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                            @Override
+                            public SceneClient getClient() {
+                                if (mainWindow == null) {
+                                    synchronized (MainWindow.class) {
+                                        mainWindow = new MainWindow();
+                                    }
+                                }
+                                return mainWindow;
                             }
-                            System.out.println("main window out");
-                            this.notify();
-                        }
-                    }
-                })
-        )).run();
+                        })
+                )).run();
+            } catch (SceneRun.SceneRunDoneException e) {
+                System.out.println("run done.");
+                break;
+            }
+        }
     }
 }

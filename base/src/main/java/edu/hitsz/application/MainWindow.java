@@ -16,14 +16,15 @@ public class MainWindow implements SceneClient {
     private JCheckBox musicOnCheckBox;
     private JLabel musicOnLabel;
     private JPanel mainPanel;
-    private final Object waitObject;
+    private final Object waitObject = new Object();
 
     public MainWindow() {
         System.out.println("waitObject created at " + Thread.currentThread());
-        waitObject = new Object();
         easyModeButton.addActionListener(e -> {
-            System.out.println(Thread.currentThread() + "clicked");
-            waitObject.notify();
+            System.out.println(Thread.currentThread() + " clicked");
+            synchronized (waitObject) {
+                waitObject.notify();
+            }
         });
     }
 

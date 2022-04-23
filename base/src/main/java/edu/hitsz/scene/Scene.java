@@ -1,19 +1,17 @@
 package edu.hitsz.scene;
 
-import javax.swing.*;
-
 /**
  * @author Chiro
  */
 public class Scene {
-    final private SceneRunnable sceneRunnable;
+    final private AbstractSceneRunnable sceneRunnable;
     final private String name;
-    public Scene(String name, SceneRunnable sceneRunnable) {
+    public Scene(String name, AbstractSceneRunnable sceneRunnable) {
         this.name = name;
         this.sceneRunnable = sceneRunnable;
     }
 
-    public SceneRunnable getSceneRunnable() {
+    public AbstractSceneRunnable getSceneRunnable() {
         return sceneRunnable;
     }
 
