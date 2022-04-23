@@ -17,4 +17,9 @@ public interface SceneClient {
      * @return obj
      */
     Object getWaitObject();
+
+    /**
+     * 主动切换到下一场景
+     */
+    void nextScene();
 }

@@ -37,22 +37,21 @@ public class Main {
             try {
                 new SceneRun(frame, Arrays.asList(
                         new Scene("Main Window", new AbstractSceneRunnable() {
-                            MainWindow mainWindow = null;
-
                             @Override
                             public SceneClient getClient() {
-                                if (mainWindow == null) {
-                                    synchronized (MainWindow.class) {
-                                        mainWindow = new MainWindow();
-                                    }
-                                }
-                                return mainWindow;
+                                return MainWindow.getInstance();
                             }
                         }),
                         new Scene("Game Window", new AbstractSceneRunnable() {
                             @Override
                             public SceneClient getClient() {
                                 return GameWindow.getInstance();
+                            }
+                        }),
+                        new Scene("History Window", new AbstractSceneRunnable() {
+                            @Override
+                            public SceneClient getClient() {
+                                return HistoryWindow.getInstance();
                             }
                         })
                 )).run();

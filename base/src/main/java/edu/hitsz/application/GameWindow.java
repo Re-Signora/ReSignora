@@ -47,6 +47,11 @@ public class GameWindow implements SceneClient {
         return getGame().getWaitObject();
     }
 
+    @Override
+    public void nextScene() {
+        // 在 Game 中自己调用了 obj.notify() 了
+    }
+
     public void clearGameInstance() {
         game = null;
     }

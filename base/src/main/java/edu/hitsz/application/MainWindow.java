@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
  * @author Chiro
  */
 public class MainWindow implements SceneClient {
+    private static MainWindow mainWindow = null;
     private JButton easyModeButton;
     private JButton mediumModeButton;
     private JButton hardModeButton;
@@ -18,13 +19,20 @@ public class MainWindow implements SceneClient {
     private JPanel mainPanel;
     private final Object waitObject = new Object();
 
+    public static MainWindow getInstance() {
+        if (mainWindow == null) {
+            synchronized (MainWindow.class) {
+                mainWindow = new MainWindow();
+            }
+        }
+        return mainWindow;
+    }
+
     public MainWindow() {
         System.out.println("waitObject created at " + Thread.currentThread());
         easyModeButton.addActionListener(e -> {
             System.out.println(Thread.currentThread() + " clicked");
-            synchronized (waitObject) {
-                waitObject.notify();
-            }
+            nextScene();
         });
     }
 
@@ -36,5 +44,12 @@ public class MainWindow implements SceneClient {
     @Override
     public Object getWaitObject() {
         return waitObject;
+    }
+
+    @Override
+    public void nextScene() {
+        synchronized (waitObject) {
+            waitObject.notify();
+        }
     }
 }
