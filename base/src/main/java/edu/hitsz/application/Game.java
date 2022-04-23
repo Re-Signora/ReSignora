@@ -173,9 +173,11 @@ public class Game extends JPanel {
                     // 游戏结束
                     gameOverFlag = true;
                     System.out.println("Game Over!");
+                    String name = JOptionPane.showInputDialog("输入你的名字");
+                    String message = JOptionPane.showInputDialog("输入额外的信息");
                     // 保存游戏结果
                     if (score > 0) {
-                        HistoryImpl.getInstance().addOne(new HistoryObjectFactory("NONAME", score, "Easy!").create());
+                        HistoryImpl.getInstance().addOne(new HistoryObjectFactory(name.isEmpty() ? "NONAME" : name, score, message.isEmpty() ? "NO MESSAGE" : message).create());
                     }
                     HistoryImpl.getInstance().display();
                     synchronized (waitObject) {

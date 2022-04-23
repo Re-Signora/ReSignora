@@ -3,8 +3,6 @@ package edu.hitsz.application;
 import edu.hitsz.scene.SceneClient;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -17,9 +15,8 @@ public class MainWindow implements SceneClient {
     private JButton mediumModeButton;
     private JButton hardModeButton;
     private JCheckBox musicOnCheckBox;
-    private JLabel musicOnLabel;
     private JPanel mainPanel;
-    private JButton HistoryButton;
+    private JButton historyButton;
     private final Object waitObject = new Object();
 
     public static MainWindow getInstance() {
@@ -38,8 +35,8 @@ public class MainWindow implements SceneClient {
             nextScene();
         });
 
-        HistoryButton.addActionListener(e -> {
-            JFrame historyWindowFrame = new JFrame("HistoryWindow");
+        historyButton.addActionListener(e -> {
+            JFrame historyWindowFrame = new JFrame("排行榜");
             historyWindowFrame.setContentPane(new HistoryWindow(false).getPanel());
             historyWindowFrame.addWindowListener(new WindowAdapter() {
                 @Override
