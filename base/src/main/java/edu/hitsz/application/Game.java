@@ -30,6 +30,7 @@ public class Game extends JPanel {
      * 创建线程的工厂函数
      */
     static private final MyThreadFactory THREAD_FACTORY = new MyThreadFactory("AircraftWar");
+    static private final MyThreadFactory MUSIC_FACTORY = new MyThreadFactory("AircraftWar-Music");
     /**
      * 线程池，自动管理
      */
@@ -38,6 +39,10 @@ public class Game extends JPanel {
 
     public static MyThreadFactory getThreadFactory() {
         return THREAD_FACTORY;
+    }
+
+    public static MyThreadFactory getMusicFactory() {
+        return MUSIC_FACTORY;
     }
 
     private HeroAircraft heroAircraft = new HeroAircraftFactory().create();
@@ -144,7 +149,7 @@ public class Game extends JPanel {
         startedFlag = true;
         HistoryImpl.getInstance().display();
         addEvents();
-        Utils.startMusic(MusicManager.MusicType.BGM);
+        Utils.startLoopMusic(MusicManager.MusicType.HERO_SHOOT);
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable task = () -> {
             try {
@@ -173,16 +178,34 @@ public class Game extends JPanel {
                     // 游戏结束
                     gameOverFlag = true;
                     System.out.println("Game Over!");
-                    String name = JOptionPane.showInputDialog("输入你的名字");
-                    String message = JOptionPane.showInputDialog("输入额外的信息");
-                    // 保存游戏结果
-                    if (score > 0) {
-                        HistoryImpl.getInstance().addOne(new HistoryObjectFactory(name.isEmpty() ? "NONAME" : name, score, message.isEmpty() ? "NO MESSAGE" : message).create());
+                    try {
+                        String name = JOptionPane.showInputDialog("输入你的名字", "NONAME");
+                        if (name == null) {
+                            int res = JOptionPane.showConfirmDialog(null, "Save Game", "不保存记录?", JOptionPane.OK_CANCEL_OPTION);
+                            if (res == JOptionPane.YES_OPTION) {
+                                throw new Exception();
+                            }
+                        }
+                        String message = JOptionPane.showInputDialog("输入额外的信息", "NO MESSAGE");
+                        // 保存游戏结果
+                        if (score > 0) {
+                            HistoryImpl.getInstance().addOne(
+                                    new HistoryObjectFactory(
+                                            name == null ? "NONAME" : name.isEmpty() ? "NONAME" : name,
+                                            score,
+                                            message == null ? "NO MESSAGE" : message.isEmpty() ? "NO MESSAGE" : message)
+                                            .create());
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Input exception: " + e);
+                    } finally {
+                        HistoryImpl.getInstance().display();
+                        getMusicFactory().getPool().forEach(Thread::interrupt);
+                        synchronized (waitObject) {
+                            waitObject.notify();
+                        }
                     }
-                    HistoryImpl.getInstance().display();
-                    synchronized (waitObject) {
-                        waitObject.notify();
-                    }
+
                 }
                 TimerController.done();
                 Thread.sleep(1);

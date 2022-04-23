@@ -16,11 +16,12 @@ public abstract class AbstractSceneRunnable implements Runnable {
         System.out.println("window in");
         try {
             Object waitObject = getClient().getWaitObject();
+            //noinspection SynchronizationOnLocalVariableOrMethodParameter
             synchronized (waitObject) {
                 waitObject.wait();
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println("window exception: " + e);
         }
         System.out.println("window out");
         synchronized (this) {

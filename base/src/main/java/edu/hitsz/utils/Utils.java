@@ -1,6 +1,7 @@
 package edu.hitsz.utils;
 
 import edu.hitsz.application.Game;
+import edu.hitsz.application.MusicLoopThread;
 import edu.hitsz.application.MusicManager;
 import edu.hitsz.application.MusicThread;
 import edu.hitsz.bullet.BaseBullet;
@@ -35,6 +36,10 @@ public class Utils {
     }
 
     public static void startMusic(MusicManager.MusicType type) {
-        Game.getThreadFactory().newThread(new MusicThread(MusicManager.get(type))).start();
+        Game.getMusicFactory().newThread(new MusicThread(MusicManager.get(type))).start();
+    }
+
+    public static void startLoopMusic(MusicManager.MusicType type) {
+        Game.getMusicFactory().newThread(new MusicLoopThread(MusicManager.get(type))).start();
     }
 }
