@@ -14,6 +14,8 @@ import edu.hitsz.utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -64,6 +66,8 @@ public class Game extends JPanel {
     private final Object waitObject = new Object();
     @SuppressWarnings("rawtypes")
     private Future future = null;
+    private Font myFontBase = null;
+    private String lastProvidedName = null;
 
     public void resetStates() {
         gameOverFlag = false;
@@ -94,6 +98,7 @@ public class Game extends JPanel {
      */
     @SuppressWarnings("FieldCanBeLocal")
     public Game() {
+        loadFont();
         heroAircrafts.add(heroAircraft);
         backgrounds.add(new BasicBackgroundFactory().create());
         //启动英雄机鼠标监听
@@ -180,12 +185,14 @@ public class Game extends JPanel {
                     getMusicFactory().getPool().forEach(Thread::interrupt);
                     System.out.println("Game Over!");
                     try {
-                        String name = JOptionPane.showInputDialog("输入你的名字", "NONAME");
+                        String name = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "NONAME" : lastProvidedName);
                         if (name == null) {
-                            int res = JOptionPane.showConfirmDialog(null, "Save Game", "不保存记录?", JOptionPane.OK_CANCEL_OPTION);
+                            int res = JOptionPane.showConfirmDialog(null, "不保存记录?", "Save Game", JOptionPane.OK_CANCEL_OPTION);
                             if (res == JOptionPane.YES_OPTION) {
                                 throw new Exception();
                             }
+                        } else {
+                            lastProvidedName = name;
                         }
                         String message = JOptionPane.showInputDialog("输入额外的信息", "NO MESSAGE");
                         // 保存游戏结果
@@ -318,8 +325,8 @@ public class Game extends JPanel {
     private void paintScoreAndLife(Graphics g) {
         int x = 10;
         int y = 25;
-        g.setColor(new Color(16711680));
-        g.setFont(new Font("SansSerif", Font.BOLD, 22));
+        g.setColor(new Color(0xcfcfcfcf));
+        g.setFont(myFontBase);
         g.drawString("SCORE:" + this.score, x, y);
         y = y + 20;
         g.drawString("LIFE:" + this.heroAircraft.getHp(), x, y);
@@ -329,6 +336,14 @@ public class Game extends JPanel {
             g.drawString("Before Boss:" + (nextBossScore - score), x, y);
         } else {
             g.drawString("BOSS LIFE:" + boss.getHp(), x, y);
+        }
+    }
+
+    private void loadFont() {
+        try {
+            myFontBase = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/Genshin.ttf")).deriveFont(22f);
+        } catch (FontFormatException | IOException e) {
+            myFontBase = new Font("SansSerif", Font.PLAIN, 22);
         }
     }
 }
