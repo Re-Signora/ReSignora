@@ -8,8 +8,19 @@ import java.util.stream.Collectors;
  * @author Chiro
  */
 public class HistoryImpl implements HistoryDAO {
+    private static HistoryImpl history = null;
     private final static String FILENAME = "save.ser";
     private List<HistoryObject> data;
+
+    public static HistoryImpl getInstance() {
+        if (history == null) {
+            synchronized (HistoryImpl.class) {
+                history = new HistoryImpl();
+            }
+        }
+        history.sort();
+        return history;
+    }
 
     public HistoryImpl() {
         data = new ArrayList<>();
@@ -59,6 +70,7 @@ public class HistoryImpl implements HistoryDAO {
 
     @Override
     public void dump() {
+        sort();
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(FILENAME);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -92,18 +104,26 @@ public class HistoryImpl implements HistoryDAO {
                 // noinspection unchecked
                 data = (List<HistoryObject>) objectInputStream.readObject();
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                System.out.println("Warning: class not found! " + e);
+                data = new ArrayList<>();
+            } catch (InvalidClassException e) {
+                System.out.println("Warning: save file has wrong version with running one! " + e);
                 data = new ArrayList<>();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        sort();
+    }
+
+    public void sort() {
+        data.sort(Comparator.comparing(HistoryObject::getScore).reversed());
     }
 
     public void display() {
         System.out.println("\t\t[ ======= HISTORY ======= ]");
         System.out.println("  Name\t   Score\t\t   Time\t\t   Message");
-        data.sort(Comparator.comparing(HistoryObject::getScore).reversed());
+        sort();
         for (HistoryObject historyObject : data) {
             System.out.println(historyObject.toString());
         }

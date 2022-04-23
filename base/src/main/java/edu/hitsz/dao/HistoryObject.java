@@ -2,6 +2,8 @@ package edu.hitsz.dao;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 历史记录储存类
@@ -47,12 +49,14 @@ public class HistoryObject implements Serializable {
 
     @Override
     public String toString() {
-        // return "{" +
-        //         "name='" + name + '\'' +
-        //         ", score=" + score +
-        //         ", time=" + getTimeString() +
-        //         ", message='" + message + '\'' +
-        //         '}';
         return "" + name + "\t" + String.format("%9d", score) + "\t" + getTimeString() + "\t" + message;
+    }
+
+    static public List<String> getLabels() {
+        return Arrays.asList("名称", "分数", "时间", "留言");
+    }
+
+    public List<Object> getDataAsList() {
+        return Arrays.asList(name, score, getTimeString(), message);
     }
 }

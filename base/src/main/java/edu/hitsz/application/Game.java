@@ -56,7 +56,6 @@ public class Game extends JPanel {
     private int score = 0;
     private final int bossScoreThreshold = 1000;
     private int nextBossScore = score + bossScoreThreshold;
-    private final HistoryImpl history = new HistoryImpl();
     private final Object waitObject = new Object();
     @SuppressWarnings("rawtypes")
     private Future future = null;
@@ -143,7 +142,7 @@ public class Game extends JPanel {
      */
     public void action() {
         startedFlag = true;
-        history.display();
+        HistoryImpl.getInstance().display();
         addEvents();
         Utils.startMusic(MusicManager.MusicType.BGM);
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
@@ -176,9 +175,9 @@ public class Game extends JPanel {
                     System.out.println("Game Over!");
                     // 保存游戏结果
                     if (score > 0) {
-                        history.addOne(new HistoryObjectFactory("NONAME", score, "Easy!").create());
+                        HistoryImpl.getInstance().addOne(new HistoryObjectFactory("NONAME", score, "Easy!").create());
                     }
-                    history.display();
+                    HistoryImpl.getInstance().display();
                     synchronized (waitObject) {
                         waitObject.notify();
                     }

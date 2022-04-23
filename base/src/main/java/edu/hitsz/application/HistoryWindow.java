@@ -1,8 +1,12 @@
 package edu.hitsz.application;
 
+import edu.hitsz.dao.HistoryImpl;
+import edu.hitsz.dao.HistoryObject;
 import edu.hitsz.scene.SceneClient;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,10 +21,25 @@ public class HistoryWindow implements SceneClient {
     private JButton deleteButton;
     private JButton modifyButton;
     private JButton restartButton;
+    private JScrollPane scrollPane;
     private final Object waitObject = new Object();
 
     public HistoryWindow() {
         restartButton.addActionListener(e -> nextScene());
+        syncWithDao();
+    }
+
+    public void syncWithDao() {
+        HistoryImpl.getInstance().sort();
+        DefaultTableModel model = (DefaultTableModel) historyTable.getModel();
+        // 清除数据
+        model.setRowCount(0);
+        // 设置表头
+        model.setColumnIdentifiers(HistoryObject.getLabels().toArray(new String[0]));
+        // 增加列
+        HistoryImpl.getInstance().getAll().forEach(historyObject -> model.addRow(historyObject.getDataAsList().toArray(new Object[0])));
+        historyTable.setRowHeight(30);
+        historyTable.setModel(model);
     }
 
     public static HistoryWindow getInstance() {
@@ -29,6 +48,7 @@ public class HistoryWindow implements SceneClient {
                 historyWindow = new HistoryWindow();
             }
         }
+        historyWindow.syncWithDao();
         return historyWindow;
     }
 
