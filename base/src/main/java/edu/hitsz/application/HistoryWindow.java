@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 /**
  * @author Chiro
@@ -26,6 +27,16 @@ public class HistoryWindow implements SceneClient {
 
     public HistoryWindow(boolean enableRestart) {
         restartButton.addActionListener(e -> nextScene());
+        deleteButton.addActionListener(e -> {
+            DefaultTableModel model = (DefaultTableModel) historyTable.getModel();
+            int[] selectedRows = historyTable.getSelectedRows();
+            List<HistoryObject> data = HistoryImpl.getInstance().getAll();
+            for (int selectedRow : selectedRows) {
+                System.out.println("selectedRow = " + selectedRow + ", data = " + data.get(selectedRow));
+                HistoryImpl.getInstance().deleteByTime(data.get(selectedRow).getTime());
+            }
+            syncWithDao();
+        });
         syncWithDao();
         if (!enableRestart) {
             restartButton.setEnabled(false);

@@ -53,10 +53,10 @@ public class HistoryObject implements Serializable {
     }
 
     static public List<String> getLabels() {
-        return Arrays.asList("名称", "分数", "时间", "留言");
+        return Arrays.asList("名称", "分数", "时间", "留言", "时间戳");
     }
 
     public List<Object> getDataAsList() {
-        return Arrays.asList(name, score, getTimeString(), message);
+        return Arrays.asList(name, score, getTimeString(), message, time);
     }
 }

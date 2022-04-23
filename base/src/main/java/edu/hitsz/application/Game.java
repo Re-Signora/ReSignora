@@ -187,7 +187,6 @@ public class Game extends JPanel {
                 TimerController.done();
                 Thread.sleep(1);
             } catch (InterruptedException e) {
-                // e.printStackTrace();
                 System.out.println("this thread will exit: " + e);
             }
         };

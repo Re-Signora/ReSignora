@@ -99,11 +99,11 @@ public class HistoryImpl implements HistoryDAO {
             }
 
             FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             try {
+                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                 // noinspection unchecked
                 data = (List<HistoryObject>) objectInputStream.readObject();
-            } catch (ClassNotFoundException e) {
+            } catch (ClassNotFoundException | EOFException e) {
                 System.out.println("Warning: class not found! " + e);
                 data = new ArrayList<>();
             } catch (InvalidClassException e) {
