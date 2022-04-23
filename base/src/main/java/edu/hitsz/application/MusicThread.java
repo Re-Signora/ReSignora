@@ -49,20 +49,23 @@ public class MusicThread extends Thread {
         return samples;
     }
 
-    protected void writeDataToAudio(InputStream source, SourceDataLine dataLine, int bufferSize) {
+    protected void writeDataToAudioBlock(InputStream source, SourceDataLine dataLine, int bufferSize) throws InterruptedException {
         byte[] buffer = new byte[bufferSize];
         try {
-            int numBytesRead = 0;
-            while (numBytesRead != -1) {
+            int numBytesRead;
+            do {
                 // 从音频流读取指定的最大数量的数据字节，并将其放入缓冲区中
-                numBytesRead =
-                        source.read(buffer, 0, buffer.length);
+                numBytesRead = source.read(buffer, 0, buffer.length);
                 // 通过此源数据行将数据写入混频器
                 if (numBytesRead != -1) {
                     dataLine.write(buffer, 0, numBytesRead);
                 }
+            } while (numBytesRead != -1);
+            Thread.sleep(getTime() / 1000 + 10);
+            if (Thread.currentThread().isInterrupted()) {
+                throw new InterruptedException();
             }
-
+            System.out.println("sleep for " + getTime() / 1000 + "ms " + Thread.currentThread().isInterrupted());
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -83,7 +86,9 @@ public class MusicThread extends Thread {
         }
         dataLine.start();
 
-        writeDataToAudio(source, dataLine, size);
+        try {
+            writeDataToAudioBlock(source, dataLine, size);
+        } catch (InterruptedException ignored) {}
 
         dataLine.drain();
         dataLine.close();

@@ -14,25 +14,16 @@ public class MusicLoopThread extends MusicThread {
     }
 
     @Override
-    protected void writeDataToAudio(InputStream source, SourceDataLine dataLine, int bufferSize) {
-        while (true) {
+    protected void writeDataToAudioBlock(InputStream source, SourceDataLine dataLine, int bufferSize) {
+        do {
+            byte[] buffer = getSamples().clone();
+            InputStream buf = new ByteArrayInputStream(buffer);
             try {
-                byte[] buffer = getSamples().clone();
-                InputStream buf = new ByteArrayInputStream(buffer);
-                super.writeDataToAudio(buf, dataLine, bufferSize);
-                //noinspection BusyWait
-                Thread.sleep(getTime() / 1000);
-                if (Thread.currentThread().isInterrupted()) {
-                    System.out.println("Music thread quiting");
-                    throw new InterruptedException();
-                } else {
-                    System.out.println("Music loop running");
-                }
+                super.writeDataToAudioBlock(buf, dataLine, bufferSize);
             } catch (InterruptedException e) {
-                System.out.println("Music loop interrupted");
                 break;
             }
-        }
+        } while (!Thread.currentThread().isInterrupted());
     }
 }
 

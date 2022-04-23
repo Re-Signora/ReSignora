@@ -177,6 +177,7 @@ public class Game extends JPanel {
                     }
                     // 游戏结束
                     gameOverFlag = true;
+                    getMusicFactory().getPool().forEach(Thread::interrupt);
                     System.out.println("Game Over!");
                     try {
                         String name = JOptionPane.showInputDialog("输入你的名字", "NONAME");
@@ -200,7 +201,6 @@ public class Game extends JPanel {
                         System.out.println("Input exception: " + e);
                     } finally {
                         HistoryImpl.getInstance().display();
-                        getMusicFactory().getPool().forEach(Thread::interrupt);
                         synchronized (waitObject) {
                             waitObject.notify();
                         }
