@@ -17,9 +17,7 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * 游戏主面板，游戏启动
@@ -42,7 +40,7 @@ public class Game extends JPanel {
         return THREAD_FACTORY;
     }
 
-    private final HeroAircraft heroAircraft = new HeroAircraftFactory().create();
+    private HeroAircraft heroAircraft = new HeroAircraftFactory().create();
     private final List<AbstractAircraft> heroAircrafts = new LinkedList<>();
     private final List<AbstractBackground> backgrounds = new LinkedList<>();
     private final List<BossEnemy> bossAircrafts = new LinkedList<>();
@@ -54,11 +52,33 @@ public class Game extends JPanel {
             backgrounds, heroBullets, enemyBullets, enemyAircrafts, bossAircrafts, heroAircrafts, props
     );
     private boolean gameOverFlag = false;
+    private boolean startedFlag = false;
     private int score = 0;
     private final int bossScoreThreshold = 1000;
     private int nextBossScore = score + bossScoreThreshold;
     private final HistoryImpl history = new HistoryImpl();
     private final Object waitObject = new Object();
+    @SuppressWarnings("rawtypes")
+    private Future future = null;
+
+    public void resetStates() {
+        gameOverFlag = false;
+        score = 0;
+        enemyBullets.clear();
+        enemyAircrafts.clear();
+        props.clear();
+        heroAircraft = new HeroAircraftFactory().clearInstance().create();
+        heroAircrafts.clear();
+        heroAircrafts.add(heroAircraft);
+    }
+
+    public boolean getGameOverFlag() {
+        return gameOverFlag;
+    }
+
+    public boolean getStartedFlag() {
+        return startedFlag;
+    }
 
     public Object getWaitObject() {
         return waitObject;
@@ -73,14 +93,10 @@ public class Game extends JPanel {
         heroAircrafts.add(heroAircraft);
         backgrounds.add(new BasicBackgroundFactory().create());
         //启动英雄机鼠标监听
-        new HeroController(this, heroAircraft);
+        new HeroController(this);
     }
 
-    /**
-     * 游戏启动入口，执行游戏逻辑
-     */
-    public void action() {
-        history.display();
+    public void addEvents() {
         TimerController.init(0);
         // 英雄射击事件
         TimerController.add(new Timer(1, () -> {
@@ -120,43 +136,63 @@ public class Game extends JPanel {
                 }
             }
         }));
+    }
+
+    /**
+     * 游戏启动入口，执行游戏逻辑
+     */
+    public void action() {
+        startedFlag = true;
+        history.display();
+        addEvents();
         Utils.startMusic(MusicManager.MusicType.BGM);
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable task = () -> {
-            TimerController.update();
-            // execute all
-            TimerController.execute();
-            // 所有物体移动
-            synchronized (allObjects) {
-                allObjects.forEach(objList -> objList.forEach(AbstractFlyingObject::forward));
-            }
-            // 撞击检测
-            crashCheckAction();
-            // 后处理
-            synchronized (allObjects) {
-                allObjects.forEach(objList -> objList.removeIf(AbstractFlyingObject::notValid));
-            }
-            // 每个时刻重绘界面
-            repaint();
+            try {
+                TimerController.update();
+                // execute all
+                TimerController.execute();
+                // 所有物体移动
+                synchronized (allObjects) {
+                    allObjects.forEach(objList -> objList.forEach(AbstractFlyingObject::forward));
+                }
+                // 撞击检测
+                crashCheckAction();
+                // 后处理
+                synchronized (allObjects) {
+                    allObjects.forEach(objList -> objList.removeIf(AbstractFlyingObject::notValid));
+                }
+                // 每个时刻重绘界面
+                repaint();
 
-            // 游戏结束检查
-            if (heroAircraft.getHp() <= 0) {
-                // 游戏结束
-                executorService.shutdown();
-                gameOverFlag = true;
-                System.out.println("Game Over!");
-                // 保存游戏结果
-                history.addOne(new HistoryObjectFactory("NONAME", score, "Easy!").create());
-                history.display();
+                // 游戏结束检查
+                if (heroAircraft.getHp() <= 0) {
+                    if (future != null) {
+                        System.out.println("cancel future: " + future);
+                        future.cancel(true);
+                    }
+                    // 游戏结束
+                    gameOverFlag = true;
+                    System.out.println("Game Over!");
+                    // 保存游戏结果
+                    if (score > 0) {
+                        history.addOne(new HistoryObjectFactory("NONAME", score, "Easy!").create());
+                    }
+                    history.display();
+                    synchronized (waitObject) {
+                        waitObject.notify();
+                    }
+                }
+                TimerController.done();
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                // e.printStackTrace();
+                System.out.println("this thread will exit: " + e);
             }
-            TimerController.done();
         };
-
-        // 时间间隔(ms)，控制刷新频率
         int timeInterval = 1;
         // 以固定延迟时间进行执行本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
-        executorService.scheduleWithFixedDelay(task, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-
+        future = executorService.scheduleWithFixedDelay(task, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
     }
 
     /**

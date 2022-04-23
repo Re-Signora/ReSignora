@@ -26,6 +26,11 @@ public class HeroAircraftFactory implements AbstractAircraftFactory {
         return heroInstance;
     }
 
+    public HeroAircraftFactory clearInstance() {
+        heroInstance = null;
+        return this;
+    }
+
     @Override
     public HeroAircraft create() {
         // Double-checked locking

@@ -8,7 +8,19 @@ import javax.swing.*;
  * @author Chiro
  */
 public class GameWindow implements SceneClient {
-    private Game game = null;
+    static GameWindow gameWindow = null;
+
+    static GameWindow getInstance() {
+        if (gameWindow == null) {
+            synchronized (GameWindow.class) {
+                gameWindow = new GameWindow();
+            }
+        }
+        return gameWindow;
+    }
+
+    static private Game game = null;
+
     @Override
     public JPanel getPanel() {
         return getGame();
@@ -19,6 +31,12 @@ public class GameWindow implements SceneClient {
             synchronized (Game.class) {
                 game = new Game();
             }
+        }
+        if (game.getStartedFlag() && game.getGameOverFlag()) {
+            game.resetStates();
+            game.action();
+        }
+        if (!game.getStartedFlag()) {
             game.action();
         }
         return game;
@@ -27,5 +45,9 @@ public class GameWindow implements SceneClient {
     @Override
     public Object getWaitObject() {
         return getGame().getWaitObject();
+    }
+
+    public void clearGameInstance() {
+        game = null;
     }
 }

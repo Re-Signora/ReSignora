@@ -52,7 +52,7 @@ public class Main {
                         new Scene("Game Window", new AbstractSceneRunnable() {
                             @Override
                             public SceneClient getClient() {
-                                return new GameWindow();
+                                return GameWindow.getInstance();
                             }
                         })
                 )).run();

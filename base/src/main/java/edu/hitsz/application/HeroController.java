@@ -1,6 +1,7 @@
 package edu.hitsz.application;
 
 import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.aircraft.HeroAircraftFactory;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -12,25 +13,31 @@ import java.awt.event.MouseEvent;
  * @author hitsz
  */
 public class HeroController {
-    private final Game game;
-    private final HeroAircraft heroAircraft;
-    private final MouseAdapter mouseAdapter;
 
-    public HeroController(Game game, HeroAircraft heroAircraft) {
-        this.game = game;
-        this.heroAircraft = heroAircraft;
+    public HeroController(Game game) {
 
-        mouseAdapter = new MouseAdapter() {
+        MouseAdapter mouseAdapter = new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
                 int x = e.getX();
                 int y = e.getY();
-                if (x < 0 || x > Main.WINDOW_WIDTH || y < 0 || y > Main.WINDOW_HEIGHT) {
-                    // 防止超出边界
-                    return;
+                if (x < 0) {
+                    x = 0;
                 }
-                heroAircraft.setPosition(x, y);
+                if (x > Main.WINDOW_WIDTH) {
+                    x = Main.WINDOW_WIDTH;
+                }
+                if (y < 0) {
+                    y = 0;
+                }
+                if (y > Main.WINDOW_HEIGHT) {
+                    y = Main.WINDOW_HEIGHT;
+                }
+                HeroAircraft heroAircraft = HeroAircraftFactory.getInstance();
+                if (heroAircraft != null) {
+                    heroAircraft.setPosition(x, y);
+                }
             }
         };
 
