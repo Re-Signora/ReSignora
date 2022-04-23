@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -31,9 +33,15 @@ public class HistoryWindow implements SceneClient {
             DefaultTableModel model = (DefaultTableModel) historyTable.getModel();
             int[] selectedRows = historyTable.getSelectedRows();
             List<HistoryObject> data = HistoryImpl.getInstance().getAll();
+            LinkedList<HistoryObject> selected = new LinkedList<>();
             for (int selectedRow : selectedRows) {
                 System.out.println("selectedRow = " + selectedRow + ", data = " + data.get(selectedRow));
-                HistoryImpl.getInstance().deleteByTime(data.get(selectedRow).getTime());
+                selected.add(data.get(selectedRow));
+            }
+            for (HistoryObject selectedHistoryObject : selected) {
+                List<HistoryObject> copy = new ArrayList<>(HistoryImpl.getInstance().getAll());
+                copy.removeIf(historyObject -> historyObject.getTime() == selectedHistoryObject.getTime());
+                HistoryImpl.getInstance().set(copy);
             }
             syncWithDao();
         });

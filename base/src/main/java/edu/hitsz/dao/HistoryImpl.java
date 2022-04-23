@@ -129,4 +129,9 @@ public class HistoryImpl implements HistoryDAO {
         }
         System.out.println("\t\t[ ======= ------- ======= ]");
     }
+
+    public void set(List<HistoryObject> data) {
+        this.data = data;
+        dump();
+    }
 }

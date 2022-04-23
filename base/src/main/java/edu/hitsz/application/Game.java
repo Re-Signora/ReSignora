@@ -147,14 +147,25 @@ public class Game extends JPanel {
         }));
     }
 
+    private void stopAllMusic() {
+        System.out.println("stopping music");
+        // getMusicFactory().getPool().forEach(Thread::interrupt);
+        getMusicFactory().getPool().forEach(thread -> {
+            System.out.println("Music stopping: " + thread);
+            thread.interrupt();
+            // thread.stop();
+        });
+    }
+
     /**
      * 游戏启动入口，执行游戏逻辑
      */
     public void action() {
         startedFlag = true;
-        HistoryImpl.getInstance().display();
+        // HistoryImpl.getInstance().display();
         addEvents();
-        Utils.startLoopMusic(MusicManager.MusicType.HERO_SHOOT);
+        Utils.startLoopMusic(MusicManager.MusicType.BGM);
+        // Utils.startLoopMusic(MusicManager.MusicType.HERO_SHOOT);
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable task = () -> {
             try {
@@ -181,7 +192,7 @@ public class Game extends JPanel {
                     }
                     // 游戏结束
                     gameOverFlag = true;
-                    getMusicFactory().getPool().forEach(Thread::interrupt);
+                    stopAllMusic();
                     System.out.println("Game Over!");
                     try {
                         String name = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "NONAME" : lastProvidedName);
@@ -206,7 +217,7 @@ public class Game extends JPanel {
                     } catch (Exception e) {
                         System.out.println("Input exception: " + e);
                     } finally {
-                        HistoryImpl.getInstance().display();
+                        // HistoryImpl.getInstance().display();
                         synchronized (waitObject) {
                             waitObject.notify();
                         }

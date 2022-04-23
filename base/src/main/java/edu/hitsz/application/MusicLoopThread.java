@@ -23,7 +23,7 @@ public class MusicLoopThread extends MusicThread {
             } catch (InterruptedException e) {
                 break;
             }
-        } while (!Thread.currentThread().isInterrupted());
+        } while (true);
     }
 }
 
