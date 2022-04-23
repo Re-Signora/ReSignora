@@ -58,6 +58,11 @@ public class Game extends JPanel {
     private final int bossScoreThreshold = 1000;
     private int nextBossScore = score + bossScoreThreshold;
     private final HistoryImpl history = new HistoryImpl();
+    private final Object waitObject = new Object();
+
+    public Object getWaitObject() {
+        return waitObject;
+    }
 
     /**
      * 周期（ms)
