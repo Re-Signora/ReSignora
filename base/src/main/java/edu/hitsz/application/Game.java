@@ -177,7 +177,6 @@ public class Game extends JPanel {
                 // 游戏结束检查
                 if (heroAircraft.getHp() <= 0) {
                     if (future != null) {
-                        System.out.println("cancel future: " + future);
                         future.cancel(true);
                     }
                     // 游戏结束

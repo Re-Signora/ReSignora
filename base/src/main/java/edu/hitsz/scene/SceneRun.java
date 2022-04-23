@@ -24,6 +24,7 @@ public class SceneRun {
     public void run() throws SceneRunDoneException {
         for (Scene scene : sceneList) {
             Thread nowRunning = Game.getThreadFactory().newThread(scene::run);
+            //noinspection SynchronizationOnLocalVariableOrMethodParameter
             synchronized (nowRunning) {
                 try {
                     JPanel panel = scene.getSceneRunnable().getClient().getPanel();
@@ -31,9 +32,7 @@ public class SceneRun {
                     parent.setVisible(true);
                     nowRunning.setDaemon(false);
                     nowRunning.start();
-                    System.out.println(Thread.currentThread() + "waiting");
                     nowRunning.wait();
-                    System.out.println("continue");
                     parent.remove(panel);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

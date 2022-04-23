@@ -10,7 +10,7 @@ public class MusicThread extends Thread {
     private final String filename;
     private AudioFormat audioFormat;
     private byte[] samples;
-    private long time = 0;
+    private long timeMs = 0;
 
     public MusicThread(String filename) {
         // 初始化 filename
@@ -26,8 +26,7 @@ public class MusicThread extends Thread {
             Clip clip = AudioSystem.getClip();
             clip.open(stream2);
             stream2.close();
-            System.out.println("time: " + (clip.getMicrosecondLength() / 1000000d) + "s");
-            time = clip.getMicrosecondLength();
+            timeMs = clip.getMicrosecondLength();
             AudioInputStream stream = AudioSystem.getAudioInputStream(new File(path + filename));
             // 用 AudioFormat 来获取 AudioInputStream 的格式
             audioFormat = stream.getFormat();
@@ -61,11 +60,10 @@ public class MusicThread extends Thread {
                     dataLine.write(buffer, 0, numBytesRead);
                 }
             } while (numBytesRead != -1);
-            Thread.sleep(getTime() / 1000 + 10);
+            Thread.sleep(getTimeMs() / 1000 + 10);
             if (Thread.currentThread().isInterrupted()) {
                 throw new InterruptedException();
             }
-            System.out.println("sleep for " + getTime() / 1000 + "ms " + Thread.currentThread().isInterrupted());
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -99,8 +97,8 @@ public class MusicThread extends Thread {
         return samples;
     }
 
-    public long getTime() {
-        return time;
+    public long getTimeMs() {
+        return timeMs;
     }
 
     @Override

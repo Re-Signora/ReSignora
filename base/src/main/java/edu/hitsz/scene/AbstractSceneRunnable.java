@@ -13,7 +13,6 @@ public abstract class AbstractSceneRunnable implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("window in");
         try {
             Object waitObject = getClient().getWaitObject();
             //noinspection SynchronizationOnLocalVariableOrMethodParameter
@@ -23,7 +22,6 @@ public abstract class AbstractSceneRunnable implements Runnable {
         } catch (InterruptedException e) {
             System.out.println("window exception: " + e);
         }
-        System.out.println("window out");
         synchronized (this) {
             this.notify();
         }

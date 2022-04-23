@@ -16,8 +16,7 @@ public class Scene {
     }
 
     public void run() {
-        System.out.println("Scene run: " + name + " " + Thread.currentThread());
+        System.out.println("Scene start: " + name);
         sceneRunnable.run();
-        System.out.println("Scene " + name + " finished");
     }
 }
