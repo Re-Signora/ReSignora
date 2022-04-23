@@ -24,9 +24,16 @@ public class HistoryWindow implements SceneClient {
     private JScrollPane scrollPane;
     private final Object waitObject = new Object();
 
-    public HistoryWindow() {
+    public HistoryWindow(boolean enableRestart) {
         restartButton.addActionListener(e -> nextScene());
         syncWithDao();
+        if (!enableRestart) {
+            restartButton.setEnabled(false);
+        }
+    }
+
+    public HistoryWindow() {
+        this(true);
     }
 
     public void syncWithDao() {
