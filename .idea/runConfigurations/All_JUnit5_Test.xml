@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="All JUnit5 Test" type="JUnit" factoryName="JUnit">
-    <module name="base" />
+    <module name="AircraftWar" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="edu.hitsz.aircraft.*" />

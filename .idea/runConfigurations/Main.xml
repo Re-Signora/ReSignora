@@ -1,11 +1,11 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Main (scala)" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="work.chiro.game.application.Main" />
+  <configuration default="false" name="Main" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="edu.hitsz.application.Main" />
     <module name="AircraftWar" />
     <option name="WORKING_DIRECTORY" value="$ProjectFileDir$" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="work.chiro.game.*" />
+        <option name="PATTERN" value="edu.hitsz.application.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

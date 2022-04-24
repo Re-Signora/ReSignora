@@ -1,8 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Packed Jar" type="JarApplication">
-    <option name="JAR_PATH" value="$PROJECT_DIR$/target/scala-2.13/aircraft-war-0.0.2.jar" />
-    <option name="WORKING_DIRECTORY" value="D:\Programs\AircraftWar" />
-    <option name="ALTERNATIVE_JRE_PATH" />
-    <method v="2" />
-  </configuration>
-</component>
