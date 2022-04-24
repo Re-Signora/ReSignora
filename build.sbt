@@ -32,20 +32,3 @@ lazy val AircraftWar = (project in file("."))
     ),
     addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.5.0" cross CrossVersion.full)
   )
-
-lazy val base = (project in file("base"))
-  .settings(
-    name := "base",
-    assembly / mainClass := Some("edu.hitsz.application.Main"),
-    assembly / assemblyJarName := f"aircraft-war-base-$projectVersion.jar",
-    assembly / assemblyOption ~= {
-      _.withIncludeBin(true)
-        .withIncludeScala(true)
-        .withIncludeDependency(true)
-    },
-    libraryDependencies ++= Seq(
-      "junit" % "junit" % "4.13.2" % Test,
-      "org.junit.jupiter" % "junit-jupiter" % "5.8.2" % Test,
-      "com.novocode" % "junit-interface" % "0.11" % Test
-    )
-  )
