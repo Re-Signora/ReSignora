@@ -14,12 +14,13 @@ public class EasyBackground extends BasicBackground {
     }
 
     public EasyBackground(Vec2 posInit, AnimateContainer animateContainer) {
+
         super(posInit, animateContainer);
     }
 
     @Override
-    public String getImageFilename() {
-        return (new Random().nextInt(2) == 0) ? "bg.jpg" : "bg1.jpg";
+    String getInitImageFilename() {
+        return "bg.jpg";
     }
 
     @Override

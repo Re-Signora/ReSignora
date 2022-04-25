@@ -63,12 +63,18 @@ public class Utils {
     private static final Map<String, BufferedImage> CACHED_IMAGE = new HashMap<>();
 
     public static BufferedImage getCachedImage(String filePath) throws IOException {
-        if (CACHED_IMAGE.containsKey(filePath)) {
-            return CACHED_IMAGE.get(filePath);
+        synchronized (CACHED_IMAGE) {
+            if (CACHED_IMAGE.containsKey(filePath)) {
+                return CACHED_IMAGE.get(filePath);
+            }
+            try {
+                BufferedImage image = ImageIO.read(new FileInputStream(Objects.requireNonNull(Utils.class.getClassLoader().getResource("images/" + filePath)).getFile()));
+                CACHED_IMAGE.put(filePath, image);
+                return image;
+            } catch (NullPointerException e) {
+                System.exit(-1);
+                return null;
+            }
         }
-        BufferedImage image = ImageIO.read(new FileInputStream(Objects.requireNonNull(Utils.class.getClassLoader().getResource("images/" + filePath)).getFile()));
-        CACHED_IMAGE.put(filePath, image);
-        return image;
-
     }
 }

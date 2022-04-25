@@ -31,7 +31,17 @@ public class MainWindow implements SceneClient {
     public MainWindow() {
         System.out.println("waitObject created at " + Thread.currentThread());
         easyModeButton.addActionListener(e -> {
-            System.out.println(Thread.currentThread() + " clicked");
+            Game.difficulty = Difficulty.Easy;
+            nextScene();
+        });
+
+        mediumModeButton.addActionListener(e -> {
+            Game.difficulty = Difficulty.Medium;
+            nextScene();
+        });
+
+        hardModeButton.addActionListener(e -> {
+            Game.difficulty = Difficulty.Hard;
             nextScene();
         });
 

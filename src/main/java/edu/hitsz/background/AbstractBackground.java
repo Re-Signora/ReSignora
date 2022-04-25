@@ -39,4 +39,9 @@ public abstract class AbstractBackground extends AbstractFlyingObject {
      * @return 生成新对象
      */
     abstract AbstractBackground newInstance(Vec2 posInit, AnimateContainer animateContainer);
+
+    @Override
+    protected Boolean keepImage() {
+        return false;
+    }
 }

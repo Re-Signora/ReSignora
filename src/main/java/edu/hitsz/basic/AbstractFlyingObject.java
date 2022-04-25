@@ -160,13 +160,23 @@ public abstract class AbstractFlyingObject {
                 System.exit(-1);
             }
         }
-        return image;
+        if (keepImage()) {
+            return image;
+        } else {
+            BufferedImage loadedImage = image;
+            image = null;
+            return loadedImage;
+        }
     }
 
     public double getWidth() {
         if (width == -1) {
             // 若未设置，则查询图片宽度并设置
-            width = getImage().getWidth();
+            if (keepImage()) {
+                width = getImage().getWidth();
+            } else {
+                return getImage().getWidth();
+            }
         }
         return width;
     }
@@ -174,7 +184,11 @@ public abstract class AbstractFlyingObject {
     public double getHeight() {
         if (height == -1) {
             // 若未设置，则查询图片高度并设置
-            height = getImage().getHeight();
+            if (keepImage()) {
+                height = getImage().getHeight();
+            } else {
+                return getImage().getHeight();
+            }
         }
         return height;
     }
@@ -222,6 +236,14 @@ public abstract class AbstractFlyingObject {
      */
     protected String getImageFilename() {
         return null;
+    }
+
+    /**
+     * 是否将图像缓存在本类中
+     * @return 是否缓存
+     */
+    protected Boolean keepImage() {
+        return true;
     }
 }
 

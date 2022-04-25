@@ -1,10 +1,7 @@
 package edu.hitsz.application;
 
 import edu.hitsz.aircraft.*;
-import edu.hitsz.background.AbstractBackground;
-import edu.hitsz.background.BasicBackgroundFactory;
-import edu.hitsz.background.HardBackground;
-import edu.hitsz.background.OtherBackgroundFactory;
+import edu.hitsz.background.*;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.dao.HistoryImpl;
@@ -29,6 +26,7 @@ import java.util.concurrent.*;
  * @author hitsz
  */
 public class Game extends JPanel {
+    static Difficulty difficulty = Difficulty.Easy;
 
     /**
      * 创建线程的工厂函数
@@ -81,6 +79,7 @@ public class Game extends JPanel {
         heroAircraft = new HeroAircraftFactory().clearInstance().create();
         heroAircrafts.clear();
         heroAircrafts.add(heroAircraft);
+        flushBackground();
     }
 
     public boolean getGameOverFlag() {
@@ -103,9 +102,26 @@ public class Game extends JPanel {
     public Game() {
         loadFont();
         heroAircrafts.add(heroAircraft);
-        backgrounds.add(new OtherBackgroundFactory<>(new HardBackground()).create());
+        flushBackground();
         // 启动英雄机鼠标监听
         heroController = HeroController.getInstance(this);
+    }
+
+    private void flushBackground() {
+        backgrounds.clear();
+        switch (difficulty) {
+            case Easy:
+                backgrounds.add(new OtherBackgroundFactory<>(new EasyBackground()).create());
+                break;
+            case Medium:
+                backgrounds.add(new OtherBackgroundFactory<>(new MediumBackground()).create());
+                break;
+            case Hard:
+                backgrounds.add(new OtherBackgroundFactory<>(new HardBackground()).create());
+                break;
+            default:
+                break;
+        }
     }
 
     public void addEvents() {
