@@ -3,6 +3,7 @@ package edu.hitsz.prop;
 import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.aircraft.HeroAircraftFactory;
 import edu.hitsz.animate.AnimateContainer;
+import edu.hitsz.application.Game;
 import edu.hitsz.vector.Vec2;
 
 import java.util.List;
@@ -20,5 +21,6 @@ public class BulletProp extends AbstractProp {
         playSupplyMusic();
         System.out.println("FireSupply active!");
         HeroAircraftFactory.getInstance().increaseShootNum();
+        Game.getThreadFactory().newThread(() -> HeroAircraftFactory.getInstance().decreaseShootNum());
     }
 }

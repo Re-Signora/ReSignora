@@ -199,7 +199,7 @@ public class Game extends JPanel {
         startedFlag = true;
         addEvents();
         Utils.startLoopMusic(MusicManager.MusicType.BGM);
-        Utils.startLoopMusic(MusicManager.MusicType.HERO_SHOOT);
+        // Utils.startLoopMusic(MusicManager.MusicType.HERO_SHOOT);
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable task = () -> {
             try {

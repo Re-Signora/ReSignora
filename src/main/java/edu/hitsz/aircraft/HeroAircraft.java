@@ -38,8 +38,7 @@ public class HeroAircraft extends AbstractAircraft {
         LinkedList<BaseBullet> res = new LinkedList<>();
         for (int i = 0; i < shootNum; i++) {
             // 子弹发射位置相对飞机位置向前偏移
-            // 多个子弹横向分散
-            BaseBullet baseBullet = new HeroBulletFactory(getPosition().plus(new Vec2((i * 2 - shootNum + 1) * 10, 0))).create();
+            BaseBullet baseBullet = new HeroBulletFactory(getPosition().copy(), i).create();
             res.add(baseBullet);
         }
         return res;
@@ -52,5 +51,13 @@ public class HeroAircraft extends AbstractAircraft {
 
     public void increaseShootNum() {
         shootNum++;
+    }
+
+    public void decreaseShootNum() {
+        shootNum = Math.max(1, shootNum - 1);
+    }
+
+    public int getShootNum() {
+        return shootNum;
     }
 }

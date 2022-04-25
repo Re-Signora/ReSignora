@@ -44,7 +44,7 @@ public class Utils {
     }
 
     public static void stopMusic(MusicManager.MusicType type) {
-
+        Game.getMusicFactory().stopMusic(type);
     }
 
     public static void startLoopMusic(MusicManager.MusicType type) {
