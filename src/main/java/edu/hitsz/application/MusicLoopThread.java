@@ -9,8 +9,8 @@ import java.io.*;
  * @author Chiro
  */
 public class MusicLoopThread extends MusicThread {
-    public MusicLoopThread(String filename) {
-        super(filename);
+    public MusicLoopThread(MusicManager.MusicType type) {
+        super(type);
     }
 
     @Override

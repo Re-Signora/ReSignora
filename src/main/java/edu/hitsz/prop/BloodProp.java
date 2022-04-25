@@ -19,6 +19,7 @@ public class BloodProp extends AbstractProp {
 
     @Override
     public void handleAircrafts(List<AbstractAircraft> enemyAircrafts) {
+        playSupplyMusic();
         HeroAircraftFactory.getInstance().decreaseHp(-increaseHp);
     }
 }

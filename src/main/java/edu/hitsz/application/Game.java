@@ -136,7 +136,7 @@ public class Game extends JPanel {
         // fps 输出事件
         TimerController.add(new Timer(1000, () -> System.out.println("fps: " + TimerController.getFps())));
         // boss 生成事件
-        TimerController.add(new Timer(100, () -> {
+        TimerController.add(new Timer(10, () -> {
             if (score > nextBossScore && bossAircrafts.isEmpty()) {
                 synchronized (bossAircrafts) {
                     bossAircrafts.add(new BossEnemyFactory(() -> {
@@ -149,11 +149,8 @@ public class Game extends JPanel {
     }
 
     private void stopAllMusic() {
-        System.out.println("stopping music");
-        getMusicFactory().getMusicThreads().forEach(musicThread -> {
-            System.out.println("Music stopping: " + musicThread);
-            musicThread.interrupt();
-        });
+        System.out.println("stopping all music");
+        getMusicFactory().interruptAll();
     }
 
     private void onGameOver() {
@@ -163,6 +160,7 @@ public class Game extends JPanel {
         }
         // 游戏结束
         gameOverFlag = true;
+        Utils.startMusic(MusicManager.MusicType.GAME_OVER, true);
         stopAllMusic();
         System.out.println("Game Over!");
         try {

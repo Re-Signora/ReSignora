@@ -7,21 +7,22 @@ import java.io.*;
  * @author Chiro
  */
 public class MusicThread implements Runnable {
-    private final String filename;
+    private final MusicManager.MusicType musicType;
     private AudioFormat audioFormat;
     private byte[] samples;
     private long timeMicroSeconds = 0;
     private boolean interrupted = false;
     private boolean stop = false;
+    private boolean willStop = true;
     private Runnable onStop = null;
 
-    public MusicThread(String filename) {
-        // 初始化 filename
-        this.filename = filename;
+    public MusicThread(MusicManager.MusicType type) {
+        this.musicType = type;
         reverseMusic();
     }
 
     public void reverseMusic() {
+        String filename = MusicManager.get(musicType);
         try {
             // 定义一个 AudioInputStream 用于接收输入的音频数据，使用 AudioSystem 来获取音频的音频输入流
             String path = "src/main/resources/sounds/";
@@ -56,11 +57,9 @@ public class MusicThread implements Runnable {
         try {
             int numBytesRead;
             do {
-                Thread.sleep(100);
+                Thread.sleep(1);
                 if (isInterrupted()) {
                     throw new InterruptedException();
-                } else {
-                    System.out.println("writeDataToAudioBlock inner running at " + Thread.currentThread());
                 }
                 // 从音频流读取指定的最大数量的数据字节，并将其放入缓冲区中
                 numBytesRead = source.read(buffer, 0, buffer.length);
@@ -69,12 +68,6 @@ public class MusicThread implements Runnable {
                     dataLine.write(buffer, 0, numBytesRead);
                 }
             } while (numBytesRead != -1);
-            Thread.sleep(getTimeMicroSeconds() / 1000);
-            if (isInterrupted()) {
-                throw new InterruptedException();
-            } else {
-                System.out.println("writeDataToAudioBlock done");
-            }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -97,7 +90,8 @@ public class MusicThread implements Runnable {
 
         try {
             writeDataToAudioBlock(source, dataLine, size);
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException ignored) {
+        }
 
         dataLine.drain();
         dataLine.close();
@@ -116,15 +110,16 @@ public class MusicThread implements Runnable {
     public void run() {
         InputStream stream = new ByteArrayInputStream(samples);
         play(stream);
+        stop();
     }
 
     public void interrupt() {
-        interrupted = true;
-        System.out.println("!!!interrupt!!!");
+        if (willStop) {
+            interrupted = true;
+        }
     }
 
     public Boolean isInterrupted() {
-        System.out.println("interrupted = " + interrupted);
         return (interrupted || Thread.currentThread().isInterrupted());
     }
 
@@ -137,9 +132,29 @@ public class MusicThread implements Runnable {
         return this;
     }
 
+    public MusicThread setWillStop(boolean willStop) {
+        this.willStop = willStop;
+        return this;
+    }
+
     private void stop() {
-        this.stop = true;
-        this.onStop.run();
+        if (!isStopped()) {
+            this.stop = true;
+            this.onStop.run();
+        }
+    }
+
+    public String getFilename() {
+        return MusicManager.get(musicType);
+    }
+
+    @Override
+    public String toString() {
+        return "MusicThread{" + "type=" + musicType + ",filename='" + getFilename() + '\'' + '}';
+    }
+
+    public MusicManager.MusicType getMusicType() {
+        return musicType;
     }
 }
 

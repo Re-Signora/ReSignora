@@ -36,7 +36,15 @@ public class Utils {
     }
 
     public static void startMusic(MusicManager.MusicType type) {
-        Game.getMusicFactory().newMusicThread(type).start();
+        startMusic(type, false);
+    }
+
+    public static void startMusic(MusicManager.MusicType type, Boolean noStop) {
+        Game.getMusicFactory().newMusicThread(type, noStop).start();
+    }
+
+    public static void stopMusic(MusicManager.MusicType type) {
+
     }
 
     public static void startLoopMusic(MusicManager.MusicType type) {

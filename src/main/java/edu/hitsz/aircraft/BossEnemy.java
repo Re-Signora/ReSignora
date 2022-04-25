@@ -1,6 +1,7 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.animate.AnimateContainer;
+import edu.hitsz.application.MusicManager;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBulletFactory;
 import edu.hitsz.utils.Utils;
@@ -22,6 +23,8 @@ public class BossEnemy extends AbstractAircraft {
     @Override
     public void vanish() {
         super.vanish();
+        Utils.stopMusic(MusicManager.MusicType.BGM_BOSS);
+        Utils.startMusic(MusicManager.MusicType.BGM);
         BossEnemyFactory.clearInstance();
     }
 

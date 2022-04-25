@@ -4,7 +4,9 @@ import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.animate.AnimateContainer;
 import edu.hitsz.animate.AnimateContainerFactory;
 import edu.hitsz.application.Main;
+import edu.hitsz.application.MusicManager;
 import edu.hitsz.basic.AbstractFlyingObject;
+import edu.hitsz.utils.Utils;
 import edu.hitsz.vector.Vec2;
 
 import java.util.List;
@@ -19,6 +21,10 @@ abstract public class AbstractProp extends AbstractFlyingObject {
 
     public AbstractProp(Vec2 posInit, AnimateContainer animateContainer) {
         super(posInit, animateContainer);
+    }
+
+    protected void playSupplyMusic() {
+        Utils.startMusic(MusicManager.MusicType.PROPS);
     }
 
     /**

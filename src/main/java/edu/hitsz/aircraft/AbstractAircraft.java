@@ -1,9 +1,11 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.animate.AnimateContainer;
+import edu.hitsz.application.MusicManager;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.prop.AbstractProp;
+import edu.hitsz.utils.Utils;
 import edu.hitsz.vector.Vec2;
 
 import java.util.LinkedList;
@@ -43,6 +45,7 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
             hp = 0;
             vanish();
         }
+        Utils.startMusic(MusicManager.MusicType.HERO_HIT);
     }
 
     public int getHp() {

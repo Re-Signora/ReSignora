@@ -17,6 +17,7 @@ public class BulletProp extends AbstractProp {
 
     @Override
     public void handleAircrafts(List<AbstractAircraft> enemyAircrafts) {
+        playSupplyMusic();
         System.out.println("FireSupply active!");
         HeroAircraftFactory.getInstance().increaseShootNum();
     }

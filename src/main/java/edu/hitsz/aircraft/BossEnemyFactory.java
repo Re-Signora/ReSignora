@@ -2,7 +2,9 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.animate.AnimateContainerFactory;
 import edu.hitsz.application.Main;
+import edu.hitsz.application.MusicManager;
 import edu.hitsz.basic.BasicCallback;
+import edu.hitsz.utils.Utils;
 import edu.hitsz.vector.Vec2;
 
 /**
@@ -27,6 +29,8 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
     @Override
     public BossEnemy create() {
         if (instance == null) {
+            Utils.stopMusic(MusicManager.MusicType.BGM);
+            Utils.startMusic(MusicManager.MusicType.BGM_BOSS);
             synchronized (BossEnemyFactory.class) {
                 Vec2 posNew = new Vec2(0, 10);
                 instance = new BossEnemy(

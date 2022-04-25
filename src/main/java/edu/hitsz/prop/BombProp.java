@@ -2,6 +2,8 @@ package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.animate.AnimateContainer;
+import edu.hitsz.application.MusicManager;
+import edu.hitsz.utils.Utils;
 import edu.hitsz.vector.Vec2;
 
 import java.util.List;
@@ -17,6 +19,7 @@ public class BombProp extends AbstractProp {
     @Override
     public void handleAircrafts(List<AbstractAircraft> enemyAircrafts) {
         System.out.println("BombSupply active!");
+        Utils.startMusic(MusicManager.MusicType.BOMB_EXPLOSION);
         for (AbstractAircraft enemy : enemyAircrafts) {
             enemy.vanish();
         }
