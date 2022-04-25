@@ -19,7 +19,7 @@ public class HardBackground extends BasicBackground {
 
     @Override
     public String getImageFilename() {
-        return "bg" + (new Random().nextInt(1) + 4) + ".jpg";
+        return "bg" + (new Random().nextInt(2) + 4) + ".jpg";
     }
 
     @Override

@@ -19,7 +19,7 @@ public class MediumBackground extends BasicBackground {
 
     @Override
     public String getImageFilename() {
-        return "bg" + (new Random().nextInt(1) + 2) + ".jpg";
+        return "bg" + (new Random().nextInt(2) + 2) + ".jpg";
     }
 
     @Override
