@@ -36,11 +36,11 @@ public class Utils {
     }
 
     public static void startMusic(MusicManager.MusicType type) {
-        Game.getMusicFactory().newThread(new MusicThread(MusicManager.get(type))).start();
+        Game.getMusicFactory().newMusicThread(type).start();
     }
 
     public static void startLoopMusic(MusicManager.MusicType type) {
-        Game.getMusicFactory().newThread(new MusicLoopThread(MusicManager.get(type))).start();
+        Game.getMusicFactory().newLoopMusicThread(type).start();
     }
 
     public static double setInRange(double value, double down, double up) {

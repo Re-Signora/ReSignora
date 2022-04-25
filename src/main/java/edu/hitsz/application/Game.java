@@ -32,7 +32,7 @@ public class Game extends JPanel {
      * 创建线程的工厂函数
      */
     static private final MyThreadFactory THREAD_FACTORY = new MyThreadFactory("AircraftWar");
-    static private final MyThreadFactory MUSIC_FACTORY = new MyThreadFactory("AircraftWar-Music");
+    static private final MusicThreadFactory MUSIC_FACTORY = new MusicThreadFactory("AircraftWar-Music");
     /**
      * 线程池，自动管理
      */
@@ -43,7 +43,7 @@ public class Game extends JPanel {
         return THREAD_FACTORY;
     }
 
-    public static MyThreadFactory getMusicFactory() {
+    public static MusicThreadFactory getMusicFactory() {
         return MUSIC_FACTORY;
     }
 
@@ -150,11 +150,9 @@ public class Game extends JPanel {
 
     private void stopAllMusic() {
         System.out.println("stopping music");
-        // getMusicFactory().getPool().forEach(Thread::interrupt);
-        getMusicFactory().getPool().forEach(thread -> {
-            System.out.println("Music stopping: " + thread);
-            thread.interrupt();
-            // thread.stop();
+        getMusicFactory().getMusicThreads().forEach(musicThread -> {
+            System.out.println("Music stopping: " + musicThread);
+            musicThread.interrupt();
         });
     }
 
@@ -202,8 +200,8 @@ public class Game extends JPanel {
     public void action() {
         startedFlag = true;
         addEvents();
-        // Utils.startLoopMusic(MusicManager.MusicType.BGM);
-        // Utils.startLoopMusic(MusicManager.MusicType.HERO_SHOOT);
+        Utils.startLoopMusic(MusicManager.MusicType.BGM);
+        Utils.startLoopMusic(MusicManager.MusicType.HERO_SHOOT);
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable task = () -> {
             try {

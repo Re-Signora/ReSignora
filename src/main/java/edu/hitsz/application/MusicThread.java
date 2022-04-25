@@ -6,11 +6,14 @@ import java.io.*;
 /**
  * @author Chiro
  */
-public class MusicThread extends Thread {
+public class MusicThread implements Runnable {
     private final String filename;
     private AudioFormat audioFormat;
     private byte[] samples;
-    private long timeMs = 0;
+    private long timeMicroSeconds = 0;
+    private boolean interrupted = false;
+    private boolean stop = false;
+    private Runnable onStop = null;
 
     public MusicThread(String filename) {
         // 初始化 filename
@@ -26,7 +29,7 @@ public class MusicThread extends Thread {
             Clip clip = AudioSystem.getClip();
             clip.open(stream2);
             stream2.close();
-            timeMs = clip.getMicrosecondLength();
+            timeMicroSeconds = clip.getMicrosecondLength();
             AudioInputStream stream = AudioSystem.getAudioInputStream(new File(path + filename));
             // 用 AudioFormat 来获取 AudioInputStream 的格式
             audioFormat = stream.getFormat();
@@ -54,11 +57,11 @@ public class MusicThread extends Thread {
             int numBytesRead;
             do {
                 Thread.sleep(100);
-                // if (Thread.currentThread().isInterrupted()) {
-                //     throw new InterruptedException();
-                // } else {
-                //     System.out.println("writeDataToAudioBlock inner running at " + Thread.currentThread());
-                // }
+                if (isInterrupted()) {
+                    throw new InterruptedException();
+                } else {
+                    System.out.println("writeDataToAudioBlock inner running at " + Thread.currentThread());
+                }
                 // 从音频流读取指定的最大数量的数据字节，并将其放入缓冲区中
                 numBytesRead = source.read(buffer, 0, buffer.length);
                 // 通过此源数据行将数据写入混频器
@@ -66,12 +69,12 @@ public class MusicThread extends Thread {
                     dataLine.write(buffer, 0, numBytesRead);
                 }
             } while (numBytesRead != -1);
-            // Thread.sleep(getTimeMs() / 1000);
-            // if (Thread.currentThread().isInterrupted()) {
-            //     throw new InterruptedException();
-            // } else {
-            //     System.out.println("writeDataToAudioBlock done");
-            // }
+            Thread.sleep(getTimeMicroSeconds() / 1000);
+            if (isInterrupted()) {
+                throw new InterruptedException();
+            } else {
+                System.out.println("writeDataToAudioBlock done");
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -105,14 +108,38 @@ public class MusicThread extends Thread {
         return samples;
     }
 
-    public long getTimeMs() {
-        return timeMs;
+    public long getTimeMicroSeconds() {
+        return timeMicroSeconds;
     }
 
     @Override
     public void run() {
         InputStream stream = new ByteArrayInputStream(samples);
         play(stream);
+    }
+
+    public void interrupt() {
+        interrupted = true;
+        System.out.println("!!!interrupt!!!");
+    }
+
+    public Boolean isInterrupted() {
+        System.out.println("interrupted = " + interrupted);
+        return (interrupted || Thread.currentThread().isInterrupted());
+    }
+
+    public boolean isStopped() {
+        return stop;
+    }
+
+    public MusicThread setOnStop(Runnable onStop) {
+        this.onStop = onStop;
+        return this;
+    }
+
+    private void stop() {
+        this.stop = true;
+        this.onStop.run();
     }
 }
 
