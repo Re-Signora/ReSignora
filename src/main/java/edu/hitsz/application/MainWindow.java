@@ -3,6 +3,8 @@ package edu.hitsz.application;
 import edu.hitsz.scene.SceneClient;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -58,6 +60,8 @@ public class MainWindow implements SceneClient {
             historyWindowFrame.pack();
             historyWindowFrame.setVisible(true);
         });
+
+        musicOnCheckBox.addActionListener(e -> System.out.println("music enable: " + musicOnCheckBox.isSelected()));
     }
 
     @Override
