@@ -42,4 +42,8 @@ public class Utils {
     public static void startLoopMusic(MusicManager.MusicType type) {
         Game.getMusicFactory().newThread(new MusicLoopThread(MusicManager.get(type))).start();
     }
+
+    public static double setInRange(double value, double down, double up) {
+        return Math.max(down, Math.min(value, up));
+    }
 }

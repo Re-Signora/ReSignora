@@ -68,6 +68,7 @@ public class Game extends JPanel {
     private Future future = null;
     private Font myFontBase = null;
     private String lastProvidedName = null;
+    private final HeroController heroController;
 
     public void resetStates() {
         gameOverFlag = false;
@@ -101,8 +102,8 @@ public class Game extends JPanel {
         loadFont();
         heroAircrafts.add(heroAircraft);
         backgrounds.add(new BasicBackgroundFactory().create());
-        //启动英雄机鼠标监听
-        new HeroController(this);
+        // 启动英雄机鼠标监听
+        heroController = HeroController.getInstance(this);
     }
 
     public void addEvents() {
@@ -157,14 +158,51 @@ public class Game extends JPanel {
         });
     }
 
+    private void onGameOver() {
+        // 游戏结束
+        if (future != null) {
+            future.cancel(true);
+        }
+        // 游戏结束
+        gameOverFlag = true;
+        stopAllMusic();
+        System.out.println("Game Over!");
+        try {
+            String name = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "NONAME" : lastProvidedName);
+            if (name == null) {
+                int res = JOptionPane.showConfirmDialog(null, "不保存记录?", "Save Game", JOptionPane.OK_CANCEL_OPTION);
+                if (res == JOptionPane.YES_OPTION) {
+                    throw new Exception();
+                }
+            } else {
+                lastProvidedName = name;
+            }
+            String message = JOptionPane.showInputDialog("输入额外的信息", "NO MESSAGE");
+            // 保存游戏结果
+            if (score > 0) {
+                HistoryImpl.getInstance().addOne(
+                        new HistoryObjectFactory(
+                                name == null ? "NONAME" : name.isEmpty() ? "NONAME" : name,
+                                score,
+                                message == null ? "NO MESSAGE" : message.isEmpty() ? "NO MESSAGE" : message)
+                                .create());
+            }
+        } catch (Exception e) {
+            System.out.println("Input exception: " + e);
+        } finally {
+            synchronized (waitObject) {
+                waitObject.notify();
+            }
+        }
+    }
+
     /**
      * 游戏启动入口，执行游戏逻辑
      */
     public void action() {
         startedFlag = true;
-        // HistoryImpl.getInstance().display();
         addEvents();
-        Utils.startLoopMusic(MusicManager.MusicType.BGM);
+        // Utils.startLoopMusic(MusicManager.MusicType.BGM);
         // Utils.startLoopMusic(MusicManager.MusicType.HERO_SHOOT);
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable task = () -> {
@@ -172,6 +210,8 @@ public class Game extends JPanel {
                 TimerController.update();
                 // execute all
                 TimerController.execute();
+                // 按键处理
+                heroController.onFrame();
                 // 所有物体移动
                 synchronized (allObjects) {
                     allObjects.forEach(objList -> objList.forEach(AbstractFlyingObject::forward));
@@ -184,45 +224,9 @@ public class Game extends JPanel {
                 }
                 // 每个时刻重绘界面
                 repaint();
-
-                // 游戏结束检查
+                // 游戏结束检查和处理
                 if (heroAircraft.getHp() <= 0) {
-                    if (future != null) {
-                        future.cancel(true);
-                    }
-                    // 游戏结束
-                    gameOverFlag = true;
-                    stopAllMusic();
-                    System.out.println("Game Over!");
-                    try {
-                        String name = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "NONAME" : lastProvidedName);
-                        if (name == null) {
-                            int res = JOptionPane.showConfirmDialog(null, "不保存记录?", "Save Game", JOptionPane.OK_CANCEL_OPTION);
-                            if (res == JOptionPane.YES_OPTION) {
-                                throw new Exception();
-                            }
-                        } else {
-                            lastProvidedName = name;
-                        }
-                        String message = JOptionPane.showInputDialog("输入额外的信息", "NO MESSAGE");
-                        // 保存游戏结果
-                        if (score > 0) {
-                            HistoryImpl.getInstance().addOne(
-                                    new HistoryObjectFactory(
-                                            name == null ? "NONAME" : name.isEmpty() ? "NONAME" : name,
-                                            score,
-                                            message == null ? "NO MESSAGE" : message.isEmpty() ? "NO MESSAGE" : message)
-                                            .create());
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Input exception: " + e);
-                    } finally {
-                        // HistoryImpl.getInstance().display();
-                        synchronized (waitObject) {
-                            waitObject.notify();
-                        }
-                    }
-
+                    onGameOver();
                 }
                 TimerController.done();
                 Thread.sleep(1);

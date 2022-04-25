@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @author Chiro
  */
 public class Vec2 extends Vec {
-    Vec2() {
+    public Vec2() {
         this(0, 0);
     }
 
@@ -22,6 +22,16 @@ public class Vec2 extends Vec {
 
     public double getY() {
         return get().get(1);
+    }
+
+    public Vec2 setX(double x) {
+        get().set(0, x);
+        return this;
+    }
+
+    public Vec2 setY(double y) {
+        get().set(1, y);
+        return this;
     }
 
     public void set(double x, double y) {
