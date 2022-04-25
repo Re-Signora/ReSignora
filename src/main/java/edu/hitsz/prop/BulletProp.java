@@ -21,6 +21,13 @@ public class BulletProp extends AbstractProp {
         playSupplyMusic();
         System.out.println("FireSupply active!");
         HeroAircraftFactory.getInstance().increaseShootNum();
-        Game.getThreadFactory().newThread(() -> HeroAircraftFactory.getInstance().decreaseShootNum());
+        Game.getThreadFactory().newThread(() -> {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException ignored) {
+            } finally {
+                HeroAircraftFactory.getInstance().decreaseShootNum();
+            }
+        }).start();
     }
 }
