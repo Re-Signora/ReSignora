@@ -1,14 +1,19 @@
 package edu.hitsz.utils;
 
-import edu.hitsz.application.Game;
-import edu.hitsz.application.MusicLoopThread;
-import edu.hitsz.application.MusicManager;
-import edu.hitsz.application.MusicThread;
+import edu.hitsz.application.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBulletFactory;
 import edu.hitsz.vector.Vec2;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * 工具类
@@ -53,5 +58,17 @@ public class Utils {
 
     public static double setInRange(double value, double down, double up) {
         return Math.max(down, Math.min(value, up));
+    }
+
+    private static final Map<String, BufferedImage> CACHED_IMAGE = new HashMap<>();
+
+    public static BufferedImage getCachedImage(String filePath) throws IOException {
+        if (CACHED_IMAGE.containsKey(filePath)) {
+            return CACHED_IMAGE.get(filePath);
+        }
+        BufferedImage image = ImageIO.read(new FileInputStream(Objects.requireNonNull(Utils.class.getClassLoader().getResource("images/" + filePath)).getFile()));
+        CACHED_IMAGE.put(filePath, image);
+        return image;
+
     }
 }

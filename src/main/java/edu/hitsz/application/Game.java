@@ -3,6 +3,8 @@ package edu.hitsz.application;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.background.AbstractBackground;
 import edu.hitsz.background.BasicBackgroundFactory;
+import edu.hitsz.background.HardBackground;
+import edu.hitsz.background.OtherBackgroundFactory;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.dao.HistoryImpl;
@@ -101,7 +103,7 @@ public class Game extends JPanel {
     public Game() {
         loadFont();
         heroAircrafts.add(heroAircraft);
-        backgrounds.add(new BasicBackgroundFactory().create());
+        backgrounds.add(new OtherBackgroundFactory<>(new HardBackground()).create());
         // 启动英雄机鼠标监听
         heroController = HeroController.getInstance(this);
     }

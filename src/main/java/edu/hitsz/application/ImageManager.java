@@ -11,6 +11,7 @@ import edu.hitsz.bullet.HeroBullet;
 import edu.hitsz.prop.BloodProp;
 import edu.hitsz.prop.BombProp;
 import edu.hitsz.prop.BulletProp;
+import edu.hitsz.utils.Utils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -46,18 +47,17 @@ public class ImageManager {
 
     static {
         try {
+            BACKGROUND_IMAGE = Utils.getCachedImage("bg.jpg");
 
-            BACKGROUND_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/bg.jpg"));
-
-            HERO_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/hero.png"));
-            MOB_ENEMY_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/mob.png"));
-            ELITE_ENEMY_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/elite.png"));
-            BOSS_ENEMY_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/boss.png"));
-            HERO_BULLET_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/bullet_hero.png"));
-            ENEMY_BULLET_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/bullet_enemy.png"));
-            BLOOD_PROP_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/prop_blood.png"));
-            BOMB_PROP_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/prop_bomb.png"));
-            BULLET_PROP_IMAGE = ImageIO.read(new FileInputStream("src/main/resources/images/prop_bullet.png"));
+            HERO_IMAGE = Utils.getCachedImage("hero.png");
+            MOB_ENEMY_IMAGE = Utils.getCachedImage("mob.png");
+            ELITE_ENEMY_IMAGE = Utils.getCachedImage("elite.png");
+            BOSS_ENEMY_IMAGE = Utils.getCachedImage("boss.png");
+            HERO_BULLET_IMAGE = Utils.getCachedImage("bullet_hero.png");
+            ENEMY_BULLET_IMAGE = Utils.getCachedImage("bullet_enemy.png");
+            BLOOD_PROP_IMAGE = Utils.getCachedImage("prop_blood.png");
+            BOMB_PROP_IMAGE = Utils.getCachedImage("prop_bomb.png");
+            BULLET_PROP_IMAGE = Utils.getCachedImage("prop_bullet.png");
 
             CLASSNAME_IMAGE_MAP.put(HeroAircraft.class.getName(), HERO_IMAGE);
             CLASSNAME_IMAGE_MAP.put(MobEnemy.class.getName(), MOB_ENEMY_IMAGE);

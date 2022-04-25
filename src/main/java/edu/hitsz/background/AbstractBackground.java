@@ -17,6 +17,10 @@ public abstract class AbstractBackground extends AbstractFlyingObject {
         super(posInit, animateContainer);
     }
 
+    public AbstractBackground() {
+        super(new Vec2());
+    }
+
     @Override
     public void draw(Graphics g) {
         g.drawImage(getImage(), (int) getLocationX(), (int) getLocationY(), null);
@@ -27,4 +31,12 @@ public abstract class AbstractBackground extends AbstractFlyingObject {
     public boolean notValid() {
         return false;
     }
+
+    /**
+     * 生成新的对象
+     * @param posInit 初始位置
+     * @param animateContainer 动画容器
+     * @return 生成新对象
+     */
+    abstract AbstractBackground newInstance(Vec2 posInit, AnimateContainer animateContainer);
 }

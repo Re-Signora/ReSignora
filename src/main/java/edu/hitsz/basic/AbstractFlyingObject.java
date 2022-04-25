@@ -1,15 +1,16 @@
 package edu.hitsz.basic;
 
+import edu.hitsz.application.ImageManager;
 import edu.hitsz.utils.Utils;
 import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.animate.AnimateContainer;
-import edu.hitsz.application.ImageManager;
 import edu.hitsz.vector.Scale;
 import edu.hitsz.vector.Vec;
 import edu.hitsz.vector.Vec2;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 /**
  * 可飞行对象的父类
@@ -147,7 +148,17 @@ public abstract class AbstractFlyingObject {
 
     public BufferedImage getImage() {
         if (image == null) {
-            image = ImageManager.get(this);
+            try {
+                String filename = getImageFilename();
+                if (filename == null) {
+                    image = ImageManager.get(this);
+                } else {
+                    image = Utils.getCachedImage(filename);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.exit(-1);
+            }
         }
         return image;
     }
@@ -155,7 +166,7 @@ public abstract class AbstractFlyingObject {
     public double getWidth() {
         if (width == -1) {
             // 若未设置，则查询图片宽度并设置
-            width = ImageManager.get(this).getWidth();
+            width = getImage().getWidth();
         }
         return width;
     }
@@ -163,7 +174,7 @@ public abstract class AbstractFlyingObject {
     public double getHeight() {
         if (height == -1) {
             // 若未设置，则查询图片高度并设置
-            height = ImageManager.get(this).getHeight();
+            height = getImage().getHeight();
         }
         return height;
     }
@@ -202,6 +213,15 @@ public abstract class AbstractFlyingObject {
 
     public void setOnVanish(BasicCallback onVanish) {
         this.onVanish = onVanish;
+    }
+
+    /**
+     * 获取当前对象的图像文件名（仅名称不需要路径）
+     *
+     * @return 文件名
+     */
+    protected String getImageFilename() {
+        return null;
     }
 }
 
