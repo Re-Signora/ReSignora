@@ -109,7 +109,7 @@ public class Game extends JPanel {
     public void addEvents() {
         TimerController.init(0);
         // 英雄射击事件
-        TimerController.add(new Timer(1, () -> {
+        TimerController.add(new Timer(10, () -> {
             synchronized (heroBullets) {
                 heroBullets.addAll(heroAircraft.shoot());
             }
