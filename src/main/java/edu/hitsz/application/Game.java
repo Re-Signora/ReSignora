@@ -328,11 +328,11 @@ public class Game extends JPanel {
         }
 
         //绘制得分和生命值
-        paintScoreAndLife(g);
+        paintInfo(g);
 
     }
 
-    private void paintScoreAndLife(Graphics g) {
+    private void paintInfo(Graphics g) {
         int x = 10;
         int y = 25;
         g.setColor(new Color(0xcfcfcfcf));
@@ -347,6 +347,8 @@ public class Game extends JPanel {
         } else {
             g.drawString("BOSS LIFE:" + boss.getHp(), x, y);
         }
+        y = y + 20;
+        g.drawString("FPS:" + TimerController.getFps(), x, y);
     }
 
     private void loadFont() {
