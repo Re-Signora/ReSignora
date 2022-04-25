@@ -200,8 +200,8 @@ public class Game extends JPanel {
     public void action() {
         startedFlag = true;
         addEvents();
-        Utils.startLoopMusic(MusicManager.MusicType.BGM);
         // Utils.startLoopMusic(MusicManager.MusicType.HERO_SHOOT);
+        Utils.startLoopMusic(MusicManager.MusicType.BGM);
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable task = () -> {
             try {
@@ -359,5 +359,17 @@ public class Game extends JPanel {
         } catch (FontFormatException | IOException e) {
             myFontBase = new Font("SansSerif", Font.PLAIN, 22);
         }
+    }
+
+    public void increaseScore(int increase) {
+        score += increase;
+    }
+
+    public void addProps(List<AbstractProp> props) {
+        this.props.addAll(props);
+    }
+
+    public void addProp(AbstractProp prop) {
+        props.add(prop);
     }
 }

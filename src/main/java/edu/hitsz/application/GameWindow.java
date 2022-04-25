@@ -10,7 +10,7 @@ import javax.swing.*;
 public class GameWindow implements SceneClient {
     static GameWindow gameWindow = null;
 
-    static GameWindow getInstance() {
+    public static GameWindow getInstance() {
         if (gameWindow == null) {
             synchronized (GameWindow.class) {
                 gameWindow = new GameWindow();
