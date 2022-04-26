@@ -3,6 +3,7 @@ package work.chiro.game.application;
 import work.chiro.game.scene.SceneClient;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -11,12 +12,8 @@ import java.awt.event.WindowEvent;
  */
 public class MainWindow implements SceneClient {
     private static MainWindow mainWindow = null;
-    private final JButton easyModeButton = new JButton();
-    private final JButton mediumModeButton = new JButton();
-    private final JButton hardModeButton = new JButton();
     private final JCheckBox musicOnCheckBox = new JCheckBox();
     private final JPanel mainPanel = new JPanel();
-    private final JButton historyButton = new JButton();
     private final Object waitObject = new Object();
 
     public static MainWindow getInstance() {
@@ -30,32 +27,28 @@ public class MainWindow implements SceneClient {
 
     public MainWindow() {
         System.out.println("waitObject created at " + Thread.currentThread());
+        JButton easyModeButton = new JButton();
         easyModeButton.addActionListener(e -> {
             Game.difficulty = Difficulty.Easy;
             nextScene();
         });
         easyModeButton.setText("简单模式");
 
+        JButton mediumModeButton = new JButton();
         mediumModeButton.addActionListener(e -> {
             Game.difficulty = Difficulty.Medium;
             nextScene();
         });
         mediumModeButton.setText("普通模式");
 
+        JButton hardModeButton = new JButton();
         hardModeButton.addActionListener(e -> {
             Game.difficulty = Difficulty.Hard;
             nextScene();
         });
         hardModeButton.setText("困难模式");
-        Box startBox = Box.createVerticalBox();
 
-        startBox.add(Box.createVerticalStrut(100));
-        startBox.add(easyModeButton);
-        startBox.add(Box.createVerticalStrut(100));
-        startBox.add(mediumModeButton);
-        startBox.add(Box.createVerticalStrut(100));
-        startBox.add(hardModeButton);
-
+        JButton historyButton = new JButton();
         historyButton.addActionListener(e -> {
             JFrame historyWindowFrame = new JFrame("排行榜");
             historyWindowFrame.setContentPane(new HistoryWindow(false).getPanel());
@@ -76,12 +69,19 @@ public class MainWindow implements SceneClient {
             System.out.println("music enable: " + musicOnCheckBox.isSelected());
         });
         musicOnCheckBox.setText("打开音效");
-        startBox.add(Box.createVerticalStrut(100));
-        startBox.add(musicOnCheckBox);
-        startBox.add(Box.createVerticalStrut(100));
-        startBox.add(historyButton);
-
-        mainPanel.add(startBox);
+        JPanel innerPanel = new JPanel();
+        innerPanel.setLayout(new GridLayout(5, 1, 10, 80));
+        innerPanel.add(easyModeButton);
+        innerPanel.add(mediumModeButton);
+        innerPanel.add(hardModeButton);
+        innerPanel.add(musicOnCheckBox);
+        innerPanel.add(historyButton);
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.add(Box.createHorizontalStrut(100), BorderLayout.WEST);
+        mainPanel.add(Box.createHorizontalStrut(100), BorderLayout.EAST);
+        mainPanel.add(Box.createVerticalStrut(100), BorderLayout.NORTH);
+        mainPanel.add(Box.createVerticalStrut(100), BorderLayout.SOUTH);
+        mainPanel.add(innerPanel, BorderLayout.CENTER);
     }
 
     @Override
