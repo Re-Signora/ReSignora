@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Main" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="edu.hitsz.application.Main" />
+    <option name="MAIN_CLASS_NAME" value="work.chiro.game.application.Main" />
     <module name="AircraftWar" />
     <option name="WORKING_DIRECTORY" value="$ProjectFileDir$" />
     <extension name="coverage">
