@@ -7,6 +7,7 @@ import work.chiro.game.utils.Utils;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,19 +17,19 @@ import java.util.List;
  */
 public class HistoryWindow implements SceneClient {
     private static HistoryWindow historyWindow = null;
-    private JPanel mainPanel;
-    private JLabel difficultyLabel;
-    private JTable historyTable;
-    private JButton deleteButton;
-    private JButton restartButton;
-    private JScrollPane scrollPane;
-    private JLabel selectDifficultyLabel;
-    private JComboBox<String> selectDifficultyComboBox;
+    private final JPanel mainPanel = new JPanel();
+    private final JLabel difficultyLabel = new JLabel();
+    private final JTable historyTable = new JTable();
+    private final JComboBox<String> selectDifficultyComboBox = new JComboBox<>();
     private final Object waitObject = new Object();
     private Difficulty selectedDifficulty = null;
 
     public HistoryWindow(boolean enableRestart) {
+        JButton restartButton = new JButton();
         restartButton.addActionListener(e -> nextScene());
+        restartButton.setText("重新开始");
+        JButton deleteButton = new JButton();
+        deleteButton.setText("删除项目");
         deleteButton.addActionListener(e -> {
             DefaultTableModel model = (DefaultTableModel) historyTable.getModel();
             int[] selectedRows = historyTable.getSelectedRows();
@@ -66,6 +67,27 @@ public class HistoryWindow implements SceneClient {
                 return false;
             }
         });
+        JPanel topPanel = new JPanel();
+        topPanel.add(new JLabel("难度:"));
+        topPanel.add(difficultyLabel);
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.add(topPanel, BorderLayout.NORTH);
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.add(historyTable);
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BorderLayout());
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BorderLayout());
+        buttonPanel.add(deleteButton, BorderLayout.EAST);
+        buttonPanel.add(restartButton, BorderLayout.WEST);
+        bottomPanel.add(buttonPanel, BorderLayout.NORTH);
+        JPanel selectPanel = new JPanel();
+        selectPanel.setLayout(new BorderLayout());
+        selectPanel.add(new JLabel("选择难度"), BorderLayout.WEST);
+        selectPanel.add(selectDifficultyComboBox, BorderLayout.EAST);
+        bottomPanel.add(selectPanel, BorderLayout.SOUTH);
+        mainPanel.add(bottomPanel, BorderLayout.SOUTH);
     }
 
     public HistoryWindow() {
