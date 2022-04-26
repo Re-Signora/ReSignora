@@ -1,5 +1,7 @@
 package edu.hitsz.bullet;
 
+import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.aircraft.HeroAircraftFactory;
 import edu.hitsz.animate.AnimateContainer;
 import edu.hitsz.animate.AnimateContainerFactory;
 import edu.hitsz.application.Main;
@@ -35,7 +37,8 @@ public class EnemyBulletFactory extends BaseBulletFactory {
         AnimateContainer scatterAnimateContainer = new AnimateContainerFactory(
                 AnimateContainerFactory.ContainerType.ConstSpeedRebound,
                 getPosition())
-                .setupSpeed(new Vec2(random.nextDouble() * 0.5 - 0.25, random.nextDouble() * 0.2 + 0.5))
+                // .setupSpeed(new Vec2(random.nextDouble() * 0.5 - 0.25, random.nextDouble() * 0.2 + 0.5))
+                .setupSpeed(getPosition().fromVector(getPosition().minus(HeroAircraftFactory.getInstance().getPosition()).times(-0.002)))
                 .setupRange(new Vec2(0, 0))
                 .setupRange2(new Vec2(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT))
                 .setupTimeSpan(3000)
