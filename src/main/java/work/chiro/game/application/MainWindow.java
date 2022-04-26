@@ -5,19 +5,18 @@ import work.chiro.game.scene.SceneClient;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.*;
 
 /**
  * @author Chiro
  */
 public class MainWindow implements SceneClient {
     private static MainWindow mainWindow = null;
-    private JButton easyModeButton = new JButton();
-    private JButton mediumModeButton = new JButton();
-    private JButton hardModeButton = new JButton();
-    private JCheckBox musicOnCheckBox = new JCheckBox();
-    private JPanel mainPanel = new JPanel();
-    private JButton historyButton = new JButton();
+    private final JButton easyModeButton = new JButton();
+    private final JButton mediumModeButton = new JButton();
+    private final JButton hardModeButton = new JButton();
+    private final JCheckBox musicOnCheckBox = new JCheckBox();
+    private final JPanel mainPanel = new JPanel();
+    private final JButton historyButton = new JButton();
     private final Object waitObject = new Object();
 
     public static MainWindow getInstance() {
@@ -48,11 +47,14 @@ public class MainWindow implements SceneClient {
             nextScene();
         });
         hardModeButton.setText("困难模式");
-        JPanel startPanel = new JPanel();
-        startPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        startPanel.add(easyModeButton);
-        startPanel.add(mediumModeButton);
-        startPanel.add(hardModeButton);
+        Box startBox = Box.createVerticalBox();
+
+        startBox.add(Box.createVerticalStrut(100));
+        startBox.add(easyModeButton);
+        startBox.add(Box.createVerticalStrut(100));
+        startBox.add(mediumModeButton);
+        startBox.add(Box.createVerticalStrut(100));
+        startBox.add(hardModeButton);
 
         historyButton.addActionListener(e -> {
             JFrame historyWindowFrame = new JFrame("排行榜");
@@ -67,12 +69,19 @@ public class MainWindow implements SceneClient {
             historyWindowFrame.pack();
             historyWindowFrame.setVisible(true);
         });
+        historyButton.setText("排行榜");
 
         musicOnCheckBox.addActionListener(e -> {
             Game.musicEnable = musicOnCheckBox.isSelected();
             System.out.println("music enable: " + musicOnCheckBox.isSelected());
         });
-        mainPanel.add(startPanel);
+        musicOnCheckBox.setText("打开音效");
+        startBox.add(Box.createVerticalStrut(100));
+        startBox.add(musicOnCheckBox);
+        startBox.add(Box.createVerticalStrut(100));
+        startBox.add(historyButton);
+
+        mainPanel.add(startBox);
     }
 
     @Override
