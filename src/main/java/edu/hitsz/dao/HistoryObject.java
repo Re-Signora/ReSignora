@@ -1,5 +1,7 @@
 package edu.hitsz.dao;
 
+import edu.hitsz.application.Difficulty;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -15,12 +17,14 @@ public class HistoryObject implements Serializable {
     final private int score;
     final private long time;
     final private String message;
+    final private Difficulty difficulty;
 
-    public HistoryObject(String name, int score, long time, String message) {
+    public HistoryObject(String name, int score, long time, String message, Difficulty difficulty) {
         this.name = name;
         this.score = score;
         this.time = time;
         this.message = message;
+        this.difficulty = difficulty;
     }
 
     public String getName() {
@@ -40,7 +44,7 @@ public class HistoryObject implements Serializable {
     }
 
     public HistoryObject copy(long newTime) {
-        return new HistoryObject(getName(), getScore(), newTime, getMessage());
+        return new HistoryObject(getName(), getScore(), newTime, getMessage(), difficulty);
     }
 
     public String getTimeString() {
@@ -49,14 +53,18 @@ public class HistoryObject implements Serializable {
 
     @Override
     public String toString() {
-        return "" + name + "\t" + String.format("%9d", score) + "\t" + getTimeString() + "\t" + message;
+        return "" + difficulty + "\t" + name + "\t" + String.format("%9d", score) + "\t" + getTimeString() + "\t" + message;
     }
 
     static public List<String> getLabels() {
-        return Arrays.asList("名称", "分数", "时间", "留言", "时间戳");
+        return Arrays.asList("难度", "名称", "分数", "时间", "留言");
     }
 
     public List<Object> getDataAsList() {
-        return Arrays.asList(name, score, getTimeString(), message, time);
+        return Arrays.asList(difficulty, name, score, getTimeString(), message);
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
     }
 }

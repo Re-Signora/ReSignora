@@ -10,10 +10,10 @@ import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static edu.hitsz.application.Difficulty.*;
 
 /**
  * 工具类
@@ -80,5 +80,22 @@ public class Utils {
                 return null;
             }
         }
+    }
+
+    static Map<String, Difficulty> difficultyHashMap = Map.of("简单", Easy, "中等", Medium, "困难", Hard);
+    static Map<Difficulty, String> difficultyToStringHashMap = Map.of(Easy, "简单", Medium, "中等", Hard, "困难");
+
+    public static String difficultyToString(Difficulty difficulty) {
+        if (difficulty == null || !difficultyToStringHashMap.containsKey(difficulty)) {
+            return null;
+        }
+        return difficultyToStringHashMap.get(difficulty);
+    }
+
+    public static Difficulty difficultyFromString(String string) {
+        if (string == null || !difficultyHashMap.containsKey(string)) {
+            return null;
+        }
+        return difficultyHashMap.get(string);
     }
 }

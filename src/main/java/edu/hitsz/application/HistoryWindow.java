@@ -3,12 +3,10 @@ package edu.hitsz.application;
 import edu.hitsz.dao.HistoryImpl;
 import edu.hitsz.dao.HistoryObject;
 import edu.hitsz.scene.SceneClient;
+import edu.hitsz.utils.Utils;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,13 +17,15 @@ import java.util.List;
 public class HistoryWindow implements SceneClient {
     private static HistoryWindow historyWindow = null;
     private JPanel mainPanel;
-    private JLabel difficulty;
+    private JLabel difficultyLabel;
     private JTable historyTable;
     private JButton deleteButton;
-    private JButton modifyButton;
     private JButton restartButton;
     private JScrollPane scrollPane;
+    private JLabel selectDifficultyLabel;
+    private JComboBox<String> selectDifficultyComboBox;
     private final Object waitObject = new Object();
+    private Difficulty selectedDifficulty = null;
 
     public HistoryWindow(boolean enableRestart) {
         restartButton.addActionListener(e -> nextScene());
@@ -49,6 +49,17 @@ public class HistoryWindow implements SceneClient {
         if (!enableRestart) {
             restartButton.setEnabled(false);
         }
+        selectDifficultyComboBox.addItem("--未选择--");
+        selectDifficultyComboBox.addItem("简单");
+        selectDifficultyComboBox.addItem("中等");
+        selectDifficultyComboBox.addItem("困难");
+        selectDifficultyComboBox.addActionListener(e -> {
+            String selectedLabel = (String) selectDifficultyComboBox.getSelectedItem();
+            selectedDifficulty = Utils.difficultyFromString(selectedLabel);
+            syncWithDao();
+            difficultyLabel.setText(selectedLabel);
+        });
+        difficultyLabel.setText("--未选择--");
     }
 
     public HistoryWindow() {
@@ -63,7 +74,9 @@ public class HistoryWindow implements SceneClient {
         // 设置表头
         model.setColumnIdentifiers(HistoryObject.getLabels().toArray(new String[0]));
         // 增加列
-        HistoryImpl.getInstance().getAll().forEach(historyObject -> model.addRow(historyObject.getDataAsList().toArray(new Object[0])));
+        HistoryImpl.getInstance().getAll().stream()
+                .filter(historyObject -> selectedDifficulty == null || (historyObject.getDifficulty() == selectedDifficulty))
+                .forEach(historyObject -> model.addRow(historyObject.getDataAsList().toArray(new Object[0])));
         historyTable.setRowHeight(30);
         historyTable.setModel(model);
     }

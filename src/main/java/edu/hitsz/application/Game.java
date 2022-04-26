@@ -210,7 +210,8 @@ public class Game extends JPanel {
                         new HistoryObjectFactory(
                                 name == null ? "NONAME" : name.isEmpty() ? "NONAME" : name,
                                 score,
-                                message == null ? "NO MESSAGE" : message.isEmpty() ? "NO MESSAGE" : message)
+                                message == null ? "NO MESSAGE" : message.isEmpty() ? "NO MESSAGE" : message,
+                                difficulty)
                                 .create());
             }
         } catch (Exception e) {

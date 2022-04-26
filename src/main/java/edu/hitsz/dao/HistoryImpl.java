@@ -106,9 +106,11 @@ public class HistoryImpl implements HistoryDAO {
             } catch (ClassNotFoundException | EOFException e) {
                 System.out.println("Warning: class not found! " + e);
                 data = new ArrayList<>();
+                dump();
             } catch (InvalidClassException e) {
                 System.out.println("Warning: save file has wrong version with running one! " + e);
                 data = new ArrayList<>();
+                dump();
             }
         } catch (IOException e) {
             e.printStackTrace();
