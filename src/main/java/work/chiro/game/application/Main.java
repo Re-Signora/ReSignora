@@ -1,9 +1,9 @@
 package work.chiro.game.application;
 
+import work.chiro.game.scene.AbstractSceneRunnable;
 import work.chiro.game.scene.Scene;
 import work.chiro.game.scene.SceneClient;
 import work.chiro.game.scene.SceneRun;
-import work.chiro.game.scene.AbstractSceneRunnable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,19 +41,19 @@ public class Main {
                             public SceneClient getClient() {
                                 return MainWindow.getInstance();
                             }
+                        }),
+                        new Scene("Game Window", new AbstractSceneRunnable() {
+                            @Override
+                            public SceneClient getClient() {
+                                return GameWindow.getInstance();
+                            }
+                        }),
+                        new Scene("History Window", new AbstractSceneRunnable() {
+                            @Override
+                            public SceneClient getClient() {
+                                return HistoryWindow.getInstance();
+                            }
                         })
-                        // new Scene("Game Window", new AbstractSceneRunnable() {
-                        //     @Override
-                        //     public SceneClient getClient() {
-                        //         return GameWindow.getInstance();
-                        //     }
-                        // }),
-                        // new Scene("History Window", new AbstractSceneRunnable() {
-                        //     @Override
-                        //     public SceneClient getClient() {
-                        //         return HistoryWindow.getInstance();
-                        //     }
-                        // })
                 )).run();
             } catch (SceneRun.SceneRunDoneException e) {
                 System.out.println("run done.");
