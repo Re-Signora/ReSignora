@@ -48,4 +48,11 @@ public class TimerController {
     public static double getTimeDelta() {
         return frameTime - lastFrameTime;
     }
+
+    public static void clear() {
+        frameTime = 0;
+        lastFrameTime = 0;
+        FRAME_COUNTER.clear();
+        TIMERS.clear();
+    }
 }

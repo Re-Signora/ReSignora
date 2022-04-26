@@ -32,6 +32,7 @@ public class BossEnemy extends AbstractAircraft {
     public LinkedList<BaseBullet> shoot() {
         LinkedList<BaseBullet> ret = new LinkedList<>();
         ret.add(new EnemyBulletFactory(getPosition().copy(), EnemyBulletFactory.BulletType.Scatter).create());
+        ret.add(new EnemyBulletFactory(getPosition().copy(), EnemyBulletFactory.BulletType.Tracking).create());
         return ret;
     }
 

@@ -80,6 +80,10 @@ public class Game extends JPanel {
         heroAircraft = new HeroAircraftFactory().clearInstance().create();
         heroAircrafts.clear();
         heroAircrafts.add(heroAircraft);
+        bossAircrafts.clear();
+        BossEnemyFactory.clearInstance();
+        TimerController.clear();
+        heroController.clear();
         flushBackground();
     }
 
@@ -126,7 +130,7 @@ public class Game extends JPanel {
     }
 
     public void addEvents() {
-        TimerController.init(0);
+        TimerController.init(Utils.getTimeMills());
         // 英雄射击事件
         TimerController.add(new Timer(10, () -> {
             synchronized (heroBullets) {

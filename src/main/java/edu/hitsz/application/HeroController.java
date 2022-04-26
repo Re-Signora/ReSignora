@@ -34,7 +34,7 @@ public class HeroController {
 
     final private Set<Integer> pressedKeys = new HashSet<>();
     private static HeroController instance = null;
-    private double lastFrameTime = Utils.getTimeMills();
+    private Double lastFrameTime = null;
 
     public HeroController(Game game) {
         KeyAdapter keyAdapter = new KeyAdapter() {
@@ -76,6 +76,9 @@ public class HeroController {
     }
 
     void onFrame() {
+        if (lastFrameTime == null) {
+            lastFrameTime = Utils.getTimeMills();
+        }
         if (HeroAircraftFactory.getInstance() == null) {
             return;
         }
@@ -122,5 +125,10 @@ public class HeroController {
             }
         }
         return instance;
+    }
+
+    public void clear() {
+        lastFrameTime = null;
+        pressedKeys.clear();
     }
 }
