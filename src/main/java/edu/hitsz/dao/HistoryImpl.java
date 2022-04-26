@@ -12,7 +12,7 @@ public class HistoryImpl implements HistoryDAO {
     private final static String FILENAME = "save.ser";
     private List<HistoryObject> data;
 
-    public static HistoryImpl getInstance() {
+    synchronized public static HistoryImpl getInstance() {
         if (history == null) {
             synchronized (HistoryImpl.class) {
                 history = new HistoryImpl();
@@ -28,18 +28,18 @@ public class HistoryImpl implements HistoryDAO {
     }
 
     @Override
-    public List<HistoryObject> getAll() {
+    synchronized public List<HistoryObject> getAll() {
         load();
         return data;
     }
 
     @Override
-    public Optional<HistoryObject> getByName(String name) {
+    synchronized public Optional<HistoryObject> getByName(String name) {
         return Optional.empty();
     }
 
     @Override
-    public Boolean updateByTime(long time, HistoryObject newHistory) {
+    synchronized public Boolean updateByTime(long time, HistoryObject newHistory) {
         List<HistoryObject> dataNew = data.stream().filter(item -> item.getTime() == time).collect(Collectors.toList());
         if (!dataNew.isEmpty()) {
             boolean r = Collections.replaceAll(data, dataNew.get(0), newHistory.copy(time));
@@ -50,26 +50,26 @@ public class HistoryImpl implements HistoryDAO {
     }
 
     @Override
-    public Boolean deleteByTime(long time) {
+    synchronized public Boolean deleteByTime(long time) {
         boolean r = data.removeIf(item -> item.getTime() == time);
         dump();
         return r;
     }
 
     @Override
-    public void deleteAll() {
+    synchronized public void deleteAll() {
         data.clear();
         dump();
     }
 
     @Override
-    public void addOne(HistoryObject historyObject) {
+    synchronized public void addOne(HistoryObject historyObject) {
         data.add(historyObject);
         dump();
     }
 
     @Override
-    public void dump() {
+    synchronized public void dump() {
         sort();
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(FILENAME);
@@ -88,7 +88,7 @@ public class HistoryImpl implements HistoryDAO {
     }
 
     @Override
-    public void load() {
+    synchronized public void load() {
         try {
             File file = new File(FILENAME);
             if (!file.exists()) {
@@ -116,11 +116,11 @@ public class HistoryImpl implements HistoryDAO {
         sort();
     }
 
-    public void sort() {
+    synchronized public void sort() {
         data.sort(Comparator.comparing(HistoryObject::getScore).reversed());
     }
 
-    public void display() {
+    synchronized public void display() {
         System.out.println("\t\t[ ======= HISTORY ======= ]");
         System.out.println("  Name\t   Score\t\t   Time\t\t   Message");
         sort();
@@ -130,7 +130,7 @@ public class HistoryImpl implements HistoryDAO {
         System.out.println("\t\t[ ======= ------- ======= ]");
     }
 
-    public void set(List<HistoryObject> data) {
+    synchronized public void set(List<HistoryObject> data) {
         this.data = data;
         dump();
     }

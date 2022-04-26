@@ -184,9 +184,15 @@ public class Game extends JPanel {
         try {
             String name = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "NONAME" : lastProvidedName);
             if (name == null) {
-                int res = JOptionPane.showConfirmDialog(null, "不保存记录?", "Save Game", JOptionPane.OK_CANCEL_OPTION);
-                if (res == JOptionPane.YES_OPTION) {
-                    throw new Exception();
+                // fixme: 第二次打开 JOption 窗口的时候会直接打开失败！
+                String name2 = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "NONAME" : lastProvidedName);
+                if (name2 == null) {
+                    int res = JOptionPane.showConfirmDialog(null, "不保存记录?", "Save Game", JOptionPane.OK_CANCEL_OPTION);
+                    if (res == JOptionPane.YES_OPTION) {
+                        throw new Exception();
+                    }
+                } else {
+                    lastProvidedName = name2;
                 }
             } else {
                 lastProvidedName = name;
@@ -202,6 +208,7 @@ public class Game extends JPanel {
                                 .create());
             }
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Input exception: " + e);
         } finally {
             synchronized (waitObject) {
