@@ -70,7 +70,7 @@ public class Utils {
                 return CACHED_IMAGE.get(filePath);
             }
             try {
-                BufferedImage image = ImageIO.read(new FileInputStream(Objects.requireNonNull(Utils.class.getClassLoader().getResource("images/" + filePath)).getFile()));
+                BufferedImage image = ImageIO.read(Utils.class.getResourceAsStream("/images/" + filePath));
                 CACHED_IMAGE.put(filePath, image);
                 return image;
             } catch (NullPointerException e) {
