@@ -45,7 +45,9 @@ public class Utils {
     }
 
     public static void startMusic(MusicManager.MusicType type, Boolean noStop) {
-        Game.getMusicFactory().newMusicThread(type, noStop).start();
+        if (Game.musicEnable) {
+            Game.getMusicFactory().newMusicThread(type, noStop).start();
+        }
     }
 
     public static void stopMusic(MusicManager.MusicType type) {
@@ -53,7 +55,9 @@ public class Utils {
     }
 
     public static void startLoopMusic(MusicManager.MusicType type) {
-        Game.getMusicFactory().newLoopMusicThread(type).start();
+        if (Game.musicEnable) {
+            Game.getMusicFactory().newLoopMusicThread(type).start();
+        }
     }
 
     public static double setInRange(double value, double down, double up) {

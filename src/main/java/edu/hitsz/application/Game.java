@@ -27,6 +27,7 @@ import java.util.concurrent.*;
  */
 public class Game extends JPanel {
     static Difficulty difficulty = Difficulty.Easy;
+    public static Boolean musicEnable = true;
 
     /**
      * 创建线程的工厂函数

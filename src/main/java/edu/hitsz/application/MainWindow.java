@@ -61,7 +61,10 @@ public class MainWindow implements SceneClient {
             historyWindowFrame.setVisible(true);
         });
 
-        musicOnCheckBox.addActionListener(e -> System.out.println("music enable: " + musicOnCheckBox.isSelected()));
+        musicOnCheckBox.addActionListener(e -> {
+            Game.musicEnable = musicOnCheckBox.isSelected();
+            System.out.println("music enable: " + musicOnCheckBox.isSelected());
+        });
     }
 
     @Override
