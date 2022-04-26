@@ -46,7 +46,6 @@ public class HistoryWindow implements SceneClient {
             }
             syncWithDao();
         });
-        syncWithDao();
         if (!enableRestart) {
             restartButton.setEnabled(false);
         }
@@ -72,22 +71,20 @@ public class HistoryWindow implements SceneClient {
         topPanel.add(difficultyLabel);
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(topPanel, BorderLayout.NORTH);
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.add(historyTable);
+        JScrollPane scrollPane = new JScrollPane(historyTable);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BorderLayout());
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BorderLayout());
-        buttonPanel.add(deleteButton, BorderLayout.EAST);
-        buttonPanel.add(restartButton, BorderLayout.WEST);
+        buttonPanel.add(deleteButton);
+        buttonPanel.add(restartButton);
         bottomPanel.add(buttonPanel, BorderLayout.NORTH);
         JPanel selectPanel = new JPanel();
-        selectPanel.setLayout(new BorderLayout());
-        selectPanel.add(new JLabel("选择难度"), BorderLayout.WEST);
-        selectPanel.add(selectDifficultyComboBox, BorderLayout.EAST);
+        selectPanel.add(new JLabel("选择难度"));
+        selectPanel.add(selectDifficultyComboBox);
         bottomPanel.add(selectPanel, BorderLayout.SOUTH);
         mainPanel.add(bottomPanel, BorderLayout.SOUTH);
+        syncWithDao();
     }
 
     public HistoryWindow() {
