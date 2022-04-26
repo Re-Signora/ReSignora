@@ -1,14 +1,15 @@
-package edu.hitsz.aircraft;
+package work.chiro.game.aircraft;
 
-import edu.hitsz.bullet.BaseBullet;
 import org.junit.jupiter.api.Test;
+import work.chiro.game.bullet.BaseBullet;
 
 import java.util.LinkedList;
 
-import static org.junit.jupiter.api.Assumptions.*;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 class BossEnemyTest {
-    BossEnemyFactory bossEnemyFactory = new BossEnemyFactory(0, 0, 0, 0, 100);
+    BossEnemyFactory bossEnemyFactory = new BossEnemyFactory(() -> System.out.println("boss vanish"));
     BossEnemy getBossNewInstance() {
         return bossEnemyFactory.create();
     }
@@ -24,11 +25,9 @@ class BossEnemyTest {
     @Test
     void shoot() {
         BossEnemy dut = getBossNewInstance();
+        HeroAircraft heroAircraft = new HeroAircraftFactory().create();
         LinkedList<BaseBullet> bullets = dut.shoot();
-        assumeTrue(bullets.size() == 1);
-        BaseBullet bullet = bullets.get(0);
-        assumeTrue(bullet.getLocationX() == 0);
-        assumeTrue(bullet.getLocationY() == 0);
+        assumeTrue(bullets.size() > 1);
         System.out.println("Test pass.");
     }
 
