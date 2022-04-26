@@ -60,6 +60,12 @@ public class HistoryWindow implements SceneClient {
             difficultyLabel.setText(selectedLabel);
         });
         difficultyLabel.setText("--未选择--");
+        historyTable.setModel(new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
     }
 
     public HistoryWindow() {
