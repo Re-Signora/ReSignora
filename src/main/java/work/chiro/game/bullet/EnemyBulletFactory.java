@@ -52,8 +52,7 @@ public class EnemyBulletFactory extends BaseBulletFactory {
         return new AnimateContainerFactory(
                 AnimateContainerFactory.ContainerType.ConstSpeedToTarget,
                 getPosition())
-                // .setupSpeed(getPosition().fromVector(getPosition().minus(HeroAircraftFactory.getInstance().getPosition()).times(-0.002)))
-                .setupSpeed(0.02)
+                .setupSpeed(0.0005)
                 .setupTarget(HeroAircraftFactory.getInstance().getPosition().copy())
                 .setupRange(new Vec2(0, 0))
                 .setupRange2(new Vec2(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT))
