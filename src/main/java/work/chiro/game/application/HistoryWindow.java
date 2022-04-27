@@ -50,6 +50,9 @@ public class HistoryWindow implements SceneClient {
                 HistoryWindow.this.syncWithDao();
             }
         });
+        JButton quitButton = new JButton();
+        quitButton.setText("退出游戏");
+        quitButton.addActionListener(e -> System.exit(0));
         if (!enableRestart) {
             restartButton.setEnabled(false);
         }
@@ -81,6 +84,7 @@ public class HistoryWindow implements SceneClient {
         bottomPanel.setLayout(new BorderLayout());
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(deleteButton);
+        buttonPanel.add(quitButton);
         buttonPanel.add(restartButton);
         bottomPanel.add(buttonPanel, BorderLayout.NORTH);
         JPanel selectPanel = new JPanel();
