@@ -68,6 +68,7 @@ public class MainWindow implements SceneClient {
             Game.musicEnable = musicOnCheckBox.isSelected();
             System.out.println("music enable: " + musicOnCheckBox.isSelected());
         });
+        musicOnCheckBox.setSelected(true);
         musicOnCheckBox.setText("打开音效");
         JPanel innerPanel = new JPanel();
         innerPanel.setLayout(new GridLayout(5, 1, 10, 80));
