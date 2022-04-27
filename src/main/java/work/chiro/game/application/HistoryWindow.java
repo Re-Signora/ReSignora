@@ -8,6 +8,8 @@ import work.chiro.game.utils.Utils;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,21 +32,23 @@ public class HistoryWindow implements SceneClient {
         restartButton.setText("重新开始");
         JButton deleteButton = new JButton();
         deleteButton.setText("删除项目");
-        deleteButton.addActionListener(e -> {
-            DefaultTableModel model = (DefaultTableModel) historyTable.getModel();
-            int[] selectedRows = historyTable.getSelectedRows();
-            List<HistoryObject> data = HistoryImpl.getInstance().getAll();
-            LinkedList<HistoryObject> selected = new LinkedList<>();
-            for (int selectedRow : selectedRows) {
-                System.out.println("selectedRow = " + selectedRow + ", data = " + data.get(selectedRow));
-                selected.add(data.get(selectedRow));
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            synchronized public void actionPerformed(ActionEvent e) {
+                int[] selectedRows = historyTable.getSelectedRows();
+                List<HistoryObject> data = HistoryImpl.getInstance().getAll();
+                LinkedList<HistoryObject> selected = new LinkedList<>();
+                for (int selectedRow : selectedRows) {
+                    System.out.println("selectedRow = " + selectedRow + ", data = " + data.get(selectedRow));
+                    selected.add(data.get(selectedRow));
+                }
+                for (HistoryObject selectedHistoryObject : selected) {
+                    List<HistoryObject> copy = new ArrayList<>(HistoryImpl.getInstance().getAll());
+                    copy.removeIf(historyObject -> historyObject.getTime() == selectedHistoryObject.getTime());
+                    HistoryImpl.getInstance().set(copy);
+                }
+                HistoryWindow.this.syncWithDao();
             }
-            for (HistoryObject selectedHistoryObject : selected) {
-                List<HistoryObject> copy = new ArrayList<>(HistoryImpl.getInstance().getAll());
-                copy.removeIf(historyObject -> historyObject.getTime() == selectedHistoryObject.getTime());
-                HistoryImpl.getInstance().set(copy);
-            }
-            syncWithDao();
         });
         if (!enableRestart) {
             restartButton.setEnabled(false);
@@ -91,7 +95,7 @@ public class HistoryWindow implements SceneClient {
         this(true);
     }
 
-    public void syncWithDao() {
+    synchronized public void syncWithDao() {
         HistoryImpl.getInstance().sort();
         DefaultTableModel model = (DefaultTableModel) historyTable.getModel();
         // 清除数据
