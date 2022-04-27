@@ -16,6 +16,10 @@ public class AnimateContainerFactory {
         ConstSpeedLoop,
         // 固定速度值反弹
         ConstSpeedRebound,
+        // 线性到某目标
+        ConstSpeedToTarget,
+        // 追踪目标
+        ConstSpeedTracking,
         // 空
         Empty
     }
@@ -33,8 +37,28 @@ public class AnimateContainerFactory {
     public AnimateContainerFactory setupSpeed(Vec2 speed2d) {
         assert containerType == ContainerType.ConstSpeed ||
                 containerType == ContainerType.ConstSpeedLoop ||
-                containerType == ContainerType.ConstSpeedRebound;
+                containerType == ContainerType.ConstSpeedRebound ||
+                containerType == ContainerType.ConstSpeedToTarget ||
+                containerType == ContainerType.ConstSpeedTracking;
         this.speed2d = speed2d;
+        return this;
+    }
+
+    private Double speed1d = null;
+
+    public AnimateContainerFactory setupSpeed(Double speed1d) {
+        assert containerType == ContainerType.ConstSpeedToTarget ||
+                containerType == ContainerType.ConstSpeedTracking;
+        this.speed1d = speed1d;
+        return this;
+    }
+
+    private Vec2 target = null;
+
+    public AnimateContainerFactory setupTarget(Vec2 target) {
+        assert containerType == ContainerType.ConstSpeedTracking ||
+                containerType == ContainerType.ConstSpeedToTarget;
+        this.target = target;
         return this;
     }
 
@@ -74,6 +98,12 @@ public class AnimateContainerFactory {
             case ConstSpeedRebound:
                 assert range != null && range2 != null && speed2d != null;
                 return new AnimateContainer(List.of(new Animate.LinearRebound<>(position, speed2d, Utils.getTimeMills(), range, range2, timeSpan)));
+            case ConstSpeedToTarget:
+                assert speed2d != null && target != null && speed1d != null;
+                return new AnimateContainer(List.of(new Animate.LinearToTarget<>(position, target, speed1d, Utils.getTimeMills())));
+            case ConstSpeedTracking:
+                assert speed2d != null && target != null && speed1d != null;
+                return new AnimateContainer(List.of(new Animate.LinearTracking<>(position, target, speed1d, Utils.getTimeMills())));
             default:
                 break;
         }

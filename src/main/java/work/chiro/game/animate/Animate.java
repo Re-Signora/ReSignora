@@ -28,6 +28,10 @@ public class Animate {
             this.willStop = willStop;
         }
 
+        public T getSpeed() {
+            return speed;
+        }
+
         @Override
         public Boolean update(double timeNow) {
             Boolean done = isDone(timeNow);
@@ -122,6 +126,43 @@ public class Animate {
                 }
             }
             return false;
+        }
+    }
+
+    public static class LinearToTarget<T extends VectorType & VectorFactory<T>> extends Linear<T> {
+        final private T target;
+        final private double speed;
+        LinearToTarget(T vecSource, T target, double speed, double timeStart) {
+            super(vecSource, target, AnimateVectorType.PositionLike, timeStart);
+            this.target = target;
+            this.speed = speed;
+            updateSpeed();
+        }
+
+        public T getTarget() {
+            return target;
+        }
+
+        public void updateSpeed() {
+            getSpeed().set(getTarget().minus(getSource()).times(this.speed));
+            System.out.println("update speed to: " + getSpeed());
+        }
+
+        @Override
+        public Boolean update(double timeNow) {
+            return super.update(timeNow);
+        }
+    }
+
+    public static class LinearTracking<T extends VectorType & VectorFactory<T>> extends LinearToTarget<T> {
+        LinearTracking(T vecSource, T target, double speed, double timeStart) {
+            super(vecSource, target, speed, timeStart);
+        }
+
+        @Override
+        public Boolean update(double timeNow) {
+            updateSpeed();
+            return super.update(timeNow);
         }
     }
 }

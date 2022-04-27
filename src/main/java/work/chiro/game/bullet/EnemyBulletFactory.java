@@ -29,34 +29,45 @@ public class EnemyBulletFactory extends BaseBulletFactory {
         this.bulletType = bulletType;
     }
 
-    @Override
-    public BaseBullet create() {
-        AnimateContainer directAnimateContainer = new AnimateContainerFactory(
+    private AnimateContainer getDirectAnimateContainer() {
+        return new AnimateContainerFactory(
                 AnimateContainerFactory.ContainerType.ConstSpeed,
                 getPosition())
                 .setupSpeed(new Vec2(0, 0.2))
                 .create();
-        AnimateContainer scatterAnimateContainer = new AnimateContainerFactory(
-                AnimateContainerFactory.ContainerType.ConstSpeedRebound,
+    }
+
+    private AnimateContainer getScatterAnimateContainer() {
+        return new AnimateContainerFactory(
+                AnimateContainerFactory.ContainerType.ConstSpeed,
                 getPosition())
                 .setupSpeed(new Vec2(random.nextDouble() * 0.5 - 0.25, random.nextDouble() * 0.2 + 0.5))
                 .setupRange(new Vec2(0, 0))
                 .setupRange2(new Vec2(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT))
                 .setupTimeSpan(3000)
                 .create();
-        AnimateContainer trackingAnimateContainer = new AnimateContainerFactory(
-                AnimateContainerFactory.ContainerType.ConstSpeedRebound,
+    }
+
+    private AnimateContainer getTrackingAnimateContainer() {
+        return new AnimateContainerFactory(
+                AnimateContainerFactory.ContainerType.ConstSpeedToTarget,
                 getPosition())
-                .setupSpeed(getPosition().fromVector(getPosition().minus(HeroAircraftFactory.getInstance().getPosition()).times(-0.002)))
+                // .setupSpeed(getPosition().fromVector(getPosition().minus(HeroAircraftFactory.getInstance().getPosition()).times(-0.002)))
+                .setupSpeed(0.02)
+                .setupTarget(HeroAircraftFactory.getInstance().getPosition().copy())
                 .setupRange(new Vec2(0, 0))
                 .setupRange2(new Vec2(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT))
                 .setupTimeSpan(3000)
                 .create();
+    }
+
+    @Override
+    public BaseBullet create() {
         return new EnemyBullet(
                 getPosition(),
-                bulletType == BulletType.Direct ? directAnimateContainer :
-                        bulletType == BulletType.Tracking ? trackingAnimateContainer :
-                                scatterAnimateContainer,
+                bulletType == BulletType.Direct ? getDirectAnimateContainer() :
+                        bulletType == BulletType.Tracking ? getTrackingAnimateContainer() :
+                                getScatterAnimateContainer(),
                 10);
     }
 }

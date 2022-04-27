@@ -36,7 +36,7 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
                 instance = new BossEnemy(
                         posNew,
                         new AnimateContainerFactory(AnimateContainerFactory.ContainerType.ConstSpeedRebound, posNew)
-                                .setupSpeed(new Vec2(0.3, 0))
+                                .setupSpeed(new Vec2(0.03, 0))
                                 .setupRange(new Vec2(0, 0))
                                 .setupRange2(new Vec2(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT))
                                 .create(), 8000);

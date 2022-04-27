@@ -2,6 +2,8 @@ package work.chiro.game.bullet;
 
 import work.chiro.game.vector.Vec2;
 
+import java.util.List;
+
 /**
  * 子弹工厂接口
  *
@@ -24,4 +26,8 @@ public abstract class BaseBulletFactory {
      * @return 弹对象
      */
     abstract BaseBullet create();
+
+    public List<BaseBullet> createMany() {
+        return List.of(create());
+    }
 }

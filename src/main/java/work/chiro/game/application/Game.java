@@ -1,5 +1,7 @@
 package work.chiro.game.application;
 
+import work.chiro.game.aircraft.*;
+import work.chiro.game.background.*;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.dao.HistoryImpl;
@@ -8,8 +10,6 @@ import work.chiro.game.prop.AbstractProp;
 import work.chiro.game.timer.Timer;
 import work.chiro.game.timer.TimerController;
 import work.chiro.game.utils.Utils;
-import work.chiro.game.aircraft.*;
-import work.chiro.game.background.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +18,10 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 游戏主面板，游戏启动
@@ -62,7 +65,7 @@ public class Game extends JPanel {
     private boolean gameOverFlag = false;
     private boolean startedFlag = false;
     private int score = 0;
-    private final int bossScoreThreshold = 1000;
+    private final int bossScoreThreshold = 10;
     private int nextBossScore = score + bossScoreThreshold;
     private final Object waitObject = new Object();
     @SuppressWarnings("rawtypes")
@@ -174,6 +177,8 @@ public class Game extends JPanel {
                 }
             }
         }));
+        // 获取键盘焦点
+        TimerController.add(new Timer(100, this::requestFocus));
     }
 
     private void stopAllMusic() {
