@@ -8,5 +8,7 @@ public enum AnimateType {
     // 未知
     Unknown,
     // 线性
-    Linear
+    Linear,
+    // 非线性
+    NonLinear
 }

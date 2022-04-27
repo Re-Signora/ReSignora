@@ -129,26 +129,46 @@ public class Animate {
         }
     }
 
-    public static class LinearToTarget<T extends VectorType & VectorFactory<T>> extends Linear<T> {
-        final private T target;
+    protected static interface AnimateWithTarget<T extends VectorType> {
+        /**
+         * 获得 vecTarget
+         *
+         * @return vecTarget
+         */
+        public T getVecTarget();
+    }
+
+    public static class LinearToTarget<T extends VectorType & VectorFactory<T>>
+            extends Linear<T>
+            implements AnimateWithTarget<T> {
+        final private T vecTarget;
         final private double speed;
-        LinearToTarget(T vecSource, T target, double speed, double timeStart) {
-            super(vecSource, target.copy(), AnimateVectorType.PositionLike, timeStart);
-            this.target = target;
+
+        LinearToTarget(T vecSource, T vecTarget, double speed, double timeStart) {
+            super(vecSource, vecTarget.copy(), AnimateVectorType.PositionLike, timeStart);
+            this.vecTarget = vecTarget;
             this.speed = speed;
             updateSpeed();
         }
 
-        public T getTarget() {
-            return target;
+        @Override
+        public T getVecTarget() {
+            return vecTarget;
         }
 
         public void updateSpeed() {
-            getSpeed().set(getTarget().minus(getSource()).times(this.speed));
+            getSpeed().set(getVecTarget().minus(getSource()).times(this.speed));
+        }
+
+        @Override
+        public T getDelta() {
+            return getNewVecInstance().fromVector(getVecTarget().minus(getSource()));
         }
     }
 
-    public static class LinearTracking<T extends VectorType & VectorFactory<T>> extends LinearToTarget<T> {
+    public static class LinearTracking<T extends VectorType & VectorFactory<T>>
+            extends LinearToTarget<T>
+            implements AnimateWithTarget<T> {
         LinearTracking(T vecSource, T target, double speed, double timeStart) {
             super(vecSource, target, speed, timeStart);
         }
@@ -157,6 +177,71 @@ public class Animate {
         public Boolean update(double timeNow) {
             updateSpeed();
             return super.update(timeNow);
+        }
+    }
+
+    public static class NonLinear<T extends VectorType & VectorFactory<T>>
+            extends AbstractAnimate<T>
+            implements AnimateWithTarget<T> {
+        final private T vecTarget;
+        final private boolean willStop;
+
+        NonLinear(T vecSource, T vecTarget, AnimateVectorType animateVectorType, double timeStart, double timeSpan, boolean willStop) {
+            super(vecSource, AnimateType.NonLinear, animateVectorType, timeStart, timeSpan);
+            this.willStop = willStop;
+            this.vecTarget = vecTarget;
+        }
+
+        NonLinear(T vecSource, T vecTarget, AnimateVectorType animateVectorType, double timeStart, double timeSpan) {
+            this(vecSource, vecTarget, animateVectorType, timeStart, timeSpan, true);
+        }
+
+        NonLinear(T vecSource, T vecTarget, AnimateVectorType animateVectorType, double timeStart) {
+            this(vecSource, vecTarget, animateVectorType, timeStart, 0);
+        }
+
+        @Override
+        public Boolean isDone(double timeNow) {
+            if (willStop && timeSpan > 0) {
+                return timeNow > timeStart + timeSpan;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public Boolean update(double timeNow) {
+            double t = timeNow - timeStart;
+            if (timeSpan != 0) {
+                getVector().set(getSource().plus(getDelta().times(t * t / (timeSpan * timeSpan))));
+            } else {
+                getVector().set(getSource().plus(getDelta().times(t * t)));
+            }
+            return isDone(timeNow);
+        }
+
+        @Override
+        public T getSpeed(double timeNow) {
+            double t = timeNow - timeStart;
+            if (getAnimateVectorType() == AnimateVectorType.PositionLike && !isDone(timeNow)) {
+                if (timeSpan != 0) {
+                    return getNewVecInstance().fromVector(getDelta().times(2 * t / (timeSpan * timeNow)));
+                } else {
+                    return getNewVecInstance().fromVector(getDelta().times(2 * t));
+                }
+            } else {
+                return getNewVecInstance().getNewInstance();
+            }
+        }
+
+        @Override
+        public T getDelta() {
+            return getNewVecInstance().fromVector(vecTarget.minus(getSource()));
+        }
+
+        @Override
+        public T getVecTarget() {
+            return vecTarget;
         }
     }
 }

@@ -5,6 +5,7 @@ import work.chiro.game.aircraft.HeroAircraftFactory;
 import work.chiro.game.animate.AnimateContainerFactory;
 import work.chiro.game.vector.Vec2;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,15 +38,26 @@ public class HeroBulletFactory extends BaseBulletFactory {
         if (enemyAircrafts.size() == 0) {
             return null;
         }
+        Vec2 p = HeroAircraftFactory.getInstance().getPosition();
+        enemyAircrafts.sort(Comparator.comparing(item -> item.getPosition().minus(p).getScale().getX()));
         return new HeroBullet(
                 getPosition(),
                 new AnimateContainerFactory(
-                        AnimateContainerFactory.ContainerType.ConstSpeedToTarget,
+                        AnimateContainerFactory.ContainerType.NonLinearTo,
                         getPosition())
-                        .setupTarget(enemyAircrafts.get(0).getPosition().copy())
-                        .setupSpeed(0.006)
+                        .setupTimeSpan(300)
+                        .setupTarget(enemyAircrafts.get(0).getPosition())
                         .create(),
                 30);
+        // return new HeroBullet(
+        //         getPosition(),
+        //         new AnimateContainerFactory(
+        //                 AnimateContainerFactory.ContainerType.ConstSpeedToTarget,
+        //                 getPosition())
+        //                 .setupTarget(enemyAircrafts.get(0).getPosition().copy())
+        //                 .setupSpeed(0.006)
+        //                 .create(),
+        //         30);
     }
 
     @Override
@@ -55,6 +67,7 @@ public class HeroBulletFactory extends BaseBulletFactory {
 
     @Override
     public List<BaseBullet> createMany() {
+        // return List.of(createDirectBullet());
         BaseBullet trackingBullet = createTrackingBullet();
         if (trackingBullet != null) {
             return List.of(createDirectBullet(), trackingBullet);

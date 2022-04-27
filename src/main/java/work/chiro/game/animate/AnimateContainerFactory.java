@@ -20,6 +20,8 @@ public class AnimateContainerFactory {
         ConstSpeedToTarget,
         // 追踪目标
         ConstSpeedTracking,
+        // 非线性
+        NonLinearTo,
         // 空
         Empty
     }
@@ -57,7 +59,8 @@ public class AnimateContainerFactory {
 
     public AnimateContainerFactory setupTarget(Vec2 target) {
         assert containerType == ContainerType.ConstSpeedTracking ||
-                containerType == ContainerType.ConstSpeedToTarget;
+                containerType == ContainerType.ConstSpeedToTarget ||
+                containerType == ContainerType.NonLinearTo;
         this.target = target;
         return this;
     }
@@ -82,7 +85,9 @@ public class AnimateContainerFactory {
     private double timeSpan = 0;
 
     public AnimateContainerFactory setupTimeSpan(double timeSpan) {
-        assert containerType == ContainerType.ConstSpeedRebound;
+        assert containerType == ContainerType.ConstSpeedRebound ||
+                containerType == ContainerType.NonLinearTo;
+        ;
         this.timeSpan = timeSpan;
         return this;
     }
@@ -104,6 +109,9 @@ public class AnimateContainerFactory {
             case ConstSpeedTracking:
                 assert speed2d != null && target != null && speed1d != null;
                 return new AnimateContainer(List.of(new Animate.LinearTracking<>(position, target, speed1d, Utils.getTimeMills())));
+            case NonLinearTo:
+                assert target != null;
+                return new AnimateContainer(List.of(new Animate.NonLinear<>(position, target, AnimateVectorType.PositionLike, Utils.getTimeMills(), timeSpan)));
             default:
                 break;
         }

@@ -160,7 +160,7 @@ public class Game extends JPanel {
             }
         }));
         // boss射击事件
-        TimerController.add(new Timer(50, () -> {
+        TimerController.add(new Timer(100, () -> {
             synchronized (enemyBullets) {
                 bossAircrafts.forEach(bossEnemy -> enemyBullets.addAll(bossEnemy.shoot()));
             }
