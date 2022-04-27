@@ -3,7 +3,7 @@ package work.chiro.game.background;
 /**
  * @author Chiro
  */
-public class OtherBackgroundFactory<T extends BasicBackground> extends BasicBackgroundFactory {
+public class OtherBackgroundFactory<T extends AbstractBackground> extends AbstractBackgroundFactory {
     private final T fakeInstance;
 
     public OtherBackgroundFactory(T fakeInstance) {

@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * @author Chiro
  */
-public class HardBackground extends BasicBackground {
+public class HardBackground extends AbstractBackground {
     public HardBackground() {
         super();
     }

@@ -30,6 +30,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class Game extends JPanel {
     static Difficulty difficulty = Difficulty.Easy;
+    final static Boolean ENABLE_SHOOT_MUSIC = false;
     public static Boolean musicEnable = true;
 
     /**
@@ -239,7 +240,9 @@ public class Game extends JPanel {
     public void action() {
         startedFlag = true;
         addEvents();
-        // Utils.startLoopMusic(MusicManager.MusicType.HERO_SHOOT);
+        if (ENABLE_SHOOT_MUSIC) {
+            Utils.startLoopMusic(MusicManager.MusicType.HERO_SHOOT);
+        }
         Utils.startLoopMusic(MusicManager.MusicType.BGM);
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable task = () -> {

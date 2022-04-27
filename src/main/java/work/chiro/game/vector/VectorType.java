@@ -59,7 +59,15 @@ public class VectorType {
         return true;
     }
 
-    enum Operator {PLUS, MINUS, TIMES, DIVIDE}
+    enum Operator {
+        // 加
+        PLUS,
+        // 减
+        MINUS,
+        //乘
+        TIMES,
+        // 除
+        DIVIDE}
 
     protected VectorType calc(VectorType that, Operator operator) {
         VectorType res = new VectorType(getSize(), null);

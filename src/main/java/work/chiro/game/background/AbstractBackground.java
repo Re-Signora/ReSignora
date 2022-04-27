@@ -15,10 +15,12 @@ import java.awt.*;
 public abstract class AbstractBackground extends AbstractFlyingObject {
     public AbstractBackground(Vec2 posInit, AnimateContainer animateContainer) {
         super(posInit, animateContainer);
+        initImageFilename = getInitImageFilename();
     }
 
     public AbstractBackground() {
         super(new Vec2());
+        initImageFilename = null;
     }
 
     @Override
@@ -34,7 +36,8 @@ public abstract class AbstractBackground extends AbstractFlyingObject {
 
     /**
      * 生成新的对象
-     * @param posInit 初始位置
+     *
+     * @param posInit          初始位置
      * @param animateContainer 动画容器
      * @return 生成新对象
      */
@@ -43,5 +46,19 @@ public abstract class AbstractBackground extends AbstractFlyingObject {
     @Override
     protected Boolean keepImage() {
         return false;
+    }
+
+    final private String initImageFilename;
+
+    /**
+     * 获取初始化的文件名
+     *
+     * @return 文件名
+     */
+    abstract String getInitImageFilename();
+
+    @Override
+    public String getImageFilename() {
+        return initImageFilename;
     }
 }

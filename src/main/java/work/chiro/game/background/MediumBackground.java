@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * @author Chiro
  */
-public class MediumBackground extends BasicBackground {
+public class MediumBackground extends AbstractBackground {
     public MediumBackground() {
         super();
     }

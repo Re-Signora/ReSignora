@@ -5,7 +5,6 @@ import work.chiro.game.aircraft.BossEnemy;
 import work.chiro.game.aircraft.EliteEnemy;
 import work.chiro.game.aircraft.HeroAircraft;
 import work.chiro.game.aircraft.MobEnemy;
-import work.chiro.game.background.BasicBackground;
 import work.chiro.game.bullet.EnemyBullet;
 import work.chiro.game.bullet.HeroBullet;
 import work.chiro.game.prop.BloodProp;
@@ -32,7 +31,6 @@ public class ImageManager {
      */
     private static final Map<String, BufferedImage> CLASSNAME_IMAGE_MAP = new HashMap<>();
 
-    public static BufferedImage BACKGROUND_IMAGE;
     public static BufferedImage HERO_IMAGE;
     public static BufferedImage HERO_BULLET_IMAGE;
     public static BufferedImage ENEMY_BULLET_IMAGE;
@@ -45,8 +43,6 @@ public class ImageManager {
 
     static {
         try {
-            BACKGROUND_IMAGE = Utils.getCachedImage("bg.jpg");
-
             HERO_IMAGE = Utils.getCachedImage("hero.png");
             MOB_ENEMY_IMAGE = Utils.getCachedImage("mob.png");
             ELITE_ENEMY_IMAGE = Utils.getCachedImage("elite.png");
@@ -66,7 +62,6 @@ public class ImageManager {
             CLASSNAME_IMAGE_MAP.put(BombProp.class.getName(), BOMB_PROP_IMAGE);
             CLASSNAME_IMAGE_MAP.put(BulletProp.class.getName(), BULLET_PROP_IMAGE);
             CLASSNAME_IMAGE_MAP.put(BossEnemy.class.getName(), BOSS_ENEMY_IMAGE);
-            CLASSNAME_IMAGE_MAP.put(BasicBackground.class.getName(), BACKGROUND_IMAGE);
 
         } catch (IOException e) {
             e.printStackTrace();
