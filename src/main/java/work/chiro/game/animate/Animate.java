@@ -145,12 +145,6 @@ public class Animate {
 
         public void updateSpeed() {
             getSpeed().set(getTarget().minus(getSource()).times(this.speed));
-            System.out.println("update speed to: " + getSpeed());
-        }
-
-        @Override
-        public Boolean update(double timeNow) {
-            return super.update(timeNow);
         }
     }
 

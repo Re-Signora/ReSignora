@@ -7,6 +7,7 @@ import work.chiro.game.prop.AbstractProp;
 import work.chiro.game.vector.Vec2;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 英雄飞机，游戏玩家操控
@@ -38,8 +39,16 @@ public class HeroAircraft extends AbstractAircraft {
         LinkedList<BaseBullet> res = new LinkedList<>();
         for (int i = 0; i < shootNum; i++) {
             // 子弹发射位置相对飞机位置向前偏移
-            BaseBullet baseBullet = new HeroBulletFactory(getPosition().copy(), i).create();
+            BaseBullet baseBullet = new HeroBulletFactory(getPosition().copy(), i, List.of()).create();
             res.add(baseBullet);
+        }
+        return res;
+    }
+
+    public LinkedList<BaseBullet> shoot(List<List<? extends AbstractAircraft>> allEnemyAircrafts) {
+        LinkedList<BaseBullet> res = new LinkedList<>();
+        for (int i = 0; i < shootNum; i++) {
+            res.addAll(new HeroBulletFactory(getPosition().copy(), i, allEnemyAircrafts).createMany());
         }
         return res;
     }

@@ -137,7 +137,7 @@ public class Game extends JPanel {
         // 英雄射击事件
         TimerController.add(new Timer(10, () -> {
             synchronized (heroBullets) {
-                heroBullets.addAll(heroAircraft.shoot());
+                heroBullets.addAll(heroAircraft.shoot(List.of(enemyAircrafts, bossAircrafts)));
             }
         }));
         // 产生精英敌机事件
