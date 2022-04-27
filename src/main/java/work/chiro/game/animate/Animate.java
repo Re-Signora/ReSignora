@@ -133,7 +133,7 @@ public class Animate {
         final private T target;
         final private double speed;
         LinearToTarget(T vecSource, T target, double speed, double timeStart) {
-            super(vecSource, target, AnimateVectorType.PositionLike, timeStart);
+            super(vecSource, target.copy(), AnimateVectorType.PositionLike, timeStart);
             this.target = target;
             this.speed = speed;
             updateSpeed();
