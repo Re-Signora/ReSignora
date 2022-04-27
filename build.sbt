@@ -1,13 +1,12 @@
-val projectVersion = "0.0.2"
+val projectVersion = "0.0.5"
 
-ThisBuild / scalaVersion     := "2.13.8"
 ThisBuild / version          := projectVersion
 ThisBuild / organization     := "work.chiro.game"
 
 lazy val AircraftWar = (project in file("."))
   .settings(
     name := "AircraftWar",
-    assembly / mainClass := Some("edu.hitsz.application.Main"),
+    assembly / mainClass := Some("work.chiro.game.application.Main"),
     assembly / assemblyJarName := f"aircraft-war-$projectVersion.jar",
     assembly / assemblyOption ~= {
       _.withIncludeBin(true)

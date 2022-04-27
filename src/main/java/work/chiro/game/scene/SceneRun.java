@@ -36,6 +36,8 @@ public class SceneRun {
                     parent.remove(panel);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                    System.out.println("Scene run: will quit!");
+                    System.exit(0);
                 }
             }
         }
