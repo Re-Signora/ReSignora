@@ -68,7 +68,7 @@ public class HeroBulletFactory extends BaseBulletFactory {
         for (int i = 0; i < required; i++) {
             res.add(createDirectBullet(i, required));
         }
-        res.addAll(createTrackingBullets(required + 10));
+        res.addAll(createTrackingBullets((required - 1) * 2));
         return res;
     }
 }

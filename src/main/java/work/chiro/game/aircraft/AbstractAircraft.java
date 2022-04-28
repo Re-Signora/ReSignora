@@ -23,6 +23,7 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
     protected int maxHp;
     protected int hp;
     protected int score;
+    private double lastPlayMusic = 0;
 
     public int getScore() {
         return score;
@@ -45,7 +46,11 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
             hp = 0;
             vanish();
         }
-        Utils.startMusic(MusicManager.MusicType.HERO_HIT);
+        double now = Utils.getTimeMills();
+        if (now - lastPlayMusic > 80) {
+            Utils.startMusic(MusicManager.MusicType.HERO_HIT);
+            lastPlayMusic = now;
+        }
     }
 
     public int getHp() {
@@ -63,6 +68,7 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
 
     /**
      * 飞机掉落道具
+     *
      * @return 返回所有的道具
      */
     public abstract LinkedList<AbstractProp> dropProps();

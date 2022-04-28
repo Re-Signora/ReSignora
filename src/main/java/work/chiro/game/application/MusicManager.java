@@ -13,7 +13,7 @@ public class MusicManager {
         BOMB_EXPLOSION,
         // 本机发射
         HERO_SHOOT,
-        // 本机被击中
+        // 飞机被击中
         HERO_HIT,
         // 道具生效
         PROPS,
