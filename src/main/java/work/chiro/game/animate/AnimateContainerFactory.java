@@ -16,8 +16,10 @@ public class AnimateContainerFactory {
         ConstSpeedLoop,
         // 固定速度值反弹
         ConstSpeedRebound,
-        // 线性到某目标
+        // 线性匀速到某目标
         ConstSpeedToTarget,
+        // 线性匀速到某目标
+        ToTarget,
         // 追踪目标
         ConstSpeedTracking,
         // 非线性

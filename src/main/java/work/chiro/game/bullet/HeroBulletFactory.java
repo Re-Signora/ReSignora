@@ -50,9 +50,9 @@ public class HeroBulletFactory extends BaseBulletFactory {
                             AnimateContainerFactory.ContainerType.ConstSpeedToTarget,
                             posCopy)
                             .setupTarget(nearEnemyAircrafts.get(i >= nearEnemyAircrafts.size() ? 0 : i).getPosition().copy())
-                            .setupSpeed(0.006)
+                            .setupSpeed(0.5)
                             .create(),
-                    2));
+                    1));
         }
         return res;
     }
@@ -68,7 +68,7 @@ public class HeroBulletFactory extends BaseBulletFactory {
         for (int i = 0; i < required; i++) {
             res.add(createDirectBullet(i, required));
         }
-        res.addAll(createTrackingBullets(required));
+        res.addAll(createTrackingBullets(required + 10));
         return res;
     }
 }

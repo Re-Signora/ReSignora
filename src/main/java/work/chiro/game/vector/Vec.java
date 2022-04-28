@@ -52,10 +52,4 @@ public class Vec extends VectorType implements VectorFactory<Vec> {
     public String toString() {
         return get().toString();
     }
-
-    public Scale getScale() {
-        final Scale sum = new Scale();
-        get().forEach(item -> sum.setX(sum.getX() + item * item));
-        return sum;
-    }
 }

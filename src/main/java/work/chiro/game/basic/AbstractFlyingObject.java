@@ -1,9 +1,10 @@
 package work.chiro.game.basic;
 
-import work.chiro.game.application.ImageManager;
-import work.chiro.game.utils.Utils;
 import work.chiro.game.aircraft.AbstractAircraft;
 import work.chiro.game.animate.AnimateContainer;
+import work.chiro.game.application.ImageManager;
+import work.chiro.game.application.Main;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec;
 import work.chiro.game.vector.Vec2;
@@ -85,12 +86,19 @@ public abstract class AbstractFlyingObject {
         this(posInit, new AnimateContainer(), null, null);
     }
 
+    private Boolean checkInBoundary() {
+        return !(getLocationX() > Main.WINDOW_WIDTH ||
+                getLocationX() < 0 ||
+                getLocationY() > Main.WINDOW_HEIGHT ||
+                getLocationY() < 0);
+    }
+
     /**
      * 可飞行对象根据速度移动
      * 若飞行对象触碰到横向边界，横向速度反向
      */
     public void forward() {
-        if (animateContainer.updateAll(Utils.getTimeMills())) {
+        if (animateContainer.updateAll(Utils.getTimeMills()) || !checkInBoundary()) {
             vanish();
         }
     }
@@ -240,6 +248,7 @@ public abstract class AbstractFlyingObject {
 
     /**
      * 是否将图像缓存在本类中
+     *
      * @return 是否缓存
      */
     protected Boolean keepImage() {

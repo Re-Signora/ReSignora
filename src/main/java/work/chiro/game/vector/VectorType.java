@@ -123,5 +123,11 @@ public class VectorType {
     public VectorType divide(double that) {
         return calc(VectorTypeFactory.fromDouble(getSize(), that), Operator.DIVIDE);
     }
+
+    public Scale getScale() {
+        final Scale sum = new Scale();
+        get().forEach(item -> sum.setX(sum.getX() + item * item));
+        return sum;
+    }
 }
 

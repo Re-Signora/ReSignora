@@ -246,7 +246,7 @@ public class Game extends JPanel {
         }
         Utils.startLoopMusic(MusicManager.MusicType.BGM);
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
-        Runnable task = () -> {
+        Runnable taskCalc = () -> {
             try {
                 TimerController.update();
                 // execute all
@@ -277,7 +277,7 @@ public class Game extends JPanel {
         };
         int timeInterval = 1;
         // 以固定延迟时间进行执行本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
-        future = executorService.scheduleWithFixedDelay(task, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        future = executorService.scheduleWithFixedDelay(taskCalc, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
     }
 
     /**

@@ -1,5 +1,6 @@
 package work.chiro.game.animate;
 
+import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.vector.VectorFactory;
 import work.chiro.game.vector.VectorType;
@@ -147,7 +148,7 @@ public class Animate {
         LinearToTarget(T vecSource, T vecTarget, double speed, double timeStart) {
             super(vecSource, vecTarget.copy(), AnimateVectorType.PositionLike, timeStart);
             this.vecTarget = vecTarget;
-            this.speed = speed;
+            this.speed = speed * 1000;
             updateSpeed();
         }
 
@@ -157,7 +158,12 @@ public class Animate {
         }
 
         public void updateSpeed() {
-            getSpeed().set(getVecTarget().minus(getSource()).times(this.speed));
+            T delta = getDelta();
+            Scale sum = delta.getScale();
+            if (sum.getX() == 0) {
+                return;
+            }
+            getSpeed().set(getNewVecInstance().fromVector(delta.times(this.speed / sum.getX())));
         }
 
         @Override
