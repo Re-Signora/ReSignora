@@ -10,6 +10,7 @@ import work.chiro.game.vector.Vec;
 import work.chiro.game.vector.Vec2;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -66,7 +67,7 @@ public abstract class AbstractFlyingObject {
         this.position = posInit;
         this.animateContainer = animateContainer;
         this.size = sizeInit;
-        this.rotation = rotationInit;
+        this.rotation = updateRotation(rotationInit);
     }
 
     public AbstractFlyingObject(
@@ -233,15 +234,48 @@ public abstract class AbstractFlyingObject {
         return size;
     }
 
-    public Scale getRotation() {
+    public Scale updateRotation() {
+        return animateContainer.getRotation();
+    }
+
+    public Scale updateRotation(Scale rotationNew) {
+        if (rotationNew == null) {
+            return updateRotation();
+        } else {
+            return rotationNew;
+        }
+    }
+
+    public Scale getRotation(boolean update) {
+        if (update) {
+            rotation.set(updateRotation());
+        }
         return rotation;
     }
 
-    public void draw(Graphics g, boolean center) {
+    public Scale getRotation() {
+        return getRotation(false);
+    }
+
+    private void drawNoRotation(Graphics g, boolean center) {
         g.drawImage(getImage(),
                 (int) (getLocationX() - (center ? getWidth() / 2 : 0)), (int) (getLocationY() - (center ? getHeight() / 2 : 0)),
                 (int) getWidth(), (int) getHeight(),
                 null);
+    }
+
+    public void draw(Graphics g, boolean center) {
+        if (getRotation().getX() == 0) {
+            drawNoRotation(g, center);
+        } else {
+            AffineTransform af = AffineTransform.getTranslateInstance(
+                    getLocationX() - (center ? getWidth() / 2 : 0),
+                    getLocationY() - (center ? getHeight() / 2 : 0)
+            );
+            af.rotate(getRotation().getX(), getWidth() / 2, getHeight() / 2);
+            Graphics2D graphics2D = (Graphics2D) g;
+            graphics2D.drawImage(getImage(), af, null);
+        }
     }
 
     public void draw(Graphics g) {

@@ -33,6 +33,7 @@ public class Game extends JPanel {
     final static Boolean ENABLE_SHOOT_MUSIC = false;
     public static Boolean musicEnable = true;
     final static Boolean DEBUG = true;
+    // final static Boolean DEBUG = false;
 
     /**
      * 创建线程的工厂函数
