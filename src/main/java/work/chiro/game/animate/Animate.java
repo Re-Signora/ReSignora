@@ -129,13 +129,13 @@ public class Animate {
         }
     }
 
-    protected static interface AnimateWithTarget<T extends VectorType> {
+    protected interface AnimateWithTarget<T extends VectorType> {
         /**
          * 获得 vecTarget
          *
          * @return vecTarget
          */
-        public T getVecTarget();
+        T getVecTarget();
     }
 
     public static class LinearToTarget<T extends VectorType & VectorFactory<T>>
@@ -196,10 +196,6 @@ public class Animate {
             this(vecSource, vecTarget, animateVectorType, timeStart, timeSpan, true);
         }
 
-        NonLinear(T vecSource, T vecTarget, AnimateVectorType animateVectorType, double timeStart) {
-            this(vecSource, vecTarget, animateVectorType, timeStart, 0);
-        }
-
         @Override
         public Boolean isDone(double timeNow) {
             if (willStop && timeSpan > 0) {
@@ -212,11 +208,7 @@ public class Animate {
         @Override
         public Boolean update(double timeNow) {
             double t = timeNow - timeStart;
-            if (timeSpan != 0) {
-                getVector().set(getSource().plus(getDelta().times(t * t / (timeSpan * timeSpan))));
-            } else {
-                getVector().set(getSource().plus(getDelta().times(t * t)));
-            }
+            getVector().set(getSource().plus(getDelta().times(t * t / (timeSpan * timeSpan))));
             return isDone(timeNow);
         }
 
@@ -224,11 +216,7 @@ public class Animate {
         public T getSpeed(double timeNow) {
             double t = timeNow - timeStart;
             if (getAnimateVectorType() == AnimateVectorType.PositionLike && !isDone(timeNow)) {
-                if (timeSpan != 0) {
-                    return getNewVecInstance().fromVector(getDelta().times(2 * t / (timeSpan * timeNow)));
-                } else {
-                    return getNewVecInstance().fromVector(getDelta().times(2 * t));
-                }
+                return getNewVecInstance().fromVector(getDelta().times(2 * t / (timeSpan * timeNow)));
             } else {
                 return getNewVecInstance().getNewInstance();
             }

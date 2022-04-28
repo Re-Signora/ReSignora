@@ -39,18 +39,14 @@ public class HeroAircraft extends AbstractAircraft {
         LinkedList<BaseBullet> res = new LinkedList<>();
         for (int i = 0; i < shootNum; i++) {
             // 子弹发射位置相对飞机位置向前偏移
-            BaseBullet baseBullet = new HeroBulletFactory(getPosition().copy(), i, List.of()).create();
+            BaseBullet baseBullet = new HeroBulletFactory(getPosition().copy(), List.of()).create();
             res.add(baseBullet);
         }
         return res;
     }
 
     public LinkedList<BaseBullet> shoot(List<List<? extends AbstractAircraft>> allEnemyAircrafts) {
-        LinkedList<BaseBullet> res = new LinkedList<>();
-        for (int i = 0; i < shootNum; i++) {
-            res.addAll(new HeroBulletFactory(getPosition().copy(), i, allEnemyAircrafts).createMany());
-        }
-        return res;
+        return new LinkedList<>(new HeroBulletFactory(getPosition(), allEnemyAircrafts).createMany(getShootNum()));
     }
 
     @Override

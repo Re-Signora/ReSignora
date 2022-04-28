@@ -4,8 +4,8 @@ import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.application.MusicManager;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.EnemyBulletFactory;
-import work.chiro.game.utils.Utils;
 import work.chiro.game.prop.AbstractProp;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
 import java.util.LinkedList;
@@ -31,7 +31,6 @@ public class BossEnemy extends AbstractAircraft {
     @Override
     public LinkedList<BaseBullet> shoot() {
         LinkedList<BaseBullet> ret = new LinkedList<>();
-        ret.add(new EnemyBulletFactory(getPosition().copy(), EnemyBulletFactory.BulletType.Scatter).create());
         ret.add(new EnemyBulletFactory(getPosition().copy(), EnemyBulletFactory.BulletType.Tracking).create());
         return ret;
     }

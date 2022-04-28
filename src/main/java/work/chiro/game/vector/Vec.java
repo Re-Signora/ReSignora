@@ -55,7 +55,7 @@ public class Vec extends VectorType implements VectorFactory<Vec> {
 
     public Scale getScale() {
         final Scale sum = new Scale();
-        get().forEach(item -> sum.plus(item * item));
+        get().forEach(item -> sum.setX(sum.getX() + item * item));
         return sum;
     }
 }

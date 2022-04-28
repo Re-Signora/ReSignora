@@ -32,6 +32,7 @@ public class Game extends JPanel {
     static Difficulty difficulty = Difficulty.Easy;
     final static Boolean ENABLE_SHOOT_MUSIC = false;
     public static Boolean musicEnable = true;
+    final static Boolean DEBUG = true;
 
     /**
      * 创建线程的工厂函数
@@ -265,7 +266,7 @@ public class Game extends JPanel {
                 // 每个时刻重绘界面
                 repaint();
                 // 游戏结束检查和处理
-                if (heroAircraft.getHp() <= 0) {
+                if (heroAircraft.getHp() <= 0 && !DEBUG) {
                     onGameOver();
                 }
                 TimerController.done();

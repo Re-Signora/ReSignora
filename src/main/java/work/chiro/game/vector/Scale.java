@@ -20,6 +20,10 @@ public class Scale extends Vec {
         return get().get(0);
     }
 
+    public void setX(double x) {
+        get().set(0, x);
+    }
+
     @Override
     public Scale copy() {
         return new Scale(getX());

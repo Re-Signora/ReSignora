@@ -87,7 +87,6 @@ public class AnimateContainerFactory {
     public AnimateContainerFactory setupTimeSpan(double timeSpan) {
         assert containerType == ContainerType.ConstSpeedRebound ||
                 containerType == ContainerType.NonLinearTo;
-        ;
         this.timeSpan = timeSpan;
         return this;
     }
@@ -111,7 +110,7 @@ public class AnimateContainerFactory {
                 return new AnimateContainer(List.of(new Animate.LinearTracking<>(position, target, speed1d, Utils.getTimeMills())));
             case NonLinearTo:
                 assert target != null;
-                return new AnimateContainer(List.of(new Animate.NonLinear<>(position, target, AnimateVectorType.PositionLike, Utils.getTimeMills(), timeSpan)));
+                return new AnimateContainer(List.of(new Animate.NonLinear<>(position, target, AnimateVectorType.PositionLike, Utils.getTimeMills(), timeSpan, false)));
             default:
                 break;
         }

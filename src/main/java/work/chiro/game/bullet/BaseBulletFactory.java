@@ -2,6 +2,7 @@ package work.chiro.game.bullet;
 
 import work.chiro.game.vector.Vec2;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ public abstract class BaseBulletFactory {
      */
     abstract BaseBullet create();
 
-    public List<BaseBullet> createMany() {
-        return List.of(create());
+    public List<BaseBullet> createMany(int requireNum) {
+        return Collections.nCopies(requireNum, create());
     }
 }
