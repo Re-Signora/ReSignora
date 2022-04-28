@@ -6,9 +6,14 @@ package work.chiro.game.scene;
 public class Scene {
     final private AbstractSceneRunnable sceneRunnable;
     final private String name;
-    public Scene(String name, AbstractSceneRunnable sceneRunnable) {
+    public Scene(String name, AbstractSceneClient client) {
         this.name = name;
-        this.sceneRunnable = sceneRunnable;
+        this.sceneRunnable = new AbstractSceneRunnable() {
+            @Override
+            public AbstractSceneClient getClient() {
+                return client;
+            }
+        };
     }
 
     public AbstractSceneRunnable getSceneRunnable() {

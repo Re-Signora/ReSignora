@@ -1,7 +1,5 @@
 package work.chiro.game.application;
 
-import work.chiro.game.scene.AbstractSceneClient;
-import work.chiro.game.scene.AbstractSceneRunnable;
 import work.chiro.game.scene.Scene;
 import work.chiro.game.scene.SceneRun;
 
@@ -35,24 +33,9 @@ public class Main {
 
         try {
             SceneRun.newInstance(frame, Arrays.asList(
-                            new Scene("Main Window", new AbstractSceneRunnable() {
-                                @Override
-                                public AbstractSceneClient getClient() {
-                                    return MainWindow.getInstance();
-                                }
-                            }),
-                            new Scene("Game Window", new AbstractSceneRunnable() {
-                                @Override
-                                public AbstractSceneClient getClient() {
-                                    return GameWindow.getInstance();
-                                }
-                            }),
-                            new Scene("History Window", new AbstractSceneRunnable() {
-                                @Override
-                                public AbstractSceneClient getClient() {
-                                    return HistoryWindow.getInstance();
-                                }
-                            })
+                            new Scene("Main Window", MainWindow.getInstance()),
+                            new Scene("Game Window", GameWindow.getInstance()),
+                            new Scene("History Window", HistoryWindow.getInstance())
                     ))
                     .setNextScene(MainWindow.class)
                     .run();
