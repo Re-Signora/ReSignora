@@ -1,11 +1,13 @@
 package work.chiro.game.aircraft;
 
 import work.chiro.game.animate.AnimateContainer;
+import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.HeroBulletFactory;
 import work.chiro.game.prop.AbstractProp;
 import work.chiro.game.vector.Vec2;
 
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,9 +21,11 @@ public class HeroAircraft extends AbstractAircraft {
      * 子弹一次发射数量
      */
     private int shootNum = 1;
+    final private AircraftHeroBox box;
 
     public HeroAircraft(Vec2 posInit, AnimateContainer animateContainer, int hp) {
         super(posInit, animateContainer, hp, 0);
+        box = new AircraftHeroBox(posInit, new Vec2(12, 12));
     }
 
     @Override
@@ -64,5 +68,21 @@ public class HeroAircraft extends AbstractAircraft {
 
     public int getShootNum() {
         return shootNum;
+    }
+
+    @Override
+    public boolean crash(AbstractFlyingObject abstractFlyingObject) {
+        return box.crash(abstractFlyingObject);
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        super.draw(g);
+        box.draw(g);
+    }
+
+    @Override
+    public void vanish() {
+        // 保持存在
     }
 }

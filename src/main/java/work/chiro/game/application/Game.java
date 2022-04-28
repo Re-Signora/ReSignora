@@ -62,7 +62,7 @@ public class Game extends JPanel {
     private final List<BaseBullet> enemyBullets = new LinkedList<>();
     private final List<AbstractProp> props = new LinkedList<>();
     private final List<List<? extends AbstractFlyingObject>> allObjects = Arrays.asList(
-            backgrounds, heroBullets, enemyBullets, enemyAircrafts, bossAircrafts, heroAircrafts, props
+            backgrounds, heroBullets, heroAircrafts, enemyBullets, enemyAircrafts, bossAircrafts, props
     );
     private boolean gameOverFlag = false;
     private boolean startedFlag = false;
@@ -321,7 +321,7 @@ public class Game extends JPanel {
                     }
                 }
                 // 英雄机 与 敌机 相撞，均损毁
-                if (enemyAircraft.crash(heroAircraft) || heroAircraft.crash(enemyAircraft)) {
+                if (heroAircraft.crash(enemyAircraft)) {
                     enemyAircraft.vanish();
                     heroAircraft.decreaseHp(Integer.MAX_VALUE);
                 }
@@ -333,7 +333,7 @@ public class Game extends JPanel {
             if (bullet.notValid()) {
                 continue;
             }
-            if (bullet.crash(heroAircraft)) {
+            if (heroAircraft.crash(bullet)) {
                 heroAircraft.decreaseHp(bullet.getPower());
                 bullet.vanish();
             }

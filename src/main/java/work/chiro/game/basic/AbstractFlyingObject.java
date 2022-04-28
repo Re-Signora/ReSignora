@@ -118,7 +118,7 @@ public abstract class AbstractFlyingObject {
      * @param abstractFlyingObject 撞击对方
      * @return true: 我方被击中; false 我方未被击中
      */
-    public boolean crash(AbstractFlyingObject abstractFlyingObject) {
+    public boolean crash(AbstractFlyingObject abstractFlyingObject, double locationX, double locationY, double width, double height) {
         // 缩放因子，用于控制 y轴方向区域范围
         int factor = this instanceof AbstractAircraft ? 2 : 1;
         int fFactor = abstractFlyingObject instanceof AbstractAircraft ? 2 : 1;
@@ -128,10 +128,14 @@ public abstract class AbstractFlyingObject {
         double fWidth = abstractFlyingObject.getWidth();
         double fHeight = abstractFlyingObject.getHeight();
 
-        return x + (fWidth + this.getWidth()) / 2 > getLocationX()
-                && x - (fWidth + this.getWidth()) / 2 < getLocationX()
-                && y + (fHeight / fFactor + this.getHeight() / factor) / 2 > getLocationY()
-                && y - (fHeight / fFactor + this.getHeight() / factor) / 2 < getLocationY();
+        double w = (fWidth + width);
+        double h = (fHeight / fFactor + height / factor) / 2;
+        return x + w / 2 > locationX && x - w / 2 < locationX
+                && y + h > locationY && y - h < locationY;
+    }
+
+    public boolean crash(AbstractFlyingObject abstractFlyingObject) {
+        return crash(abstractFlyingObject, getLocationX(), getLocationY(), getWidth(), getHeight());
     }
 
     public double getLocationX() {
@@ -178,6 +182,10 @@ public abstract class AbstractFlyingObject {
     }
 
     public double getWidth() {
+        if (getSize() != null) {
+            width = getSize().getX();
+            return width;
+        }
         if (width == -1) {
             // 若未设置，则查询图片宽度并设置
             if (keepImage()) {
@@ -190,6 +198,10 @@ public abstract class AbstractFlyingObject {
     }
 
     public double getHeight() {
+        if (getSize() != null) {
+            height = getSize().getX();
+            return height;
+        }
         if (height == -1) {
             // 若未设置，则查询图片高度并设置
             if (keepImage()) {
@@ -225,10 +237,15 @@ public abstract class AbstractFlyingObject {
         return rotation;
     }
 
-    public void draw(Graphics g) {
+    public void draw(Graphics g, boolean center) {
         g.drawImage(getImage(),
-                (int) (getLocationX() - image.getWidth() / 2), (int) (getLocationY() - image.getHeight() / 2),
+                (int) (getLocationX() - (center ? getWidth() / 2 : 0)), (int) (getLocationY() - (center ? getHeight() / 2 : 0)),
+                (int) getWidth(), (int) getHeight(),
                 null);
+    }
+
+    public void draw(Graphics g) {
+        draw(g, true);
     }
 
     protected BasicCallback onVanish = null;

@@ -95,6 +95,8 @@ public class AnimateContainerFactory {
 
     public AnimateContainer create() {
         switch (containerType) {
+            case Empty:
+                return new AnimateContainer();
             case ConstSpeed:
                 assert speed2d != null;
                 return new AnimateContainer(List.of(new Animate.Linear<>(position, speed2d, AnimateVectorType.PositionLike, Utils.getTimeMills())));

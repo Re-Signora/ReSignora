@@ -1,10 +1,7 @@
 package work.chiro.game.application;
 
 
-import work.chiro.game.aircraft.BossEnemy;
-import work.chiro.game.aircraft.EliteEnemy;
-import work.chiro.game.aircraft.HeroAircraft;
-import work.chiro.game.aircraft.MobEnemy;
+import work.chiro.game.aircraft.*;
 import work.chiro.game.bullet.EnemyBullet;
 import work.chiro.game.bullet.HeroBullet;
 import work.chiro.game.prop.BloodProp;
@@ -40,6 +37,7 @@ public class ImageManager {
     public static BufferedImage BLOOD_PROP_IMAGE;
     public static BufferedImage BOMB_PROP_IMAGE;
     public static BufferedImage BULLET_PROP_IMAGE;
+    public static BufferedImage BOX_HERO;
 
     static {
         try {
@@ -52,6 +50,7 @@ public class ImageManager {
             BLOOD_PROP_IMAGE = Utils.getCachedImage("prop_blood.png");
             BOMB_PROP_IMAGE = Utils.getCachedImage("prop_bomb.png");
             BULLET_PROP_IMAGE = Utils.getCachedImage("prop_bullet.png");
+            BOX_HERO = Utils.getCachedImage("box_hero.png");
 
             CLASSNAME_IMAGE_MAP.put(HeroAircraft.class.getName(), HERO_IMAGE);
             CLASSNAME_IMAGE_MAP.put(MobEnemy.class.getName(), MOB_ENEMY_IMAGE);
@@ -62,6 +61,7 @@ public class ImageManager {
             CLASSNAME_IMAGE_MAP.put(BombProp.class.getName(), BOMB_PROP_IMAGE);
             CLASSNAME_IMAGE_MAP.put(BulletProp.class.getName(), BULLET_PROP_IMAGE);
             CLASSNAME_IMAGE_MAP.put(BossEnemy.class.getName(), BOSS_ENEMY_IMAGE);
+            CLASSNAME_IMAGE_MAP.put(AircraftHeroBox.class.getName(), BOX_HERO);
 
         } catch (IOException e) {
             e.printStackTrace();

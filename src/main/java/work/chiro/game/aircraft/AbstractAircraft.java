@@ -47,7 +47,7 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
             vanish();
         }
         double now = Utils.getTimeMills();
-        if (now - lastPlayMusic > 80) {
+        if (now - lastPlayMusic > 100) {
             Utils.startMusic(MusicManager.MusicType.HERO_HIT);
             lastPlayMusic = now;
         }
