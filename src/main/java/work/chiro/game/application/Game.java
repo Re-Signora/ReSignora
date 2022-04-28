@@ -7,6 +7,7 @@ import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.dao.HistoryImpl;
 import work.chiro.game.dao.HistoryObjectFactory;
 import work.chiro.game.prop.AbstractProp;
+import work.chiro.game.scene.SceneRun;
 import work.chiro.game.timer.Timer;
 import work.chiro.game.timer.TimerController;
 import work.chiro.game.utils.Utils;
@@ -32,8 +33,8 @@ public class Game extends JPanel {
     static Difficulty difficulty = Difficulty.Easy;
     final static Boolean ENABLE_SHOOT_MUSIC = false;
     public static Boolean musicEnable = true;
-    final static Boolean DEBUG = true;
-    // final static Boolean DEBUG = false;
+    // final static Boolean DEBUG = true;
+    final static Boolean DEBUG = false;
 
     /**
      * 创建线程的工厂函数
@@ -71,8 +72,7 @@ public class Game extends JPanel {
     private final int bossScoreThreshold = 10;
     private int nextBossScore = score + bossScoreThreshold;
     private final Object waitObject = new Object();
-    @SuppressWarnings("rawtypes")
-    private Future future = null;
+    private Future<?> future = null;
     private Font myFontBase = null;
     private String lastProvidedName = null;
     private final HeroController heroController;
@@ -230,6 +230,7 @@ public class Game extends JPanel {
             e.printStackTrace();
             System.out.println("Input exception: " + e);
         } finally {
+            SceneRun.getInstance().setNextScene(HistoryWindow.class);
             synchronized (waitObject) {
                 waitObject.notify();
             }

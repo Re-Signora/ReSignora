@@ -9,7 +9,7 @@ public abstract class AbstractSceneRunnable implements Runnable {
      *
      * @return client
      */
-    public abstract SceneClient getClient();
+    public abstract AbstractSceneClient getClient();
 
     @Override
     public void run() {

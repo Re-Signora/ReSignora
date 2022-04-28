@@ -2,7 +2,7 @@ package work.chiro.game.application;
 
 import work.chiro.game.dao.HistoryImpl;
 import work.chiro.game.dao.HistoryObject;
-import work.chiro.game.scene.SceneClient;
+import work.chiro.game.scene.AbstractSceneClient;
 import work.chiro.game.utils.Utils;
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * @author Chiro
  */
-public class HistoryWindow implements SceneClient {
+public class HistoryWindow extends AbstractSceneClient {
     private static HistoryWindow historyWindow = null;
     private final JPanel mainPanel = new JPanel();
     private final JLabel difficultyLabel = new JLabel();
@@ -28,7 +28,7 @@ public class HistoryWindow implements SceneClient {
 
     public HistoryWindow(boolean enableRestart) {
         JButton restartButton = new JButton();
-        restartButton.addActionListener(e -> nextScene());
+        restartButton.addActionListener(e -> nextScene(MainWindow.class));
         restartButton.setText("重新开始");
         JButton deleteButton = new JButton();
         deleteButton.setText("删除项目");
@@ -135,17 +135,5 @@ public class HistoryWindow implements SceneClient {
     @Override
     public JPanel getPanel() {
         return mainPanel;
-    }
-
-    @Override
-    public Object getWaitObject() {
-        return waitObject;
-    }
-
-    @Override
-    public void nextScene() {
-        synchronized (waitObject) {
-            waitObject.notify();
-        }
     }
 }

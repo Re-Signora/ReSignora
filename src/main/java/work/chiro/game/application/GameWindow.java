@@ -1,13 +1,13 @@
 package work.chiro.game.application;
 
-import work.chiro.game.scene.SceneClient;
+import work.chiro.game.scene.AbstractSceneClient;
 
 import javax.swing.*;
 
 /**
  * @author Chiro
  */
-public class GameWindow implements SceneClient {
+public class GameWindow extends AbstractSceneClient {
     static GameWindow gameWindow = null;
 
     public static GameWindow getInstance() {
@@ -48,8 +48,8 @@ public class GameWindow implements SceneClient {
     }
 
     @Override
-    public void nextScene() {
-        // 在 Game 中自己调用了 obj.notify() 了
+    public void nextScene(Class<? extends AbstractSceneClient> clazz) {
+        // Game 中自己调用
     }
 
     public void clearGameInstance() {

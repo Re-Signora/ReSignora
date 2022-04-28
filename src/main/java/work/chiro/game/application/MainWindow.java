@@ -1,6 +1,6 @@
 package work.chiro.game.application;
 
-import work.chiro.game.scene.SceneClient;
+import work.chiro.game.scene.AbstractSceneClient;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,11 +10,10 @@ import java.awt.event.WindowEvent;
 /**
  * @author Chiro
  */
-public class MainWindow implements SceneClient {
+public class MainWindow extends AbstractSceneClient {
     private static MainWindow mainWindow = null;
     private final JCheckBox musicOnCheckBox = new JCheckBox();
     private final JPanel mainPanel = new JPanel();
-    private final Object waitObject = new Object();
 
     public static MainWindow getInstance() {
         if (mainWindow == null) {
@@ -30,21 +29,21 @@ public class MainWindow implements SceneClient {
         JButton easyModeButton = new JButton();
         easyModeButton.addActionListener(e -> {
             Game.difficulty = Difficulty.Easy;
-            nextScene();
+            nextScene(GameWindow.class);
         });
         easyModeButton.setText("简单模式");
 
         JButton mediumModeButton = new JButton();
         mediumModeButton.addActionListener(e -> {
             Game.difficulty = Difficulty.Medium;
-            nextScene();
+            nextScene(GameWindow.class);
         });
         mediumModeButton.setText("普通模式");
 
         JButton hardModeButton = new JButton();
         hardModeButton.addActionListener(e -> {
             Game.difficulty = Difficulty.Hard;
-            nextScene();
+            nextScene(GameWindow.class);
         });
         hardModeButton.setText("困难模式");
 
@@ -88,17 +87,5 @@ public class MainWindow implements SceneClient {
     @Override
     public JPanel getPanel() {
         return mainPanel;
-    }
-
-    @Override
-    public Object getWaitObject() {
-        return waitObject;
-    }
-
-    @Override
-    public void nextScene() {
-        synchronized (waitObject) {
-            waitObject.notify();
-        }
     }
 }

@@ -1,8 +1,8 @@
 package work.chiro.game.application;
 
+import work.chiro.game.scene.AbstractSceneClient;
 import work.chiro.game.scene.AbstractSceneRunnable;
 import work.chiro.game.scene.Scene;
-import work.chiro.game.scene.SceneClient;
 import work.chiro.game.scene.SceneRun;
 
 import javax.swing.*;
@@ -33,32 +33,32 @@ public class Main {
                 WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        while (true) {
-            try {
-                new SceneRun(frame, Arrays.asList(
-                        new Scene("Main Window", new AbstractSceneRunnable() {
-                            @Override
-                            public SceneClient getClient() {
-                                return MainWindow.getInstance();
-                            }
-                        }),
-                        new Scene("Game Window", new AbstractSceneRunnable() {
-                            @Override
-                            public SceneClient getClient() {
-                                return GameWindow.getInstance();
-                            }
-                        }),
-                        new Scene("History Window", new AbstractSceneRunnable() {
-                            @Override
-                            public SceneClient getClient() {
-                                return HistoryWindow.getInstance();
-                            }
-                        })
-                )).run();
-            } catch (SceneRun.SceneRunDoneException e) {
-                System.out.println("run done.");
-                break;
-            }
+        try {
+            SceneRun.newInstance(frame, Arrays.asList(
+                            new Scene("Main Window", new AbstractSceneRunnable() {
+                                @Override
+                                public AbstractSceneClient getClient() {
+                                    return MainWindow.getInstance();
+                                }
+                            }),
+                            new Scene("Game Window", new AbstractSceneRunnable() {
+                                @Override
+                                public AbstractSceneClient getClient() {
+                                    return GameWindow.getInstance();
+                                }
+                            }),
+                            new Scene("History Window", new AbstractSceneRunnable() {
+                                @Override
+                                public AbstractSceneClient getClient() {
+                                    return HistoryWindow.getInstance();
+                                }
+                            })
+                    ))
+                    .setNextScene(MainWindow.class)
+                    .run();
+        } catch (SceneRun.SceneRunDoneException e) {
+            System.out.println("All scene run done.");
         }
+        System.exit(0);
     }
 }
