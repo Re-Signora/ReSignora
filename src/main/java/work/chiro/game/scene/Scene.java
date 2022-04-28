@@ -16,6 +16,10 @@ public class Scene {
         };
     }
 
+    public String getName() {
+        return name;
+    }
+
     public AbstractSceneRunnable getSceneRunnable() {
         return sceneRunnable;
     }

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * @author Chiro
  */
 public class SceneRun {
-    final private JFrame parent;
+    final private JFrame frame;
     final private LinkedList<Scene> sceneList = new LinkedList<>();
     public static SceneRun instance;
     private Scene nextScene = null;
@@ -29,8 +29,8 @@ public class SceneRun {
         return instance;
     }
 
-    protected SceneRun(JFrame parent, List<Scene> sceneList) {
-        this.parent = parent;
+    protected SceneRun(JFrame frame, List<Scene> sceneList) {
+        this.frame = frame;
         this.sceneList.addAll(sceneList);
     }
 
@@ -46,13 +46,14 @@ public class SceneRun {
         synchronized (nowRunning) {
             try {
                 JPanel panel = nextScene.getSceneRunnable().getClient().getPanel();
+                frame.setTitle("Aircraft War - " + nextScene.getName());
                 nextScene = null;
-                parent.setContentPane(panel);
-                parent.setVisible(true);
+                frame.setContentPane(panel);
+                frame.setVisible(true);
                 nowRunning.setDaemon(false);
                 nowRunning.start();
                 nowRunning.wait();
-                parent.remove(panel);
+                frame.remove(panel);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 System.out.println("Scene run: will quit!");
@@ -60,7 +61,7 @@ public class SceneRun {
             }
         }
         System.out.println("Scene Run done");
-        parent.setVisible(false);
+        frame.setVisible(false);
         if (nextScene != null) {
             run();
         }
