@@ -36,8 +36,15 @@ public class HistoryWindow implements SceneClient {
             @Override
             synchronized public void actionPerformed(ActionEvent e) {
                 int[] selectedRows = historyTable.getSelectedRows();
+                if (selectedRows.length == 0) {
+                    return;
+                }
                 List<HistoryObject> data = HistoryImpl.getInstance().getAll();
                 LinkedList<HistoryObject> selected = new LinkedList<>();
+                int willDelete = JOptionPane.showConfirmDialog(null, "删除" + (selectedRows.length == 1 ? "该" : "这些") + "记录吗?");
+                if (willDelete != JOptionPane.YES_OPTION) {
+                    return;
+                }
                 for (int selectedRow : selectedRows) {
                     System.out.println("selectedRow = " + selectedRow + ", data = " + data.get(selectedRow));
                     selected.add(data.get(selectedRow));
