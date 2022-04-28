@@ -23,7 +23,7 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
     protected int maxHp;
     protected int hp;
     protected int score;
-    private double lastPlayMusic = 0;
+    static private double lastPlayMusic = 0;
 
     public int getScore() {
         return score;
