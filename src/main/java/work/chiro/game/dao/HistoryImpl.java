@@ -1,5 +1,7 @@
 package work.chiro.game.dao;
 
+import work.chiro.game.application.Difficulty;
+
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -135,5 +137,12 @@ public class HistoryImpl implements HistoryDAO {
     synchronized public void set(List<HistoryObject> data) {
         this.data = data;
         dump();
+    }
+
+    synchronized public List<HistoryObject> getByDifficulty(Difficulty difficulty) {
+        if (difficulty == null) {
+            return getAll();
+        }
+        return getAll().stream().filter(historyObject -> historyObject.getDifficulty() == difficulty).collect(Collectors.toList());
     }
 }

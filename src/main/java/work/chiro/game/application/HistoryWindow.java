@@ -39,7 +39,7 @@ public class HistoryWindow extends AbstractSceneClient {
                 if (selectedRows.length == 0) {
                     return;
                 }
-                List<HistoryObject> data = HistoryImpl.getInstance().getAll();
+                List<HistoryObject> data = HistoryImpl.getInstance().getByDifficulty(selectedDifficulty);
                 LinkedList<HistoryObject> selected = new LinkedList<>();
                 int willDelete = JOptionPane.showConfirmDialog(null, "删除" + (selectedRows.length == 1 ? "该" : "这些") + "记录吗?");
                 if (willDelete != JOptionPane.YES_OPTION) {
