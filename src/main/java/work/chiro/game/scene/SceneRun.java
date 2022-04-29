@@ -3,6 +3,7 @@ package work.chiro.game.scene;
 import work.chiro.game.application.Game;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +16,8 @@ public class SceneRun {
     final private LinkedList<Scene> sceneList = new LinkedList<>();
     public static SceneRun instance;
     private Scene nextScene = null;
+    private final CardLayout cardLayout;
+    private final JPanel wrapperPanel;
 
     public static SceneRun newInstance(JFrame parent, List<Scene> sceneList) {
         if (instance == null) {
@@ -32,6 +35,12 @@ public class SceneRun {
     protected SceneRun(JFrame frame, List<Scene> sceneList) {
         this.frame = frame;
         this.sceneList.addAll(sceneList);
+        // 使用 CardLayout 切换 Panel
+        cardLayout = new CardLayout(0, 0);
+        wrapperPanel = new JPanel(cardLayout);
+        sceneList.forEach(scene -> wrapperPanel.add(scene.getSceneRunnable().getClient().getPanel(), scene.getSceneRunnable().getClient().getClass().getName()));
+        frame.setContentPane(wrapperPanel);
+        frame.setVisible(true);
     }
 
     public static class SceneRunDoneException extends Exception {
@@ -45,15 +54,14 @@ public class SceneRun {
         //noinspection SynchronizationOnLocalVariableOrMethodParameter
         synchronized (nowRunning) {
             try {
-                JPanel panel = nextScene.getSceneRunnable().getClient().getPanel();
                 frame.setTitle("Aircraft War - " + nextScene.getName());
-                nextScene = null;
-                frame.setContentPane(panel);
-                frame.setVisible(true);
+                System.out.println("will show: " + nextScene.getSceneRunnable().getClient().getClass().getName());
+                cardLayout.show(wrapperPanel, nextScene.getSceneRunnable().getClient().getClass().getName());
                 nowRunning.setDaemon(false);
                 nowRunning.start();
+                nextScene.getSceneRunnable().getClient().startAction();
+                nextScene = null;
                 nowRunning.wait();
-                frame.remove(panel);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 System.out.println("Scene run: will quit!");
@@ -61,7 +69,6 @@ public class SceneRun {
             }
         }
         System.out.println("Scene Run done");
-        frame.setVisible(false);
         if (nextScene != null) {
             run();
         }

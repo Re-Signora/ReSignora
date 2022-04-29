@@ -32,13 +32,6 @@ public class GameWindow extends AbstractSceneClient {
                 game = new Game();
             }
         }
-        if (game.getStartedFlag() && game.getGameOverFlag()) {
-            game.resetStates();
-            game.action();
-        }
-        if (!game.getStartedFlag()) {
-            game.action();
-        }
         return game;
     }
 
@@ -54,5 +47,16 @@ public class GameWindow extends AbstractSceneClient {
 
     public void clearGameInstance() {
         game = null;
+    }
+
+    @Override
+    public void startAction() {
+        if (game.getStartedFlag() && game.getGameOverFlag()) {
+            game.resetStates();
+            game.action();
+        }
+        if (!game.getStartedFlag()) {
+            game.action();
+        }
     }
 }

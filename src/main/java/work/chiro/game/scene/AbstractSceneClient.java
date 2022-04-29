@@ -33,4 +33,10 @@ public abstract class AbstractSceneClient {
             waitObject.notify();
         }
     }
+
+    /**
+     * 启动该 Scene 的启动函数
+     */
+    public void startAction() {
+    }
 }
