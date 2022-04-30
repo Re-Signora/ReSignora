@@ -23,7 +23,6 @@ public class HistoryWindow extends AbstractSceneClient {
     private final JLabel difficultyLabel = new JLabel();
     private final JTable historyTable = new JTable();
     private final JComboBox<String> selectDifficultyComboBox = new JComboBox<>();
-    private final Object waitObject = new Object();
     private Difficulty selectedDifficulty = null;
 
     public HistoryWindow(boolean enableRestart) {

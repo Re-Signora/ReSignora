@@ -25,7 +25,6 @@ public class MainWindow extends AbstractSceneClient {
     }
 
     public MainWindow() {
-        System.out.println("waitObject created at " + Thread.currentThread());
         JButton easyModeButton = new JButton();
         easyModeButton.addActionListener(e -> {
             Game.difficulty = Difficulty.Easy;
