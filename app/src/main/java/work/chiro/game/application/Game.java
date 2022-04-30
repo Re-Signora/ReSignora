@@ -136,6 +136,7 @@ public class Game extends JPanel {
     }
 
     public void addEvents() {
+        MusicManager.initAll();
         TimerController.init(Utils.getTimeMills());
         // 英雄射击事件
         TimerController.add(new Timer(10, () -> {

@@ -1,55 +1,23 @@
 package work.chiro.game.application;
 
 import javax.sound.sampled.*;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Chiro
  */
 public class MusicThread implements Runnable {
     private final MusicManager.MusicType musicType;
-    private AudioFormat audioFormat;
-    private byte[] samples;
-    private long timeMicroSeconds = 0;
     private boolean interrupted = false;
+    // FIXME: history display err
     private boolean stop = false;
     private boolean willStop = true;
     private Runnable onStop = null;
 
     public MusicThread(MusicManager.MusicType type) {
         this.musicType = type;
-        reverseMusic();
-    }
-
-    public void reverseMusic() {
-        String filename = MusicManager.get(musicType);
-        try {
-            // 定义一个 AudioInputStream 用于接收输入的音频数据，使用 AudioSystem 来获取音频的音频输入流
-            String path = "src/main/resources/sounds/";
-            AudioInputStream stream2 = AudioSystem.getAudioInputStream(new File(path + filename));
-            Clip clip = AudioSystem.getClip();
-            clip.open(stream2);
-            stream2.close();
-            timeMicroSeconds = clip.getMicrosecondLength();
-            AudioInputStream stream = AudioSystem.getAudioInputStream(new File(path + filename));
-            // 用 AudioFormat 来获取 AudioInputStream 的格式
-            audioFormat = stream.getFormat();
-            samples = getSamples(stream);
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public byte[] getSamples(AudioInputStream stream) {
-        int size = (int) (stream.getFrameLength() * audioFormat.getFrameSize());
-        byte[] samples = new byte[size];
-        DataInputStream dataInputStream = new DataInputStream(stream);
-        try {
-            dataInputStream.readFully(samples);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return samples;
     }
 
     protected void writeDataToAudioBlock(InputStream source, SourceDataLine dataLine, int bufferSize) throws InterruptedException {
@@ -73,7 +41,12 @@ public class MusicThread implements Runnable {
         }
     }
 
+    protected AudioFormat getAudioFormat() {
+        return MusicManager.getMusicAudioFormat(musicType);
+    }
+
     public void play(InputStream source) {
+        AudioFormat audioFormat = getAudioFormat();
         int size = (int) (audioFormat.getFrameSize() * audioFormat.getSampleRate());
         // 源数据行 SourceDataLine 是可以写入数据的数据行
         // 获取受数据行支持的音频格式 DataLine.info
@@ -99,16 +72,12 @@ public class MusicThread implements Runnable {
     }
 
     protected byte[] getSamples() {
-        return samples;
-    }
-
-    public long getTimeMicroSeconds() {
-        return timeMicroSeconds;
+        return MusicManager.get(musicType);
     }
 
     @Override
     public void run() {
-        InputStream stream = new ByteArrayInputStream(samples);
+        InputStream stream = new ByteArrayInputStream(getSamples());
         play(stream);
         stop();
     }
@@ -144,13 +113,9 @@ public class MusicThread implements Runnable {
         }
     }
 
-    public String getFilename() {
-        return MusicManager.get(musicType);
-    }
-
     @Override
     public String toString() {
-        return "MusicThread{" + "type=" + musicType + ",filename='" + getFilename() + '\'' + '}';
+        return "MusicThread{" + "type=" + musicType + '}';
     }
 
     public MusicManager.MusicType getMusicType() {

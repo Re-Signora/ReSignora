@@ -1,7 +1,8 @@
 package work.chiro.game.application;
 
-import javax.sound.sampled.*;
-import java.io.*;
+import javax.sound.sampled.SourceDataLine;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 /**
  * 循环音乐
@@ -16,7 +17,7 @@ public class MusicLoopThread extends MusicThread {
     @Override
     protected void writeDataToAudioBlock(InputStream source, SourceDataLine dataLine, int bufferSize) {
         do {
-            byte[] buffer = getSamples().clone();
+            byte[] buffer = getSamples();
             InputStream buf = new ByteArrayInputStream(buffer);
             try {
                 super.writeDataToAudioBlock(buf, dataLine, bufferSize);

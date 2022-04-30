@@ -39,6 +39,15 @@ tasks.withType<Test> {
     systemProperty("file.encoding", "UTF-8")
 }
 
-tasks.withType<Javadoc>{
+tasks.withType<Javadoc> {
     options.encoding = "UTF-8"
+}
+
+tasks.jar {
+    enabled = true
+    manifest {
+        attributes(mapOf("Main-Class" to "work.chiro.game.application.Main"))
+    }
+    val sourcesMain = sourceSets.main.get()
+    from(sourcesMain.output)
 }

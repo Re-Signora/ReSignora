@@ -1,17 +1,19 @@
 package work.chiro.game.utils;
 
-import work.chiro.game.bullet.BaseBullet;
-import work.chiro.game.bullet.EnemyBulletFactory;
-import work.chiro.game.vector.Vec2;
 import work.chiro.game.application.Difficulty;
 import work.chiro.game.application.Game;
 import work.chiro.game.application.MusicManager;
+import work.chiro.game.bullet.BaseBullet;
+import work.chiro.game.bullet.EnemyBulletFactory;
+import work.chiro.game.vector.Vec2;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * 工具类
@@ -70,7 +72,7 @@ public class Utils {
                 return CACHED_IMAGE.get(filePath);
             }
             try {
-                BufferedImage image = ImageIO.read(Utils.class.getResourceAsStream("/images/" + filePath));
+                BufferedImage image = ImageIO.read(Objects.requireNonNull(Utils.class.getResourceAsStream("/images/" + filePath)));
                 CACHED_IMAGE.put(filePath, image);
                 return image;
             } catch (NullPointerException e) {
