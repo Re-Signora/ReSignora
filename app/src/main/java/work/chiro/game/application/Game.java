@@ -14,11 +14,11 @@ import work.chiro.game.utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
@@ -401,7 +401,7 @@ public class Game extends JPanel {
 
     private void loadFont() {
         try {
-            myFontBase = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/fonts/Genshin.ttf")).deriveFont(22f);
+            myFontBase = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getResourceAsStream("/fonts/Genshin.ttf"))).deriveFont(22f);
         } catch (FontFormatException | IOException e) {
             myFontBase = new Font("SansSerif", Font.PLAIN, 22);
         }
