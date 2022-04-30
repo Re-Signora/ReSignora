@@ -135,4 +135,10 @@ public class HistoryWindow extends AbstractSceneClient {
     public JPanel getPanel() {
         return mainPanel;
     }
+
+    @Override
+    public void startAction() {
+        super.startAction();
+        syncWithDao();
+    }
 }
