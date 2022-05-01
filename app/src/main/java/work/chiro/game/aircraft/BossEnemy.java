@@ -5,6 +5,9 @@ import work.chiro.game.application.MusicManager;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.EnemyBulletFactory;
 import work.chiro.game.prop.AbstractProp;
+import work.chiro.game.prop.BloodPropFactory;
+import work.chiro.game.prop.BombPropFactory;
+import work.chiro.game.prop.BulletPropFactory;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
@@ -37,6 +40,11 @@ public class BossEnemy extends AbstractAircraft {
 
     @Override
     public LinkedList<AbstractProp> dropProps() {
-        return new LinkedList<>();
+        LinkedList <AbstractProp> props = new LinkedList<>();
+        double range = 100;
+        props.add(new BloodPropFactory(getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
+        props.add(new BombPropFactory(getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
+        props.add(new BulletPropFactory(getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
+        return props;
     }
 }

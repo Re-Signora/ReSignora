@@ -10,10 +10,7 @@ import work.chiro.game.vector.Vec2;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * 工具类
@@ -97,5 +94,11 @@ public class Utils {
             return null;
         }
         return difficultyHashMap.get(string);
+    }
+
+    static Random random = new Random();
+
+    public static Vec2 randomPosition(Vec2 rangeLeft, Vec2 rangeRight) {
+        return rangeRight.minus(rangeLeft).times(new Vec2(random.nextDouble(), random.nextDouble())).plus(rangeLeft);
     }
 }

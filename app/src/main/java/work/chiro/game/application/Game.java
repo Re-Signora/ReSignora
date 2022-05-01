@@ -302,6 +302,7 @@ public class Game extends JPanel {
                     bullet.vanish();
                     if (boss.notValid()) {
                         score += boss.getScore();
+                        props.addAll(boss.dropProps());
                     }
                     continue;
                 }
