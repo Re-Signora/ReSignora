@@ -34,6 +34,10 @@ UML 图见 [AircraftWar-java.puml](uml/AircraftWar-java.puml)。
 
 编译好的 Jar 文件放在 `app/build/libs/app.jar`。
 
+或者在 IDEA 中运行 `packed jar` 也行。
+
+![image-20220501100732366](README.assets/image-20220501100732366.png)
+
 ### 运行
 
 1. 使用 IDEA 打开项目文件夹（即此 `README.md` 文件所在文件夹）
