@@ -20,7 +20,7 @@ import java.util.List;
  * @author hitsz
  */
 public class HeroAircraft extends AbstractAircraft {
-    static private double lastPlayMusic = 0;
+    private double heroLastPlayMusic = 0;
     /**
      * 子弹一次发射数量
      */
@@ -93,9 +93,9 @@ public class HeroAircraft extends AbstractAircraft {
     @Override
     protected void playBeShootMusic() {
         double now = Utils.getTimeMills();
-        if (now - lastPlayMusic > Constants.MUSIC_SHOOT_MIN_CYCLE_MS) {
+        if (now - heroLastPlayMusic > Constants.MUSIC_SHOOT_MIN_CYCLE_MS) {
             Utils.startMusic(MusicManager.MusicType.HERO_SHOOT);
-            lastPlayMusic = now;
+            heroLastPlayMusic = now;
         }
     }
 }

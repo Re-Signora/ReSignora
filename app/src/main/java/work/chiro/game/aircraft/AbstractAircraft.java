@@ -52,7 +52,7 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
 
     protected void playBeShootMusic() {
         double now = Utils.getTimeMills();
-        if (now - lastPlayMusic > Constants.MUSIC_HERO_HURT_MIN_CYCLE_MS) {
+        if (now - lastPlayMusic > Constants.MUSIC_SHOOT_MIN_CYCLE_MS) {
             Utils.startMusic(MusicManager.MusicType.HERO_HIT);
             lastPlayMusic = now;
         }
