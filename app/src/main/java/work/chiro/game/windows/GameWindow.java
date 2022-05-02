@@ -1,5 +1,6 @@
 package work.chiro.game.windows;
 
+import work.chiro.game.config.EasyConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.scene.AbstractSceneClient;
 
@@ -20,17 +21,17 @@ public class GameWindow extends AbstractSceneClient {
         return gameWindow;
     }
 
-    static private Game game = null;
+    static private Game<?> game = null;
 
     @Override
     public JPanel getPanel() {
         return getGame();
     }
 
-    public Game getGame() {
+    public Game<?> getGame() {
         if (game == null) {
             synchronized (Game.class) {
-                game = new Game();
+                game = new Game<EasyConfig>();
             }
         }
         return game;

@@ -38,7 +38,7 @@ public class HeroController {
     private static HeroController instance = null;
     private Double lastFrameTime = null;
 
-    public HeroController(Game game) {
+    public HeroController(Game<?> game) {
         KeyAdapter keyAdapter = new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -120,7 +120,7 @@ public class HeroController {
         lastFrameTime = now;
     }
 
-    static public HeroController getInstance(Game game) {
+    static public HeroController getInstance(Game<?> game) {
         if (instance == null) {
             synchronized (HeroController.class) {
                 instance = new HeroController(game);

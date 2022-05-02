@@ -15,7 +15,7 @@ public class Animate {
         private final T speed;
         private final Boolean willStop;
 
-        Linear(T vecSource, T speed, AnimateVectorType animateVectorType, double timeStart) {
+        public Linear(T vecSource, T speed, AnimateVectorType animateVectorType, double timeStart) {
             this(vecSource, speed, animateVectorType, timeStart, 0);
         }
 

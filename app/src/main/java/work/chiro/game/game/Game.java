@@ -8,6 +8,7 @@ import work.chiro.game.application.MyThreadFactory;
 import work.chiro.game.background.*;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
+import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.dao.HistoryImpl;
@@ -37,7 +38,7 @@ import java.util.stream.Collectors;
  *
  * @author hitsz
  */
-public class Game extends JPanel {
+public class Game<T extends AbstractConfig> extends JPanel {
     /**
      * 创建线程的工厂函数
      */
