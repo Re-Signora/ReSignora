@@ -240,15 +240,8 @@ public class Game extends JPanel {
         }
     }
 
-    /**
-     * 游戏启动入口，执行游戏逻辑
-     */
-    public void action() {
-        startedFlag = true;
-        addEvents();
-        Utils.startLoopMusic(MusicManager.MusicType.BGM);
-        // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
-        Runnable taskCalc = () -> {
+    protected Runnable getMainTask() {
+        return () -> {
             try {
                 timerController.update();
                 // execute all
@@ -277,9 +270,20 @@ public class Game extends JPanel {
                 System.out.println("this thread will exit: " + e);
             }
         };
+    }
+
+    /**
+     * 游戏启动入口，执行游戏逻辑
+     */
+    public void action() {
+        startedFlag = true;
+        addEvents();
+        Utils.startLoopMusic(MusicManager.MusicType.BGM);
+        // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
+        Runnable mainTask = getMainTask();
         int timeInterval = 1;
         // 以固定延迟时间进行执行本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
-        future = executorService.scheduleWithFixedDelay(taskCalc, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        future = executorService.scheduleWithFixedDelay(mainTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
     }
 
     /**
