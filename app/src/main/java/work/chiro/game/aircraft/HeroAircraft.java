@@ -1,10 +1,13 @@
 package work.chiro.game.aircraft;
 
 import work.chiro.game.animate.AnimateContainer;
+import work.chiro.game.application.MusicManager;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.HeroBulletFactory;
+import work.chiro.game.config.Constants;
 import work.chiro.game.prop.AbstractProp;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
 import java.awt.*;
@@ -17,6 +20,7 @@ import java.util.List;
  * @author hitsz
  */
 public class HeroAircraft extends AbstractAircraft {
+    static private double lastPlayMusic = 0;
     /**
      * 子弹一次发射数量
      */
@@ -84,5 +88,14 @@ public class HeroAircraft extends AbstractAircraft {
     @Override
     public void vanish() {
         // 保持存在
+    }
+
+    @Override
+    protected void playBeShootMusic() {
+        double now = Utils.getTimeMills();
+        if (now - lastPlayMusic > Constants.MUSIC_SHOOT_MIN_CYCLE_MS) {
+            Utils.startMusic(MusicManager.MusicType.HERO_SHOOT);
+            lastPlayMusic = now;
+        }
     }
 }
