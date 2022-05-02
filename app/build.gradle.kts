@@ -17,9 +17,6 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit test framework.
-    testImplementation("junit:junit:4.13.2")
-    // "org.junit.jupiter" % "junit-jupiter" % "5.8.2" % Test,
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 
     // This dependency is used by the application.
@@ -50,4 +47,18 @@ tasks.jar {
     }
     val sourcesMain = sourceSets.main.get()
     from(sourcesMain.output)
+}
+//
+//tasks.test {
+////    include("work.chiro.game.prop.BulletPropTest")
+//    include("**")
+////    filter {
+////        includeTestsMatching("work.chiro.game.prop.*")
+////        setIncludePatterns("work.chiro.game.**")
+////    }
+//}
+
+tasks.named<Test>("test") {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
 }

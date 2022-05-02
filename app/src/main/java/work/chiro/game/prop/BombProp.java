@@ -7,8 +7,6 @@ import work.chiro.game.application.MusicManager;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
-import java.util.List;
-
 /**
  * @author Chiro
  */
@@ -18,12 +16,13 @@ public class BombProp extends AbstractProp {
     }
 
     @Override
-    public void handleAircrafts(List<AbstractAircraft> enemyAircrafts) {
+    public AbstractProp update() {
         System.out.println("BombSupply active!");
         Utils.startMusic(MusicManager.MusicType.BOMB_EXPLOSION);
         for (AbstractAircraft enemy : enemyAircrafts) {
             GameWindow.getInstance().getGame().increaseScore(enemy.getScore());
             enemy.vanish();
         }
+        return this;
     }
 }

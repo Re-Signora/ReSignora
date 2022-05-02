@@ -30,8 +30,8 @@ class BulletPropTest {
         for (int i = 0; i < 100; i++) {
             enemyAircrafts.add(eliteEnemyFactory.create());
         }
-        BulletProp bulletProp = bulletPropFactory.create();
-        bulletProp.handleAircrafts(enemyAircrafts);
+        AbstractProp bulletProp = bulletPropFactory.create().subscribeEnemyAircrafts(enemyAircrafts);
+        bulletProp.update();
         assumeTrue(HeroAircraftFactory.getInstance().shoot().size() == 2);
         System.out.println("Test pass.");
     }

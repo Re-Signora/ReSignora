@@ -7,6 +7,7 @@ import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -16,6 +17,7 @@ import java.util.List;
  * @author hitsz
  */
 abstract public class AbstractProp extends AbstractFlyingObject {
+    protected List<AbstractAircraft> enemyAircrafts = new LinkedList<>();
 
     public AbstractProp(Vec2 posInit, AnimateContainer animateContainer) {
         super(posInit, animateContainer);
@@ -25,10 +27,15 @@ abstract public class AbstractProp extends AbstractFlyingObject {
         Utils.startMusic(MusicManager.MusicType.PROPS);
     }
 
+    public AbstractProp subscribeEnemyAircrafts(List<AbstractAircraft> enemyAircrafts) {
+        this.enemyAircrafts = enemyAircrafts;
+        return this;
+    }
+
     /**
      * 处理飞机碰到道具的时候的反应
      *
-     * @param enemyAircrafts 所有的敌机
+     * @return this
      */
-    abstract public void handleAircrafts(List<AbstractAircraft> enemyAircrafts);
+    abstract public AbstractProp update();
 }

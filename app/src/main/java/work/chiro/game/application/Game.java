@@ -23,6 +23,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * 游戏主面板，游戏启动
@@ -302,7 +303,9 @@ public class Game extends JPanel {
                     bullet.vanish();
                     if (boss.notValid()) {
                         score += boss.getScore();
-                        props.addAll(boss.dropProps());
+                        props.addAll(boss.dropProps().stream().map(
+                                prop -> prop.subscribeEnemyAircrafts(enemyAircrafts)
+                        ).collect(Collectors.toList()));
                     }
                     continue;
                 }
@@ -321,7 +324,9 @@ public class Game extends JPanel {
                     if (enemyAircraft.notValid()) {
                         // 获得分数，添加掉落道具
                         score += enemyAircraft.getScore();
-                        props.addAll(enemyAircraft.dropProps());
+                        props.addAll(enemyAircraft.dropProps().stream().map(
+                                prop -> prop.subscribeEnemyAircrafts(enemyAircrafts)
+                        ).collect(Collectors.toList()));
                     }
                 }
                 // 英雄机 与 敌机 相撞，均损毁
@@ -349,7 +354,7 @@ public class Game extends JPanel {
                 continue;
             }
             if (prop.crash(heroAircraft)) {
-                prop.handleAircrafts(enemyAircrafts);
+                prop.update();
                 prop.vanish();
             }
         }
@@ -410,13 +415,5 @@ public class Game extends JPanel {
 
     public void increaseScore(int increase) {
         score += increase;
-    }
-
-    public void addProps(List<AbstractProp> props) {
-        this.props.addAll(props);
-    }
-
-    public void addProp(AbstractProp prop) {
-        props.add(prop);
     }
 }

@@ -27,7 +27,7 @@ class BossEnemyTest {
         BossEnemy dut = getBossNewInstance();
         HeroAircraft heroAircraft = new HeroAircraftFactory().create();
         LinkedList<BaseBullet> bullets = dut.shoot();
-        assumeTrue(bullets.size() > 1);
+        assumeTrue(bullets.size() >= 1);
         System.out.println("Test pass.");
     }
 

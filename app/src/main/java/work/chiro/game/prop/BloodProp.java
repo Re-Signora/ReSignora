@@ -1,11 +1,8 @@
 package work.chiro.game.prop;
 
-import work.chiro.game.aircraft.AbstractAircraft;
 import work.chiro.game.aircraft.HeroAircraftFactory;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.vector.Vec2;
-
-import java.util.List;
 
 /**
  * @author Chiro
@@ -18,8 +15,9 @@ public class BloodProp extends AbstractProp {
     }
 
     @Override
-    public void handleAircrafts(List<AbstractAircraft> enemyAircrafts) {
+    public AbstractProp update() {
         playSupplyMusic();
         HeroAircraftFactory.getInstance().decreaseHp(-increaseHp);
+        return this;
     }
 }

@@ -107,7 +107,7 @@ public class AnimateContainerFactory {
                 assert range != null && range2 != null && speed2d != null;
                 return new AnimateContainer(List.of(new Animate.LinearRebound<>(position, speed2d, Utils.getTimeMills(), range, range2, timeSpan)));
             case ConstSpeedToTarget:
-                assert speed2d != null && target != null && speed1d != null;
+                assert target != null && speed1d != null;
                 return new AnimateContainer(List.of(new Animate.LinearToTarget<>(position, target, speed1d, Utils.getTimeMills())));
             case ConstSpeedTracking:
                 assert speed2d != null && target != null && speed1d != null;
