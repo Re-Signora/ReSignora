@@ -13,4 +13,5 @@ public class Constants {
     public static final int WINDOW_WIDTH = 512;
     public static final int WINDOW_HEIGHT = 768;
     public static final boolean DEBUG_NO_DEATH = false;
+    public static final int GAME_POOL_SIZE = 100;
 }

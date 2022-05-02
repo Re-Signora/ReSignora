@@ -47,7 +47,7 @@ public class Game extends JPanel {
      * 线程池，自动管理
      */
     @SuppressWarnings("AlibabaThreadPoolCreation")
-    static private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(100, THREAD_FACTORY);
+    static private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(Constants.GAME_POOL_SIZE, THREAD_FACTORY);
 
     public static MyThreadFactory getThreadFactory() {
         return THREAD_FACTORY;
