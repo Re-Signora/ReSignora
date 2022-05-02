@@ -34,7 +34,6 @@ public class Game extends JPanel {
     static Difficulty difficulty = Difficulty.Easy;
     final static Boolean ENABLE_SHOOT_MUSIC = false;
     public static Boolean musicEnable = true;
-    // final static Boolean DEBUG = true;
     final static Boolean DEBUG = false;
 
     /**
@@ -305,6 +304,7 @@ public class Game extends JPanel {
                         score += boss.getScore();
                         props.addAll(boss.dropProps().stream().map(
                                 prop -> prop.subscribeEnemyAircrafts(enemyAircrafts)
+                                        .subscribeEnemyBullets(enemyBullets)
                         ).collect(Collectors.toList()));
                     }
                     continue;
@@ -326,6 +326,7 @@ public class Game extends JPanel {
                         score += enemyAircraft.getScore();
                         props.addAll(enemyAircraft.dropProps().stream().map(
                                 prop -> prop.subscribeEnemyAircrafts(enemyAircrafts)
+                                        .subscribeEnemyBullets(enemyBullets)
                         ).collect(Collectors.toList()));
                     }
                 }
