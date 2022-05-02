@@ -81,6 +81,7 @@ public class Game<T extends AbstractConfig> extends JPanel {
     private String lastProvidedMessage = null;
     private final HeroController heroController;
     private final TimerController timerController = new TimerController();
+    private T config = null;
 
     public void resetStates() {
         gameOverFlag = false;
@@ -121,6 +122,7 @@ public class Game<T extends AbstractConfig> extends JPanel {
         flushBackground();
         // 启动英雄机鼠标监听
         heroController = HeroController.getInstance(this);
+        // config = new T();
     }
 
     private void flushBackground() {

@@ -1,10 +1,6 @@
 package work.chiro.game.config;
 
-import work.chiro.game.animate.Animate;
-import work.chiro.game.animate.AnimateVectorType;
-import work.chiro.game.utils.Utils;
-import work.chiro.game.vector.Scale;
-import work.chiro.game.vector.Vec;
+import work.chiro.game.timer.TimerLinearChange;
 
 /**
  * 配置参数类
@@ -12,61 +8,24 @@ import work.chiro.game.vector.Vec;
  * @author Chiro
  */
 public abstract class AbstractConfig {
-    protected static class TimerConfig {
-        final private Scale initial;
-        final private Scale change;
-        final private Animate.Linear<Vec> animate;
+    protected TimerLinearChange mobCreate = new TimerLinearChange(700);
+    protected TimerLinearChange eliteCreate = new TimerLinearChange(1200);
+    protected TimerLinearChange enemyShoot = new TimerLinearChange(200);
+    protected TimerLinearChange heroShoot = new TimerLinearChange(10);
 
-        public TimerConfig(Scale initial, Scale change) {
-            this.initial = initial;
-            this.change = change;
-            animate = new Animate.Linear<>(this.initial, this.change, AnimateVectorType.Others, Utils.getTimeMills());
-        }
-
-        public TimerConfig(double initial, double change) {
-            this(new Scale(initial), new Scale(change));
-        }
-
-        public TimerConfig(double initial) {
-            this(initial, 0);
-        }
-
-        public Animate.Linear<Vec> getAnimate() {
-            return animate;
-        }
-
-        public TimerConfig update(double timeNow) {
-            animate.update(timeNow);
-            return this;
-        }
-
-        public Scale getCycleNow() {
-            return initial.fromVector(animate.getVector());
-        }
-
-        public Scale getChange() {
-            return change;
-        }
-    }
-
-    protected TimerConfig mobCreate = new TimerConfig(700);
-    protected TimerConfig eliteCreate = new TimerConfig(1200);
-    protected TimerConfig enemyShoot = new TimerConfig(200);
-    protected TimerConfig heroShoot = new TimerConfig(10);
-
-    public TimerConfig getMobCreate() {
+    public TimerLinearChange getMobCreate() {
         return mobCreate;
     }
 
-    public TimerConfig getEliteCreate() {
+    public TimerLinearChange getEliteCreate() {
         return eliteCreate;
     }
 
-    public TimerConfig getEnemyShoot() {
+    public TimerLinearChange getEnemyShoot() {
         return enemyShoot;
     }
 
-    public TimerConfig getHeroShoot() {
+    public TimerLinearChange getHeroShoot() {
         return heroShoot;
     }
 }
