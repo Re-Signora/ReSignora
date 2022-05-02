@@ -1,5 +1,6 @@
-package work.chiro.game.application;
+package work.chiro.game.windows;
 
+import work.chiro.game.application.Game;
 import work.chiro.game.scene.AbstractSceneClient;
 
 import javax.swing.*;

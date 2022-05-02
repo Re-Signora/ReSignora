@@ -1,6 +1,6 @@
 package work.chiro.game.dao;
 
-import work.chiro.game.application.Difficulty;
+import work.chiro.game.config.Difficulty;
 
 /**
  * @author Chiro

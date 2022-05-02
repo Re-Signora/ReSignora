@@ -3,6 +3,9 @@ package work.chiro.game.application;
 import work.chiro.game.config.Constants;
 import work.chiro.game.scene.Scene;
 import work.chiro.game.scene.SceneRun;
+import work.chiro.game.windows.GameWindow;
+import work.chiro.game.windows.HistoryWindow;
+import work.chiro.game.windows.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;

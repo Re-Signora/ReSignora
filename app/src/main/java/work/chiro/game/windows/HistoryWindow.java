@@ -1,5 +1,6 @@
-package work.chiro.game.application;
+package work.chiro.game.windows;
 
+import work.chiro.game.config.Difficulty;
 import work.chiro.game.dao.HistoryImpl;
 import work.chiro.game.dao.HistoryObject;
 import work.chiro.game.scene.AbstractSceneClient;

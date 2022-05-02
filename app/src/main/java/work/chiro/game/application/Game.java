@@ -4,6 +4,8 @@ import work.chiro.game.aircraft.*;
 import work.chiro.game.background.*;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
+import work.chiro.game.config.Constants;
+import work.chiro.game.config.RunningConfig;
 import work.chiro.game.dao.HistoryImpl;
 import work.chiro.game.dao.HistoryObjectFactory;
 import work.chiro.game.prop.AbstractProp;
@@ -11,6 +13,7 @@ import work.chiro.game.scene.SceneRun;
 import work.chiro.game.timer.Timer;
 import work.chiro.game.timer.TimerController;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.windows.HistoryWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,11 +34,6 @@ import java.util.stream.Collectors;
  * @author hitsz
  */
 public class Game extends JPanel {
-    static Difficulty difficulty = Difficulty.Easy;
-    final static Boolean ENABLE_SHOOT_MUSIC = false;
-    public static Boolean musicEnable = true;
-    final static Boolean DEBUG = false;
-
     /**
      * 创建线程的工厂函数
      */
@@ -121,7 +119,7 @@ public class Game extends JPanel {
 
     private void flushBackground() {
         backgrounds.clear();
-        switch (difficulty) {
+        switch (RunningConfig.difficulty) {
             case Easy:
                 backgrounds.add(new OtherBackgroundFactory<>(new EasyBackground()).create());
                 break;
@@ -225,7 +223,7 @@ public class Game extends JPanel {
                                 name == null ? "NONAME" : name.isEmpty() ? "NONAME" : name,
                                 score,
                                 message == null ? "NO MESSAGE" : message.isEmpty() ? "NO MESSAGE" : message,
-                                difficulty)
+                                RunningConfig.difficulty)
                                 .create());
             }
         } catch (Exception e) {
@@ -245,9 +243,6 @@ public class Game extends JPanel {
     public void action() {
         startedFlag = true;
         addEvents();
-        if (ENABLE_SHOOT_MUSIC) {
-            Utils.startLoopMusic(MusicManager.MusicType.HERO_SHOOT);
-        }
         Utils.startLoopMusic(MusicManager.MusicType.BGM);
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable taskCalc = () -> {
@@ -270,7 +265,7 @@ public class Game extends JPanel {
                 // 每个时刻重绘界面
                 repaint();
                 // 游戏结束检查和处理
-                if (heroAircraft.getHp() <= 0 && !DEBUG) {
+                if (heroAircraft.getHp() <= 0 && !Constants.DEBUG_NO_DEATH) {
                     onGameOver();
                 }
                 timerController.done();

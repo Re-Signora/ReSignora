@@ -1,5 +1,7 @@
-package work.chiro.game.application;
+package work.chiro.game.windows;
 
+import work.chiro.game.config.Difficulty;
+import work.chiro.game.config.RunningConfig;
 import work.chiro.game.scene.AbstractSceneClient;
 
 import javax.swing.*;
@@ -27,21 +29,21 @@ public class MainWindow extends AbstractSceneClient {
     public MainWindow() {
         JButton easyModeButton = new JButton();
         easyModeButton.addActionListener(e -> {
-            Game.difficulty = Difficulty.Easy;
+            RunningConfig.difficulty = Difficulty.Easy;
             nextScene(GameWindow.class);
         });
         easyModeButton.setText("简单模式");
 
         JButton mediumModeButton = new JButton();
         mediumModeButton.addActionListener(e -> {
-            Game.difficulty = Difficulty.Medium;
+            RunningConfig.difficulty = Difficulty.Medium;
             nextScene(GameWindow.class);
         });
         mediumModeButton.setText("普通模式");
 
         JButton hardModeButton = new JButton();
         hardModeButton.addActionListener(e -> {
-            Game.difficulty = Difficulty.Hard;
+            RunningConfig.difficulty = Difficulty.Hard;
             nextScene(GameWindow.class);
         });
         hardModeButton.setText("困难模式");
@@ -63,7 +65,7 @@ public class MainWindow extends AbstractSceneClient {
         historyButton.setText("排行榜");
 
         musicOnCheckBox.addActionListener(e -> {
-            Game.musicEnable = musicOnCheckBox.isSelected();
+            RunningConfig.musicEnable = musicOnCheckBox.isSelected();
             System.out.println("music enable: " + musicOnCheckBox.isSelected());
         });
         musicOnCheckBox.setSelected(true);
