@@ -77,6 +77,7 @@ public class Game extends JPanel {
     private Future<?> future = null;
     private Font myFontBase = null;
     private String lastProvidedName = null;
+    private String lastProvidedMessage = null;
     private final HeroController heroController;
     private final TimerController timerController = new TimerController();
 
@@ -218,7 +219,8 @@ public class Game extends JPanel {
             } else {
                 lastProvidedName = name;
             }
-            String message = JOptionPane.showInputDialog("输入额外的信息", "NO MESSAGE");
+            String message = JOptionPane.showInputDialog("输入额外的信息", lastProvidedMessage == null ? "NO MESSAGE" : lastProvidedMessage);
+            lastProvidedMessage = message;
             // 保存游戏结果
             if (score > 0) {
                 HistoryImpl.getInstance().addOne(
