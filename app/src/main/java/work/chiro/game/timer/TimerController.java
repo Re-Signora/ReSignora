@@ -10,46 +10,46 @@ import java.util.List;
  * @author Chiro
  */
 public class TimerController {
-    private static double frameTime = 0;
-    private static double lastFrameTime = 0;
-    private static final List<Double> FRAME_COUNTER = new LinkedList<>();
-    private static final List<Timer> TIMERS = new LinkedList<>();
+    private double frameTime = 0;
+    private double lastFrameTime = 0;
+    private final List<Double> FRAME_COUNTER = new LinkedList<>();
+    private final List<Timer> TIMERS = new LinkedList<>();
 
-    public static void init(double startTime) {
+    public void init(double startTime) {
         frameTime = startTime;
     }
 
-    public static void add(Timer c) {
+    public void add(Timer c) {
         TIMERS.add(c);
     }
 
-    public static void execute() {
-        TIMERS.forEach(Timer::execute);
+    public void execute() {
+        TIMERS.forEach(timer -> timer.execute(this));
     }
 
-    public static List<Timer> getTimers() {
+    public List<Timer> getTimers() {
         return TIMERS;
     }
 
-    public static void update() {
+    public void update() {
         frameTime = Utils.getTimeMills();
         FRAME_COUNTER.add(frameTime);
         FRAME_COUNTER.removeIf(t -> t < ((frameTime >= 1000) ? (frameTime - 1000) : 0));
     }
 
-    public static void done() {
+    public void done() {
         lastFrameTime = frameTime;
     }
 
-    public static int getFps() {
+    public int getFps() {
         return FRAME_COUNTER.size();
     }
 
-    public static double getTimeDelta() {
+    public double getTimeDelta() {
         return frameTime - lastFrameTime;
     }
 
-    public static void clear() {
+    public void clear() {
         frameTime = 0;
         lastFrameTime = 0;
         FRAME_COUNTER.clear();

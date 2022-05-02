@@ -14,8 +14,8 @@ public class Timer {
         this.callback = callback;
     }
 
-    void execute() {
-        time += TimerController.getTimeDelta();
+    void execute(TimerController timerController) {
+        time += timerController.getTimeDelta();
         if (time >= duration) {
             time %= duration;
             callback.run();

@@ -76,6 +76,7 @@ public class Game extends JPanel {
     private Font myFontBase = null;
     private String lastProvidedName = null;
     private final HeroController heroController;
+    private final TimerController timerController = new TimerController();
 
     public void resetStates() {
         gameOverFlag = false;
@@ -88,7 +89,7 @@ public class Game extends JPanel {
         heroAircrafts.add(heroAircraft);
         bossAircrafts.clear();
         BossEnemyFactory.clearInstance();
-        TimerController.clear();
+        timerController.clear();
         heroController.clear();
         flushBackground();
     }
@@ -137,41 +138,41 @@ public class Game extends JPanel {
 
     public void addEvents() {
         MusicManager.initAll();
-        TimerController.init(Utils.getTimeMills());
+        timerController.init(Utils.getTimeMills());
         // 英雄射击事件
-        TimerController.add(new Timer(10, () -> {
+        timerController.add(new Timer(10, () -> {
             synchronized (heroBullets) {
                 heroBullets.addAll(heroAircraft.shoot(List.of(enemyAircrafts, bossAircrafts)));
             }
         }));
         // 产生精英敌机事件
-        TimerController.add(new Timer(1200, () -> {
+        timerController.add(new Timer(1200, () -> {
             synchronized (enemyAircrafts) {
                 enemyAircrafts.add(new EliteEnemyFactory().create());
             }
         }));
         // 产生普通敌机事件
-        TimerController.add(new Timer(700, () -> {
+        timerController.add(new Timer(700, () -> {
             synchronized (enemyAircrafts) {
                 enemyAircrafts.add(new MobEnemyFactory().create());
             }
         }));
         // 敌机射击事件
-        TimerController.add(new Timer(200, () -> {
+        timerController.add(new Timer(200, () -> {
             synchronized (enemyBullets) {
                 enemyAircrafts.forEach(enemyAircraft -> enemyBullets.addAll(enemyAircraft.shoot()));
             }
         }));
         // boss射击事件
-        TimerController.add(new Timer(100, () -> {
+        timerController.add(new Timer(100, () -> {
             synchronized (enemyBullets) {
                 bossAircrafts.forEach(bossEnemy -> enemyBullets.addAll(bossEnemy.shoot()));
             }
         }));
         // fps 输出事件
-        TimerController.add(new Timer(1000, () -> System.out.println("fps: " + TimerController.getFps())));
+        timerController.add(new Timer(1000, () -> System.out.println("fps: " + timerController.getFps())));
         // boss 生成事件
-        TimerController.add(new Timer(10, () -> {
+        timerController.add(new Timer(10, () -> {
             if (score > nextBossScore && bossAircrafts.isEmpty()) {
                 synchronized (bossAircrafts) {
                     bossAircrafts.add(new BossEnemyFactory(() -> {
@@ -182,7 +183,7 @@ public class Game extends JPanel {
             }
         }));
         // 获取键盘焦点
-        TimerController.add(new Timer(100, this::requestFocus));
+        timerController.add(new Timer(100, this::requestFocus));
     }
 
     private void stopAllMusic() {
@@ -251,9 +252,9 @@ public class Game extends JPanel {
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable taskCalc = () -> {
             try {
-                TimerController.update();
+                timerController.update();
                 // execute all
-                TimerController.execute();
+                timerController.execute();
                 // 按键处理
                 heroController.onFrame();
                 // 所有物体移动
@@ -272,7 +273,7 @@ public class Game extends JPanel {
                 if (heroAircraft.getHp() <= 0 && !DEBUG) {
                     onGameOver();
                 }
-                TimerController.done();
+                timerController.done();
                 Thread.sleep(1);
             } catch (InterruptedException e) {
                 System.out.println("this thread will exit: " + e);
@@ -403,7 +404,7 @@ public class Game extends JPanel {
             g.drawString("BOSS LIFE:" + boss.getHp(), x, y);
         }
         y = y + 20;
-        g.drawString("FPS:" + TimerController.getFps(), x, y);
+        g.drawString("FPS:" + timerController.getFps(), x, y);
     }
 
     private void loadFont() {
