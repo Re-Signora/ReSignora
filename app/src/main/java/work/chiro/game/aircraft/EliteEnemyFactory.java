@@ -2,7 +2,7 @@ package work.chiro.game.aircraft;
 
 import work.chiro.game.animate.AnimateContainerFactory;
 import work.chiro.game.application.ImageManager;
-import work.chiro.game.application.Main;
+import work.chiro.game.config.Constants;
 import work.chiro.game.vector.Vec2;
 
 /**
@@ -14,8 +14,8 @@ public class EliteEnemyFactory implements AbstractAircraftFactory {
 
     @Override
     public EliteEnemy create() {
-        Vec2 newPos = new Vec2((Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
-                (Math.random() * Main.WINDOW_HEIGHT * 0.2));
+        Vec2 newPos = new Vec2((Math.random() * (Constants.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
+                (Math.random() * Constants.WINDOW_HEIGHT * Constants.ELITE_CREATE_VERTICAL_RANGE));
         return new EliteEnemy(
                 newPos,
                 new AnimateContainerFactory(

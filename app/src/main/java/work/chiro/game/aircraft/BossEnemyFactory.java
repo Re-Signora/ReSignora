@@ -1,9 +1,9 @@
 package work.chiro.game.aircraft;
 
 import work.chiro.game.animate.AnimateContainerFactory;
-import work.chiro.game.application.Main;
 import work.chiro.game.application.MusicManager;
 import work.chiro.game.basic.BasicCallback;
+import work.chiro.game.config.Constants;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
@@ -38,7 +38,7 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
                         new AnimateContainerFactory(AnimateContainerFactory.ContainerType.ConstSpeedRebound, posNew)
                                 .setupSpeed(new Vec2(0.03, 0))
                                 .setupRange(new Vec2(0, 0))
-                                .setupRange2(new Vec2(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT))
+                                .setupRange2(new Vec2(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT))
                                 .create(), 8000);
             }
         }

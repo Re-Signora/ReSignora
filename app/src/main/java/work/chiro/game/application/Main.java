@@ -1,5 +1,6 @@
 package work.chiro.game.application;
 
+import work.chiro.game.config.Constants;
 import work.chiro.game.scene.Scene;
 import work.chiro.game.scene.SceneRun;
 
@@ -13,22 +14,17 @@ import java.util.Arrays;
  * @author hitsz
  */
 public class Main {
-
-    public static final int WINDOW_WIDTH = 512;
-    public static final int WINDOW_HEIGHT = 768;
-
     public static void main(String[] args) {
-
         System.out.println("Hello Aircraft War");
 
         // 获得屏幕的分辨率，初始化 Frame
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         JFrame frame = new JFrame();
-        frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        frame.setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
         frame.setResizable(false);
         //设置窗口的大小和位置,居中放置
-        frame.setBounds(((int) screenSize.getWidth() - WINDOW_WIDTH) / 2, 0,
-                WINDOW_WIDTH, WINDOW_HEIGHT);
+        frame.setBounds(((int) screenSize.getWidth() - Constants.WINDOW_WIDTH) / 2, 0,
+                Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         try {

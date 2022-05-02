@@ -2,7 +2,7 @@ package work.chiro.game.aircraft;
 
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.application.ImageManager;
-import work.chiro.game.application.Main;
+import work.chiro.game.config.Constants;
 import work.chiro.game.vector.Vec2;
 
 /**
@@ -36,8 +36,8 @@ public class HeroAircraftFactory implements AbstractAircraftFactory {
         // Double-checked locking
         if (heroInstance == null) {
             synchronized (HeroAircraftFactory.class) {
-                heroInstance = new HeroAircraft(new Vec2(Main.WINDOW_WIDTH / 2.0,
-                        Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight()),
+                heroInstance = new HeroAircraft(new Vec2(Constants.WINDOW_WIDTH / 2.0,
+                        Constants.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight()),
                         new AnimateContainer(), 100000);
             }
         }

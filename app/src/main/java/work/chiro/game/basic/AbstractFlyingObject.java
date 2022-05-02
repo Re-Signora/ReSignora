@@ -3,7 +3,7 @@ package work.chiro.game.basic;
 import work.chiro.game.aircraft.AbstractAircraft;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.application.ImageManager;
-import work.chiro.game.application.Main;
+import work.chiro.game.config.Constants;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec;
@@ -88,9 +88,9 @@ public abstract class AbstractFlyingObject {
     }
 
     private Boolean checkInBoundary() {
-        return !(getLocationX() > Main.WINDOW_WIDTH ||
+        return !(getLocationX() > Constants.WINDOW_WIDTH ||
                 getLocationX() < 0 ||
-                getLocationY() > Main.WINDOW_HEIGHT ||
+                getLocationY() > Constants.WINDOW_HEIGHT ||
                 getLocationY() < 0);
     }
 

@@ -2,6 +2,7 @@ package work.chiro.game.application;
 
 import work.chiro.game.aircraft.HeroAircraft;
 import work.chiro.game.aircraft.HeroAircraftFactory;
+import work.chiro.game.config.Constants;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
@@ -55,7 +56,7 @@ public class HeroController {
                 super.mouseDragged(e);
                 HeroAircraft heroAircraft = HeroAircraftFactory.getInstance();
                 if (heroAircraft != null) {
-                    heroAircraft.setPosition(Utils.setInRange(e.getX(), 0, Main.WINDOW_WIDTH), Utils.setInRange(e.getY(), 0, Main.WINDOW_HEIGHT));
+                    heroAircraft.setPosition(Utils.setInRange(e.getX(), 0, Constants.WINDOW_WIDTH), Utils.setInRange(e.getY(), 0, Constants.WINDOW_HEIGHT));
                 }
             }
 
@@ -112,8 +113,8 @@ public class HeroController {
         Vec2 nextScaled = next.fromVector(next.times(frameTime * MOVE_SPEED));
         Vec2 newPos = HeroAircraftFactory.getInstance().getPosition().plus(nextScaled);
         HeroAircraftFactory.getInstance().setPosition(
-                Utils.setInRange(newPos.getX(), 0, Main.WINDOW_WIDTH),
-                Utils.setInRange(newPos.getY(), 0, Main.WINDOW_HEIGHT)
+                Utils.setInRange(newPos.getX(), 0, Constants.WINDOW_WIDTH),
+                Utils.setInRange(newPos.getY(), 0, Constants.WINDOW_HEIGHT)
         );
         lastFrameTime = now;
     }

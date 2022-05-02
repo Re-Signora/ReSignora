@@ -3,7 +3,7 @@ package work.chiro.game.bullet;
 import work.chiro.game.aircraft.HeroAircraftFactory;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.animate.AnimateContainerFactory;
-import work.chiro.game.application.Main;
+import work.chiro.game.config.Constants;
 import work.chiro.game.vector.Vec2;
 
 import java.util.Random;
@@ -43,7 +43,7 @@ public class EnemyBulletFactory extends BaseBulletFactory {
                 getPosition())
                 .setupSpeed(new Vec2(random.nextDouble() * 0.5 - 0.25, random.nextDouble() * 0.2 + 0.5))
                 .setupRange(new Vec2(0, 0))
-                .setupRange2(new Vec2(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT))
+                .setupRange2(new Vec2(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT))
                 .setupTimeSpan(3000)
                 .create();
     }

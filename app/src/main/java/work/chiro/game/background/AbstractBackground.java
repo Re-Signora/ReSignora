@@ -1,8 +1,8 @@
 package work.chiro.game.background;
 
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.application.Main;
 import work.chiro.game.basic.AbstractFlyingObject;
+import work.chiro.game.config.Constants;
 import work.chiro.game.vector.Vec2;
 
 import java.awt.*;
@@ -26,7 +26,7 @@ public abstract class AbstractBackground extends AbstractFlyingObject {
     @Override
     public void draw(Graphics g) {
         g.drawImage(getImage(), (int) getLocationX(), (int) getLocationY(), null);
-        g.drawImage(getImage(), (int) getLocationX(), (int) getLocationY() - Main.WINDOW_HEIGHT, null);
+        g.drawImage(getImage(), (int) getLocationX(), (int) getLocationY() - Constants.WINDOW_HEIGHT, null);
     }
 
     @Override
