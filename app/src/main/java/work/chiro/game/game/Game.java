@@ -172,8 +172,6 @@ public class Game extends JPanel {
                 bossAircrafts.forEach(bossEnemy -> enemyBullets.addAll(bossEnemy.shoot()));
             }
         }));
-        // fps 输出事件
-        timerController.add(new Timer(1000, () -> System.out.println("fps: " + timerController.getFps())));
         // boss 生成事件
         timerController.add(new Timer(10, () -> {
             if (score > nextBossScore && bossAircrafts.isEmpty()) {
