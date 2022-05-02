@@ -30,6 +30,7 @@ application {
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
+    options.compilerArgs.addAll(listOf("-Xlint:unchecked", "-Xlint:deprecation"))
 }
 
 tasks.withType<Test> {
@@ -48,15 +49,6 @@ tasks.jar {
     val sourcesMain = sourceSets.main.get()
     from(sourcesMain.output)
 }
-//
-//tasks.test {
-////    include("work.chiro.game.prop.BulletPropTest")
-//    include("**")
-////    filter {
-////        includeTestsMatching("work.chiro.game.prop.*")
-////        setIncludePatterns("work.chiro.game.**")
-////    }
-//}
 
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
