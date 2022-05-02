@@ -11,7 +11,6 @@ import java.io.InputStream;
 public class MusicThread implements Runnable {
     private final MusicManager.MusicType musicType;
     private boolean interrupted = false;
-    // FIXME: history display err
     private boolean stop = false;
     private boolean willStop = true;
     private Runnable onStop = null;
