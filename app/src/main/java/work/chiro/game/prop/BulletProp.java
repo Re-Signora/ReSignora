@@ -2,7 +2,7 @@ package work.chiro.game.prop;
 
 import work.chiro.game.aircraft.HeroAircraftFactory;
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.application.Game;
+import work.chiro.game.game.Game;
 import work.chiro.game.vector.Vec2;
 
 /**

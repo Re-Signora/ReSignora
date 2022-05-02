@@ -1,11 +1,11 @@
 package work.chiro.game.utils;
 
-import work.chiro.game.application.Game;
 import work.chiro.game.application.MusicManager;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.EnemyBulletFactory;
 import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.game.Game;
 import work.chiro.game.vector.Vec2;
 
 import javax.imageio.ImageIO;

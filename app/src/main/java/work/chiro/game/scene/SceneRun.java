@@ -1,6 +1,6 @@
 package work.chiro.game.scene;
 
-import work.chiro.game.application.Game;
+import work.chiro.game.game.Game;
 
 import javax.swing.*;
 import java.awt.*;

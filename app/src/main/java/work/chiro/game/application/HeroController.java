@@ -3,6 +3,7 @@ package work.chiro.game.application;
 import work.chiro.game.aircraft.HeroAircraft;
 import work.chiro.game.aircraft.HeroAircraftFactory;
 import work.chiro.game.config.Constants;
+import work.chiro.game.game.Game;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
@@ -76,7 +77,7 @@ public class HeroController {
         return pressedKeys.contains(keyCode);
     }
 
-    void onFrame() {
+    public void onFrame() {
         if (lastFrameTime == null) {
             lastFrameTime = Utils.getTimeMills();
         }
