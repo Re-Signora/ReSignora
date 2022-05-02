@@ -204,9 +204,9 @@ public class Game extends JPanel {
         stopAllMusic();
         System.out.println("Game Over!");
         try {
-            String name = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "NONAME" : lastProvidedName);
+            String name = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "Nanshi" : lastProvidedName);
             if (name == null) {
-                String name2 = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "NONAME" : lastProvidedName);
+                String name2 = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "Nanshi" : lastProvidedName);
                 if (name2 == null) {
                     int res = JOptionPane.showConfirmDialog(null, "不保存记录?", "Save Game", JOptionPane.OK_CANCEL_OPTION);
                     if (res == JOptionPane.YES_OPTION) {
@@ -223,7 +223,7 @@ public class Game extends JPanel {
             if (score > 0) {
                 HistoryImpl.getInstance().addOne(
                         new HistoryObjectFactory(
-                                name == null ? "NONAME" : name.isEmpty() ? "NONAME" : name,
+                                name == null ? "Nanshi" : name.isEmpty() ? "Nanshi" : name,
                                 score,
                                 message == null ? "NO MESSAGE" : message.isEmpty() ? "NO MESSAGE" : message,
                                 RunningConfig.difficulty)
