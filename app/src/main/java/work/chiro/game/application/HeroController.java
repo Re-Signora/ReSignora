@@ -115,7 +115,7 @@ public class HeroController {
         Vec2 newPos = HeroAircraftFactory.getInstance().getPosition().plus(nextScaled);
         HeroAircraftFactory.getInstance().setPosition(
                 Utils.setInRange(newPos.getX(), 0, Constants.WINDOW_WIDTH),
-                Utils.setInRange(newPos.getY(), 0, Constants.WINDOW_HEIGHT)
+                Utils.setInRange(newPos.getY(), 0, Constants.WINDOW_HEIGHT - HeroAircraftFactory.getInstance().getHeight() / 2)
         );
         lastFrameTime = now;
     }
