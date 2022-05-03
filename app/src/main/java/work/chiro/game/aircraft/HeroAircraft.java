@@ -94,7 +94,7 @@ public class HeroAircraft extends AbstractAircraft {
     @Override
     protected void playBeShootMusic() {
         double now = Utils.getTimeMills();
-        if (now - heroLastPlayMusic > Constants.MUSIC_SHOOT_MIN_CYCLE_MS) {
+        if (now - heroLastPlayMusic > Constants.MUSIC_HERO_HURT_MIN_CYCLE_MS) {
             Utils.startMusic(MusicManager.MusicType.HERO_SHOOT);
             heroLastPlayMusic = now;
         }

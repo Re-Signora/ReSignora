@@ -82,7 +82,7 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
     public abstract LinkedList<AbstractProp> dropProps(AbstractConfig config);
 
     protected void drawHp(Graphics g) {
-        int hpBarHeight = 3;
+        int hpBarHeight = Constants.DRAW_HP_BAR;
         g.setColor(Color.gray);
         g.fillRect((int) (getLocationX() - getWidth() / 2), (int) (getLocationY() - getHeight() / 2),
                 (int) getWidth(), hpBarHeight);
