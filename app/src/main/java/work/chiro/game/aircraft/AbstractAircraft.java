@@ -10,6 +10,7 @@ import work.chiro.game.prop.AbstractProp;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
+import java.awt.*;
 import java.util.LinkedList;
 
 /**
@@ -79,6 +80,22 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
      * @return 返回所有的道具
      */
     public abstract LinkedList<AbstractProp> dropProps(AbstractConfig config);
+
+    protected void drawHp(Graphics g) {
+        int hpBarHeight = 3;
+        g.setColor(Color.gray);
+        g.fillRect((int) (getLocationX() - getWidth() / 2), (int) (getLocationY() - getHeight() / 2),
+                (int) getWidth(), hpBarHeight);
+        g.setColor(Color.red);
+        g.fillRect((int) (getLocationX() - getWidth() / 2), (int) (getLocationY() - getHeight() / 2),
+                (int) (getWidth() / maxHp * getHp()), hpBarHeight);
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        super.draw(g);
+        drawHp(g);
+    }
 }
 
 
