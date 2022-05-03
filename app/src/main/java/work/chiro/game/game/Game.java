@@ -180,6 +180,7 @@ public class Game extends JPanel {
         }));
         // boss 生成事件
         timerController.add(new Timer(10, () -> {
+            config.getBossScoreThreshold().update(Utils.getTimeMills());
             if (score > nextBossScore && bossAircrafts.isEmpty()) {
                 synchronized (bossAircrafts) {
                     bossAircrafts.add(new BossEnemyFactory(() -> {

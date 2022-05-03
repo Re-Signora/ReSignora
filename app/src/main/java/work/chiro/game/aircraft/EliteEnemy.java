@@ -32,6 +32,7 @@ public class EliteEnemy extends AbstractAircraft {
     @Override
     public LinkedList<AbstractProp> dropProps(AbstractConfig config) {
         double select = Utils.getRandom().nextDouble();
+        config.getDropPropsRate().update(Utils.getTimeMills());
         double probability = config.getDropPropsRate().getScaleNow().getX();
         LinkedList <AbstractProp> props = new LinkedList<>();
         if (Utils.isInRange(select, 0, probability)) {
