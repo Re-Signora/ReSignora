@@ -2,6 +2,7 @@ package work.chiro.game.aircraft;
 
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.bullet.BaseBullet;
+import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.prop.AbstractProp;
 import work.chiro.game.vector.Vec2;
 
@@ -24,7 +25,7 @@ public class MobEnemy extends AbstractAircraft {
     }
 
     @Override
-    public LinkedList<AbstractProp> dropProps() {
+    public LinkedList<AbstractProp> dropProps(AbstractConfig config) {
         return new LinkedList<>();
     }
 

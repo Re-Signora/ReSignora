@@ -5,6 +5,7 @@ import work.chiro.game.application.MusicManager;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.HeroBulletFactory;
+import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
 import work.chiro.game.prop.AbstractProp;
 import work.chiro.game.utils.Utils;
@@ -58,7 +59,7 @@ public class HeroAircraft extends AbstractAircraft {
     }
 
     @Override
-    public LinkedList<AbstractProp> dropProps() {
+    public LinkedList<AbstractProp> dropProps(AbstractConfig config) {
         return new LinkedList<>();
     }
 

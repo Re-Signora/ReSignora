@@ -70,8 +70,7 @@ public class Game extends JPanel {
     private boolean gameOverFlag = false;
     private boolean startedFlag = false;
     private int score = 0;
-    private final int bossScoreThreshold = 10;
-    private int nextBossScore = score + bossScoreThreshold;
+    private double nextBossScore;
     private final Object waitObject = new Object();
     private Future<?> future = null;
     private Font myFontBase = null;
@@ -126,6 +125,7 @@ public class Game extends JPanel {
         // 启动英雄机鼠标监听
         heroController = HeroController.getInstance(this);
         config = new ConfigFactory(difficulty).create();
+        nextBossScore = score + config.getBossScoreThreshold().getScaleNow().getX();
     }
 
     private void flushBackground() {
@@ -183,7 +183,7 @@ public class Game extends JPanel {
             if (score > nextBossScore && bossAircrafts.isEmpty()) {
                 synchronized (bossAircrafts) {
                     bossAircrafts.add(new BossEnemyFactory(() -> {
-                        nextBossScore = bossScoreThreshold + score;
+                        nextBossScore = config.getBossScoreThreshold().getScaleNow().getX() + score;
                         BossEnemyFactory.clearInstance();
                     }).create());
                 }
@@ -294,6 +294,18 @@ public class Game extends JPanel {
         future = executorService.scheduleWithFixedDelay(mainTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
     }
 
+    private void onEnemyAircraftHit(AbstractAircraft enemyAircraft, BaseBullet bullet) {
+        enemyAircraft.decreaseHp(bullet.getPower());
+        bullet.vanish();
+        if (enemyAircraft.notValid()) {
+            score += enemyAircraft.getScore();
+            props.addAll(enemyAircraft.dropProps(config).stream().map(
+                    prop -> prop.subscribeEnemyAircrafts(enemyAircrafts)
+                            .subscribeEnemyBullets(enemyBullets)
+            ).collect(Collectors.toList()));
+        }
+    }
+
     /**
      * 碰撞检测：
      * 1. 敌机攻击英雄
@@ -309,15 +321,7 @@ public class Game extends JPanel {
             }
             if (boss != null && !boss.notValid()) {
                 if (bullet.crash(boss)) {
-                    boss.decreaseHp(bullet.getPower());
-                    bullet.vanish();
-                    if (boss.notValid()) {
-                        score += boss.getScore();
-                        props.addAll(boss.dropProps().stream().map(
-                                prop -> prop.subscribeEnemyAircrafts(enemyAircrafts)
-                                        .subscribeEnemyBullets(enemyBullets)
-                        ).collect(Collectors.toList()));
-                    }
+                    onEnemyAircraftHit(boss, bullet);
                     continue;
                 }
             }
@@ -330,16 +334,7 @@ public class Game extends JPanel {
                 if (enemyAircraft.crash(bullet)) {
                     // 敌机撞击到英雄机子弹
                     // 敌机损失一定生命值
-                    enemyAircraft.decreaseHp(bullet.getPower());
-                    bullet.vanish();
-                    if (enemyAircraft.notValid()) {
-                        // 获得分数，添加掉落道具
-                        score += enemyAircraft.getScore();
-                        props.addAll(enemyAircraft.dropProps().stream().map(
-                                prop -> prop.subscribeEnemyAircrafts(enemyAircrafts)
-                                        .subscribeEnemyBullets(enemyBullets)
-                        ).collect(Collectors.toList()));
-                    }
+                    onEnemyAircraftHit(enemyAircraft, bullet);
                 }
                 // 英雄机 与 敌机 相撞，均损毁
                 if (heroAircraft.crash(enemyAircraft)) {

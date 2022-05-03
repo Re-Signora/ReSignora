@@ -53,7 +53,7 @@ public class EnemyBulletFactory extends BaseBulletFactory {
                 AnimateContainerFactory.ContainerType.ConstSpeedToTarget,
                 getPosition())
                 .setupSpeed(0.2)
-                .setupTarget(HeroAircraftFactory.getInstance().getPosition())
+                .setupTarget(HeroAircraftFactory.getInstance().getPosition().copy())
                 .create();
     }
 

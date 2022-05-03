@@ -99,6 +99,10 @@ public class Utils {
 
     static Random random = new Random();
 
+    public static Random getRandom() {
+        return random;
+    }
+
     public static Vec2 randomPosition(Vec2 rangeLeft, Vec2 rangeRight) {
         return rangeRight.minus(rangeLeft).times(new Vec2(random.nextDouble(), random.nextDouble())).plus(rangeLeft);
     }

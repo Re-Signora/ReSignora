@@ -4,6 +4,7 @@ import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.application.MusicManager;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
+import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
 import work.chiro.game.prop.AbstractProp;
 import work.chiro.game.utils.Utils;
@@ -74,9 +75,10 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
     /**
      * 飞机掉落道具
      *
+     * @param config 当前配置信息
      * @return 返回所有的道具
      */
-    public abstract LinkedList<AbstractProp> dropProps();
+    public abstract LinkedList<AbstractProp> dropProps(AbstractConfig config);
 }
 
 

@@ -13,6 +13,8 @@ public abstract class AbstractConfig {
     protected TimerLinearChange enemyShoot = new TimerLinearChange(200);
     protected TimerLinearChange bossShoot = new TimerLinearChange(200);
     protected TimerLinearChange heroShoot = new TimerLinearChange(100d, 1e-3, 10d);
+    protected TimerLinearChange bossScoreThreshold = new TimerLinearChange(1000);
+    protected TimerLinearChange dropPropsRate = new TimerLinearChange(0.3);
 
     public TimerLinearChange getMobCreate() {
         return mobCreate;
@@ -34,11 +36,20 @@ public abstract class AbstractConfig {
         return bossShoot;
     }
 
+    public TimerLinearChange getBossScoreThreshold() {
+        return bossScoreThreshold;
+    }
+
+    public TimerLinearChange getDropPropsRate() {
+        return dropPropsRate;
+    }
+
     public void printNow() {
         System.out.println("MobCreate:" + getMobCreate().getScaleNow() +
                 " EliteCreate:" + getEliteCreate().getScaleNow() +
                 " enemyShoot:" + getEnemyShoot().getScaleNow() +
                 " bossShoot:" + getBossShoot().getScaleNow() +
-                " heroShoot:" + getHeroShoot().getScaleNow());
+                " heroShoot:" + getHeroShoot().getScaleNow() +
+                " bossScoreThreshold:" + getBossScoreThreshold().getScaleNow());
     }
 }
