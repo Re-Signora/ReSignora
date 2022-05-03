@@ -16,6 +16,7 @@ public abstract class AbstractConfig {
     protected TimerLinearChange bossScoreThreshold = new TimerLinearChange(1000);
     protected TimerLinearChange dropPropsRate = new TimerLinearChange(0.3);
     protected TimerLinearChange enemyMagnification = new TimerLinearChange(1d);
+    protected TimerLinearChange bossInitialHp = new TimerLinearChange(3000);
 
     public TimerLinearChange getMobCreate() {
         return mobCreate;
@@ -49,6 +50,10 @@ public abstract class AbstractConfig {
         return enemyMagnification;
     }
 
+    public TimerLinearChange getBossInitialHp() {
+        return bossInitialHp;
+    }
+
     public int getHeroInitialHp() {
         return 10000;
     }
@@ -63,8 +68,9 @@ public abstract class AbstractConfig {
                 ",heroShoot:" + getHeroShoot().getScaleNow() +
                 ",bossScoreThreshold:" + getBossScoreThreshold().getScaleNow() +
                 ",dropRate:" + getDropPropsRate().getScaleNow() +
-                ",enemyMagnification:" + getEnemyMagnification().getScaleNow()
-                + "}";
+                ",enemyMagnification:" + getEnemyMagnification().getScaleNow() +
+                ",bossInitialHp:" + getBossInitialHp().getScaleNow() +
+                "}";
     }
 
     public void printNow() {

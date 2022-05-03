@@ -31,6 +31,7 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
     public BossEnemy create(AbstractConfig config) {
         if (instance == null) {
             config.getEnemyMagnification().update(Utils.getTimeMills());
+            config.getBossInitialHp().update(Utils.getTimeMills());
             Utils.stopMusic(MusicManager.MusicType.BGM);
             Utils.startMusic(MusicManager.MusicType.BGM_BOSS);
             synchronized (BossEnemyFactory.class) {
@@ -41,7 +42,7 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
                                 .setupSpeed(new Vec2(0.03 * config.getEnemyMagnification().getScaleNow().getX(), 0))
                                 .setupRange(new Vec2(0, 0))
                                 .setupRange2(new Vec2(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT))
-                                .create(), (int) (8000 * config.getEnemyMagnification().getScaleNow().getX()));
+                                .create(), (int) config.getBossInitialHp().getScaleNow().getX());
             }
         }
         instance.setOnVanish(onVanish);
