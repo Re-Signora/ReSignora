@@ -5,6 +5,7 @@ import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.application.MusicManager;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
+import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
@@ -21,8 +22,8 @@ abstract public class AbstractProp extends AbstractFlyingObject implements PropA
     protected List<AbstractAircraft> enemyAircrafts = new LinkedList<>();
     protected List<BaseBullet> enemyBullets = new LinkedList<>();
 
-    public AbstractProp(Vec2 posInit, AnimateContainer animateContainer) {
-        super(posInit, animateContainer);
+    public AbstractProp(AbstractConfig config, Vec2 posInit, AnimateContainer animateContainer) {
+        super(config, posInit, animateContainer);
     }
 
     protected void playSupplyMusic() {

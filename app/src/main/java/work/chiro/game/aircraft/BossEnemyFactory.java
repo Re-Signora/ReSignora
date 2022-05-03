@@ -37,6 +37,7 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
             synchronized (BossEnemyFactory.class) {
                 Vec2 posNew = new Vec2(0, 10);
                 instance = new BossEnemy(
+                        config,
                         posNew,
                         new AnimateContainerFactory(AnimateContainerFactory.ContainerType.ConstSpeedRebound, posNew)
                                 .setupSpeed(new Vec2(0.03 * config.getEnemyMagnification().getScaleNow().getX(), 0))

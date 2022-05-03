@@ -20,6 +20,7 @@ public class EliteEnemyFactory implements AbstractAircraftFactory {
         Vec2 newPos = new Vec2((Math.random() * (Constants.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
                 (Math.random() * Constants.WINDOW_HEIGHT * Constants.ELITE_CREATE_VERTICAL_RANGE));
         return new EliteEnemy(
+                config,
                 newPos,
                 new AnimateContainerFactory(
                         AnimateContainerFactory.ContainerType.ConstSpeed, newPos)

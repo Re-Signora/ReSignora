@@ -2,6 +2,7 @@ package work.chiro.game.prop;
 
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.animate.AnimateContainerFactory;
+import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.vector.Vec2;
 
 /**
@@ -11,8 +12,10 @@ import work.chiro.game.vector.Vec2;
  */
 public abstract class AbstractPropFactory {
     protected Vec2 position;
+    protected AbstractConfig config;
 
-    public AbstractPropFactory(Vec2 posInit) {
+    public AbstractPropFactory(AbstractConfig config, Vec2 posInit) {
+        this.config = config;
         this.position = posInit;
     }
 

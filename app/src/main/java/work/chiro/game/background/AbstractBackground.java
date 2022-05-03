@@ -14,12 +14,12 @@ import java.awt.*;
  */
 public abstract class AbstractBackground extends AbstractFlyingObject {
     public AbstractBackground(Vec2 posInit, AnimateContainer animateContainer) {
-        super(posInit, animateContainer);
+        super(null, posInit, animateContainer);
         initImageFilename = getInitImageFilename();
     }
 
     public AbstractBackground() {
-        super(new Vec2());
+        super(null, new Vec2());
         initImageFilename = null;
     }
 

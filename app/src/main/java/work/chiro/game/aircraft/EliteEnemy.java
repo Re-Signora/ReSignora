@@ -19,13 +19,13 @@ import java.util.LinkedList;
  */
 public class EliteEnemy extends AbstractAircraft {
 
-    public EliteEnemy(Vec2 posInit, AnimateContainer animateContainer, int hp) {
-        super(posInit, animateContainer, hp, 100);
+    public EliteEnemy(AbstractConfig config, Vec2 posInit, AnimateContainer animateContainer, int hp) {
+        super(config, posInit, animateContainer, hp, 100);
     }
 
     @Override
     public LinkedList<BaseBullet> shoot() {
-        return Utils.letEnemyShoot(getPosition().copy());
+        return Utils.letEnemyShoot(config, getPosition().copy());
     }
 
     @SuppressWarnings("AlibabaUndefineMagicConstant")
@@ -36,11 +36,11 @@ public class EliteEnemy extends AbstractAircraft {
         double probability = config.getDropPropsRate().getScaleNow().getX();
         LinkedList <AbstractProp> props = new LinkedList<>();
         if (Utils.isInRange(select, 0, probability)) {
-            props.add(new BloodPropFactory(getPosition().copy()).create());
+            props.add(new BloodPropFactory(config, getPosition().copy()).create());
         } else if (Utils.isInRange(select, probability, probability * 2)) {
-            props.add(new BombPropFactory(getPosition().copy()).create());
+            props.add(new BombPropFactory(config, getPosition().copy()).create());
         } else if (Utils.isInRange(select, probability * 2, probability * 3)) {
-            props.add(new BulletPropFactory(getPosition().copy()).create());
+            props.add(new BulletPropFactory(config, getPosition().copy()).create());
         }
         // else no props.
         return props;

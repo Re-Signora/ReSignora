@@ -3,6 +3,7 @@ package work.chiro.game.prop;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.application.MusicManager;
 import work.chiro.game.basic.AbstractFlyingObject;
+import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.windows.GameWindow;
@@ -11,8 +12,8 @@ import work.chiro.game.windows.GameWindow;
  * @author Chiro
  */
 public class BombProp extends AbstractProp implements PropApplier {
-    public BombProp(Vec2 posInit, AnimateContainer animateContainer) {
-        super(posInit, animateContainer);
+    public BombProp(AbstractConfig config,  Vec2 posInit, AnimateContainer animateContainer) {
+        super(config, posInit, animateContainer);
     }
 
     @Override

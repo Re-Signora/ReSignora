@@ -2,6 +2,7 @@ package work.chiro.game.prop;
 
 import work.chiro.game.aircraft.HeroAircraftFactory;
 import work.chiro.game.animate.AnimateContainer;
+import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.vector.Vec2;
 
 /**
@@ -9,8 +10,8 @@ import work.chiro.game.vector.Vec2;
  */
 public class BloodProp extends AbstractProp implements PropApplier {
     int increaseHp;
-    public BloodProp(Vec2 posInit, AnimateContainer animateContainer, int increaseHp) {
-        super(posInit, animateContainer);
+    public BloodProp(AbstractConfig config,  Vec2 posInit, AnimateContainer animateContainer, int increaseHp) {
+        super(config, posInit, animateContainer);
         this.increaseHp = increaseHp;
     }
 

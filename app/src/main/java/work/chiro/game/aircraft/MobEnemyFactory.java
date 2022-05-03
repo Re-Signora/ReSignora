@@ -20,6 +20,7 @@ public class MobEnemyFactory implements AbstractAircraftFactory {
                 Math.random() * Constants.WINDOW_HEIGHT * 0.2);
         config.getEnemyMagnification().update(Utils.getTimeMills());
         return new MobEnemy(
+                config,
                 posNew,
                 new AnimateContainerFactory(AnimateContainerFactory.ContainerType.ConstSpeed, posNew)
                         .setupSpeed(new Vec2(0, 0.1 * config.getEnemyMagnification().getScaleNow().getX()))

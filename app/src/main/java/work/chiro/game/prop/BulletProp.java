@@ -2,6 +2,7 @@ package work.chiro.game.prop;
 
 import work.chiro.game.aircraft.HeroAircraftFactory;
 import work.chiro.game.animate.AnimateContainer;
+import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.vector.Vec2;
 
@@ -9,8 +10,8 @@ import work.chiro.game.vector.Vec2;
  * @author Chiro
  */
 public class BulletProp extends AbstractProp implements PropApplier {
-    public BulletProp(Vec2 posInit, AnimateContainer animateContainer) {
-        super(posInit, animateContainer);
+    public BulletProp(AbstractConfig config,  Vec2 posInit, AnimateContainer animateContainer) {
+        super(config, posInit, animateContainer);
     }
 
     @Override

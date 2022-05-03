@@ -37,7 +37,9 @@ public class HeroAircraftFactory implements AbstractAircraftFactory {
         // Double-checked locking
         if (heroInstance == null) {
             synchronized (HeroAircraftFactory.class) {
-                heroInstance = new HeroAircraft(new Vec2(Constants.WINDOW_WIDTH / 2.0,
+                heroInstance = new HeroAircraft(
+                        config,
+                        new Vec2(Constants.WINDOW_WIDTH / 2.0,
                         Constants.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight()),
                         new AnimateContainer(), new Vec2(config.getHeroBoxSize(), config.getHeroBoxSize()),
                         config.getHeroInitialHp());

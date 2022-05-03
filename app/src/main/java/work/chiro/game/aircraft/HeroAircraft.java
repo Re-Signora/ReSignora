@@ -28,9 +28,9 @@ public class HeroAircraft extends AbstractAircraft {
     private int shootNum = 1;
     final private AircraftHeroBox box;
 
-    public HeroAircraft(Vec2 posInit, AnimateContainer animateContainer, Vec2 boxSize, int hp) {
-        super(posInit, animateContainer, hp, 0);
-        box = new AircraftHeroBox(posInit, boxSize);
+    public HeroAircraft(AbstractConfig config, Vec2 posInit, AnimateContainer animateContainer, Vec2 boxSize, int hp) {
+        super(config, posInit, animateContainer, hp, 0);
+        box = new AircraftHeroBox(config, posInit, boxSize);
     }
 
     @Override
@@ -48,14 +48,14 @@ public class HeroAircraft extends AbstractAircraft {
         LinkedList<BaseBullet> res = new LinkedList<>();
         for (int i = 0; i < shootNum; i++) {
             // 子弹发射位置相对飞机位置向前偏移
-            BaseBullet baseBullet = new HeroBulletFactory(getPosition().copy(), List.of()).create();
+            BaseBullet baseBullet = new HeroBulletFactory(config, getPosition().copy(), List.of()).create();
             res.add(baseBullet);
         }
         return res;
     }
 
     public LinkedList<BaseBullet> shoot(List<List<? extends AbstractAircraft>> allEnemyAircrafts) {
-        return new LinkedList<>(new HeroBulletFactory(getPosition(), allEnemyAircrafts).createMany(getShootNum()));
+        return new LinkedList<>(new HeroBulletFactory(config, getPosition(), allEnemyAircrafts).createMany(getShootNum()));
     }
 
     @Override

@@ -22,8 +22,8 @@ import java.util.LinkedList;
  * @author hitsz
  */
 public class BossEnemy extends AbstractAircraft {
-    public BossEnemy(Vec2 posInit, AnimateContainer animateContainer, int hp) {
-        super(posInit, animateContainer, hp, 500);
+    public BossEnemy(AbstractConfig config, Vec2 posInit, AnimateContainer animateContainer, int hp) {
+        super(config, posInit, animateContainer, hp, 500);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class BossEnemy extends AbstractAircraft {
     @Override
     public LinkedList<BaseBullet> shoot() {
         LinkedList<BaseBullet> ret = new LinkedList<>();
-        ret.add(new EnemyBulletFactory(getPosition().copy(), EnemyBulletFactory.BulletType.Tracking).create());
+        ret.add(new EnemyBulletFactory(config, getPosition().copy(), EnemyBulletFactory.BulletType.Tracking).create());
         return ret;
     }
 
@@ -50,9 +50,9 @@ public class BossEnemy extends AbstractAircraft {
     public LinkedList<AbstractProp> dropProps(AbstractConfig config) {
         LinkedList<AbstractProp> props = new LinkedList<>();
         double range = Constants.BOSS_DROP_RANGE;
-        props.add(new BloodPropFactory(getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
-        props.add(new BombPropFactory(getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
-        props.add(new BulletPropFactory(getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
+        props.add(new BloodPropFactory(config, getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
+        props.add(new BombPropFactory(config, getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
+        props.add(new BulletPropFactory(config, getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
         return props;
     }
 

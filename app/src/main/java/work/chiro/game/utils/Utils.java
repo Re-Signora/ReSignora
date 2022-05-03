@@ -3,6 +3,7 @@ package work.chiro.game.utils;
 import work.chiro.game.application.MusicManager;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.EnemyBulletFactory;
+import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
@@ -20,9 +21,9 @@ import java.util.*;
  * @author Chiro
  */
 public class Utils {
-    public static LinkedList<BaseBullet> letEnemyShoot(Vec2 position) {
+    public static LinkedList<BaseBullet> letEnemyShoot(AbstractConfig config, Vec2 position) {
         LinkedList<BaseBullet> ret = new LinkedList<>();
-        ret.add(new EnemyBulletFactory(position, EnemyBulletFactory.BulletType.Direct).create());
+        ret.add(new EnemyBulletFactory(config, position, EnemyBulletFactory.BulletType.Direct).create());
         return ret;
     }
 

@@ -33,11 +33,12 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
     }
 
     public AbstractAircraft(
+            AbstractConfig config,
             Vec2 posInit,
             AnimateContainer animateContainer,
             int hp,
             int score) {
-        super(posInit, animateContainer);
+        super(config, posInit, animateContainer);
         this.hp = hp;
         this.maxHp = hp;
         this.score = score;

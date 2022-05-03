@@ -3,6 +3,7 @@ package work.chiro.game.basic;
 import work.chiro.game.aircraft.AbstractAircraft;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.application.ImageManager;
+import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;
@@ -52,6 +53,11 @@ public abstract class AbstractFlyingObject {
      */
     protected double height = -1;
 
+    /**
+     * 此物体适用的配置信息
+     */
+    final protected AbstractConfig config;
+
 
     /**
      * 有效（生存）标记，
@@ -60,10 +66,12 @@ public abstract class AbstractFlyingObject {
     protected boolean isValid = true;
 
     public AbstractFlyingObject(
+            AbstractConfig config,
             Vec2 posInit,
             AnimateContainer animateContainer,
             Vec2 sizeInit,
             Scale rotationInit) {
+        this.config = config;
         this.position = posInit;
         this.animateContainer = animateContainer;
         this.size = sizeInit;
@@ -71,20 +79,24 @@ public abstract class AbstractFlyingObject {
     }
 
     public AbstractFlyingObject(
+            AbstractConfig config,
             Vec2 posInit,
             AnimateContainer animateContainer,
             Vec2 sizeInit) {
-        this(posInit, animateContainer, sizeInit, null);
+        this(config, posInit, animateContainer, sizeInit, null);
     }
 
     public AbstractFlyingObject(
+            AbstractConfig config,
             Vec2 posInit,
             AnimateContainer animateContainer) {
-        this(posInit, animateContainer, null, null);
+        this(config, posInit, animateContainer, null, null);
     }
 
-    public AbstractFlyingObject(Vec2 posInit) {
-        this(posInit, new AnimateContainer(), null, null);
+    public AbstractFlyingObject(
+            AbstractConfig config,
+            Vec2 posInit) {
+        this(config, posInit, new AnimateContainer(), null, null);
     }
 
     protected Boolean checkInBoundary() {

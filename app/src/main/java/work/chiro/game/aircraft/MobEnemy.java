@@ -15,8 +15,8 @@ import java.util.LinkedList;
  * @author hitsz
  */
 public class MobEnemy extends AbstractAircraft {
-    public MobEnemy(Vec2 posInit, AnimateContainer animateContainer, int hp) {
-        super(posInit, animateContainer, hp, 30);
+    public MobEnemy(AbstractConfig config, Vec2 posInit, AnimateContainer animateContainer, int hp) {
+        super(config, posInit, animateContainer, hp, 30);
     }
 
     @Override
