@@ -76,4 +76,8 @@ public abstract class AbstractConfig {
     public void printNow() {
         System.out.println(this);
     }
+
+    public int getHeroBoxSize() {
+        return 12;
+    }
 }

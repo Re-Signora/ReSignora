@@ -39,7 +39,8 @@ public class HeroAircraftFactory implements AbstractAircraftFactory {
             synchronized (HeroAircraftFactory.class) {
                 heroInstance = new HeroAircraft(new Vec2(Constants.WINDOW_WIDTH / 2.0,
                         Constants.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight()),
-                        new AnimateContainer(), config.getHeroInitialHp());
+                        new AnimateContainer(), new Vec2(config.getHeroBoxSize(), config.getHeroBoxSize()),
+                        config.getHeroInitialHp());
             }
         }
         return heroInstance;

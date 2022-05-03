@@ -65,4 +65,9 @@ public class HardConfig extends AbstractConfig {
     public TimerLinearChange getHeroShoot() {
         return heroShoot;
     }
+
+    @Override
+    public int getHeroBoxSize() {
+        return super.getHeroBoxSize() + 6;
+    }
 }

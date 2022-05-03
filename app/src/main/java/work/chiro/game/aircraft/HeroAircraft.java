@@ -28,9 +28,9 @@ public class HeroAircraft extends AbstractAircraft {
     private int shootNum = 1;
     final private AircraftHeroBox box;
 
-    public HeroAircraft(Vec2 posInit, AnimateContainer animateContainer, int hp) {
+    public HeroAircraft(Vec2 posInit, AnimateContainer animateContainer, Vec2 boxSize, int hp) {
         super(posInit, animateContainer, hp, 0);
-        box = new AircraftHeroBox(posInit, new Vec2(12, 12));
+        box = new AircraftHeroBox(posInit, boxSize);
     }
 
     @Override

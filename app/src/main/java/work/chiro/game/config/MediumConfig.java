@@ -59,4 +59,9 @@ public class MediumConfig extends AbstractConfig {
     public TimerLinearChange getHeroShoot() {
         return heroShoot;
     }
+
+    @Override
+    public int getHeroBoxSize() {
+        return super.getHeroBoxSize() + 3;
+    }
 }
