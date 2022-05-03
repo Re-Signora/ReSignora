@@ -81,14 +81,18 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
      */
     public abstract LinkedList<AbstractProp> dropProps(AbstractConfig config);
 
-    protected void drawHp(Graphics g) {
+    protected void drawHp(Graphics g, Color colorFront, Color colorBack) {
         int hpBarHeight = Constants.DRAW_HP_BAR;
-        g.setColor(Color.gray);
+        g.setColor(colorBack);
         g.fillRect((int) (getLocationX() - getWidth() / 2), (int) (getLocationY() - getHeight() / 2),
                 (int) getWidth(), hpBarHeight);
-        g.setColor(Color.red);
+        g.setColor(colorFront);
         g.fillRect((int) (getLocationX() - getWidth() / 2), (int) (getLocationY() - getHeight() / 2),
                 (int) (getWidth() / maxHp * getHp()), hpBarHeight);
+    }
+
+    protected void drawHp(Graphics g) {
+        drawHp(g, Color.red, Color.gray);
     }
 
     @Override

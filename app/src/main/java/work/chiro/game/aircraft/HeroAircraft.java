@@ -81,6 +81,11 @@ public class HeroAircraft extends AbstractAircraft {
     }
 
     @Override
+    protected void drawHp(Graphics g) {
+        super.drawHp(g, Color.green, Color.lightGray);
+    }
+
+    @Override
     public void draw(Graphics g) {
         super.draw(g);
         box.draw(g);
