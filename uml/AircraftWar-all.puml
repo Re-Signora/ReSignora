@@ -581,4 +581,6 @@ class Constants
 
 class RunningConfig
 
+enum Difficulty
+
 @enduml
