@@ -13,6 +13,7 @@ import work.chiro.game.prop.BulletPropFactory;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
+import java.awt.*;
 import java.util.LinkedList;
 
 /**
@@ -42,11 +43,20 @@ public class BossEnemy extends AbstractAircraft {
 
     @Override
     public LinkedList<AbstractProp> dropProps(AbstractConfig config) {
-        LinkedList <AbstractProp> props = new LinkedList<>();
+        LinkedList<AbstractProp> props = new LinkedList<>();
         double range = Constants.BOSS_DROP_RANGE;
         props.add(new BloodPropFactory(getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
         props.add(new BombPropFactory(getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
         props.add(new BulletPropFactory(getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
         return props;
+    }
+
+    @Override
+    protected void drawHp(Graphics g) {
+        int hpBarHeight = Constants.DRAW_HP_BAR * 3 / 2;
+        g.setColor(Color.gray);
+        g.fillRect(0, 0, Constants.WINDOW_WIDTH, hpBarHeight);
+        g.setColor(Color.red);
+        g.fillRect(0, 0, (int) ((double) (Constants.WINDOW_WIDTH) / maxHp * getHp()), hpBarHeight);
     }
 }
