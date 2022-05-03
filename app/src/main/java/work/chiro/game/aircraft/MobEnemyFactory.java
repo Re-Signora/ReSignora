@@ -20,8 +20,8 @@ public class MobEnemyFactory implements AbstractAircraftFactory {
         return new MobEnemy(
                 posNew,
                 new AnimateContainerFactory(AnimateContainerFactory.ContainerType.ConstSpeed, posNew)
-                        .setupSpeed(new Vec2(0, 0.1))
+                        .setupSpeed(new Vec2(0, 0.1 * config.getEnemyMagnification().getScaleNow().getX()))
                         .create(),
-                30);
+                (int) (30 * config.getEnemyMagnification().getScaleNow().getX()));
     }
 }

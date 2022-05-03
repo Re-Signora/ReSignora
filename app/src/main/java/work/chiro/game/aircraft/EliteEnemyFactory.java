@@ -21,7 +21,7 @@ public class EliteEnemyFactory implements AbstractAircraftFactory {
                 newPos,
                 new AnimateContainerFactory(
                         AnimateContainerFactory.ContainerType.ConstSpeed, newPos)
-                        .setupSpeed(new Vec2(0, 0.08))
+                        .setupSpeed(new Vec2(0, 0.08 * config.getEnemyMagnification().getScaleNow().getX()))
                         .create(),
                 60
         );
