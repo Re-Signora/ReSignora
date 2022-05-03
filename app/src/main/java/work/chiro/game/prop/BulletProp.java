@@ -8,7 +8,7 @@ import work.chiro.game.vector.Vec2;
 /**
  * @author Chiro
  */
-public class BulletProp extends AbstractProp {
+public class BulletProp extends AbstractProp implements PropApplier {
     public BulletProp(Vec2 posInit, AnimateContainer animateContainer) {
         super(posInit, animateContainer);
     }

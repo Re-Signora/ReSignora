@@ -10,7 +10,7 @@ import work.chiro.game.windows.GameWindow;
 /**
  * @author Chiro
  */
-public class BombProp extends AbstractProp {
+public class BombProp extends AbstractProp implements PropApplier {
     public BombProp(Vec2 posInit, AnimateContainer animateContainer) {
         super(posInit, animateContainer);
     }

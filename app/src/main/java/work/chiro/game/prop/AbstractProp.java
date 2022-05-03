@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author hitsz
  */
-abstract public class AbstractProp extends AbstractFlyingObject {
+abstract public class AbstractProp extends AbstractFlyingObject implements PropApplier {
     protected List<AbstractAircraft> enemyAircrafts = new LinkedList<>();
     protected List<BaseBullet> enemyBullets = new LinkedList<>();
 
@@ -38,11 +38,4 @@ abstract public class AbstractProp extends AbstractFlyingObject {
         this.enemyBullets = enemyBullets;
         return this;
     }
-
-    /**
-     * 处理飞机碰到道具的时候的反应
-     *
-     * @return this
-     */
-    abstract public AbstractProp update();
 }

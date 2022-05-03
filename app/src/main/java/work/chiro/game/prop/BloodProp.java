@@ -7,7 +7,7 @@ import work.chiro.game.vector.Vec2;
 /**
  * @author Chiro
  */
-public class BloodProp extends AbstractProp {
+public class BloodProp extends AbstractProp implements PropApplier {
     int increaseHp;
     public BloodProp(Vec2 posInit, AnimateContainer animateContainer, int increaseHp) {
         super(posInit, animateContainer);
