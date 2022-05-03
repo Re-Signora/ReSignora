@@ -8,7 +8,7 @@ import work.chiro.game.timer.TimerLinearChange;
  * @author Chiro
  */
 public abstract class AbstractConfig {
-    protected TimerLinearChange mobCreate = new TimerLinearChange(700);
+    protected TimerLinearChange mobCreate = new TimerLinearChange(700, -1e-2);
     protected TimerLinearChange eliteCreate = new TimerLinearChange(1200);
     protected TimerLinearChange enemyShoot = new TimerLinearChange(200);
     protected TimerLinearChange heroShoot = new TimerLinearChange(10);
@@ -27,5 +27,9 @@ public abstract class AbstractConfig {
 
     public TimerLinearChange getHeroShoot() {
         return heroShoot;
+    }
+
+    public void printNow() {
+        System.out.println("Mob create: " + getMobCreate().getScaleNow());
     }
 }

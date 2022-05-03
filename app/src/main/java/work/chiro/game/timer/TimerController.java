@@ -35,6 +35,7 @@ public class TimerController {
         frameTime = Utils.getTimeMills();
         FRAME_COUNTER.add(frameTime);
         FRAME_COUNTER.removeIf(t -> t < ((frameTime >= 1000) ? (frameTime - 1000) : 0));
+        TIMERS.forEach(timer -> timer.update(frameTime));
     }
 
     public void done() {

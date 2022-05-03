@@ -55,4 +55,9 @@ public class Scale extends Vec {
     public Scale divide(Scale that) {
         return fromVector(super.divide(that));
     }
+
+    @Override
+    public String toString() {
+        return "Scale(" + getX() + ")";
+    }
 }

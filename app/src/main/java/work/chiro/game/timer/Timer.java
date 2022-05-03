@@ -37,4 +37,10 @@ public class Timer {
         }
         judgeToRun();
     }
+
+    public void update(double timeNow) {
+        if (change != null) {
+            change.update(timeNow);
+        }
+    }
 }

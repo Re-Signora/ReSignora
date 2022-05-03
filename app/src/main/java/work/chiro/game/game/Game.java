@@ -8,9 +8,7 @@ import work.chiro.game.application.MyThreadFactory;
 import work.chiro.game.background.*;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
-import work.chiro.game.config.AbstractConfig;
-import work.chiro.game.config.Constants;
-import work.chiro.game.config.RunningConfig;
+import work.chiro.game.config.*;
 import work.chiro.game.dao.HistoryImpl;
 import work.chiro.game.dao.HistoryObjectFactory;
 import work.chiro.game.prop.AbstractProp;
@@ -38,7 +36,7 @@ import java.util.stream.Collectors;
  *
  * @author hitsz
  */
-public class Game<T extends AbstractConfig> extends JPanel {
+public class Game extends JPanel {
     /**
      * 创建线程的工厂函数
      */
@@ -81,7 +79,8 @@ public class Game<T extends AbstractConfig> extends JPanel {
     private String lastProvidedMessage = null;
     private final HeroController heroController;
     private final TimerController timerController = new TimerController();
-    private T config = null;
+    private AbstractConfig config;
+    private Difficulty difficulty;
 
     public void resetStates() {
         gameOverFlag = false;
@@ -96,6 +95,9 @@ public class Game<T extends AbstractConfig> extends JPanel {
         BossEnemyFactory.clearInstance();
         timerController.clear();
         heroController.clear();
+        difficulty = RunningConfig.difficulty;
+        config = new ConfigFactory(difficulty).create();
+
         flushBackground();
     }
 
@@ -116,18 +118,19 @@ public class Game<T extends AbstractConfig> extends JPanel {
      * 指示子弹的发射、敌机的产生频率
      */
     @SuppressWarnings("FieldCanBeLocal")
-    public Game() {
+    public Game(Difficulty difficulty) {
+        this.difficulty = difficulty;
         loadFont();
         heroAircrafts.add(heroAircraft);
         flushBackground();
         // 启动英雄机鼠标监听
         heroController = HeroController.getInstance(this);
-        // config = new T();
+        config = new ConfigFactory(difficulty).create();
     }
 
     private void flushBackground() {
         backgrounds.clear();
-        switch (RunningConfig.difficulty) {
+        switch (difficulty) {
             case Easy:
                 backgrounds.add(new OtherBackgroundFactory<>(new EasyBackground()).create());
                 break;
@@ -158,7 +161,7 @@ public class Game<T extends AbstractConfig> extends JPanel {
             }
         }));
         // 产生普通敌机事件
-        timerController.add(new Timer(700, () -> {
+        timerController.add(new Timer(config.getMobCreate(), () -> {
             synchronized (enemyAircrafts) {
                 enemyAircrafts.add(new MobEnemyFactory().create());
             }
@@ -188,6 +191,8 @@ public class Game<T extends AbstractConfig> extends JPanel {
         }));
         // 获取键盘焦点
         timerController.add(new Timer(100, this::requestFocus));
+        // 输出当前 config
+        timerController.add(new Timer(2000, () -> config.printNow()));
     }
 
     private void stopAllMusic() {
@@ -229,7 +234,7 @@ public class Game<T extends AbstractConfig> extends JPanel {
                                 name == null ? "Nanshi" : name.isEmpty() ? "Nanshi" : name,
                                 score,
                                 message == null ? "NO MESSAGE" : message.isEmpty() ? "NO MESSAGE" : message,
-                                RunningConfig.difficulty)
+                                difficulty)
                                 .create());
             }
         } catch (Exception e) {
