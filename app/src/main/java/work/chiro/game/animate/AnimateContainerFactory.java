@@ -101,28 +101,35 @@ public class AnimateContainerFactory {
         return this;
     }
 
+    private AnimateCallback animateCallback = null;
+
+    public AnimateContainerFactory setupAnimateCallback(AnimateCallback animateCallback) {
+        this.animateCallback = animateCallback;
+        return this;
+    }
+
     public AnimateContainer create() {
         switch (containerType) {
             case Empty:
                 return new AnimateContainer();
             case ConstSpeed:
                 assert speed2d != null;
-                return new AnimateContainer(List.of(new Animate.Linear<>(position, speed2d, AnimateVectorType.PositionLike, Utils.getTimeMills())));
+                return new AnimateContainer(List.of(new Animate.Linear<>(position, speed2d, AnimateVectorType.PositionLike, Utils.getTimeMills())), animateCallback);
             case ConstSpeedLoop:
                 assert range != null && speed2d != null;
-                return new AnimateContainer(List.of(new Animate.LinearLoop<>(position, speed2d, AnimateVectorType.PositionLike, Utils.getTimeMills(), range)));
+                return new AnimateContainer(List.of(new Animate.LinearLoop<>(position, speed2d, AnimateVectorType.PositionLike, Utils.getTimeMills(), range)), animateCallback);
             case ConstSpeedRebound:
                 assert range != null && range2 != null && speed2d != null;
-                return new AnimateContainer(List.of(new Animate.LinearRebound<>(position, speed2d, Utils.getTimeMills(), range, range2, timeSpan)));
+                return new AnimateContainer(List.of(new Animate.LinearRebound<>(position, speed2d, Utils.getTimeMills(), range, range2, timeSpan)), animateCallback);
             case ConstSpeedToTarget:
                 assert target != null && speed1d != null;
-                return new AnimateContainer(List.of(new Animate.LinearToTarget<>(position, target, speed1d, Utils.getTimeMills(), willStop)));
+                return new AnimateContainer(List.of(new Animate.LinearToTarget<>(position, target, speed1d, Utils.getTimeMills(), willStop)), animateCallback);
             case ConstSpeedTracking:
                 assert speed2d != null && target != null && speed1d != null;
-                return new AnimateContainer(List.of(new Animate.LinearTracking<>(position, target, speed1d, Utils.getTimeMills())));
+                return new AnimateContainer(List.of(new Animate.LinearTracking<>(position, target, speed1d, Utils.getTimeMills())), animateCallback);
             case NonLinearTo:
                 assert target != null;
-                return new AnimateContainer(List.of(new Animate.NonLinear<>(position, target, AnimateVectorType.PositionLike, Utils.getTimeMills(), timeSpan, false)));
+                return new AnimateContainer(List.of(new Animate.NonLinear<>(position, target, AnimateVectorType.PositionLike, Utils.getTimeMills(), timeSpan, false)), animateCallback);
             default:
                 break;
         }

@@ -15,13 +15,19 @@ import java.util.stream.Collectors;
  */
 public class AnimateContainer {
     private final List<AbstractAnimate<Vec>> animateList;
+    private final AnimateCallback animateCallback;
 
     public AnimateContainer() {
         this(new LinkedList<>());
     }
 
     public AnimateContainer(List<AbstractAnimate<Vec>> animateList) {
+        this(animateList, null);
+    }
+
+    public AnimateContainer(List<AbstractAnimate<Vec>> animateList, AnimateCallback animateCallback) {
         this.animateList = animateList;
+        this.animateCallback = animateCallback;
     }
 
     public List<AbstractAnimate<Vec>> getAnimateList() {
@@ -39,7 +45,11 @@ public class AnimateContainer {
      */
     public Boolean updateAll(double timeNow) {
         List<Boolean> innerRes = updateAllInner(timeNow);
-        return innerRes.stream().mapToInt(res -> res ? 0 : 1).sum() == 0;
+        boolean finished = innerRes.stream().mapToInt(res -> res ? 0 : 1).sum() == 0;
+        if (finished && animateCallback != null) {
+            return animateCallback.onFinish(this);
+        }
+        return finished;
     }
 
     public Vec getSpeed(double timeNow) {
