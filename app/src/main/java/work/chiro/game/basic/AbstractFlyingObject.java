@@ -87,7 +87,7 @@ public abstract class AbstractFlyingObject {
         this(posInit, new AnimateContainer(), null, null);
     }
 
-    private Boolean checkInBoundary() {
+    protected Boolean checkInBoundary() {
         return !(getLocationX() > Constants.WINDOW_WIDTH ||
                 getLocationX() < 0 ||
                 getLocationY() > Constants.WINDOW_HEIGHT ||

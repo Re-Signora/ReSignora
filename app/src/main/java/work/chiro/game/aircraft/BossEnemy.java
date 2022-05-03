@@ -35,6 +35,11 @@ public class BossEnemy extends AbstractAircraft {
     }
 
     @Override
+    protected Boolean checkInBoundary() {
+        return true;
+    }
+
+    @Override
     public LinkedList<BaseBullet> shoot() {
         LinkedList<BaseBullet> ret = new LinkedList<>();
         ret.add(new EnemyBulletFactory(getPosition().copy(), EnemyBulletFactory.BulletType.Tracking).create());
