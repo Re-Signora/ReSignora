@@ -17,6 +17,10 @@ public class ConfigFactory {
         switch (difficulty) {
             case Easy:
                 return new EasyConfig();
+            case Medium:
+                return new MediumConfig();
+            case Hard:
+                return new HardConfig();
             default:
                 try {
                     throw new ConfigArgumentErrorException();
