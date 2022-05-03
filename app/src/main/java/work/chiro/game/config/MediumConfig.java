@@ -13,6 +13,7 @@ public class MediumConfig extends AbstractConfig {
     protected TimerLinearChange dropPropsRate = new TimerLinearChange(0.2);
     protected TimerLinearChange enemyMagnification = new TimerLinearChange(1.0, 1e-8, 3.0);
     protected TimerLinearChange bossInitialHp = new TimerLinearChange(8000);
+    protected TimerLinearChange heroShoot = new TimerLinearChange(40d, 1e-3, 25d);
 
     @Override
     public TimerLinearChange getMobCreate() {
@@ -52,5 +53,10 @@ public class MediumConfig extends AbstractConfig {
     @Override
     public int getHeroInitialHp() {
         return 5000;
+    }
+
+    @Override
+    public TimerLinearChange getHeroShoot() {
+        return heroShoot;
     }
 }

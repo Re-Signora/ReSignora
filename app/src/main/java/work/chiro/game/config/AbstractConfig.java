@@ -12,7 +12,7 @@ public abstract class AbstractConfig {
     protected TimerLinearChange eliteCreate = new TimerLinearChange(1200);
     protected TimerLinearChange enemyShoot = new TimerLinearChange(200);
     protected TimerLinearChange bossShoot = new TimerLinearChange(200);
-    protected TimerLinearChange heroShoot = new TimerLinearChange(100d, 1e-3, 10d);
+    protected TimerLinearChange heroShoot = new TimerLinearChange(30d, 1e-3, 10d);
     protected TimerLinearChange bossScoreThreshold = new TimerLinearChange(1000);
     protected TimerLinearChange dropPropsRate = new TimerLinearChange(0.3);
     protected TimerLinearChange enemyMagnification = new TimerLinearChange(1d);

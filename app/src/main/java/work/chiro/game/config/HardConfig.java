@@ -14,6 +14,7 @@ public class HardConfig extends AbstractConfig {
     protected TimerLinearChange enemyMagnification = new TimerLinearChange(1.5, 1e-8, 5.0);
     protected TimerLinearChange bossScoreThreshold = new TimerLinearChange(1000, 1e-3, 300d);
     protected TimerLinearChange bossInitialHp = new TimerLinearChange(8000, 1e-1, 12000d);
+    protected TimerLinearChange heroShoot = new TimerLinearChange(30d, 1e-3, 50d);
 
     @Override
     public TimerLinearChange getMobCreate() {
@@ -58,5 +59,10 @@ public class HardConfig extends AbstractConfig {
     @Override
     public int getHeroInitialHp() {
         return 3000;
+    }
+
+    @Override
+    public TimerLinearChange getHeroShoot() {
+        return heroShoot;
     }
 }
