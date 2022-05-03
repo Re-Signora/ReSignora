@@ -116,7 +116,6 @@ public class Game extends JPanel {
      * 周期（ms)
      * 指示子弹的发射、敌机的产生频率
      */
-    @SuppressWarnings("FieldCanBeLocal")
     public Game(Difficulty difficulty) {
         this.difficulty = difficulty;
         config = new ConfigFactory(difficulty).create();
@@ -127,7 +126,7 @@ public class Game extends JPanel {
         flushBackground();
         // 启动英雄机鼠标监听
         heroController = HeroController.getInstance(this);
-
+        System.out.println("Game instance created!");
     }
 
     private void flushBackground() {
@@ -411,7 +410,7 @@ public class Game extends JPanel {
         y = y + 20;
         BossEnemy boss = BossEnemyFactory.getInstance();
         if (boss == null) {
-            g.drawString("Before Boss:" + (nextBossScore - score), x, y);
+            g.drawString("Before Boss:" + (int) (nextBossScore - score), x, y);
         } else {
             g.drawString("BOSS LIFE:" + boss.getHp(), x, y);
         }

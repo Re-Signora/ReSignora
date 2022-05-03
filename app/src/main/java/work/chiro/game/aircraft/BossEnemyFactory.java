@@ -30,6 +30,7 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
     @Override
     public BossEnemy create(AbstractConfig config) {
         if (instance == null) {
+            config.getEnemyMagnification().update(Utils.getTimeMills());
             Utils.stopMusic(MusicManager.MusicType.BGM);
             Utils.startMusic(MusicManager.MusicType.BGM_BOSS);
             synchronized (BossEnemyFactory.class) {

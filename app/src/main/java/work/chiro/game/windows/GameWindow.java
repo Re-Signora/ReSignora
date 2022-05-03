@@ -53,12 +53,7 @@ public class GameWindow extends AbstractSceneClient {
 
     @Override
     public void startAction() {
-        if (game.getStartedFlag() && game.getGameOverFlag()) {
-            game.resetStates();
-            game.action();
-        }
-        if (!game.getStartedFlag()) {
-            game.action();
-        }
+        game.resetStates();
+        game.action();
     }
 }
