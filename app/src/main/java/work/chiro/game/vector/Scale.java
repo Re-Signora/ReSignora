@@ -58,6 +58,6 @@ public class Scale extends Vec {
 
     @Override
     public String toString() {
-        return "Scale(" + getX() + ")";
+        return String.format("%.0f", getX());
     }
 }

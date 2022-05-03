@@ -149,13 +149,13 @@ public class Game extends JPanel {
         MusicManager.initAll();
         timerController.init(Utils.getTimeMills());
         // 英雄射击事件
-        timerController.add(new Timer(10, () -> {
+        timerController.add(new Timer(config.getHeroShoot(), () -> {
             synchronized (heroBullets) {
                 heroBullets.addAll(heroAircraft.shoot(List.of(enemyAircrafts, bossAircrafts)));
             }
         }));
         // 产生精英敌机事件
-        timerController.add(new Timer(1200, () -> {
+        timerController.add(new Timer(config.getEliteCreate(), () -> {
             synchronized (enemyAircrafts) {
                 enemyAircrafts.add(new EliteEnemyFactory().create());
             }
@@ -167,13 +167,13 @@ public class Game extends JPanel {
             }
         }));
         // 敌机射击事件
-        timerController.add(new Timer(200, () -> {
+        timerController.add(new Timer(config.getEnemyShoot(), () -> {
             synchronized (enemyBullets) {
                 enemyAircrafts.forEach(enemyAircraft -> enemyBullets.addAll(enemyAircraft.shoot()));
             }
         }));
         // boss射击事件
-        timerController.add(new Timer(100, () -> {
+        timerController.add(new Timer(config.getBossShoot(), () -> {
             synchronized (enemyBullets) {
                 bossAircrafts.forEach(bossEnemy -> enemyBullets.addAll(bossEnemy.shoot()));
             }

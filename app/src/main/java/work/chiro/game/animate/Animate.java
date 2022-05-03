@@ -145,7 +145,7 @@ public class Animate {
         final private T vecTarget;
         final private double speed;
 
-        LinearToTarget(T vecSource, T vecTarget, double speed, double timeStart) {
+        public LinearToTarget(T vecSource, T vecTarget, double speed, double timeStart) {
             super(vecSource, vecTarget.copy(), AnimateVectorType.PositionLike, timeStart);
             this.vecTarget = vecTarget;
             this.speed = speed * 1000;
@@ -169,6 +169,24 @@ public class Animate {
         @Override
         public T getDelta() {
             return getNewVecInstance().fromVector(getVecTarget().minus(getSource()));
+        }
+
+        @Override
+        public Boolean isDone(double timeNow) {
+            return super.isDone(timeNow) ||
+                    ((getDelta().get().get(0) > 0) ?
+                            (getVector().get().get(0) >= getVecTarget().get().get(0)) :
+                            (getVector().get().get(0) <= getVecTarget().get().get(0)));
+        }
+
+        @Override
+        public Boolean update(double timeNow) {
+            super.update(timeNow);
+            if (isDone(timeNow)) {
+                getVector().set(getVecTarget());
+                return true;
+            }
+            return false;
         }
     }
 

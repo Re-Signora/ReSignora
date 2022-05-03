@@ -1,5 +1,6 @@
 package work.chiro.game.timer;
 
+import work.chiro.game.animate.AbstractAnimate;
 import work.chiro.game.animate.Animate;
 import work.chiro.game.animate.AnimateVectorType;
 import work.chiro.game.utils.Utils;
@@ -11,24 +12,30 @@ import work.chiro.game.vector.Vec;
  */
 public class TimerLinearChange {
     final private Scale initial;
-    final private Scale change;
-    final private Animate.Linear<Vec> animate;
+    final private AbstractAnimate<Vec> animate;
 
-    public TimerLinearChange(Scale initial, Scale change) {
+    public TimerLinearChange(Scale initial, Scale change, Scale end) {
         this.initial = initial;
-        this.change = change;
-        animate = new Animate.Linear<>(this.initial, this.change, AnimateVectorType.Others, Utils.getTimeMills());
+        if (end == null) {
+            animate = new Animate.Linear<>(this.initial, change, AnimateVectorType.Others, Utils.getTimeMills());
+        } else {
+            animate = new Animate.LinearToTarget<>(this.initial, end, change.getX(), Utils.getTimeMills());
+        }
+    }
+
+    public TimerLinearChange(double initial, double change, Double end) {
+        this(new Scale(initial), new Scale(change), end == null ? null : new Scale(end));
     }
 
     public TimerLinearChange(double initial, double change) {
-        this(new Scale(initial), new Scale(change));
+        this(new Scale(initial), new Scale(change), null);
     }
 
     public TimerLinearChange(double initial) {
-        this(initial, 0);
+        this(initial, 0, null);
     }
 
-    public Animate.Linear<Vec> getAnimate() {
+    public AbstractAnimate<Vec> getAnimate() {
         return animate;
     }
 
@@ -39,9 +46,5 @@ public class TimerLinearChange {
 
     public Scale getScaleNow() {
         return initial.fromVector(animate.getVector());
-    }
-
-    public Scale getChange() {
-        return change;
     }
 }
