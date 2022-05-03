@@ -5,7 +5,7 @@ import work.chiro.game.timer.TimerLinearChange;
 /**
  * @author Chiro
  */
-public class HardConfig extends MediumConfig {
+public class HardConfig extends AbstractConfig {
     protected TimerLinearChange mobCreate = new TimerLinearChange(500, 1e-3, 100d);
     protected TimerLinearChange eliteCreate = new TimerLinearChange(800, 1e-3, 300d);
     protected TimerLinearChange enemyShoot = new TimerLinearChange(200, 1e-4, 80d);

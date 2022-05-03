@@ -30,8 +30,4 @@ public class ConfigFactory {
                 }
         }
     }
-
-    public static void main(String[] args) {
-        new ConfigFactory(Difficulty.Easy);
-    }
 }

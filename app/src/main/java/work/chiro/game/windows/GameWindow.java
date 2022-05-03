@@ -10,7 +10,7 @@ import javax.swing.*;
  * @author Chiro
  */
 public class GameWindow extends AbstractSceneClient {
-    static GameWindow gameWindow = null;
+    private static GameWindow gameWindow = null;
 
     public static GameWindow getInstance() {
         if (gameWindow == null) {

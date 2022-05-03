@@ -16,7 +16,6 @@ public abstract class AbstractConfig {
     protected TimerLinearChange bossScoreThreshold = new TimerLinearChange(1000);
     protected TimerLinearChange dropPropsRate = new TimerLinearChange(0.3);
     protected TimerLinearChange enemyMagnification = new TimerLinearChange(1d);
-    protected int heroInitialHp = 10000;
 
     public TimerLinearChange getMobCreate() {
         return mobCreate;
@@ -51,7 +50,7 @@ public abstract class AbstractConfig {
     }
 
     public int getHeroInitialHp() {
-        return heroInitialHp;
+        return 10000;
     }
 
     @Override

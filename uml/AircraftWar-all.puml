@@ -14,7 +14,7 @@ abstract class AbstractFlyingObject {
     + AbstractFlyingObject(Vec2, AnimateContainer)
     + AbstractFlyingObject(Vec2, AnimateContainer, Vec2)
     + AbstractFlyingObject(Vec2, AnimateContainer, Vec2, Scale)
-    + draw(): void
+    + draw(Graphics): void
     + forward(): void
     + setPosition(double, double)
     + crash(AbstractFlyingObject): boolean
@@ -28,6 +28,7 @@ abstract class AbstractFlyingObject {
     + vanish(): void
     + getPosition(): Vec2
     + getRotation(): Scale
+    + updateRotation(): Scale
     + getOnVanish(): BasicCallback
     + getSize(): Vec2
 }
@@ -38,6 +39,7 @@ abstract class AbstractAircraft extends AbstractFlyingObject {
     + decreaseHp(int): void
     + getHp(): int
     + getScore(): int
+    # drawHp(): void
     + {abstract} shoot(): LinkedList<BaseBullet>
     + {abstract} dropProps(): LinkedList<AbstractProp>
  }
@@ -50,6 +52,7 @@ abstract class BaseBullet extends AbstractFlyingObject {
 
 class HeroAircraft extends AbstractAircraft {
     - int shootNum
+    - AircraftHeroBox box
     + HeroAircraft(Vec2, AnimateContainer, int)
     + forward(): void
     + shoot(): LinkedList<BaseBullet>
@@ -271,19 +274,21 @@ class Timer {
     - double time
     - TimerCallback callback
     + Timer(double, TimerCallback)
-    + execute(): void
+    + Timer(TimerLinearChange, TimerCallback)
+    + execute(TimerController): void
+    + update(double): void
 }
 
 class TimerController {
-    - {static} List<Timer> TIMERS
+    - List<Timer> TIMERS
     + TimerController()
     + getTimers(): List<Timer>
-    + {static} done(): void
-    + {static} init(double): void
-    + {static} update(): void
-    + {static} add(Timer): void
-    + {static} getFps(): int
-    + {static} getTimeDelta(): double
+    + done(): void
+    + init(double): void
+    + update(): void
+    + add(Timer): void
+    + getFps(): int
+    + getTimeDelta(): double
 }
 Timer ..+ TimerController
 
@@ -408,5 +413,172 @@ class HistoryObjectFactory {
     + create(): HistoryObject
 }
 HistoryObjectFactory ..> HistoryObject
+
+class AircraftBox extends AbstractFlyingObject {
+    + AircraftBox(Vec2, Vec2)
+    + forward(): void
+}
+
+class AircraftHeroBox extends AircraftBox
+
+abstract class AbstractSceneClient {
+    - Object waitObject
+    + {abstract} getPanel(): JPanel
+    + getWaitObject(): Object
+    + nextScene(Class<? extends AbstractSceneClient>): void
+    + void startAction(): void
+}
+
+interface Runnable {
+    + {abstract} run(): void
+}
+
+abstract class AbstractSceneRunnable implements Runnable {
+    + getClient(): AbstractSceneClient
+    + run(): void
+}
+
+class Scene {
+    - AbstractSceneRunnable sceneRunnable
+    - String name
+    + Scene(String, AbstractSceneClient)
+    + getName(): String
+    + getSceneRunnable(): AbstractSceneRunnable
+    + run(): void
+}
+
+class SceneRun {
+    - JFrame frame
+    - LinkedList<Scene> sceneList
+    - SceneRun instance
+    - Scene nextScene
+    - CardLayout cardLayout
+    - JPanel wrapperPanel
+    + {static} newInstance(JFrame, List<Scene>): SceneRun
+    + {static} getInstance(): SceneRun
+    # SceneRun(JFrame, List<Scene>)
+    + run(): void
+    + setNextScene(Scene): SceneRun
+    + setNextScene(Class<? extends AbstractSceneClient>): SceneRun
+}
+
+class GameWindow extends AbstractSceneClient {
+    - {static} GameWindow gameWindow
+    - {static} Game game
+    + {static} getInstance(): GameWindow
+    + getPanel(): JPanel
+    + getGame(): Game
+    + getWaitObject(): Object
+    + nextScene(Class<? extends AbstractSceneClient>): void
+    + clearGameInstance(): void
+    + startAction(): void
+}
+
+class HistoryWindow extends AbstractSceneClient {
+    - {static} HistoryWindow historyWindow
+    - JPanel mainPanel
+    - JLabel difficultyLabel
+    - JTable historyTable
+    - JComboBox<String> selectDifficultyComboBox
+    - Difficulty selectedDifficulty
+    + HistoryWindow(boolean)
+    + HistoryWindow()
+    + syncWidthDao(): void
+    + {static} getInstance(): HistoryWindow
+    + getPanel(): JPanel
+    + startAction(): void
+}
+
+class MainWindow extends AbstractSceneClient {
+    - {static} MainWindow mainWindow
+    - JCheckBox musicOnCheckBox
+    - JPanel mainPanel
+    + {static} getInstance(): MainWindow
+    + MainWindow()
+    + getPanel(): JPanel
+}
+
+class TimerLinearChange {
+    - Scale initial
+    - AbstractAnimate<Vec> animate
+    + TimerLinearChange(Scale, Scale, Scale)
+    + TimerLinearChange(double, double, Double)
+    + TimerLinearChange(double, double)
+    + TimerLinearChange(double)
+    + getAnimate(): AbstractAnimate<Vec>
+    + update(double): TimerLinearChange
+    + getScaleNow(double): Scale
+}
+
+abstract class AbstractConfig {
+    # TimerLinearChange mobCreate
+    # TimerLinearChange eliteCreate
+    # TimerLinearChange enemyShoot
+    # TimerLinearChange bossShoot
+    # TimerLinearChange heroShoot
+    # TimerLinearChange bossScoreThreshold
+    # TimerLinearChange dropPropsRate
+    # TimerLinearChange enemyMagnification
+    + getMobCreate(): TimerLinearChange
+    + getEliteCreate(): TimerLinearChange
+    + getEnemyShoot(): TimerLinearChange
+    + getHeroShoot(): TimerLinearChange
+    + getBossShoot(): TimerLinearChange
+    + getBossScoreThreshold(): TimerLinearChange
+    + getDropPropsRate(): TimerLinearChange
+    + getEnemyMagnification(): TimerLinearChange
+    + getHeroInitialHp(): int
+    + toString(): String
+    + printNow(): void
+}
+
+class EasyConfig extends AbstractConfig
+
+class MediumConfig extends AbstractConfig {
+    # TimerLinearChange mobCreate
+    # TimerLinearChange eliteCreate
+    # TimerLinearChange enemyShoot
+    # TimerLinearChange bossShoot
+    # TimerLinearChange dropPropsRate
+    # TimerLinearChange enemyMagnification
+    + getMobCreate(): TimerLinearChange
+    + getEliteCreate(): TimerLinearChange
+    + getEnemyShoot(): TimerLinearChange
+    + getBossShoot(): TimerLinearChange
+    + getDropPropsRate(): TimerLinearChange
+    + getEnemyMagnification(): TimerLinearChange
+    + getHeroInitialHp(): int
+}
+
+class HardConfig extends AbstractConfig {
+    # TimerLinearChange mobCreate
+    # TimerLinearChange eliteCreate
+    # TimerLinearChange enemyShoot
+    # TimerLinearChange bossShoot
+    # TimerLinearChange dropPropsRate
+    # TimerLinearChange enemyMagnification
+    # TimerLinearChange bossScoreThreshold
+    + getMobCreate(): TimerLinearChange
+    + getEliteCreate(): TimerLinearChange
+    + getEnemyShoot(): TimerLinearChange
+    + getBossShoot(): TimerLinearChange
+    + getDropPropsRate(): TimerLinearChange
+    + getEnemyMagnification(): TimerLinearChange
+    + getHeroInitialHp(): int
+    + getBossScoreThreshold(): TimerLinearChange
+}
+
+class ConfigFactory {
+    - Difficulty difficulty
+    + ConfigFactory(Difficulty)
+    + create(): AbstractConfig
+}
+ConfigFactory ..> EasyConfig
+ConfigFactory ..> MediumConfig
+ConfigFactory ..> HardConfig
+
+class Constants
+
+class RunningConfig
 
 @enduml
