@@ -3,6 +3,7 @@ package work.chiro.game.aircraft;
 import work.chiro.game.animate.AnimateContainerFactory;
 import work.chiro.game.application.MusicManager;
 import work.chiro.game.basic.BasicCallback;
+import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
@@ -27,7 +28,7 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
     }
 
     @Override
-    public BossEnemy create() {
+    public BossEnemy create(AbstractConfig config) {
         if (instance == null) {
             Utils.stopMusic(MusicManager.MusicType.BGM);
             Utils.startMusic(MusicManager.MusicType.BGM_BOSS);

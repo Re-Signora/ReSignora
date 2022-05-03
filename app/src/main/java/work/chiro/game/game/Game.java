@@ -56,7 +56,7 @@ public class Game extends JPanel {
         return MUSIC_FACTORY;
     }
 
-    private HeroAircraft heroAircraft = new HeroAircraftFactory().create();
+    private HeroAircraft heroAircraft;
     private final List<AbstractAircraft> heroAircrafts = new LinkedList<>();
     private final List<AbstractBackground> backgrounds = new LinkedList<>();
     private final List<BossEnemy> bossAircrafts = new LinkedList<>();
@@ -87,15 +87,15 @@ public class Game extends JPanel {
         enemyBullets.clear();
         enemyAircrafts.clear();
         props.clear();
-        heroAircraft = new HeroAircraftFactory().clearInstance().create();
+        difficulty = RunningConfig.difficulty;
+        config = new ConfigFactory(difficulty).create();
+        heroAircraft = new HeroAircraftFactory().clearInstance().create(config);
         heroAircrafts.clear();
         heroAircrafts.add(heroAircraft);
         bossAircrafts.clear();
         BossEnemyFactory.clearInstance();
         timerController.clear();
         heroController.clear();
-        difficulty = RunningConfig.difficulty;
-        config = new ConfigFactory(difficulty).create();
 
         flushBackground();
     }
@@ -119,13 +119,15 @@ public class Game extends JPanel {
     @SuppressWarnings("FieldCanBeLocal")
     public Game(Difficulty difficulty) {
         this.difficulty = difficulty;
-        loadFont();
+        config = new ConfigFactory(difficulty).create();
+        nextBossScore = score + config.getBossScoreThreshold().getScaleNow().getX();
+        heroAircraft = new HeroAircraftFactory().create(config);
         heroAircrafts.add(heroAircraft);
+        loadFont();
         flushBackground();
         // 启动英雄机鼠标监听
         heroController = HeroController.getInstance(this);
-        config = new ConfigFactory(difficulty).create();
-        nextBossScore = score + config.getBossScoreThreshold().getScaleNow().getX();
+
     }
 
     private void flushBackground() {
@@ -157,13 +159,13 @@ public class Game extends JPanel {
         // 产生精英敌机事件
         timerController.add(new Timer(config.getEliteCreate(), () -> {
             synchronized (enemyAircrafts) {
-                enemyAircrafts.add(new EliteEnemyFactory().create());
+                enemyAircrafts.add(new EliteEnemyFactory().create(config));
             }
         }));
         // 产生普通敌机事件
         timerController.add(new Timer(config.getMobCreate(), () -> {
             synchronized (enemyAircrafts) {
-                enemyAircrafts.add(new MobEnemyFactory().create());
+                enemyAircrafts.add(new MobEnemyFactory().create(config));
             }
         }));
         // 敌机射击事件
@@ -186,7 +188,7 @@ public class Game extends JPanel {
                     bossAircrafts.add(new BossEnemyFactory(() -> {
                         nextBossScore = config.getBossScoreThreshold().getScaleNow().getX() + score;
                         BossEnemyFactory.clearInstance();
-                    }).create());
+                    }).create(config));
                 }
             }
         }));

@@ -2,6 +2,7 @@ package work.chiro.game.aircraft;
 
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.application.ImageManager;
+import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
 import work.chiro.game.vector.Vec2;
 
@@ -32,7 +33,7 @@ public class HeroAircraftFactory implements AbstractAircraftFactory {
     }
 
     @Override
-    public HeroAircraft create() {
+    public HeroAircraft create(AbstractConfig config) {
         // Double-checked locking
         if (heroInstance == null) {
             synchronized (HeroAircraftFactory.class) {

@@ -1,5 +1,7 @@
 package work.chiro.game.vector;
 
+import work.chiro.game.utils.Utils;
+
 import java.util.List;
 
 /**
@@ -58,6 +60,6 @@ public class Scale extends Vec {
 
     @Override
     public String toString() {
-        return String.format("%.0f", getX());
+        return Utils.convertDoubleToString(getX());
     }
 }

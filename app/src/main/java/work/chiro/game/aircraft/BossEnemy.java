@@ -36,7 +36,6 @@ public class BossEnemy extends AbstractAircraft {
     @Override
     public LinkedList<BaseBullet> shoot() {
         LinkedList<BaseBullet> ret = new LinkedList<>();
-        new HeroAircraftFactory().create();
         ret.add(new EnemyBulletFactory(getPosition().copy(), EnemyBulletFactory.BulletType.Tracking).create());
         return ret;
     }

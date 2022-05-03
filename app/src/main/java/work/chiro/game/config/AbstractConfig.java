@@ -15,6 +15,7 @@ public abstract class AbstractConfig {
     protected TimerLinearChange heroShoot = new TimerLinearChange(100d, 1e-3, 10d);
     protected TimerLinearChange bossScoreThreshold = new TimerLinearChange(1000);
     protected TimerLinearChange dropPropsRate = new TimerLinearChange(0.3);
+    protected TimerLinearChange enemyMagnification = new TimerLinearChange(1d);
 
     public TimerLinearChange getMobCreate() {
         return mobCreate;
@@ -44,12 +45,25 @@ public abstract class AbstractConfig {
         return dropPropsRate;
     }
 
+    public TimerLinearChange getEnemyMagnification() {
+        return enemyMagnification;
+    }
+
+    @Override
+    public String toString() {
+        return "Config{" +
+                "MobCreate:" + getMobCreate().getScaleNow() +
+                ",EliteCreate:" + getEliteCreate().getScaleNow() +
+                ",enemyShoot:" + getEnemyShoot().getScaleNow() +
+                ",bossShoot:" + getBossShoot().getScaleNow() +
+                ",heroShoot:" + getHeroShoot().getScaleNow() +
+                ",bossScoreThreshold:" + getBossScoreThreshold().getScaleNow() +
+                ",dropRate:" + getDropPropsRate().getScaleNow() +
+                ",enemyMagnification:" + getEnemyMagnification().getScaleNow()
+                + "}";
+    }
+
     public void printNow() {
-        System.out.println("MobCreate:" + getMobCreate().getScaleNow() +
-                " EliteCreate:" + getEliteCreate().getScaleNow() +
-                " enemyShoot:" + getEnemyShoot().getScaleNow() +
-                " bossShoot:" + getBossShoot().getScaleNow() +
-                " heroShoot:" + getHeroShoot().getScaleNow() +
-                " bossScoreThreshold:" + getBossScoreThreshold().getScaleNow());
+        System.out.println(this);
     }
 }
