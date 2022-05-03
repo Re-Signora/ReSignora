@@ -144,12 +144,18 @@ public class Animate {
             implements AnimateWithTarget<T> {
         final private T vecTarget;
         final private double speed;
+        final private boolean willStop;
 
-        public LinearToTarget(T vecSource, T vecTarget, double speed, double timeStart) {
+        public LinearToTarget(T vecSource, T vecTarget, double speed, double timeStart, boolean willStop) {
             super(vecSource, vecTarget.copy(), AnimateVectorType.PositionLike, timeStart);
             this.vecTarget = vecTarget;
             this.speed = speed * 1000;
+            this.willStop = willStop;
             updateSpeed();
+        }
+
+        public LinearToTarget(T vecSource, T vecTarget, double speed, double timeStart) {
+            this(vecSource, vecTarget, speed, timeStart, true);
         }
 
         @Override
@@ -173,10 +179,10 @@ public class Animate {
 
         @Override
         public Boolean isDone(double timeNow) {
-            return super.isDone(timeNow) ||
+            return willStop && (super.isDone(timeNow) ||
                     ((getDelta().get().get(0) > 0) ?
                             (getVector().get().get(0) >= getVecTarget().get().get(0)) :
-                            (getVector().get().get(0) <= getVecTarget().get().get(0)));
+                            (getVector().get().get(0) <= getVecTarget().get().get(0))));
         }
 
         @Override

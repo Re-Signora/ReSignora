@@ -93,6 +93,14 @@ public class AnimateContainerFactory {
         return this;
     }
 
+    private boolean willStop = true;
+
+    public AnimateContainerFactory setupWillStop(boolean willStop) {
+        assert containerType == ContainerType.ConstSpeedToTarget;
+        this.willStop = willStop;
+        return this;
+    }
+
     public AnimateContainer create() {
         switch (containerType) {
             case Empty:
@@ -108,7 +116,7 @@ public class AnimateContainerFactory {
                 return new AnimateContainer(List.of(new Animate.LinearRebound<>(position, speed2d, Utils.getTimeMills(), range, range2, timeSpan)));
             case ConstSpeedToTarget:
                 assert target != null && speed1d != null;
-                return new AnimateContainer(List.of(new Animate.LinearToTarget<>(position, target, speed1d, Utils.getTimeMills())));
+                return new AnimateContainer(List.of(new Animate.LinearToTarget<>(position, target, speed1d, Utils.getTimeMills(), willStop)));
             case ConstSpeedTracking:
                 assert speed2d != null && target != null && speed1d != null;
                 return new AnimateContainer(List.of(new Animate.LinearTracking<>(position, target, speed1d, Utils.getTimeMills())));

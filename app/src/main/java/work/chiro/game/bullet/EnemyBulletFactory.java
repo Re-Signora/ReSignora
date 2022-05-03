@@ -54,6 +54,7 @@ public class EnemyBulletFactory extends BaseBulletFactory {
                 getPosition())
                 .setupSpeed(0.2)
                 .setupTarget(HeroAircraftFactory.getInstance().getPosition().copy())
+                .setupWillStop(false)
                 .create();
     }
 
