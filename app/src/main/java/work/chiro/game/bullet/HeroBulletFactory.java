@@ -54,6 +54,7 @@ public class HeroBulletFactory extends BaseBulletFactory {
                             posCopy)
                             .setupTarget(nearEnemyAircrafts.get(i >= nearEnemyAircrafts.size() ? 0 : i).getPosition().copy())
                             .setupSpeed(0.5)
+                            .setupWillStop(false)
                             .create(),
                     1));
         }
