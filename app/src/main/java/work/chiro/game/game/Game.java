@@ -296,13 +296,13 @@ public class Game<T extends AbstractConfig> extends JPanel {
      * 3. 英雄获得补给
      */
     private void crashCheckAction() {
+        BossEnemy boss = BossEnemyFactory.getInstance();
         // 英雄子弹攻击敌机
         for (BaseBullet bullet : heroBullets) {
             if (bullet.notValid()) {
                 continue;
             }
-            BossEnemy boss = BossEnemyFactory.getInstance();
-            if (boss != null) {
+            if (boss != null && !boss.notValid()) {
                 if (bullet.crash(boss)) {
                     boss.decreaseHp(bullet.getPower());
                     bullet.vanish();
@@ -366,6 +366,10 @@ public class Game<T extends AbstractConfig> extends JPanel {
             }
         }
 
+        // 英雄与 Boss 相撞
+        if (boss != null && !boss.notValid() && heroAircraft.crash(boss)) {
+            heroAircraft.decreaseHp(Integer.MAX_VALUE);
+        }
     }
 
     /**
