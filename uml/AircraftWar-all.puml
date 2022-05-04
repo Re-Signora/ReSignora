@@ -298,6 +298,10 @@ enum AnimateVectorType
 
 enum AnimateType
 
+interface AnimateWithTarget<T> {
+    + getVecTarget(): T
+}
+
 abstract class AbstractAnimate<T> {
     - AnimateType animateType
     - AnimateVectorType animateVectorType
@@ -343,6 +347,64 @@ class LinearRebound<T> extends Linear {
     + update(double): Boolean
 }
 LinearRebound ..+ Animate
+
+class Empty<T> extends AbstractAnimate {
+    + Empty(T)
+    + isDone(double): Boolean
+    + update(double): Boolean
+    + getDelta(): T
+    + getSpeed(): T
+}
+Empty ..+ Animate
+
+class Delay<T> extends AbstractAnimate {
+    + Delay(T, double)
+    + isDone(double): Boolean
+    + update(double): Boolean
+    + getDelta(): T
+    + getSpeed(): T
+}
+Delay ..+ Animate
+
+class LinearToTarget<T> extends Linear implements AnimateWithTarget {
+    - T vecTarget
+    - double speed
+    - boolean willStop
+    + LinearToTarget(T, T, double, double, boolean)
+    + LinearToTarget(T, T, double, double)
+    + getVecTarget(): T
+    + updateSpeed(): void
+    + getDelta(): T
+    + isDone(): Boolean
+    + update(): Boolean
+}
+LinearToTarget ..+ Animate
+
+class LinearTracking<T> extends LinearToTarget implements AnimateWithTarget {
+    + LinearTracking(T, T, double, double)
+    + update(): Boolean
+}
+LinearTracking ..+ Animate
+
+class NonLinear<T> extends AbstractAnimate implements AnimateWithTarget {
+    + NonLinear(T, T, AnimateVectorType, double, double, boolean)
+    + NonLinear(T, T, AnimateVectorType, double, double)
+    + isDone(): Boolean
+    + update(): Boolean
+    + getSpeed(): T
+    + getDelta(): T
+    + getVecTarget(): T
+}
+NonLinear ..+ Animate
+
+class SmoothTo<T> extends AbstractAnimate implements AnimateWithTarget {
+    + SmoothTo(T, T, AnimateVectorType, double, double)
+    + update(): Boolean
+    + getSpeed(): T
+    + getDelta(): T
+    + getVecTarget(): T
+}
+SmoothTo ..+ Animate
 
 class AnimateContainer {
     - List<AbstractAnimate<Vec>> animateList
