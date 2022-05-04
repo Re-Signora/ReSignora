@@ -24,14 +24,14 @@ public class HeroController {
     final static double MOVE_SPEED = 1;
 
     static public class KeyCode {
-        final static int UP = 38;
-        final static int DOWN = 40;
-        final static int LEFT = 37;
-        final static int RIGHT = 39;
-        final static int SLOW = 16;
-        final static int BUFF = 88;
-        final static int SHOOT = 90;
-        final static int QUIT = 81;
+        public final static int UP = 38;
+        public final static int DOWN = 40;
+        public final static int LEFT = 37;
+        public final static int RIGHT = 39;
+        public final static int SLOW = 16;
+        public final static int BUFF = 88;
+        public final static int SHOOT = 90;
+        public final static int QUIT = 81;
     }
 
     final private Set<Integer> pressedKeys = new HashSet<>();

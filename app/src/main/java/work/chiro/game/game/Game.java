@@ -146,13 +146,23 @@ public class Game extends JPanel {
         }
     }
 
+    private void heroShoot() {
+        synchronized (heroBullets) {
+            heroBullets.addAll(heroAircraft.shoot(List.of(enemyAircrafts, bossAircrafts)));
+        }
+    }
+
     public void addEvents() {
         MusicManager.initAll();
         timerController.init(Utils.getTimeMills());
         // 英雄射击事件
         timerController.add(new Timer(config.getHeroShoot(), () -> {
-            synchronized (heroBullets) {
-                heroBullets.addAll(heroAircraft.shoot(List.of(enemyAircrafts, bossAircrafts)));
+            if (RunningConfig.autoShoot) {
+                heroShoot();
+            } else {
+                if (HeroController.getInstance(this).pressed(HeroController.KeyCode.SHOOT)) {
+                    heroShoot();
+                }
             }
         }));
         // 产生精英敌机事件

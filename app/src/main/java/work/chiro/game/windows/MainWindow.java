@@ -15,6 +15,7 @@ import java.awt.event.WindowEvent;
 public class MainWindow extends AbstractSceneClient {
     private static MainWindow mainWindow = null;
     private final JCheckBox musicOnCheckBox = new JCheckBox();
+    private final JCheckBox autoShootCheckBox = new JCheckBox();
     private final JPanel mainPanel = new JPanel();
 
     public static MainWindow getInstance() {
@@ -70,12 +71,21 @@ public class MainWindow extends AbstractSceneClient {
         });
         musicOnCheckBox.setSelected(true);
         musicOnCheckBox.setText("打开音效");
+        autoShootCheckBox.addActionListener(e -> {
+            RunningConfig.autoShoot = autoShootCheckBox.isSelected();
+            System.out.println("auto shoot: " + autoShootCheckBox.isSelected());
+        });
+        autoShootCheckBox.setSelected(true);
+        autoShootCheckBox.setText("自动射击");
         JPanel innerPanel = new JPanel();
         innerPanel.setLayout(new GridLayout(5, 1, 10, 80));
         innerPanel.add(easyModeButton);
         innerPanel.add(mediumModeButton);
         innerPanel.add(hardModeButton);
-        innerPanel.add(musicOnCheckBox);
+        JPanel checkBoxPanel = new JPanel();
+        checkBoxPanel.add(musicOnCheckBox);
+        checkBoxPanel.add(autoShootCheckBox);
+        innerPanel.add(checkBoxPanel);
         innerPanel.add(historyButton);
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(Box.createHorizontalStrut(100), BorderLayout.WEST);
