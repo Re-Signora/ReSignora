@@ -6,6 +6,8 @@ import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.EnemyBulletFactory;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
+import work.chiro.game.config.Difficulty;
+import work.chiro.game.config.RunningConfig;
 import work.chiro.game.prop.AbstractProp;
 import work.chiro.game.prop.BloodPropFactory;
 import work.chiro.game.prop.BombPropFactory;
@@ -43,6 +45,12 @@ public class BossEnemy extends AbstractAircraft {
     public LinkedList<BaseBullet> shoot() {
         LinkedList<BaseBullet> ret = new LinkedList<>();
         ret.add(new EnemyBulletFactory(config, getPosition().copy(), EnemyBulletFactory.BulletType.Tracking).create());
+        if (RunningConfig.difficulty == Difficulty.Medium || RunningConfig.difficulty == Difficulty.Hard) {
+            ret.add(new EnemyBulletFactory(config, getPosition().copy(), EnemyBulletFactory.BulletType.Direct).create());
+        }
+        if (RunningConfig.difficulty == Difficulty.Hard) {
+            ret.add(new EnemyBulletFactory(config, getPosition().copy(), EnemyBulletFactory.BulletType.Scatter).create());
+        }
         return ret;
     }
 
