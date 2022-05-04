@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 class BulletPropTest {
-    BulletPropFactory bulletPropFactory = new BulletPropFactory(new Vec2());
+    BulletPropFactory bulletPropFactory = new BulletPropFactory(new EasyConfig(), new Vec2());
     AbstractConfig config = new EasyConfig();
     BulletPropTest() {
         new HeroAircraftFactory().create(config);
