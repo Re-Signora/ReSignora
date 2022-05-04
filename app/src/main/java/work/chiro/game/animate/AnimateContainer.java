@@ -45,7 +45,7 @@ public class AnimateContainer {
      */
     public Boolean updateAll(double timeNow) {
         List<Boolean> innerRes = updateAllInner(timeNow);
-        boolean finished = innerRes.stream().mapToInt(res -> res ? 0 : 1).sum() == 0;
+        boolean finished = innerRes.isEmpty() || (innerRes.stream().mapToInt(res -> res ? 0 : 1).sum() == 0);
         if (finished && animateCallback != null) {
             return animateCallback.onFinish(this);
         }
@@ -90,5 +90,14 @@ public class AnimateContainer {
             assert delta.getSize() == 2;
             return new Scale(-Math.atan(delta.get().get(0) / (delta.get().get(1) == 0.0 ? 1e-5 : delta.get().get(1))));
         }
+    }
+
+    public AnimateContainer clearAllAnimates() {
+        getAnimateList().clear();
+        return this;
+    }
+
+    public void addAnimate(AbstractAnimate<Vec> animate) {
+        getAnimateList().add(animate);
     }
 }

@@ -4,6 +4,8 @@ import work.chiro.game.animate.AnimateContainerFactory;
 import work.chiro.game.application.ImageManager;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
+import work.chiro.game.config.Difficulty;
+import work.chiro.game.config.RunningConfig;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
@@ -19,14 +21,37 @@ public class EliteEnemyFactory implements AbstractAircraftFactory {
         config.getEnemyMagnification().update(Utils.getTimeMills());
         Vec2 newPos = new Vec2((Math.random() * (Constants.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
                 (Math.random() * Constants.WINDOW_HEIGHT * Constants.ELITE_CREATE_VERTICAL_RANGE));
-        return new EliteEnemy(
-                config,
-                newPos,
-                new AnimateContainerFactory(
-                        AnimateContainerFactory.ContainerType.ConstSpeed, newPos)
-                        .setupSpeed(new Vec2(0, 0.08 * config.getEnemyMagnification().getScaleNow().getX()))
-                        .create(),
-                60
-        );
+        if (RunningConfig.difficulty == Difficulty.Easy) {
+            return new EliteEnemy(
+                    config,
+                    newPos,
+                    new AnimateContainerFactory(
+                            AnimateContainerFactory.ContainerType.ConstSpeed, newPos)
+                            .setupSpeed(new Vec2(0, 0.08 * config.getEnemyMagnification().getScaleNow().getX()))
+                            .create(),
+                    60
+            );
+        } else {
+            return new EliteEnemy(
+                    config,
+                    newPos,
+                    new AnimateContainerFactory(
+                            AnimateContainerFactory.ContainerType.SmoothTo, newPos)
+                            .setupTimeSpan(1000)
+                            .setupTarget(newPos.plus(Utils.randomPosition(new Vec2(-100, 0), new Vec2(100, 300))))
+                            .setupAnimateCallback(animateContainer -> {
+                                animateContainer.clearAllAnimates()
+                                        .addAnimate(
+                                                new AnimateContainerFactory(AnimateContainerFactory.ContainerType.SmoothTo, newPos)
+                                                        .setupTimeSpan(1000)
+                                                        .setupTarget(newPos.plus(Utils.randomPosition(new Vec2(-100, 0), new Vec2(100, 300))))
+                                                        .createAnimate()
+                                        );
+                                return false;
+                            })
+                            .create(),
+                    60
+            );
+        }
     }
 }

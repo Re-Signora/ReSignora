@@ -1,8 +1,10 @@
 package work.chiro.game.animate;
 
 import work.chiro.game.utils.Utils;
+import work.chiro.game.vector.Vec;
 import work.chiro.game.vector.Vec2;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,6 +26,8 @@ public class AnimateContainerFactory {
         ConstSpeedTracking,
         // 非线性
         NonLinearTo,
+        // 平滑过渡到
+        SmoothTo,
         // 空
         Empty
     }
@@ -62,7 +66,8 @@ public class AnimateContainerFactory {
     public AnimateContainerFactory setupTarget(Vec2 target) {
         assert containerType == ContainerType.ConstSpeedTracking ||
                 containerType == ContainerType.ConstSpeedToTarget ||
-                containerType == ContainerType.NonLinearTo;
+                containerType == ContainerType.NonLinearTo ||
+                containerType == ContainerType.SmoothTo;
         this.target = target;
         return this;
     }
@@ -88,7 +93,8 @@ public class AnimateContainerFactory {
 
     public AnimateContainerFactory setupTimeSpan(double timeSpan) {
         assert containerType == ContainerType.ConstSpeedRebound ||
-                containerType == ContainerType.NonLinearTo;
+                containerType == ContainerType.NonLinearTo ||
+                containerType == ContainerType.SmoothTo;
         this.timeSpan = timeSpan;
         return this;
     }
@@ -108,31 +114,45 @@ public class AnimateContainerFactory {
         return this;
     }
 
-    public AnimateContainer create() {
+    public AbstractAnimate<Vec> createAnimate() {
         switch (containerType) {
             case Empty:
-                return new AnimateContainer();
+                return null;
             case ConstSpeed:
                 assert speed2d != null;
-                return new AnimateContainer(List.of(new Animate.Linear<>(position, speed2d, AnimateVectorType.PositionLike, Utils.getTimeMills())), animateCallback);
+                return new Animate.Linear<>(position, speed2d, AnimateVectorType.PositionLike, Utils.getTimeMills());
             case ConstSpeedLoop:
                 assert range != null && speed2d != null;
-                return new AnimateContainer(List.of(new Animate.LinearLoop<>(position, speed2d, AnimateVectorType.PositionLike, Utils.getTimeMills(), range)), animateCallback);
+                return new Animate.LinearLoop<>(position, speed2d, AnimateVectorType.PositionLike, Utils.getTimeMills(), range);
             case ConstSpeedRebound:
                 assert range != null && range2 != null && speed2d != null;
-                return new AnimateContainer(List.of(new Animate.LinearRebound<>(position, speed2d, Utils.getTimeMills(), range, range2, timeSpan)), animateCallback);
+                return new Animate.LinearRebound<>(position, speed2d, Utils.getTimeMills(), range, range2, timeSpan);
             case ConstSpeedToTarget:
                 assert target != null && speed1d != null;
-                return new AnimateContainer(List.of(new Animate.LinearToTarget<>(position, target, speed1d, Utils.getTimeMills(), willStop)), animateCallback);
+                return new Animate.LinearToTarget<>(position, target, speed1d, Utils.getTimeMills(), willStop);
             case ConstSpeedTracking:
                 assert speed2d != null && target != null && speed1d != null;
-                return new AnimateContainer(List.of(new Animate.LinearTracking<>(position, target, speed1d, Utils.getTimeMills())), animateCallback);
+                return new Animate.LinearTracking<>(position, target, speed1d, Utils.getTimeMills());
             case NonLinearTo:
                 assert target != null;
-                return new AnimateContainer(List.of(new Animate.NonLinear<>(position, target, AnimateVectorType.PositionLike, Utils.getTimeMills(), timeSpan, false)), animateCallback);
+                return new Animate.NonLinear<>(position, target, AnimateVectorType.PositionLike, Utils.getTimeMills(), timeSpan, false);
+            case SmoothTo:
+                assert target != null && timeSpan != 0;
+                return new Animate.SmoothTo<>(position, target, AnimateVectorType.PositionLike, Utils.getTimeMills(), timeSpan);
             default:
                 break;
         }
-        return new AnimateContainer();
+        return null;
+    }
+
+    public AnimateContainer create() {
+        AbstractAnimate<Vec> animate = createAnimate();
+        if (animate == null) {
+            return new AnimateContainer();
+        } else {
+            List<AbstractAnimate<Vec>> animateList = new LinkedList<>();
+            animateList.add(animate);
+            return new AnimateContainer(animateList, animateCallback);
+        }
     }
 }

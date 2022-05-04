@@ -11,6 +11,31 @@ import work.chiro.game.vector.VectorType;
  * @author Chiro
  */
 public class Animate {
+    public static class Empty <T extends VectorType & VectorFactory<T>> extends AbstractAnimate<T> {
+        Empty(T vecSource) {
+            super(vecSource, AnimateType.Empty, AnimateVectorType.Others, 0, 0);
+        }
+
+        @Override
+        public Boolean update(double timeNow) {
+            return true;
+        }
+
+        @Override
+        public T getSpeed(double timeNow) {
+            return getNewVecInstance();
+        }
+
+        @Override
+        public T getDelta() {
+            return getNewVecInstance();
+        }
+
+        @Override
+        public Boolean isDone(double timeNow) {
+            return false;
+        }
+    }
     public static class Linear<T extends VectorType & VectorFactory<T>> extends AbstractAnimate<T> {
         private final T speed;
         private final Boolean willStop;
@@ -255,6 +280,57 @@ public class Animate {
         @Override
         public T getDelta() {
             return getNewVecInstance().fromVector(vecTarget.minus(getSource()));
+        }
+
+        @Override
+        public T getVecTarget() {
+            return vecTarget;
+        }
+    }
+
+    public static class SmoothTo<T extends VectorType & VectorFactory<T>>
+            extends AbstractAnimate<T>
+            implements AnimateWithTarget<T> {
+        final private T vecTarget;
+
+        SmoothTo(T vecSource, T vecTarget, AnimateVectorType animateVectorType, double timeStart, double timeSpan) {
+            super(vecSource, AnimateType.SmoothTo, animateVectorType, timeStart, timeSpan);
+            this.vecTarget = vecTarget;
+        }
+
+        @Override
+        public Boolean update(double timeNow) {
+            double t = timeNow - timeStart;
+            boolean done = isDone(timeNow);
+            if (done) {
+                getVector().set(getVecTarget());
+            } else {
+                double m = 2 * t * t / (timeSpan * timeSpan);
+                if (t < timeSpan / 2) {
+                    getVector().set(getSource().plus(getDelta().times(m)));
+                } else {
+                    getVector().set(getSource().plus(getDelta().times(-1 - m + 4 * t / timeSpan)));
+                }
+            }
+            return done;
+        }
+
+        @Override
+        public T getSpeed(double timeNow) {
+            double t = timeNow - timeStart;
+            if (getAnimateVectorType() == AnimateVectorType.PositionLike && !isDone(timeNow)) {
+                if (t < timeSpan / 2) {
+                    return getNewVecInstance().fromVector(getDelta().times(2.0 / timeSpan * (t / timeSpan)));
+                } else {
+                    return getNewVecInstance().fromVector(getDelta().times(2.0 / timeSpan * (1 - t / timeSpan)));
+                }
+            }
+            return getNewVecInstance();
+        }
+
+        @Override
+        public T getDelta() {
+            return getNewVecInstance().fromVector(getVecTarget().minus(getSource()));
         }
 
         @Override

@@ -6,9 +6,11 @@ package work.chiro.game.animate;
  */
 public enum AnimateType {
     // 未知
-    Unknown,
+    Empty,
     // 线性
     Linear,
     // 非线性
-    NonLinear
+    NonLinear,
+    // 平滑过渡到
+    SmoothTo
 }
