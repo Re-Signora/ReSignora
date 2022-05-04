@@ -31,9 +31,22 @@ public abstract class AbstractFlyingObject {
      */
     private final Vec2 position;
 
+    /**
+     * 动画容器
+     */
     private final AnimateContainer animateContainer;
+    /**
+     * 大小
+     */
     private final Vec2 size;
+    /**
+     * 旋转角度（弧度制）
+     */
     private final Scale rotation;
+    /**
+     * 透明度 (0~1)
+     */
+    private final Scale alpha;
 
     /**
      * 图片,
@@ -70,12 +83,23 @@ public abstract class AbstractFlyingObject {
             Vec2 posInit,
             AnimateContainer animateContainer,
             Vec2 sizeInit,
-            Scale rotationInit) {
+            Scale rotationInit,
+            Scale alpha) {
         this.config = config;
         this.position = posInit;
         this.animateContainer = animateContainer;
         this.size = sizeInit;
         this.rotation = updateRotation(rotationInit);
+        this.alpha = alpha;
+    }
+
+    public AbstractFlyingObject(
+            AbstractConfig config,
+            Vec2 posInit,
+            AnimateContainer animateContainer,
+            Vec2 sizeInit,
+            Scale rotationInit) {
+        this(config, posInit, animateContainer, sizeInit, rotationInit, null);
     }
 
     public AbstractFlyingObject(
@@ -83,20 +107,20 @@ public abstract class AbstractFlyingObject {
             Vec2 posInit,
             AnimateContainer animateContainer,
             Vec2 sizeInit) {
-        this(config, posInit, animateContainer, sizeInit, null);
+        this(config, posInit, animateContainer, sizeInit, null, null);
     }
 
     public AbstractFlyingObject(
             AbstractConfig config,
             Vec2 posInit,
             AnimateContainer animateContainer) {
-        this(config, posInit, animateContainer, null, null);
+        this(config, posInit, animateContainer, null, null, null);
     }
 
     public AbstractFlyingObject(
             AbstractConfig config,
             Vec2 posInit) {
-        this(config, posInit, new AnimateContainer(), null, null);
+        this(config, posInit, new AnimateContainer(), null, null, null);
     }
 
     protected Boolean checkInBoundary() {
@@ -269,24 +293,32 @@ public abstract class AbstractFlyingObject {
         return getRotation(false);
     }
 
-    private void drawNoRotation(Graphics g, boolean center) {
-        g.drawImage(getImage(),
-                (int) (getLocationX() - (center ? getWidth() / 2 : 0)), (int) (getLocationY() - (center ? getHeight() / 2 : 0)),
-                (int) getWidth(), (int) getHeight(),
-                null);
+    private void drawImageWithAlphaAffineTransform(Graphics g, boolean center, AffineTransform affineTransform) {
+        Graphics2D graphics2D = (Graphics2D) g;
+        if (alpha != null) {
+            graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) alpha.getX()));
+        }
+        if (affineTransform != null) {
+            graphics2D.drawImage(getImage(), affineTransform, null);
+        } else {
+            graphics2D.drawImage(
+                    getImage(),
+                    (int) (getLocationX() - (center ? getWidth() / 2 : 0)), (int) (getLocationY() - (center ? getHeight() / 2 : 0)),
+                    (int) getWidth(), (int) getHeight(),
+                    null);
+        }
     }
 
     public void draw(Graphics g, boolean center) {
         if (getRotation(true).getX() == 0) {
-            drawNoRotation(g, center);
+            drawImageWithAlphaAffineTransform(g, center, null);
         } else {
             AffineTransform af = AffineTransform.getTranslateInstance(
                     getLocationX() - (center ? getWidth() / 2 : 0),
                     getLocationY() - (center ? getHeight() / 2 : 0)
             );
             af.rotate(getRotation(true).getX(), getWidth() / 2, getHeight() / 2);
-            Graphics2D graphics2D = (Graphics2D) g;
-            graphics2D.drawImage(getImage(), af, null);
+            drawImageWithAlphaAffineTransform(g, center, af);
         }
     }
 
