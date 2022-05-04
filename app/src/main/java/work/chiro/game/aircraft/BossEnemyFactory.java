@@ -43,7 +43,7 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
                                 .setupSpeed(new Vec2(0.03 * config.getEnemyMagnification().getScaleNow().getX(), 0))
                                 .setupRange(new Vec2(0, 0))
                                 .setupRange2(new Vec2(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT))
-                                .create(), (int) config.getBossInitialHp().getScaleNow().getX());
+                                .create(), config.getBossInitialHp().getScaleNow().getX());
             }
         }
         instance.setOnVanish(onVanish);

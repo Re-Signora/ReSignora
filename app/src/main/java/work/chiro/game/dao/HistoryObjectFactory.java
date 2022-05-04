@@ -7,12 +7,12 @@ import work.chiro.game.config.Difficulty;
  */
 public class HistoryObjectFactory {
     final private String name;
-    final private int score;
+    final private double score;
     final private long time;
     final private String message;
     final private Difficulty difficulty;
 
-    public HistoryObjectFactory(String name, int score, String message, Difficulty difficulty) {
+    public HistoryObjectFactory(String name, double score, String message, Difficulty difficulty) {
         this.name = name;
         this.score = score;
         this.message = message;

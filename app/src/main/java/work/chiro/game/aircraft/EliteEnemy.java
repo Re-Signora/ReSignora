@@ -19,7 +19,7 @@ import java.util.LinkedList;
  */
 public class EliteEnemy extends AbstractAircraft {
 
-    public EliteEnemy(AbstractConfig config, Vec2 posInit, AnimateContainer animateContainer, int hp) {
+    public EliteEnemy(AbstractConfig config, Vec2 posInit, AnimateContainer animateContainer, double hp) {
         super(config, posInit, animateContainer, hp, 100);
     }
 

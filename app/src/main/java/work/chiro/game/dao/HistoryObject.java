@@ -14,12 +14,12 @@ import java.util.List;
  */
 public class HistoryObject implements Serializable {
     final private String name;
-    final private int score;
+    final private double score;
     final private long time;
     final private String message;
     final private Difficulty difficulty;
 
-    public HistoryObject(String name, int score, long time, String message, Difficulty difficulty) {
+    public HistoryObject(String name, double score, long time, String message, Difficulty difficulty) {
         this.name = name;
         this.score = score;
         this.time = time;
@@ -31,7 +31,7 @@ public class HistoryObject implements Serializable {
         return name;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
@@ -53,7 +53,7 @@ public class HistoryObject implements Serializable {
 
     @Override
     public String toString() {
-        return "" + difficulty + "\t" + name + "\t" + String.format("%9d", score) + "\t" + getTimeString() + "\t" + message;
+        return "" + difficulty + "\t" + name + "\t" + String.format("%9d", (int) (score)) + "\t" + getTimeString() + "\t" + message;
     }
 
     static public List<String> getLabels() {

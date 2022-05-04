@@ -29,7 +29,7 @@ public class EliteEnemyFactory implements AbstractAircraftFactory {
                             AnimateContainerFactory.ContainerType.ConstSpeed, newPos)
                             .setupSpeed(new Vec2(0, 0.08 * config.getEnemyMagnification().getScaleNow().getX()))
                             .create(),
-                    60
+                    60 * config.getEnemyMagnification().getScaleNow().getX()
             );
         } else {
             return new EliteEnemy(
@@ -50,7 +50,7 @@ public class EliteEnemyFactory implements AbstractAircraftFactory {
                                 return false;
                             })
                             .create(),
-                    60
+                    90 * config.getEnemyMagnification().getScaleNow().getX()
             );
         }
     }

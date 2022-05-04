@@ -23,12 +23,12 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
     /**
      * 生命值
      */
-    protected int maxHp;
-    protected int hp;
-    protected int score;
+    protected double maxHp;
+    protected double hp;
+    protected double score;
     static private double lastPlayMusic = 0;
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
@@ -36,15 +36,15 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
             AbstractConfig config,
             Vec2 posInit,
             AnimateContainer animateContainer,
-            int hp,
-            int score) {
+            double hp,
+            double score) {
         super(config, posInit, animateContainer);
         this.hp = hp;
         this.maxHp = hp;
         this.score = score;
     }
 
-    public void decreaseHp(int decrease) {
+    public void decreaseHp(double decrease) {
         hp -= decrease;
         if (hp <= 0) {
             hp = 0;
@@ -63,7 +63,7 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
         }
     }
 
-    public int getHp() {
+    public double getHp() {
         return hp;
     }
 

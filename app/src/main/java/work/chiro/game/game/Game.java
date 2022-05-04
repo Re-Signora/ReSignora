@@ -69,7 +69,7 @@ public class Game extends JPanel {
     );
     private boolean gameOverFlag = false;
     private boolean startedFlag = false;
-    private int score = 0;
+    private double score = 0;
     private double nextBossScore;
     private final Object waitObject = new Object();
     private Future<?> future = null;
@@ -414,15 +414,15 @@ public class Game extends JPanel {
         int y = 25;
         g.setColor(new Color(0xcfcfcfcf));
         g.setFont(myFontBase);
-        g.drawString("SCORE:" + this.score, x, y);
+        g.drawString("SCORE:" + (int) (this.score), x, y);
         y = y + 20;
-        g.drawString("LIFE:" + this.heroAircraft.getHp(), x, y);
+        g.drawString("LIFE:" + (int) (this.heroAircraft.getHp()), x, y);
         y = y + 20;
         BossEnemy boss = BossEnemyFactory.getInstance();
         if (boss == null) {
             g.drawString("Before Boss:" + (int) (nextBossScore - score), x, y);
         } else {
-            g.drawString("BOSS LIFE:" + boss.getHp(), x, y);
+            g.drawString("BOSS LIFE:" + (int) (boss.getHp()), x, y);
         }
         y = y + 20;
         g.drawString("FPS:" + timerController.getFps(), x, y);
@@ -436,7 +436,7 @@ public class Game extends JPanel {
         }
     }
 
-    public void increaseScore(int increase) {
+    public void increaseScore(double increase) {
         score += increase;
     }
 }

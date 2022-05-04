@@ -25,6 +25,6 @@ public class MobEnemyFactory implements AbstractAircraftFactory {
                 new AnimateContainerFactory(AnimateContainerFactory.ContainerType.ConstSpeed, posNew)
                         .setupSpeed(new Vec2(0, 0.1 * config.getEnemyMagnification().getScaleNow().getX()))
                         .create(),
-                (int) (30 * config.getEnemyMagnification().getScaleNow().getX()));
+                (30 * config.getEnemyMagnification().getScaleNow().getX()));
     }
 }
