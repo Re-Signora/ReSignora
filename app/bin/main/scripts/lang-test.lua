@@ -1,1 +1,0 @@
-logger.info("Lua Engine Launched!")
