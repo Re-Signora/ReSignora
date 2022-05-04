@@ -37,14 +37,14 @@ public class EliteEnemyFactory implements AbstractAircraftFactory {
                     newPos,
                     new AnimateContainerFactory(
                             AnimateContainerFactory.ContainerType.SmoothTo, newPos)
-                            .setupTimeSpan(1000)
-                            .setupTarget(newPos.plus(Utils.randomPosition(new Vec2(-100, 0), new Vec2(100, 300))))
+                            .setupTimeSpan(config.getEliteJumpTime())
+                            .setupTarget(newPos.plus(Utils.randomPosition(new Vec2(-config.getEliteJumpRange().getX(), 0), new Vec2(config.getEliteJumpRange().getX(), config.getEliteJumpRange().getY()))))
                             .setupAnimateCallback(animateContainer -> {
                                 animateContainer.clearAllAnimates()
                                         .addAnimate(
                                                 new AnimateContainerFactory(AnimateContainerFactory.ContainerType.SmoothTo, newPos)
-                                                        .setupTimeSpan(1000)
-                                                        .setupTarget(newPos.plus(Utils.randomPosition(new Vec2(-100, 0), new Vec2(100, 300))))
+                                                        .setupTimeSpan(config.getEliteJumpTime())
+                                                        .setupTarget(newPos.plus(Utils.randomPosition(new Vec2(-config.getEliteJumpRange().getX(), 0), new Vec2(config.getEliteJumpRange().getX(), config.getEliteJumpRange().getY()))))
                                                         .createAnimate()
                                         );
                                 return false;

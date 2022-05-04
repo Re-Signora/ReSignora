@@ -1,6 +1,7 @@
 package work.chiro.game.config;
 
 import work.chiro.game.timer.TimerLinearChange;
+import work.chiro.game.vector.Vec2;
 
 /**
  * @author Chiro
@@ -69,5 +70,20 @@ public class HardConfig extends AbstractConfig {
     @Override
     public int getHeroBoxSize() {
         return super.getHeroBoxSize() + 6;
+    }
+
+    @Override
+    public double getAircraftCrashDecreaseHp() {
+        return 1500;
+    }
+
+    @Override
+    public int getEliteJumpTime() {
+        return 700;
+    }
+
+    @Override
+    public Vec2 getEliteJumpRange() {
+        return new Vec2(200, 300);
     }
 }

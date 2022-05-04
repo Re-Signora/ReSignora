@@ -1,6 +1,7 @@
 package work.chiro.game.config;
 
 import work.chiro.game.timer.TimerLinearChange;
+import work.chiro.game.vector.Vec2;
 
 /**
  * 配置参数类
@@ -82,6 +83,14 @@ public abstract class AbstractConfig {
     }
 
     public double getAircraftCrashDecreaseHp() {
-        return 3000;
+        return 1000;
+    }
+
+    public int getEliteJumpTime() {
+        return 1000;
+    }
+
+    public Vec2 getEliteJumpRange() {
+        return new Vec2(100, 300);
     }
 }
