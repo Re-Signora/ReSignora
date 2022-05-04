@@ -352,11 +352,20 @@ public class Game extends JPanel {
                     // 敌机损失一定生命值
                     onEnemyAircraftHit(enemyAircraft, bullet);
                 }
-                // 英雄机 与 敌机 相撞，均损毁
-                if (heroAircraft.crash(enemyAircraft)) {
-                    enemyAircraft.vanish();
-                    heroAircraft.decreaseHp(Integer.MAX_VALUE);
-                }
+            }
+        }
+
+        for (AbstractAircraft enemyAircraft : enemyAircrafts) {
+            if (enemyAircraft.notValid()) {
+                // 已被其他子弹击毁的敌机，不再检测
+                // 避免多个子弹重复击毁同一敌机的判定
+                continue;
+            }
+            // 英雄机 与 敌机 相撞
+            if (heroAircraft.crash(enemyAircraft)) {
+                enemyAircraft.vanish();
+                heroAircraft.decreaseHp(config.getAircraftCrashDecreaseHp());
+                heroAircraft.startInvincibleState();
             }
         }
 

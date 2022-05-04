@@ -80,4 +80,8 @@ public abstract class AbstractConfig {
     public int getHeroBoxSize() {
         return 12;
     }
+
+    public double getAircraftCrashDecreaseHp() {
+        return 3000;
+    }
 }
