@@ -47,7 +47,7 @@ public class BossEnemy extends AbstractAircraft {
     }
 
     @Override
-    public LinkedList<AbstractProp> dropProps(AbstractConfig config) {
+    public LinkedList<AbstractProp> dropProps() {
         LinkedList<AbstractProp> props = new LinkedList<>();
         double range = Constants.BOSS_DROP_RANGE;
         props.add(new BloodPropFactory(config, getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());

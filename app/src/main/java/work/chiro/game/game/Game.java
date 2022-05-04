@@ -301,7 +301,7 @@ public class Game extends JPanel {
         bullet.vanish();
         if (enemyAircraft.notValid()) {
             score += enemyAircraft.getScore();
-            props.addAll(enemyAircraft.dropProps(config).stream().map(
+            props.addAll(enemyAircraft.dropProps().stream().map(
                     prop -> prop.subscribeEnemyAircrafts(enemyAircrafts)
                             .subscribeEnemyBullets(enemyBullets)
             ).collect(Collectors.toList()));

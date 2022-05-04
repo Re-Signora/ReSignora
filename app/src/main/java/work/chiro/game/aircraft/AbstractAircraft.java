@@ -79,10 +79,9 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
     /**
      * 飞机掉落道具
      *
-     * @param config 当前配置信息
      * @return 返回所有的道具
      */
-    public abstract LinkedList<AbstractProp> dropProps(AbstractConfig config);
+    public abstract LinkedList<AbstractProp> dropProps();
 
     protected void drawHp(Graphics g, Color colorFront, Color colorBack) {
         int hpBarHeight = Constants.DRAW_HP_BAR;

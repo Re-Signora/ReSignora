@@ -30,7 +30,7 @@ public class EliteEnemy extends AbstractAircraft {
 
     @SuppressWarnings("AlibabaUndefineMagicConstant")
     @Override
-    public LinkedList<AbstractProp> dropProps(AbstractConfig config) {
+    public LinkedList<AbstractProp> dropProps() {
         double select = Utils.getRandom().nextDouble();
         config.getDropPropsRate().update(Utils.getTimeMills());
         double probability = config.getDropPropsRate().getScaleNow().getX();

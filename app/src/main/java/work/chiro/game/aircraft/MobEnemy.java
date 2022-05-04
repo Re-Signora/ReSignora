@@ -25,7 +25,7 @@ public class MobEnemy extends AbstractAircraft {
     }
 
     @Override
-    public LinkedList<AbstractProp> dropProps(AbstractConfig config) {
+    public LinkedList<AbstractProp> dropProps() {
         return new LinkedList<>();
     }
 
