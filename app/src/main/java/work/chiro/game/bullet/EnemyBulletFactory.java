@@ -43,9 +43,9 @@ public class EnemyBulletFactory extends BaseBulletFactory {
                 AnimateContainerFactory.ContainerType.ConstSpeedRebound,
                 getPosition())
                 .setupSpeed(new Vec2(random.nextDouble() * 0.5 - 0.25, random.nextDouble() * 0.2 + 0.5))
-                .setupRange(new Vec2(0, 0))
-                .setupRange2(new Vec2(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT))
-                .setupTimeSpan(3000)
+                .setupRange(new Vec2(2, 2))
+                .setupRange2(new Vec2(Constants.WINDOW_WIDTH - 2, Constants.WINDOW_HEIGHT - 2))
+                .setupTimeSpan(30000)
                 .create();
     }
 
