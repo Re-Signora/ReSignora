@@ -277,14 +277,14 @@ public abstract class AbstractFlyingObject {
     }
 
     public void draw(Graphics g, boolean center) {
-        if (getRotation().getX() == 0) {
+        if (getRotation(true).getX() == 0) {
             drawNoRotation(g, center);
         } else {
             AffineTransform af = AffineTransform.getTranslateInstance(
                     getLocationX() - (center ? getWidth() / 2 : 0),
                     getLocationY() - (center ? getHeight() / 2 : 0)
             );
-            af.rotate(getRotation().getX(), getWidth() / 2, getHeight() / 2);
+            af.rotate(getRotation(true).getX(), getWidth() / 2, getHeight() / 2);
             Graphics2D graphics2D = (Graphics2D) g;
             graphics2D.drawImage(getImage(), af, null);
         }
