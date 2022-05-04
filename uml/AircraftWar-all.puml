@@ -278,6 +278,8 @@ class Timer {
     + execute(TimerController): void
     + update(double): void
 }
+Timer --> TimerCallback
+Timer --> TimerLinearChange
 
 class TimerController {
     - List<Timer> TIMERS
@@ -290,9 +292,7 @@ class TimerController {
     + getFps(): int
     + getTimeDelta(): double
 }
-Timer ..+ TimerController
-
-class Animate
+TimerController --> Timer
 
 enum AnimateVectorType
 
@@ -316,6 +316,8 @@ abstract class AbstractAnimate<T> {
     + getSource(): T
     # getNewVecInstance(): T
 }
+AbstractAnimate --> AnimateVectorType
+AbstractAnimate --> AnimateType
 
 class Linear<T> extends AbstractAnimate {
     - T speed
@@ -328,7 +330,6 @@ class Linear<T> extends AbstractAnimate {
     + getSpeed(): T
     + getDelta(): T
 }
-Linear ..+ Animate
 
 class LinearLoop<T> extends Linear {
     - Vec2 range
@@ -336,7 +337,6 @@ class LinearLoop<T> extends Linear {
     + update(double): Boolean
     + isDone(double): Boolean
 }
-LinearLoop ..+ Animate
 
 class LinearRebound<T> extends Linear {
     - Vec2 rangeLeft
@@ -346,7 +346,6 @@ class LinearRebound<T> extends Linear {
     + isDone(double): Boolean
     + update(double): Boolean
 }
-LinearRebound ..+ Animate
 
 class Empty<T> extends AbstractAnimate {
     + Empty(T)
@@ -355,7 +354,6 @@ class Empty<T> extends AbstractAnimate {
     + getDelta(): T
     + getSpeed(): T
 }
-Empty ..+ Animate
 
 class Delay<T> extends AbstractAnimate {
     + Delay(T, double)
@@ -364,7 +362,6 @@ class Delay<T> extends AbstractAnimate {
     + getDelta(): T
     + getSpeed(): T
 }
-Delay ..+ Animate
 
 class LinearToTarget<T> extends Linear implements AnimateWithTarget {
     - T vecTarget
@@ -378,13 +375,11 @@ class LinearToTarget<T> extends Linear implements AnimateWithTarget {
     + isDone(): Boolean
     + update(): Boolean
 }
-LinearToTarget ..+ Animate
 
 class LinearTracking<T> extends LinearToTarget implements AnimateWithTarget {
     + LinearTracking(T, T, double, double)
     + update(): Boolean
 }
-LinearTracking ..+ Animate
 
 class NonLinear<T> extends AbstractAnimate implements AnimateWithTarget {
     + NonLinear(T, T, AnimateVectorType, double, double, boolean)
@@ -395,7 +390,6 @@ class NonLinear<T> extends AbstractAnimate implements AnimateWithTarget {
     + getDelta(): T
     + getVecTarget(): T
 }
-NonLinear ..+ Animate
 
 class SmoothTo<T> extends AbstractAnimate implements AnimateWithTarget {
     + SmoothTo(T, T, AnimateVectorType, double, double)
@@ -404,7 +398,10 @@ class SmoothTo<T> extends AbstractAnimate implements AnimateWithTarget {
     + getDelta(): T
     + getVecTarget(): T
 }
-SmoothTo ..+ Animate
+
+interface AnimateCallback {
+    + onFinish(AnimateContainer): boolean
+}
 
 class AnimateContainer {
     - List<AbstractAnimate<Vec>> animateList
@@ -416,7 +413,13 @@ class AnimateContainer {
     + getRotation(): Scale
     + getDelta(): Vec
     + getAnimateList(): ListL<AbstractAnimate<Vec>>
+    + clearAllAnimate(): AnimateContainer
+    + addAnimate(AbstractAnimate<Vec>): void
+    + setAnimateCallback(AnimateCallback): void
+    + clearAnimateCallback(): void
 }
+AnimateContainer --> AbstractAnimate
+AnimateContainer ..> AnimateCallback
 
 class AnimateContainerFactory {
     + enum ContainerType
@@ -469,6 +472,7 @@ class HistoryImpl implements HistoryDAO {
     + deleteAll(): void
     + display(): void
 }
+HistoryImpl --> HistoryObject
 
 class HistoryObjectFactory {
     + HistoryObjectFactory(String, int, String)
@@ -523,6 +527,7 @@ class SceneRun {
     + setNextScene(Scene): SceneRun
     + setNextScene(Class<? extends AbstractSceneClient>): SceneRun
 }
+SceneRun --> Scene
 
 class GameWindow extends AbstractSceneClient {
     - {static} GameWindow gameWindow
@@ -535,6 +540,7 @@ class GameWindow extends AbstractSceneClient {
     + clearGameInstance(): void
     + startAction(): void
 }
+GameWindow ..> RunningConfig
 
 class HistoryWindow extends AbstractSceneClient {
     - {static} HistoryWindow historyWindow
@@ -550,6 +556,7 @@ class HistoryWindow extends AbstractSceneClient {
     + getPanel(): JPanel
     + startAction(): void
 }
+HistoryWindow --> HistoryImpl
 
 class MainWindow extends AbstractSceneClient {
     - {static} MainWindow mainWindow
@@ -559,6 +566,7 @@ class MainWindow extends AbstractSceneClient {
     + MainWindow()
     + getPanel(): JPanel
 }
+MainWindow ..> RunningConfig
 
 class TimerLinearChange {
     - Scale initial
@@ -642,6 +650,7 @@ ConfigFactory ..> HardConfig
 class Constants
 
 class RunningConfig
+RunningConfig --> Difficulty
 
 enum Difficulty
 
