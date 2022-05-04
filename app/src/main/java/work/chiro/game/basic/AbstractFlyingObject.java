@@ -71,6 +71,11 @@ public abstract class AbstractFlyingObject {
      */
     final protected AbstractConfig config;
 
+    /**
+     * 是否为无敌状态
+     */
+    private boolean invincible = false;
+
 
     /**
      * 有效（生存）标记，
@@ -119,6 +124,14 @@ public abstract class AbstractFlyingObject {
 
     public AbstractFlyingObject(
             AbstractConfig config,
+            Vec2 posInit,
+            AnimateContainer animateContainer,
+            Scale alpha) {
+        this(config, posInit, animateContainer, null, null, alpha);
+    }
+
+    public AbstractFlyingObject(
+            AbstractConfig config,
             Vec2 posInit) {
         this(config, posInit, new AnimateContainer(), null, null, null);
     }
@@ -156,6 +169,9 @@ public abstract class AbstractFlyingObject {
      * @return true: 我方被击中; false 我方未被击中
      */
     public boolean crash(AbstractFlyingObject abstractFlyingObject, double locationX, double locationY, double width, double height) {
+        if (isInvincible() || abstractFlyingObject.isInvincible()) {
+            return false;
+        }
         // 缩放因子，用于控制 y轴方向区域范围
         int factor = this instanceof AbstractAircraft ? 2 : 1;
         int fFactor = abstractFlyingObject instanceof AbstractAircraft ? 2 : 1;
@@ -297,6 +313,8 @@ public abstract class AbstractFlyingObject {
         Graphics2D graphics2D = (Graphics2D) g;
         if (alpha != null) {
             graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) alpha.getX()));
+        } else {
+            graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 1.0f));
         }
         if (affineTransform != null) {
             graphics2D.drawImage(getImage(), affineTransform, null);
@@ -348,6 +366,22 @@ public abstract class AbstractFlyingObject {
      */
     protected Boolean keepImage() {
         return true;
+    }
+
+    public AnimateContainer getAnimateContainer() {
+        return animateContainer;
+    }
+
+    public boolean isInvincible() {
+        return invincible;
+    }
+
+    public void setInvincible(boolean invincible) {
+        this.invincible = invincible;
+    }
+
+    public Scale getAlpha() {
+        return alpha;
     }
 }
 

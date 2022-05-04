@@ -1,5 +1,6 @@
 package work.chiro.game.aircraft;
 
+import work.chiro.game.animate.Animate;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.application.MusicManager;
 import work.chiro.game.basic.AbstractFlyingObject;
@@ -7,8 +8,10 @@ import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.HeroBulletFactory;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
+import work.chiro.game.game.Game;
 import work.chiro.game.prop.AbstractProp;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 
 import java.awt.*;
@@ -29,13 +32,50 @@ public class HeroAircraft extends AbstractAircraft {
     final private AircraftHeroBox box;
 
     public HeroAircraft(AbstractConfig config, Vec2 posInit, AnimateContainer animateContainer, Vec2 boxSize, double hp) {
-        super(config, posInit, animateContainer, hp, 0);
+        super(config, posInit, animateContainer, hp, 0, new Scale(1));
         box = new AircraftHeroBox(config, posInit, boxSize);
+        startInvincibleState();
+    }
+
+    public void startInvincibleState() {
+        if (box.isInvincible()) {
+            return;
+        }
+        box.setInvincible(true);
+        getAnimateContainer().clearAllAnimates();
+        getAnimateContainer().addAnimate(new Animate.Delay<>(new Vec2(), 50));
+        getAnimateContainer().setAnimateCallback(animateContainer -> {
+            synchronized (HeroAircraft.class) {
+                animateContainer.clearAllAnimates();
+                animateContainer.addAnimate(new Animate.Delay<>(new Vec2(), 50));
+                if (getAlpha().getX() > Constants.HERO_ALPHA_DATA.get(1)) {
+                    getAlpha().setX(Constants.HERO_ALPHA_DATA.get(0));
+                } else {
+                    getAlpha().setX(Constants.HERO_ALPHA_DATA.get(2));
+                }
+            }
+            return false;
+        });
+        Game.getThreadFactory().newThread(() -> {
+            try {
+                Thread.sleep(Constants.INVINCIBLE_TIME);
+            } catch (InterruptedException ignored) {
+            }
+            finally {
+                synchronized (HeroAircraft.class) {
+                    getAnimateContainer().clearAnimateCallback();
+                    getAnimateContainer().clearAllAnimates();
+                    getAlpha().setX(1);
+                    box.setInvincible(false);
+                }
+            }
+        }).start();
     }
 
     @Override
     public void forward() {
-        // 英雄机由鼠标控制，不通过forward函数移动
+        // 英雄机由鼠标控制，forward 不能控制位置
+        getAnimateContainer().updateAll(Utils.getTimeMills());
     }
 
     /**

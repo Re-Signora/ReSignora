@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  */
 public class AnimateContainer {
     private final List<AbstractAnimate<Vec>> animateList;
-    private final AnimateCallback animateCallback;
+    private AnimateCallback animateCallback;
 
     public AnimateContainer() {
         this(new LinkedList<>());
@@ -40,6 +40,7 @@ public class AnimateContainer {
 
     /**
      * 调用所有动画，更新当前时间下的所有动画控制的所有变量。
+     *
      * @param timeNow 当前时间
      * @return 所有动画都结束了？
      */
@@ -47,7 +48,11 @@ public class AnimateContainer {
         List<Boolean> innerRes = updateAllInner(timeNow);
         boolean finished = innerRes.isEmpty() || (innerRes.stream().mapToInt(res -> res ? 0 : 1).sum() == 0);
         if (finished && animateCallback != null) {
-            return animateCallback.onFinish(this);
+            boolean allFinished = animateCallback.onFinish(this);
+            if (allFinished) {
+                clearAnimateCallback();
+            }
+            return allFinished;
         }
         return finished;
     }
@@ -99,5 +104,13 @@ public class AnimateContainer {
 
     public void addAnimate(AbstractAnimate<Vec> animate) {
         getAnimateList().add(animate);
+    }
+
+    public void setAnimateCallback(AnimateCallback animateCallback) {
+        this.animateCallback = animateCallback;
+    }
+
+    public void clearAnimateCallback() {
+        this.animateCallback = null;
     }
 }

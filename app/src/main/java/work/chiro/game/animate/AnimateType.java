@@ -5,8 +5,10 @@ package work.chiro.game.animate;
  * @author Chiro
  */
 public enum AnimateType {
-    // 未知
+    // 空动画，占位
     Empty,
+    // 延迟动画，仅延时，啥也不做
+    Delay,
     // 线性
     Linear,
     // 非线性

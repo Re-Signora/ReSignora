@@ -1,5 +1,6 @@
 package work.chiro.game.animate;
 
+import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.vector.VectorFactory;
@@ -11,8 +12,8 @@ import work.chiro.game.vector.VectorType;
  * @author Chiro
  */
 public class Animate {
-    public static class Empty <T extends VectorType & VectorFactory<T>> extends AbstractAnimate<T> {
-        Empty(T vecSource) {
+    public static class Empty<T extends VectorType & VectorFactory<T>> extends AbstractAnimate<T> {
+        public Empty(T vecSource) {
             super(vecSource, AnimateType.Empty, AnimateVectorType.Others, 0, 0);
         }
 
@@ -36,6 +37,28 @@ public class Animate {
             return false;
         }
     }
+
+    public static class Delay<T extends VectorType & VectorFactory<T>> extends AbstractAnimate<T> {
+        public Delay(T vecSource, double delayMs) {
+            super(vecSource, AnimateType.Delay, AnimateVectorType.Others, Utils.getTimeMills(), delayMs);
+        }
+
+        @Override
+        public Boolean update(double timeNow) {
+            return isDone(timeNow);
+        }
+
+        @Override
+        public T getSpeed(double timeNow) {
+            return getNewVecInstance();
+        }
+
+        @Override
+        public T getDelta() {
+            return getNewVecInstance();
+        }
+    }
+
     public static class Linear<T extends VectorType & VectorFactory<T>> extends AbstractAnimate<T> {
         private final T speed;
         private final Boolean willStop;

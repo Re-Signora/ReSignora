@@ -8,6 +8,7 @@ import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
 import work.chiro.game.prop.AbstractProp;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 
 import java.awt.*;
@@ -37,11 +38,21 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
             Vec2 posInit,
             AnimateContainer animateContainer,
             double hp,
-            double score) {
-        super(config, posInit, animateContainer);
+            double score,
+            Scale alpha) {
+        super(config, posInit, animateContainer, alpha);
         this.hp = hp;
         this.maxHp = hp;
         this.score = score;
+    }
+
+    public AbstractAircraft(
+            AbstractConfig config,
+            Vec2 posInit,
+            AnimateContainer animateContainer,
+            double hp,
+            double score) {
+        this(config, posInit, animateContainer, hp, score, null);
     }
 
     public void decreaseHp(double decrease) {
