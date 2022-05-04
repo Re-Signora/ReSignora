@@ -61,15 +61,15 @@ public abstract class AbstractConfig {
     @Override
     public String toString() {
         return "Config{" +
-                "MobCreate:" + getMobCreate().getScaleNow() +
-                ",EliteCreate:" + getEliteCreate().getScaleNow() +
-                ",enemyShoot:" + getEnemyShoot().getScaleNow() +
-                ",bossShoot:" + getBossShoot().getScaleNow() +
-                ",heroShoot:" + getHeroShoot().getScaleNow() +
-                ",bossScoreThreshold:" + getBossScoreThreshold().getScaleNow() +
-                ",dropRate:" + getDropPropsRate().getScaleNow() +
-                ",enemyMagnification:" + getEnemyMagnification().getScaleNow() +
-                ",bossInitialHp:" + getBossInitialHp().getScaleNow() +
+                "小兵间隔:" + getMobCreate().getScaleNow() +
+                ",精英间隔:" + getEliteCreate().getScaleNow() +
+                ",敌机射击间隔:" + getEnemyShoot().getScaleNow() +
+                ",首领射击间隔:" + getBossShoot().getScaleNow() +
+                ",英雄射击间隔:" + getHeroShoot().getScaleNow() +
+                ",首领产生分数间隔:" + getBossScoreThreshold().getScaleNow() +
+                ",掉落概率:" + getDropPropsRate().getScaleNow() +
+                ",敌机增强倍率:" + getEnemyMagnification().getScaleNow() +
+                ",首领初始血量:" + getBossInitialHp().getScaleNow() +
                 "}";
     }
 

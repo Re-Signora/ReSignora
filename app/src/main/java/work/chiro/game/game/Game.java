@@ -204,7 +204,11 @@ public class Game extends JPanel {
         // 获取键盘焦点
         timerController.add(new Timer(100, this::requestFocus));
         // 输出当前 config
-        timerController.add(new Timer(2000, () -> config.printNow()));
+        if (RunningConfig.difficulty != Difficulty.Easy) {
+            timerController.add(new Timer(2000, () -> config.printNow()));
+        } else {
+            System.out.println("简单模式 Config 将不会改变: " + config);
+        }
     }
 
     private void stopAllMusic() {
