@@ -11,7 +11,7 @@ import work.chiro.game.windows.GameWindow;
 /**
  * @author Chiro
  */
-public class BombProp extends AbstractProp implements PropApplier {
+public class BombProp extends AbstractProp {
     public BombProp(AbstractConfig config,  Vec2 posInit, AnimateContainer animateContainer) {
         super(config, posInit, animateContainer);
     }

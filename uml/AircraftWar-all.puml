@@ -88,23 +88,31 @@ class EnemyBullet extends BaseBullet {
     + EnemyBullet(Vec2, AnimateContainer, int power)
 }
 
-abstract class AbstractProp extends AbstractFlyingObject {
-    + AbstractProp(Vec2, AnimateContainer)
-    + {abstract} handleAircrafts(List<AbstractAircraft>): void
+interface PropApplier {
+    + update(): AbstractProp
 }
 
-class BloodProp extends AbstractProp {
+abstract class AbstractProp extends AbstractFlyingObject implements PropApplier {
+    # List<AbstractAircraft> enemyAircrafts
+    # List<BaseBullet> enemyBullets
+    + AbstractProp(Vec2, AnimateContainer)
+    + playSupplyMusic(): void
+    + subscribeEnemyAircrafts(List<AbstractAircraft>): AbstractProp
+    + subscribeEnemyBullets(List<BaseBullet>): AbstractProp
+}
+
+class BloodProp extends AbstractProp implements PropApplier {
     # int increaseHp
     + BloodProp(Vec2, AnimateContainer, int increaseHp)
-    + handleAircrafts(List<AbstractAircraft>): void
+    + update(): AbstractProp
 }
 
-class BombProp extends AbstractProp {
+class BombProp extends AbstractProp implements PropApplier {
     + BombProp(Vec2, AnimateContainer)
-    + handleAircrafts(List<AbstractAircraft>): void
+    + update(): AbstractProp
 }
 
-class BulletProp extends AbstractProp {
+class BulletProp extends AbstractProp implements PropApplier {
     + BulletProp(Vec2, AnimateContainer)
     + handleAircrafts(List<AbstractAircraft>): void
 }
@@ -471,6 +479,7 @@ class HistoryImpl implements HistoryDAO {
     + getAll(): List<HistoryObject>
     + deleteAll(): void
     + display(): void
+    + {static} getInstance(): HistoryImpl
 }
 HistoryImpl --> HistoryObject
 
@@ -512,6 +521,8 @@ class Scene {
     + getSceneRunnable(): AbstractSceneRunnable
     + run(): void
 }
+Scene --> AbstractSceneRunnable
+Scene ..> AbstractSceneClient
 
 class SceneRun {
     - JFrame frame
@@ -646,10 +657,15 @@ class ConfigFactory {
 ConfigFactory ..> EasyConfig
 ConfigFactory ..> MediumConfig
 ConfigFactory ..> HardConfig
+ConfigFactory --> Difficulty
 
 class Constants
 
-class RunningConfig
+class RunningConfig {
+    + {static} Difficulty difficulty
+    + {static} Boolean musicEnable
+    + {static} Boolean autoShoot
+}
 RunningConfig --> Difficulty
 
 enum Difficulty

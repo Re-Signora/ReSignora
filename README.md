@@ -12,7 +12,7 @@ Java 部分为 master 分支，Scala 部分为 scala 分支。
 
 ## UML
 
-UML 图见 [AircraftWar-java.puml](uml/AircraftWar-java.puml)。
+所有 UML 图见 [AircraftWar-all.puml](uml/AircraftWar-all.puml)，其部分子图位于 `uml/*.puml`。
 
 ## 运行
 

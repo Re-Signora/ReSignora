@@ -24,7 +24,7 @@ public class HistoryImpl implements HistoryDAO {
         return history;
     }
 
-    public HistoryImpl() {
+    HistoryImpl() {
         data = new ArrayList<>();
         load();
     }
