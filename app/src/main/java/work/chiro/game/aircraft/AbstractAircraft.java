@@ -50,7 +50,9 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
             hp = 0;
             vanish();
         }
-        playBeShootMusic();
+        if (decrease > 0) {
+            playBeShootMusic();
+        }
     }
 
     protected void playBeShootMusic() {
