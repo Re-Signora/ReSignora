@@ -33,8 +33,11 @@ abstract class AbstractFlyingObject {
     + getSize(): Vec2
 }
 
-abstract class AbstractAircraft extends AbstractFlyingObject {
-	# int
+abstract class AbstractAircraft extends AbstractFlyingObject implements PropHandler {
+	# double hp
+	# double maxHp
+	# double score
+	- {static} lastPlayMusic
     + AbstractAircraft(Vec2, AnimateContainer, int, int)
     + decreaseHp(int): void
     + getHp(): int
@@ -42,12 +45,15 @@ abstract class AbstractAircraft extends AbstractFlyingObject {
     # drawHp(): void
     + {abstract} shoot(): LinkedList<BaseBullet>
     + {abstract} dropProps(): LinkedList<AbstractProp>
+    + onPropHandle(): void
+    # playBeShootMusic(): void
  }
 
-abstract class BaseBullet extends AbstractFlyingObject {
+abstract class BaseBullet extends AbstractFlyingObject implements PropHandler {
     - int power
     + BaseBullet(Vec2, AnimateContainer, int)
 	+ getPower(): int
+	+ onPropHandle(): void
 }
 
 class HeroAircraft extends AbstractAircraft {
@@ -88,11 +94,11 @@ class EnemyBullet extends BaseBullet {
     + EnemyBullet(Vec2, AnimateContainer, int power)
 }
 
-interface PropApplier {
-    + update(): AbstractProp
+interface PropHandler {
+    + onPropHandle(): void
 }
 
-abstract class AbstractProp extends AbstractFlyingObject implements PropApplier {
+abstract class AbstractProp extends AbstractFlyingObject {
     # List<AbstractAircraft> enemyAircrafts
     # List<BaseBullet> enemyBullets
     + AbstractProp(Vec2, AnimateContainer)
@@ -101,18 +107,18 @@ abstract class AbstractProp extends AbstractFlyingObject implements PropApplier 
     + subscribeEnemyBullets(List<BaseBullet>): AbstractProp
 }
 
-class BloodProp extends AbstractProp implements PropApplier {
+class BloodProp extends AbstractProp {
     # int increaseHp
     + BloodProp(Vec2, AnimateContainer, int increaseHp)
     + update(): AbstractProp
 }
 
-class BombProp extends AbstractProp implements PropApplier {
+class BombProp extends AbstractProp {
     + BombProp(Vec2, AnimateContainer)
     + update(): AbstractProp
 }
 
-class BulletProp extends AbstractProp implements PropApplier {
+class BulletProp extends AbstractProp {
     + BulletProp(Vec2, AnimateContainer)
     + handleAircrafts(List<AbstractAircraft>): void
 }

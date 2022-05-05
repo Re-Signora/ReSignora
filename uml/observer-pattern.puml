@@ -1,0 +1,41 @@
+@startuml
+'https: //plantuml.com/class-diagram
+
+abstract class AbstractAircraft implements PropHandler {
+	# double hp
+	# double maxHp
+	# double score
+	- {static} lastPlayMusic
+    + AbstractAircraft(Vec2, AnimateContainer, int, int)
+    + decreaseHp(int): void
+    + getHp(): int
+    + getScore(): int
+    # drawHp(): void
+    + {abstract} shoot(): LinkedList<BaseBullet>
+    + {abstract} dropProps(): LinkedList<AbstractProp>
+    + onPropHandle(): void
+    # playBeShootMusic(): void
+ }
+
+abstract class BaseBullet implements PropHandler {
+    - int power
+    + BaseBullet(Vec2, AnimateContainer, int)
+	+ getPower(): int
+	+ onPropHandle(): void
+}
+
+interface PropHandler {
+    + onPropHandle(): void
+}
+
+abstract class AbstractProp {
+    # List<AbstractAircraft> enemyAircrafts
+    # List<BaseBullet> enemyBullets
+    + AbstractProp(Vec2, AnimateContainer)
+    + playSupplyMusic(): void
+    + subscribeEnemyAircrafts(List<AbstractAircraft>): AbstractProp
+    + subscribeEnemyBullets(List<BaseBullet>): AbstractProp
+}
+AbstractProp o--> PropHandler
+
+@enduml
