@@ -1,0 +1,62 @@
+@startuml
+'https: //plantuml.com/class-diagram
+
+abstract class AbstractConfig {
+    # TimerLinearChange mobCreate
+    # TimerLinearChange eliteCreate
+    # TimerLinearChange enemyShoot
+    # TimerLinearChange bossShoot
+    # TimerLinearChange heroShoot
+    # TimerLinearChange bossScoreThreshold
+    # TimerLinearChange dropPropsRate
+    # TimerLinearChange enemyMagnification
+    + getMobCreate(): TimerLinearChange
+    + getEliteCreate(): TimerLinearChange
+    + getEnemyShoot(): TimerLinearChange
+    + getHeroShoot(): TimerLinearChange
+    + getBossShoot(): TimerLinearChange
+    + getBossScoreThreshold(): TimerLinearChange
+    + getDropPropsRate(): TimerLinearChange
+    + getEnemyMagnification(): TimerLinearChange
+    + getHeroInitialHp(): int
+    + toString(): String
+    + printNow(): void
+}
+
+class EasyConfig extends AbstractConfig
+
+class MediumConfig extends AbstractConfig {
+    # TimerLinearChange mobCreate
+    # TimerLinearChange eliteCreate
+    # TimerLinearChange enemyShoot
+    # TimerLinearChange bossShoot
+    # TimerLinearChange dropPropsRate
+    # TimerLinearChange enemyMagnification
+    + getMobCreate(): TimerLinearChange
+    + getEliteCreate(): TimerLinearChange
+    + getEnemyShoot(): TimerLinearChange
+    + getBossShoot(): TimerLinearChange
+    + getDropPropsRate(): TimerLinearChange
+    + getEnemyMagnification(): TimerLinearChange
+    + getHeroInitialHp(): int
+}
+
+class HardConfig extends AbstractConfig {
+    # TimerLinearChange mobCreate
+    # TimerLinearChange eliteCreate
+    # TimerLinearChange enemyShoot
+    # TimerLinearChange bossShoot
+    # TimerLinearChange dropPropsRate
+    # TimerLinearChange enemyMagnification
+    # TimerLinearChange bossScoreThreshold
+    + getMobCreate(): TimerLinearChange
+    + getEliteCreate(): TimerLinearChange
+    + getEnemyShoot(): TimerLinearChange
+    + getBossShoot(): TimerLinearChange
+    + getDropPropsRate(): TimerLinearChange
+    + getEnemyMagnification(): TimerLinearChange
+    + getHeroInitialHp(): int
+    + getBossScoreThreshold(): TimerLinearChange
+}
+
+@enduml

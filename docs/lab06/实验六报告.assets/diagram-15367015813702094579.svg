@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" contentScriptType="application/ecmascript" contentStyleType="text/css"
+     height="647px" preserveAspectRatio="none" style="width:679px;height:647px;background:#FFFFFF;" version="1.1"
+     viewBox="0 0 679 647" width="679px" zoomAndPan="magnify"><defs><filter height="300%" id="f2kxnastn3ls8" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[d8625d42033e279df8a349fab1e28aec]
+class AbstractConfig--><rect codeLine="3" fill="#FEFECE" filter="url(#f2kxnastn3ls8)" height="310.8828" id="AbstractConfig" style="stroke:#A80036;stroke-width:1.5;" width="250" x="133.5" y="7"/><ellipse cx="213.75" cy="23" fill="#A9DCDF" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M215.5,24.5 L212.2031,24.5 L211.7656,25.5 L211.7656,25.5 L212.2344,25.5 L212.75,26.125 L212.75,26.5 L212.75,26.875 L212.2344,27.5 L211.7656,27.5 L209.875,27.5 L209.2656,27.5 L208.75,26.875 L208.75,26.5 L208.75,26.125 L209.2656,25.5 L209.875,25.5 L212.1875,19.5 L211.3125,19.5 L210.2656,19.5 L209.75,18.875 L209.75,18.5 L209.75,18.125 L210.2656,17.5 L211.3125,17.5 L214.9844,17.5 L217.6719,25.5 L218.2344,25.5 L218.2344,25.5 L218.75,26.125 L218.75,26.5 L218.75,26.875 L218.2344,27.5 L217.6719,27.5 L215.7813,27.5 L215.2656,27.5 L214.75,26.875 L214.75,26.5 L214.75,26.125 L215.2656,25.5 L215.7813,25.5 L215.7813,25.5 L215.5,24.5 Z M214.9531,22.5 L213.75,18.9219 L212.7188,22.5 L214.9531,22.5 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="81" x="234.25" y="27.9102">AbstractConfig</text><line style="stroke:#A80036;stroke-width:1.5;" x1="134.5" x2="382.5" y1="39" y2="39"/><polygon fill="none" points="144.5,45,148.5,49,144.5,53,140.5,49" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="148" x="153.5" y="54.4189">TimerLinearChange mobCreate</text><polygon fill="none" points="144.5,58.8359,148.5,62.8359,144.5,66.8359,140.5,62.8359" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="147" x="153.5" y="68.2549">TimerLinearChange eliteCreate</text><polygon fill="none" points="144.5,72.6719,148.5,76.6719,144.5,80.6719,140.5,76.6719" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="156" x="153.5" y="82.0908">TimerLinearChange enemyShoot</text><polygon fill="none" points="144.5,86.5078,148.5,90.5078,144.5,94.5078,140.5,90.5078" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="148" x="153.5" y="95.9268">TimerLinearChange bossShoot</text><polygon fill="none" points="144.5,100.3438,148.5,104.3438,144.5,108.3438,140.5,104.3438" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="146" x="153.5" y="109.7627">TimerLinearChange heroShoot</text><polygon fill="none" points="144.5,114.1797,148.5,118.1797,144.5,122.1797,140.5,118.1797" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="197" x="153.5" y="123.5986">TimerLinearChange bossScoreThreshold</text><polygon fill="none" points="144.5,128.0156,148.5,132.0156,144.5,136.0156,140.5,132.0156" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="168" x="153.5" y="137.4346">TimerLinearChange dropPropsRate</text><polygon fill="none" points="144.5,141.8516,148.5,145.8516,144.5,149.8516,140.5,145.8516" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="191" x="153.5" y="151.2705">TimerLinearChange enemyMagnification</text><line style="stroke:#A80036;stroke-width:1.5;" x1="134.5" x2="382.5" y1="157.6875" y2="157.6875"/><ellipse cx="144.5" cy="168.6875" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="174" x="153.5" y="173.1064">getMobCreate(): TimerLinearChange</text><ellipse cx="144.5" cy="182.5234" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="173" x="153.5" y="186.9424">getEliteCreate(): TimerLinearChange</text><ellipse cx="144.5" cy="196.3594" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="182" x="153.5" y="200.7783">getEnemyShoot(): TimerLinearChange</text><ellipse cx="144.5" cy="210.1953" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="173" x="153.5" y="214.6143">getHeroShoot(): TimerLinearChange</text><ellipse cx="144.5" cy="224.0313" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="175" x="153.5" y="228.4502">getBossShoot(): TimerLinearChange</text><ellipse cx="144.5" cy="237.8672" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="224" x="153.5" y="242.2861">getBossScoreThreshold(): TimerLinearChange</text><ellipse cx="144.5" cy="251.7031" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="195" x="153.5" y="256.1221">getDropPropsRate(): TimerLinearChange</text><ellipse cx="144.5" cy="265.5391" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="217" x="153.5" y="269.958">getEnemyMagnification(): TimerLinearChange</text><ellipse cx="144.5" cy="279.375" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="99" x="153.5" y="283.7939">getHeroInitialHp(): int</text><ellipse cx="144.5" cy="293.2109" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="79" x="153.5" y="297.6299">toString(): String</text><ellipse cx="144.5" cy="307.0469" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="78" x="153.5" y="311.4658">printNow(): void</text><!--MD5=[95fd663f94c956ccb48825888b944353]
+class EasyConfig--><rect codeLine="25" fill="#FEFECE" filter="url(#f2kxnastn3ls8)" height="48" id="EasyConfig" style="stroke:#A80036;stroke-width:1.5;" width="95" x="7" y="482"/><ellipse cx="22" cy="498" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M24,494.5 Q24.2031,494 24.4375,493.75 Q24.6719,493.5 24.9375,493.5 Q25.4063,493.5 25.7031,493.7813 Q26,494.0625 26,494.7188 L26,496.2813 Q26,496.9375 25.7188,497.2188 Q25.4375,497.5 25,497.5 Q24.6094,497.5 24.3594,497.3281 Q24.1094,497.1563 24,496.7031 Q23.9531,496.3906 23.7813,496.2188 Q23.4688,495.8906 22.9063,495.7031 Q22.3438,495.5 21.7813,495.5 Q21.0781,495.5 20.4844,495.7813 Q19.9063,496.0625 19.4531,496.6875 Q19,497.3125 19,498.1719 L19,499.0938 Q19,500.125 19.8438,500.8125 Q20.6875,501.5 22.1875,501.5 Q23.0781,501.5 23.7031,501.2969 Q24.0625,501.1875 24.4688,500.8281 Q24.7344,500.625 24.875,500.5625 Q25.0156,500.5 25.1875,500.5 Q25.5156,500.5 25.75,500.7656 Q26,501.0156 26,501.375 Q26,501.7188 25.6563,502.125 Q25.1563,502.7188 24.3594,503.0469 Q23.3125,503.5 22.0313,503.5 Q20.5313,503.5 19.3281,502.9063 Q18.3594,502.4375 17.6719,501.4219 Q17,500.4063 17,499.2031 L17,498.1094 Q17,496.8594 17.5938,495.7656 Q18.2031,494.6719 19.25,494.0938 Q20.3125,493.5 21.5,493.5 Q22.2188,493.5 22.8438,493.75 Q23.4688,494 24,494.5 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="63" x="36" y="502.9102">EasyConfig</text><line style="stroke:#A80036;stroke-width:1.5;" x1="8" x2="101" y1="514" y2="514"/><line style="stroke:#A80036;stroke-width:1.5;" x1="8" x2="101" y1="522" y2="522"/><!--MD5=[782cd9d4b87ca461fc5a969562f6e077]
+class MediumConfig--><rect codeLine="27" fill="#FEFECE" filter="url(#f2kxnastn3ls8)" height="227.8672" id="MediumConfig" style="stroke:#A80036;stroke-width:1.5;" width="243" x="137" y="392"/><ellipse cx="214.25" cy="408" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M216.25,404.5 Q216.4531,404 216.6875,403.75 Q216.9219,403.5 217.1875,403.5 Q217.6563,403.5 217.9531,403.7813 Q218.25,404.0625 218.25,404.7188 L218.25,406.2813 Q218.25,406.9375 217.9688,407.2188 Q217.6875,407.5 217.25,407.5 Q216.8594,407.5 216.6094,407.3281 Q216.3594,407.1563 216.25,406.7031 Q216.2031,406.3906 216.0313,406.2188 Q215.7188,405.8906 215.1563,405.7031 Q214.5938,405.5 214.0313,405.5 Q213.3281,405.5 212.7344,405.7813 Q212.1563,406.0625 211.7031,406.6875 Q211.25,407.3125 211.25,408.1719 L211.25,409.0938 Q211.25,410.125 212.0938,410.8125 Q212.9375,411.5 214.4375,411.5 Q215.3281,411.5 215.9531,411.2969 Q216.3125,411.1875 216.7188,410.8281 Q216.9844,410.625 217.125,410.5625 Q217.2656,410.5 217.4375,410.5 Q217.7656,410.5 218,410.7656 Q218.25,411.0156 218.25,411.375 Q218.25,411.7188 217.9063,412.125 Q217.4063,412.7188 216.6094,413.0469 Q215.5625,413.5 214.2813,413.5 Q212.7813,413.5 211.5781,412.9063 Q210.6094,412.4375 209.9219,411.4219 Q209.25,410.4063 209.25,409.2031 L209.25,408.1094 Q209.25,406.8594 209.8438,405.7656 Q210.4531,404.6719 211.5,404.0938 Q212.5625,403.5 213.75,403.5 Q214.4688,403.5 215.0938,403.75 Q215.7188,404 216.25,404.5 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="80" x="234.75" y="412.9102">MediumConfig</text><line style="stroke:#A80036;stroke-width:1.5;" x1="138" x2="379" y1="424" y2="424"/><polygon fill="none" points="148,430,152,434,148,438,144,434" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="148" x="157" y="439.4189">TimerLinearChange mobCreate</text><polygon fill="none" points="148,443.8359,152,447.8359,148,451.8359,144,447.8359" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="147" x="157" y="453.2549">TimerLinearChange eliteCreate</text><polygon fill="none" points="148,457.6719,152,461.6719,148,465.6719,144,461.6719" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="156" x="157" y="467.0908">TimerLinearChange enemyShoot</text><polygon fill="none" points="148,471.5078,152,475.5078,148,479.5078,144,475.5078" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="148" x="157" y="480.9268">TimerLinearChange bossShoot</text><polygon fill="none" points="148,485.3438,152,489.3438,148,493.3438,144,489.3438" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="168" x="157" y="494.7627">TimerLinearChange dropPropsRate</text><polygon fill="none" points="148,499.1797,152,503.1797,148,507.1797,144,503.1797" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="191" x="157" y="508.5986">TimerLinearChange enemyMagnification</text><line style="stroke:#A80036;stroke-width:1.5;" x1="138" x2="379" y1="515.0156" y2="515.0156"/><ellipse cx="148" cy="526.0156" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="174" x="157" y="530.4346">getMobCreate(): TimerLinearChange</text><ellipse cx="148" cy="539.8516" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="173" x="157" y="544.2705">getEliteCreate(): TimerLinearChange</text><ellipse cx="148" cy="553.6875" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="182" x="157" y="558.1064">getEnemyShoot(): TimerLinearChange</text><ellipse cx="148" cy="567.5234" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="175" x="157" y="571.9424">getBossShoot(): TimerLinearChange</text><ellipse cx="148" cy="581.3594" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="195" x="157" y="585.7783">getDropPropsRate(): TimerLinearChange</text><ellipse cx="148" cy="595.1953" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="217" x="157" y="599.6143">getEnemyMagnification(): TimerLinearChange</text><ellipse cx="148" cy="609.0313" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="99" x="157" y="613.4502">getHeroInitialHp(): int</text><!--MD5=[a0c8b577502e5c46a890923ddd15c109]
+class HardConfig--><rect codeLine="43" fill="#FEFECE" filter="url(#f2kxnastn3ls8)" height="255.5391" id="HardConfig" style="stroke:#A80036;stroke-width:1.5;" width="250" x="415.5" y="378"/><ellipse cx="504.75" cy="394" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M506.75,390.5 Q506.9531,390 507.1875,389.75 Q507.4219,389.5 507.6875,389.5 Q508.1563,389.5 508.4531,389.7813 Q508.75,390.0625 508.75,390.7188 L508.75,392.2813 Q508.75,392.9375 508.4688,393.2188 Q508.1875,393.5 507.75,393.5 Q507.3594,393.5 507.1094,393.3281 Q506.8594,393.1563 506.75,392.7031 Q506.7031,392.3906 506.5313,392.2188 Q506.2188,391.8906 505.6563,391.7031 Q505.0938,391.5 504.5313,391.5 Q503.8281,391.5 503.2344,391.7813 Q502.6563,392.0625 502.2031,392.6875 Q501.75,393.3125 501.75,394.1719 L501.75,395.0938 Q501.75,396.125 502.5938,396.8125 Q503.4375,397.5 504.9375,397.5 Q505.8281,397.5 506.4531,397.2969 Q506.8125,397.1875 507.2188,396.8281 Q507.4844,396.625 507.625,396.5625 Q507.7656,396.5 507.9375,396.5 Q508.2656,396.5 508.5,396.7656 Q508.75,397.0156 508.75,397.375 Q508.75,397.7188 508.4063,398.125 Q507.9063,398.7188 507.1094,399.0469 Q506.0625,399.5 504.7813,399.5 Q503.2813,399.5 502.0781,398.9063 Q501.1094,398.4375 500.4219,397.4219 Q499.75,396.4063 499.75,395.2031 L499.75,394.1094 Q499.75,392.8594 500.3438,391.7656 Q500.9531,390.6719 502,390.0938 Q503.0625,389.5 504.25,389.5 Q504.9688,389.5 505.5938,389.75 Q506.2188,390 506.75,390.5 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="63" x="525.25" y="398.9102">HardConfig</text><line style="stroke:#A80036;stroke-width:1.5;" x1="416.5" x2="664.5" y1="410" y2="410"/><polygon fill="none" points="426.5,416,430.5,420,426.5,424,422.5,420" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="148" x="435.5" y="425.4189">TimerLinearChange mobCreate</text><polygon fill="none" points="426.5,429.8359,430.5,433.8359,426.5,437.8359,422.5,433.8359" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="147" x="435.5" y="439.2549">TimerLinearChange eliteCreate</text><polygon fill="none" points="426.5,443.6719,430.5,447.6719,426.5,451.6719,422.5,447.6719" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="156" x="435.5" y="453.0908">TimerLinearChange enemyShoot</text><polygon fill="none" points="426.5,457.5078,430.5,461.5078,426.5,465.5078,422.5,461.5078" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="148" x="435.5" y="466.9268">TimerLinearChange bossShoot</text><polygon fill="none" points="426.5,471.3438,430.5,475.3438,426.5,479.3438,422.5,475.3438" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="168" x="435.5" y="480.7627">TimerLinearChange dropPropsRate</text><polygon fill="none" points="426.5,485.1797,430.5,489.1797,426.5,493.1797,422.5,489.1797" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="191" x="435.5" y="494.5986">TimerLinearChange enemyMagnification</text><polygon fill="none" points="426.5,499.0156,430.5,503.0156,426.5,507.0156,422.5,503.0156" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="197" x="435.5" y="508.4346">TimerLinearChange bossScoreThreshold</text><line style="stroke:#A80036;stroke-width:1.5;" x1="416.5" x2="664.5" y1="514.8516" y2="514.8516"/><ellipse cx="426.5" cy="525.8516" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="174" x="435.5" y="530.2705">getMobCreate(): TimerLinearChange</text><ellipse cx="426.5" cy="539.6875" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="173" x="435.5" y="544.1064">getEliteCreate(): TimerLinearChange</text><ellipse cx="426.5" cy="553.5234" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="182" x="435.5" y="557.9424">getEnemyShoot(): TimerLinearChange</text><ellipse cx="426.5" cy="567.3594" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="175" x="435.5" y="571.7783">getBossShoot(): TimerLinearChange</text><ellipse cx="426.5" cy="581.1953" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="195" x="435.5" y="585.6143">getDropPropsRate(): TimerLinearChange</text><ellipse cx="426.5" cy="595.0313" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="217" x="435.5" y="599.4502">getEnemyMagnification(): TimerLinearChange</text><ellipse cx="426.5" cy="608.8672" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="99" x="435.5" y="613.2861">getHeroInitialHp(): int</text><ellipse cx="426.5" cy="622.7031" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="224" x="435.5" y="627.1221">getBossScoreThreshold(): TimerLinearChange</text><!--MD5=[318d74a0a0ff8e045958adb8c920597f]
+reverse link AbstractConfig to EasyConfig--><path d="M144.87,335.52 C136.11,349.78 127.55,364.07 119.5,378 C99.05,413.38 77.96,455.91 65.55,481.68 " fill="none" id="AbstractConfig-backto-EasyConfig" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="139.15,331.47,155.64,318.16,151.04,338.84,139.15,331.47" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[58c60e55ce95fd4ee5452c83bea2f85e]
+reverse link AbstractConfig to MediumConfig--><path d="M258.5,338.37 C258.5,356.55 258.5,374.66 258.5,391.89 " fill="none" id="AbstractConfig-backto-MediumConfig" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="251.5,338.26,258.5,318.26,265.5,338.26,251.5,338.26" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[f70f433ca0f775071e1a43e67699b925]
+reverse link AbstractConfig to HardConfig--><path d="M396.84,331.03 C409.87,346.81 422.93,362.63 435.58,377.95 " fill="none" id="AbstractConfig-backto-HardConfig" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="391.17,335.15,383.83,315.28,401.96,326.24,391.17,335.15" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[7d971184eecb92ef78834d0e0550363f]
+@startuml
+'https: //plantuml.com/class-diagram
+
+abstract class AbstractConfig {
+    # TimerLinearChange mobCreate
+    # TimerLinearChange eliteCreate
+    # TimerLinearChange enemyShoot
+    # TimerLinearChange bossShoot
+    # TimerLinearChange heroShoot
+    # TimerLinearChange bossScoreThreshold
+    # TimerLinearChange dropPropsRate
+    # TimerLinearChange enemyMagnification
+    + getMobCreate(): TimerLinearChange
+    + getEliteCreate(): TimerLinearChange
+    + getEnemyShoot(): TimerLinearChange
+    + getHeroShoot(): TimerLinearChange
+    + getBossShoot(): TimerLinearChange
+    + getBossScoreThreshold(): TimerLinearChange
+    + getDropPropsRate(): TimerLinearChange
+    + getEnemyMagnification(): TimerLinearChange
+    + getHeroInitialHp(): int
+    + toString(): String
+    + printNow(): void
+}
+
+class EasyConfig extends AbstractConfig
+
+class MediumConfig extends AbstractConfig {
+    # TimerLinearChange mobCreate
+    # TimerLinearChange eliteCreate
+    # TimerLinearChange enemyShoot
+    # TimerLinearChange bossShoot
+    # TimerLinearChange dropPropsRate
+    # TimerLinearChange enemyMagnification
+    + getMobCreate(): TimerLinearChange
+    + getEliteCreate(): TimerLinearChange
+    + getEnemyShoot(): TimerLinearChange
+    + getBossShoot(): TimerLinearChange
+    + getDropPropsRate(): TimerLinearChange
+    + getEnemyMagnification(): TimerLinearChange
+    + getHeroInitialHp(): int
+}
+
+class HardConfig extends AbstractConfig {
+    # TimerLinearChange mobCreate
+    # TimerLinearChange eliteCreate
+    # TimerLinearChange enemyShoot
+    # TimerLinearChange bossShoot
+    # TimerLinearChange dropPropsRate
+    # TimerLinearChange enemyMagnification
+    # TimerLinearChange bossScoreThreshold
+    + getMobCreate(): TimerLinearChange
+    + getEliteCreate(): TimerLinearChange
+    + getEnemyShoot(): TimerLinearChange
+    + getBossShoot(): TimerLinearChange
+    + getDropPropsRate(): TimerLinearChange
+    + getEnemyMagnification(): TimerLinearChange
+    + getHeroInitialHp(): int
+    + getBossScoreThreshold(): TimerLinearChange
+}
+
+@enduml
+
+@startuml
+
+abstract class AbstractConfig {
+    # TimerLinearChange mobCreate
+    # TimerLinearChange eliteCreate
+    # TimerLinearChange enemyShoot
+    # TimerLinearChange bossShoot
+    # TimerLinearChange heroShoot
+    # TimerLinearChange bossScoreThreshold
+    # TimerLinearChange dropPropsRate
+    # TimerLinearChange enemyMagnification
+    + getMobCreate(): TimerLinearChange
+    + getEliteCreate(): TimerLinearChange
+    + getEnemyShoot(): TimerLinearChange
+    + getHeroShoot(): TimerLinearChange
+    + getBossShoot(): TimerLinearChange
+    + getBossScoreThreshold(): TimerLinearChange
+    + getDropPropsRate(): TimerLinearChange
+    + getEnemyMagnification(): TimerLinearChange
+    + getHeroInitialHp(): int
+    + toString(): String
+    + printNow(): void
+}
+
+class EasyConfig extends AbstractConfig
+
+class MediumConfig extends AbstractConfig {
+    # TimerLinearChange mobCreate
+    # TimerLinearChange eliteCreate
+    # TimerLinearChange enemyShoot
+    # TimerLinearChange bossShoot
+    # TimerLinearChange dropPropsRate
+    # TimerLinearChange enemyMagnification
+    + getMobCreate(): TimerLinearChange
+    + getEliteCreate(): TimerLinearChange
+    + getEnemyShoot(): TimerLinearChange
+    + getBossShoot(): TimerLinearChange
+    + getDropPropsRate(): TimerLinearChange
+    + getEnemyMagnification(): TimerLinearChange
+    + getHeroInitialHp(): int
+}
+
+class HardConfig extends AbstractConfig {
+    # TimerLinearChange mobCreate
+    # TimerLinearChange eliteCreate
+    # TimerLinearChange enemyShoot
+    # TimerLinearChange bossShoot
+    # TimerLinearChange dropPropsRate
+    # TimerLinearChange enemyMagnification
+    # TimerLinearChange bossScoreThreshold
+    + getMobCreate(): TimerLinearChange
+    + getEliteCreate(): TimerLinearChange
+    + getEnemyShoot(): TimerLinearChange
+    + getBossShoot(): TimerLinearChange
+    + getDropPropsRate(): TimerLinearChange
+    + getEnemyMagnification(): TimerLinearChange
+    + getHeroInitialHp(): int
+    + getBossScoreThreshold(): TimerLinearChange
+}
+
+@enduml
+
+PlantUML version 1.2022.1(Wed Feb 02 02:19:58 CST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: zh
+Country: CN
+--></g></svg>
