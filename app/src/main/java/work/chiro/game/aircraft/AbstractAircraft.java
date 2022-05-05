@@ -6,7 +6,9 @@ import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
+import work.chiro.game.config.RunningConfig;
 import work.chiro.game.prop.AbstractProp;
+import work.chiro.game.prop.PropHandler;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
@@ -20,7 +22,9 @@ import java.util.LinkedList;
  *
  * @author hitsz
  */
-public abstract class AbstractAircraft extends AbstractFlyingObject {
+public abstract class AbstractAircraft
+        extends AbstractFlyingObject
+        implements PropHandler {
     /**
      * 生命值
      */
@@ -59,7 +63,7 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
         hp -= decrease;
         if (hp <= 0) {
             hp = 0;
-            vanish();
+            vanish(true);
         }
         if (decrease > 0) {
             playBeShootMusic();
@@ -112,6 +116,18 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
     public void draw(Graphics g) {
         super.draw(g);
         drawHp(g);
+    }
+
+    @Override
+    public void onPropHandle() {
+        vanish(true);
+    }
+
+    public void vanish(boolean increaseScore) {
+        if (increaseScore) {
+            RunningConfig.increaseScore(getScore());
+        }
+        vanish();
     }
 }
 

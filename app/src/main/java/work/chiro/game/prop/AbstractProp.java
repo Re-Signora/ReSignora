@@ -19,8 +19,8 @@ import java.util.List;
  * @author hitsz
  */
 abstract public class AbstractProp extends AbstractFlyingObject {
-    protected List<AbstractAircraft> enemyAircrafts = new LinkedList<>();
-    protected List<BaseBullet> enemyBullets = new LinkedList<>();
+    final protected List<AbstractAircraft> enemyAircrafts = new LinkedList<>();
+    final protected List<BaseBullet> enemyBullets = new LinkedList<>();
 
     public AbstractProp(AbstractConfig config, Vec2 posInit, AnimateContainer animateContainer) {
         super(config, posInit, animateContainer);
@@ -31,12 +31,12 @@ abstract public class AbstractProp extends AbstractFlyingObject {
     }
 
     public AbstractProp subscribeEnemyAircrafts(List<AbstractAircraft> enemyAircrafts) {
-        this.enemyAircrafts = enemyAircrafts;
+        this.enemyAircrafts.addAll(enemyAircrafts);
         return this;
     }
 
     public AbstractProp subscribeEnemyBullets(List<BaseBullet> enemyBullets) {
-        this.enemyBullets = enemyBullets;
+        this.enemyBullets.addAll(enemyBullets);
         return this;
     }
 

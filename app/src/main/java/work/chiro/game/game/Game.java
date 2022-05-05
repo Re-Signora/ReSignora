@@ -69,7 +69,6 @@ public class Game extends JPanel {
     );
     private boolean gameOverFlag = false;
     private boolean startedFlag = false;
-    private double score = 0;
     private double nextBossScore;
     private final Object waitObject = new Object();
     private Future<?> future = null;
@@ -83,7 +82,7 @@ public class Game extends JPanel {
 
     public void resetStates() {
         gameOverFlag = false;
-        score = 0;
+        RunningConfig.score = 0;
         enemyBullets.clear();
         enemyAircrafts.clear();
         props.clear();
@@ -119,7 +118,7 @@ public class Game extends JPanel {
     public Game(Difficulty difficulty) {
         this.difficulty = difficulty;
         config = new ConfigFactory(difficulty).create();
-        nextBossScore = score + config.getBossScoreThreshold().getScaleNow().getX();
+        nextBossScore = RunningConfig.score + config.getBossScoreThreshold().getScaleNow().getX();
         heroAircraft = new HeroAircraftFactory().create(config);
         heroAircrafts.add(heroAircraft);
         loadFont();
@@ -192,10 +191,10 @@ public class Game extends JPanel {
         // boss 生成事件
         timerController.add(new Timer(10, () -> {
             config.getBossScoreThreshold().update(Utils.getTimeMills());
-            if (score > nextBossScore && bossAircrafts.isEmpty()) {
+            if (RunningConfig.score > nextBossScore && bossAircrafts.isEmpty()) {
                 synchronized (bossAircrafts) {
                     bossAircrafts.add(new BossEnemyFactory(() -> {
-                        nextBossScore = config.getBossScoreThreshold().getScaleNow().getX() + score;
+                        nextBossScore = config.getBossScoreThreshold().getScaleNow().getX() + RunningConfig.score;
                         BossEnemyFactory.clearInstance();
                     }).create(config));
                 }
@@ -244,11 +243,11 @@ public class Game extends JPanel {
             String message = JOptionPane.showInputDialog("输入额外的信息", lastProvidedMessage == null ? "NO MESSAGE" : lastProvidedMessage);
             lastProvidedMessage = message;
             // 保存游戏结果
-            if (score > 0) {
+            if (RunningConfig.score > 0) {
                 HistoryImpl.getInstance().addOne(
                         new HistoryObjectFactory(
                                 name == null ? "Nanshi" : name.isEmpty() ? "Nanshi" : name,
-                                score,
+                                RunningConfig.score,
                                 message == null ? "NO MESSAGE" : message.isEmpty() ? "NO MESSAGE" : message,
                                 difficulty)
                                 .create());
@@ -314,7 +313,6 @@ public class Game extends JPanel {
         enemyAircraft.decreaseHp(bullet.getPower());
         bullet.vanish();
         if (enemyAircraft.notValid()) {
-            score += enemyAircraft.getScore();
             props.addAll(enemyAircraft.dropProps().stream().map(
                     prop -> prop.subscribeEnemyAircrafts(enemyAircrafts)
                             .subscribeEnemyBullets(enemyBullets)
@@ -363,7 +361,7 @@ public class Game extends JPanel {
             }
             // 英雄机 与 敌机 相撞
             if (heroAircraft.crash(enemyAircraft)) {
-                enemyAircraft.vanish();
+                enemyAircraft.vanish(true);
                 heroAircraft.decreaseHp(config.getAircraftCrashDecreaseHp());
                 heroAircraft.startInvincibleState();
             }
@@ -427,13 +425,13 @@ public class Game extends JPanel {
         int y = 25;
         g.setColor(new Color(0xcfcfcfcf));
         g.setFont(myFontBase);
-        g.drawString("SCORE:" + (int) (this.score), x, y);
+        g.drawString("SCORE:" + (int) (RunningConfig.score), x, y);
         y = y + 20;
         g.drawString("LIFE:" + (int) (this.heroAircraft.getHp()), x, y);
         y = y + 20;
         BossEnemy boss = BossEnemyFactory.getInstance();
         if (boss == null) {
-            g.drawString("Before Boss:" + (int) (nextBossScore - score), x, y);
+            g.drawString("Before Boss:" + (int) (nextBossScore - RunningConfig.score), x, y);
         } else {
             g.drawString("BOSS LIFE:" + (int) (boss.getHp()), x, y);
         }
@@ -447,9 +445,5 @@ public class Game extends JPanel {
         } catch (FontFormatException | IOException e) {
             myFontBase = new Font("SansSerif", Font.PLAIN, 22);
         }
-    }
-
-    public void increaseScore(double increase) {
-        score += increase;
     }
 }

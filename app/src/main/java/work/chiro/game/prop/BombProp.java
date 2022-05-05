@@ -1,12 +1,12 @@
 package work.chiro.game.prop;
 
+import work.chiro.game.aircraft.AbstractAircraft;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.application.MusicManager;
-import work.chiro.game.basic.AbstractFlyingObject;
+import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
-import work.chiro.game.windows.GameWindow;
 
 /**
  * @author Chiro
@@ -20,11 +20,8 @@ public class BombProp extends AbstractProp {
     public AbstractProp update() {
         System.out.println("BombSupply active!");
         Utils.startMusic(MusicManager.MusicType.BOMB_EXPLOSION);
-        enemyAircrafts.forEach(enemy -> {
-            GameWindow.getInstance().getGame().increaseScore(enemy.getScore());
-            enemy.vanish();
-        });
-        enemyBullets.forEach(AbstractFlyingObject::vanish);
+        enemyAircrafts.forEach(AbstractAircraft::onPropHandle);
+        enemyBullets.forEach(BaseBullet::onPropHandle);
         return this;
     }
 }
