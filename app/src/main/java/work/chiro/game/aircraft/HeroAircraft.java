@@ -59,12 +59,13 @@ public class HeroAircraft extends AbstractAircraft {
         Game.getThreadFactory().newThread(() -> {
             try {
                 Thread.sleep(Constants.INVINCIBLE_TIME);
+                getAnimateContainer().clearAnimateCallback();
+                getAnimateContainer().clearAllAnimates();
+                Thread.sleep(Constants.INVINCIBLE_TIME / 10);
             } catch (InterruptedException ignored) {
             }
             finally {
                 synchronized (HeroAircraft.class) {
-                    getAnimateContainer().clearAnimateCallback();
-                    getAnimateContainer().clearAllAnimates();
                     getAlpha().setX(1);
                     box.setInvincible(false);
                 }
