@@ -95,6 +95,7 @@ public class Game extends JPanel {
         BossEnemyFactory.clearInstance();
         timerController.clear();
         heroController.clear();
+        nextBossScore = RunningConfig.score + config.getBossScoreThreshold().getScaleNow().getX();
 
         flushBackground();
     }
