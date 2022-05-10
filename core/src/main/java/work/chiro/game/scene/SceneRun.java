@@ -1,6 +1,6 @@
 package work.chiro.game.scene;
 
-import work.chiro.game.game.Game;
+import work.chiro.game.thread.MyThreadFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,7 +50,7 @@ public class SceneRun {
         if (nextScene == null) {
             throw new SceneRunDoneException();
         }
-        Thread nowRunning = Game.getThreadFactory().newThread(nextScene::run);
+        Thread nowRunning = MyThreadFactory.getInstance().newThread(nextScene::run);
         //noinspection SynchronizationOnLocalVariableOrMethodParameter
         synchronized (nowRunning) {
             try {

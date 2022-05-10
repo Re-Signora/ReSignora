@@ -9,6 +9,8 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
+    // Apply the java-library plugin for API and implementation separation.
+    `java-library`
 }
 
 repositories {
@@ -21,11 +23,14 @@ dependencies {
 
     // This dependency is used by the application.
     implementation("com.google.guava:guava:30.1.1-jre")
+
+    // 对 `core` 模块的依赖
+    implementation(project(":core"))
 }
 
 application {
     // Define the main class for the application.
-    mainClass.set("test.TestMe")
+    mainClass.set("work.chiro.game.application.Main")
 }
 
 tasks.withType<JavaCompile> {
@@ -44,7 +49,7 @@ tasks.withType<Javadoc> {
 tasks.jar {
     enabled = true
     manifest {
-        attributes(mapOf("Main-Class" to "test.TestMe"))
+        attributes(mapOf("Main-Class" to "work.chiro.game.application.Main"))
     }
     val sourcesMain = sourceSets.main.get()
     from(sourcesMain.output)

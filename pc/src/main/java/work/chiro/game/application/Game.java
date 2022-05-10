@@ -1,10 +1,6 @@
-package work.chiro.game.game;
+package work.chiro.game.application;
 
 import work.chiro.game.aircraft.*;
-import work.chiro.game.application.HeroController;
-import work.chiro.game.application.MusicManager;
-import work.chiro.game.application.MusicThreadFactory;
-import work.chiro.game.application.MyThreadFactory;
 import work.chiro.game.background.*;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
@@ -12,7 +8,9 @@ import work.chiro.game.config.*;
 import work.chiro.game.dao.HistoryImpl;
 import work.chiro.game.dao.HistoryObjectFactory;
 import work.chiro.game.prop.AbstractProp;
+import work.chiro.game.resource.MusicManager;
 import work.chiro.game.scene.SceneRun;
+import work.chiro.game.thread.MusicThreadFactory;
 import work.chiro.game.timer.Timer;
 import work.chiro.game.timer.TimerController;
 import work.chiro.game.utils.Utils;
@@ -31,6 +29,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import static work.chiro.game.config.Difficulty.Easy;
+
 /**
  * 游戏主面板，游戏启动
  *
@@ -38,23 +38,10 @@ import java.util.stream.Collectors;
  */
 public class Game extends JPanel {
     /**
-     * 创建线程的工厂函数
-     */
-    static private final MyThreadFactory THREAD_FACTORY = new MyThreadFactory("AircraftWar");
-    static private final MusicThreadFactory MUSIC_FACTORY = new MusicThreadFactory("AircraftWar-Music");
-    /**
      * 线程池，自动管理
      */
     @SuppressWarnings("AlibabaThreadPoolCreation")
-    static private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(Constants.GAME_POOL_SIZE, THREAD_FACTORY);
-
-    public static MyThreadFactory getThreadFactory() {
-        return THREAD_FACTORY;
-    }
-
-    public static MusicThreadFactory getMusicFactory() {
-        return MUSIC_FACTORY;
-    }
+    static private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(Constants.GAME_POOL_SIZE, MusicThreadFactory.getInstance());
 
     private HeroAircraft heroAircraft;
     private final List<AbstractAircraft> heroAircrafts = new LinkedList<>();
@@ -204,7 +191,7 @@ public class Game extends JPanel {
         // 获取键盘焦点
         timerController.add(new Timer(100, this::requestFocus));
         // 输出当前 config
-        if (RunningConfig.difficulty != Difficulty.Easy) {
+        if (RunningConfig.difficulty != Easy) {
             timerController.add(new Timer(2000, () -> config.printNow()));
         } else {
             System.out.println("简单模式 Config 将不会改变: " + config);
@@ -213,7 +200,7 @@ public class Game extends JPanel {
 
     private void stopAllMusic() {
         System.out.println("stopping all music");
-        getMusicFactory().interruptAll();
+        MusicThreadFactory.getInstance().interruptAll();
     }
 
     private void onGameOver() {

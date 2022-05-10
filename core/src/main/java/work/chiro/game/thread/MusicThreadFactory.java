@@ -1,4 +1,6 @@
-package work.chiro.game.application;
+package work.chiro.game.thread;
+
+import work.chiro.game.resource.MusicManager;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,7 +11,18 @@ import java.util.List;
 public class MusicThreadFactory extends MyThreadFactory {
     private final List<MusicThread> musicThreads = new LinkedList<>();
 
-    public MusicThreadFactory(String name) {
+    private static MusicThreadFactory instance = null;
+
+    public static MusicThreadFactory getInstance() {
+        if (instance == null) {
+            synchronized (MusicThreadFactory.class) {
+                instance = new MusicThreadFactory("AircraftWar-Music");
+            }
+        }
+        return instance;
+    }
+
+    MusicThreadFactory(String name) {
         super(name);
     }
 

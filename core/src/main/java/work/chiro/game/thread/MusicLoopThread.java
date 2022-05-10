@@ -1,4 +1,6 @@
-package work.chiro.game.application;
+package work.chiro.game.thread;
+
+import work.chiro.game.resource.MusicManager;
 
 import javax.sound.sampled.SourceDataLine;
 import java.io.ByteArrayInputStream;

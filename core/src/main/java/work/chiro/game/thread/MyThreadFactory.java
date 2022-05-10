@@ -1,4 +1,4 @@
-package work.chiro.game.application;
+package work.chiro.game.thread;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,7 +16,18 @@ public class MyThreadFactory implements ThreadFactory {
     private boolean debug = false;
     private final List<Thread> pool;
 
-    public MyThreadFactory(String name) {
+    private static MyThreadFactory instance = null;
+
+    public static MyThreadFactory getInstance() {
+        if (instance == null) {
+            synchronized (MyThreadFactory.class) {
+                instance = new MyThreadFactory("AircraftWar");
+            }
+        }
+        return instance;
+    }
+
+    MyThreadFactory(String name) {
         counter = 0;
         this.name = name;
         stats = new ArrayList<>();
@@ -29,6 +40,7 @@ public class MyThreadFactory implements ThreadFactory {
      * @param run 新线程对应任务
      * @return 线程对象
      */
+    @SuppressWarnings("NullableProblems")
     @Override
     public Thread newThread(Runnable run) {
         Thread t = new Thread(run, name + "-Thread-" + counter);

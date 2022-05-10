@@ -1,7 +1,6 @@
 package work.chiro.game.aircraft;
 
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.application.MusicManager;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.EnemyBulletFactory;
 import work.chiro.game.config.AbstractConfig;
@@ -12,6 +11,7 @@ import work.chiro.game.prop.AbstractProp;
 import work.chiro.game.prop.BloodPropFactory;
 import work.chiro.game.prop.BombPropFactory;
 import work.chiro.game.prop.BulletPropFactory;
+import work.chiro.game.resource.MusicManager;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 

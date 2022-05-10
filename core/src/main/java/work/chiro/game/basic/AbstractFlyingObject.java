@@ -2,9 +2,9 @@ package work.chiro.game.basic;
 
 import work.chiro.game.aircraft.AbstractAircraft;
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.application.ImageManager;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
+import work.chiro.game.resource.ImageManager;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec;

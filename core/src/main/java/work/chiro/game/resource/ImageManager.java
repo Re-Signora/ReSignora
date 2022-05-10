@@ -1,4 +1,4 @@
-package work.chiro.game.application;
+package work.chiro.game.resource;
 
 
 import work.chiro.game.aircraft.*;

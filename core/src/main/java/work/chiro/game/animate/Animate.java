@@ -329,6 +329,7 @@ public class Animate {
                 getVector().set(getVecTarget());
             } else {
                 double m = 2 * t * t / (timeSpan * timeSpan);
+                //noinspection AlibabaUndefineMagicConstant
                 if (t < timeSpan / 2) {
                     getVector().set(getSource().plus(getDelta().times(m)));
                 } else {
@@ -342,6 +343,7 @@ public class Animate {
         public T getSpeed(double timeNow) {
             double t = timeNow - timeStart;
             if (getAnimateVectorType() == AnimateVectorType.PositionLike && !isDone(timeNow)) {
+                //noinspection AlibabaUndefineMagicConstant
                 if (t < timeSpan / 2) {
                     return getNewVecInstance().fromVector(getDelta().times(2.0 / timeSpan * (t / timeSpan)));
                 } else {

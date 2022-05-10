@@ -2,14 +2,14 @@ package work.chiro.game.aircraft;
 
 import work.chiro.game.animate.Animate;
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.application.MusicManager;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.HeroBulletFactory;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
-import work.chiro.game.game.Game;
 import work.chiro.game.prop.AbstractProp;
+import work.chiro.game.resource.MusicManager;
+import work.chiro.game.thread.MyThreadFactory;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
@@ -56,7 +56,7 @@ public class HeroAircraft extends AbstractAircraft {
             }
             return false;
         });
-        Game.getThreadFactory().newThread(() -> {
+        MyThreadFactory.getInstance().newThread(() -> {
             try {
                 Thread.sleep(Constants.INVINCIBLE_TIME);
                 getAnimateContainer().clearAnimateCallback();

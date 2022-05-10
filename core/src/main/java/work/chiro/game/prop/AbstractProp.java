@@ -2,10 +2,10 @@ package work.chiro.game.prop;
 
 import work.chiro.game.aircraft.AbstractAircraft;
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.application.MusicManager;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.config.AbstractConfig;
+import work.chiro.game.resource.MusicManager;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 

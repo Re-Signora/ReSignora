@@ -1,12 +1,12 @@
 package work.chiro.game.utils;
 
-import work.chiro.game.application.MusicManager;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.EnemyBulletFactory;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
-import work.chiro.game.game.Game;
+import work.chiro.game.resource.MusicManager;
+import work.chiro.game.thread.MusicThreadFactory;
 import work.chiro.game.vector.Vec2;
 
 import javax.imageio.ImageIO;
@@ -46,17 +46,17 @@ public class Utils {
 
     public static void startMusic(MusicManager.MusicType type, Boolean noStop) {
         if (RunningConfig.musicEnable) {
-            Game.getMusicFactory().newMusicThread(type, noStop).start();
+            MusicThreadFactory.getInstance().newMusicThread(type, noStop).start();
         }
     }
 
     public static void stopMusic(MusicManager.MusicType type) {
-        Game.getMusicFactory().stopMusic(type);
+        MusicThreadFactory.getInstance().stopMusic(type);
     }
 
     public static void startLoopMusic(MusicManager.MusicType type) {
         if (RunningConfig.musicEnable) {
-            Game.getMusicFactory().newLoopMusicThread(type).start();
+            MusicThreadFactory.getInstance().newLoopMusicThread(type).start();
         }
     }
 
