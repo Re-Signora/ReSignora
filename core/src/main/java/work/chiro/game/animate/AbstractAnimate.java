@@ -1,7 +1,7 @@
 package work.chiro.game.animate;
 
-import work.chiro.game.vector.VectorType;
 import work.chiro.game.vector.VectorFactory;
+import work.chiro.game.vector.VectorType;
 
 /**
  * 抽象动画类

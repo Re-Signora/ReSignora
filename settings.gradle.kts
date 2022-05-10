@@ -8,4 +8,5 @@
  */
 
 rootProject.name = "aircraft-war"
-include("app")
+include("core")
+include("pc")
