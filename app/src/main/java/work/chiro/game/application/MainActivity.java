@@ -82,20 +82,13 @@ public class MainActivity extends AppCompatActivity {
             return this;
         }
 
-        abstract protected Paint getPaint();
-
         abstract protected Canvas getCanvas();
     }
 
-    private void draw(Paint paint) {
+    private void draw() {
         List<List<? extends AbstractFlyingObject>> allObjects = game.getAllObjects();
         Canvas canvas = surfaceHolder.lockCanvas();
         XGraphics xGraphics = new XGraphicsPart() {
-            @Override
-            protected Paint getPaint() {
-                return paint;
-            }
-
             @Override
             protected Canvas getCanvas() {
                 return canvas;
@@ -154,8 +147,7 @@ public class MainActivity extends AppCompatActivity {
             }
             // noinspection SynchronizeOnNonFinalField
             synchronized (surfaceHolder) {
-                Paint paint = new Paint();
-                draw(paint);
+                draw();
             }
         });
         game.setOnFinish(() -> System.out.println("FINISH!!!"));
