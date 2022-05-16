@@ -11,7 +11,7 @@
         android:theme="@style/Theme.AircraftWar">
         <activity
             android:name=".GameActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:configChanges="keyboardHidden"
             android:exported="true"
             android:label="@string/title_activity_game"
             android:theme="@style/Theme.AircraftWar.Fullscreen">
