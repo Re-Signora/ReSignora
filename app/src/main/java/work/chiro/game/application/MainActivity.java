@@ -160,18 +160,22 @@ public class MainActivity extends AppCompatActivity {
         });
         game.setOnFinish(() -> System.out.println("FINISH!!!"));
         surfaceView.setOnTouchListener((v, event) -> {
-            draw(new Paint());
             heroControllerAndroid.onTouchEvent(event);
             v.performClick();
             return true;
         });
+    }
+
+    @Override
+    protected void onStart() {
         MyThreadFactory.getInstance().newThread(() -> {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(300);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             game.action();
         }).start();
+        super.onStart();
     }
 }
