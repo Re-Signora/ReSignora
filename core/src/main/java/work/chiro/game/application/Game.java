@@ -72,7 +72,7 @@ public class Game {
     private BasicCallback onFinish = null;
     private BasicCallback onPaint = null;
     private BasicCallback onFrame = null;
-    private HeroController heroController;
+    private final HeroController heroController;
 
     public void resetStates() {
         gameOverFlag = false;

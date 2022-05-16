@@ -1,4 +1,4 @@
-package com.example.testapp2;
+package work.chiro.game.application;
 
 import static org.junit.Assert.assertEquals;
 

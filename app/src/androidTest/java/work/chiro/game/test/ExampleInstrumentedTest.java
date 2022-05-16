@@ -1,4 +1,4 @@
-package com.example.testapp2;
+package work.chiro.game.test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.testapp2", appContext.getPackageName());
+        assertEquals("work.chiro.game.application", appContext.getPackageName());
     }
 }

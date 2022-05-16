@@ -1,7 +1,7 @@
-const val PUBLISHING_GROUP = "com.example"
+const val PUBLISHING_GROUP = "work.chiro.game"
 
 object AppCoordinates {
-    const val APP_ID = "com.example.testapp2"
+    const val APP_ID = "work.chiro.game.application"
 
     const val APP_VERSION_NAME = "1.0.0"
     const val APP_VERSION_CODE = 1

@@ -17,7 +17,6 @@ import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.scene.SceneRun;
-import work.chiro.game.thread.MusicThreadFactory;
 import work.chiro.game.timer.Timer;
 import work.chiro.game.windows.HistoryWindow;
 
@@ -59,11 +58,6 @@ public class GamePanel extends JPanel {
     public void addEvents() {
         // 获取键盘焦点
         game.getTimerController().add(new Timer(100, this::requestFocus));
-    }
-
-    private void stopAllMusic() {
-        System.out.println("stopping all music");
-        MusicThreadFactory.getInstance().interruptAll();
     }
 
     /**
