@@ -193,6 +193,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onResize() {
+        heroControllerAndroid.reset();
+
         RunningConfig.windowWidth = surfaceView.getMeasuredWidth();
         RunningConfig.windowHeight = surfaceView.getMeasuredHeight();
 

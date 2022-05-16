@@ -10,9 +10,14 @@ import work.chiro.game.vector.Vec2;
 
 public class HeroControllerAndroidImpl implements HeroController {
     private Vec2 offset = new Vec2();
+
     @Override
     public boolean isShootPressed() {
         return true;
+    }
+
+    public void reset() {
+        offset = new Vec2();
     }
 
     public void onTouchEvent(MotionEvent e) {
