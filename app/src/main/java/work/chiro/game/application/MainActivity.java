@@ -43,7 +43,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public XImage<?> drawImage(XImage<?> image, double x, double y) {
             Paint paint = new Paint();
-            getCanvas().drawBitmap((Bitmap) image.getImage(), (int) x, (int) y, paint);
+            paint.setAlpha((int) (alpha * 255));
+            Matrix matrix = new Matrix();
+            matrix.postTranslate(-(float) image.getWidth() / 2, -(float) image.getHeight() / 2);
+            matrix.postRotate((float) (rotation * 180 / Math.PI));
+            matrix.postTranslate((float) (image.getWidth() / 2 + x), (float) (image.getHeight() / 2 + y));
+            getCanvas().drawBitmap((Bitmap) image.getImage(), matrix, paint);
             return image;
         }
 
@@ -100,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void draw() {
         List<List<? extends AbstractFlyingObject>> allObjects = game.getAllObjects();
-        Canvas canvas = surfaceHolder.lockCanvas();
+        // Canvas canvas = surfaceHolder.lockCanvas();
+        Canvas canvas = surfaceHolder.lockHardwareCanvas();
         XGraphics xGraphics = new XGraphicsPart() {
             @Override
             protected Canvas getCanvas() {
