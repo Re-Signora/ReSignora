@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -72,13 +73,39 @@ public class GamePanel extends JPanel {
         int color = 0x0;
 
         @Override
-        public XGraphics drawImage(XImage<?> image, double x, double y) {
+        public XImage<?> drawImage(XImage<?> image, double x, double y) {
             AffineTransform af = AffineTransform.getTranslateInstance(x, y);
             af.rotate(rotation, image.getWidth() * 1.0 / 2, image.getHeight() * 1.0 / 2);
             Graphics2D graphics2D = (Graphics2D) (getGraphics());
             graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) alpha));
             graphics2D.drawImage((Image) image.getImage(), af, null);
-            return this;
+            return image;
+        }
+
+        @Override
+        public XImage<?> drawImage(XImage<?> image, double x, double y, double w, double h) {
+            if (image.getWidth() != (int) w || image.getHeight() != (int) h) {
+                BufferedImage bufferedImage = (BufferedImage) image.getImage();
+                bufferedImage.getScaledInstance((int) w, (int) h, Image.SCALE_DEFAULT);
+                return drawImage(new XImage<BufferedImage>() {
+                    @Override
+                    public int getWidth() {
+                        return bufferedImage.getWidth();
+                    }
+
+                    @Override
+                    public int getHeight() {
+                        return bufferedImage.getHeight();
+                    }
+
+                    @Override
+                    public BufferedImage getImage() {
+                        return bufferedImage;
+                    }
+                }, x, y);
+            } else {
+                return drawImage(image, x, y);
+            }
         }
 
         @Override

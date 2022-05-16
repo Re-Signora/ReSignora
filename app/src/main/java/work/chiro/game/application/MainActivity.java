@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
@@ -35,9 +36,38 @@ public class MainActivity extends AppCompatActivity {
         int color = 0x0;
 
         @Override
-        public XGraphics drawImage(XImage<?> image, double x, double y) {
+        public XImage<?> drawImage(XImage<?> image, double x, double y) {
             getCanvas().drawBitmap((Bitmap) image.getImage(), (int) x, (int) y, getPaint());
-            return this;
+            return image;
+        }
+
+        @Override
+        public XImage<?> drawImage(XImage<?> image, double x, double y, double w, double h) {
+            // getCanvas().drawBitmap((Bitmap) image.getImage(), new Rect(0, 0, image.getWidth(), image.getHeight()), new Rect((int) x, (int) y, (int) (w + x), (int) (h + y)), getPaint());
+            if (image.getWidth() != (int) w || image.getHeight() != (int) h) {
+                Matrix matrix = new Matrix();
+                matrix.postScale((float) (w / image.getWidth()), (float) (h / image.getHeight()));
+                Bitmap scaledBitmap = Bitmap.createBitmap((Bitmap) image.getImage(), 0, 0, image.getWidth(), image.getHeight(), matrix, true);
+                getCanvas().drawBitmap((Bitmap) image.getImage(), matrix, getPaint());
+                return new XImage<Bitmap>() {
+                    @Override
+                    public int getWidth() {
+                        return scaledBitmap.getWidth();
+                    }
+
+                    @Override
+                    public int getHeight() {
+                        return scaledBitmap.getHeight();
+                    }
+
+                    @Override
+                    public Bitmap getImage() {
+                        return scaledBitmap;
+                    }
+                };
+            } else {
+                return drawImage(image, x, y);
+            }
         }
 
         @Override
@@ -139,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
             RunningConfig.windowHeight = surfaceView.getMeasuredHeight();
 
             System.out.println("set window(" + RunningConfig.windowWidth + ", " + RunningConfig.windowHeight + ")");
+            game.flushBackground();
         });
 
         game = new Game(Difficulty.Easy, heroControllerAndroid);

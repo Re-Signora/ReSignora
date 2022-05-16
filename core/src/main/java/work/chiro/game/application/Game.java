@@ -118,7 +118,7 @@ public class Game {
         System.out.println("Game instance created!");
     }
 
-    private void flushBackground() {
+    public void flushBackground() {
         backgrounds.clear();
         switch (difficulty) {
             case Easy:

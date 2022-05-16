@@ -9,7 +9,18 @@ public interface XGraphics {
      * @param y     Y坐标
      * @return this
      */
-    XGraphics drawImage(XImage<?> image, double x, double y);
+    XImage<?> drawImage(XImage<?> image, double x, double y);
+
+    /**
+     * 在 (x, y) 绘制大小为 (w, h) 的图片
+     * @param image 图片
+     * @param x X坐标
+     * @param y Y坐标
+     * @param w 宽度
+     * @param h 高度
+     * @return this
+     */
+    XImage<?> drawImage(XImage<?> image, double x, double y, double w, double h);
 
     /**
      * 设置绘制图片时的透明度

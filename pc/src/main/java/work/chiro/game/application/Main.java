@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 
 import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.compatible.XImage;
-import work.chiro.game.config.Constants;
+import work.chiro.game.config.RunningConfig;
 import work.chiro.game.scene.Scene;
 import work.chiro.game.scene.SceneRun;
 import work.chiro.game.utils.Utils;
@@ -55,11 +55,11 @@ public class Main {
         // 获得屏幕的分辨率，初始化 Frame
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         JFrame frame = new JFrame();
-        frame.setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
+        frame.setSize(RunningConfig.windowWidth, RunningConfig.windowHeight);
         frame.setResizable(false);
         //设置窗口的大小和位置,居中放置
-        frame.setBounds(((int) screenSize.getWidth() - Constants.WINDOW_WIDTH) / 2, 0,
-                Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
+        frame.setBounds(((int) screenSize.getWidth() - RunningConfig.windowWidth) / 2, 0,
+                RunningConfig.windowWidth, RunningConfig.windowHeight);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         try {

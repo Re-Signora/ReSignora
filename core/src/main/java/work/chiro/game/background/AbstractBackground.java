@@ -3,7 +3,7 @@ package work.chiro.game.background;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.compatible.XGraphics;
-import work.chiro.game.config.Constants;
+import work.chiro.game.compatible.XImage;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.vector.Vec2;
 
@@ -13,8 +13,10 @@ import work.chiro.game.vector.Vec2;
  * @author Chiro
  */
 public abstract class AbstractBackground extends AbstractFlyingObject {
+    private XImage<?> cachedBitmap = null;
+
     public AbstractBackground(Vec2 posInit, AnimateContainer animateContainer) {
-        super(null, posInit, animateContainer);
+        super(null, posInit, animateContainer, new Vec2(RunningConfig.windowWidth, RunningConfig.windowHeight));
         initImageFilename = getInitImageFilename();
     }
 
@@ -25,8 +27,20 @@ public abstract class AbstractBackground extends AbstractFlyingObject {
 
     @Override
     public void draw(XGraphics g) {
-        g.drawImage(getImage(), (int) getLocationX(), (int) getLocationY());
-        g.drawImage(getImage(), (int) getLocationX(), (int) getLocationY() - RunningConfig.windowHeight);
+        XImage<?> newBitmap = g.drawImage(getImage(), getLocationX(), getLocationY(), RunningConfig.windowWidth, RunningConfig.windowHeight);
+        if (cachedBitmap != newBitmap) {
+            cachedBitmap = newBitmap;
+        }
+        g.drawImage(cachedBitmap, getLocationX(), getLocationY() - RunningConfig.windowHeight, RunningConfig.windowWidth, RunningConfig.windowHeight);
+    }
+
+    @Override
+    public XImage<?> getImage() {
+        if (cachedBitmap != null) {
+            return cachedBitmap;
+        } else {
+            return super.getImage();
+        }
     }
 
     @Override
