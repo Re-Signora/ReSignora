@@ -13,8 +13,6 @@ import work.chiro.game.vector.Vec2;
  * @author Chiro
  */
 public abstract class AbstractBackground extends AbstractFlyingObject {
-    private XImage<?> cachedBitmap = null;
-
     public AbstractBackground(Vec2 posInit, AnimateContainer animateContainer) {
         super(null, posInit, animateContainer, new Vec2(RunningConfig.windowWidth, RunningConfig.windowHeight));
         initImageFilename = getInitImageFilename();
@@ -27,17 +25,17 @@ public abstract class AbstractBackground extends AbstractFlyingObject {
 
     @Override
     public void draw(XGraphics g) {
-        XImage<?> newBitmap = g.drawImage(getImage(), getLocationX(), getLocationY(), RunningConfig.windowWidth, RunningConfig.windowHeight);
-        if (cachedBitmap != newBitmap) {
-            cachedBitmap = newBitmap;
+        XImage<?> newImage = g.drawImage(getImage(), getLocationX(), getLocationY(), RunningConfig.windowWidth, RunningConfig.windowHeight);
+        if (cachedImage != newImage) {
+            cachedImage = newImage;
         }
-        g.drawImage(cachedBitmap, getLocationX(), getLocationY() - RunningConfig.windowHeight, RunningConfig.windowWidth, RunningConfig.windowHeight);
+        g.drawImage(cachedImage, getLocationX(), getLocationY() - RunningConfig.windowHeight, RunningConfig.windowWidth, RunningConfig.windowHeight);
     }
 
     @Override
     public XImage<?> getImage() {
-        if (cachedBitmap != null) {
-            return cachedBitmap;
+        if (cachedImage != null) {
+            return cachedImage;
         } else {
             return super.getImage();
         }

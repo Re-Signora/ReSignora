@@ -38,13 +38,16 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public XImage<?> drawImage(XImage<?> image, double x, double y) {
-            getCanvas().drawBitmap((Bitmap) image.getImage(), (int) x, (int) y, getPaint());
+            // System.out.printf(Locale.CHINA, "draw(%f, %f, %d, %d)%n", x, y, image.getWidth(), image.getHeight());
+            Paint paint = new Paint();
+            getCanvas().drawBitmap((Bitmap) image.getImage(), (int) x, (int) y, paint);
             return image;
         }
 
         @Override
         public XImage<?> drawImage(XImage<?> image, double x, double y, double w, double h) {
             if (image.getWidth() != (int) w || image.getHeight() != (int) h) {
+                System.out.println("WARN: update cache image");
                 Matrix matrix = new Matrix();
                 matrix.postScale((float) (w / image.getWidth()), (float) (h / image.getHeight()));
                 Bitmap scaledBitmap = Bitmap.createBitmap((Bitmap) image.getImage(), 0, 0, image.getWidth(), image.getHeight(), matrix, true);
@@ -74,8 +77,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public XGraphics fillRect(double x, double y, double width, double height) {
-            getPaint().setColor(color);
-            getCanvas().drawRect((int) x, (int) y, (int) width, (int) height, getPaint());
+            Paint paint = new Paint();
+            paint.setColor(color);
+            getCanvas().drawRect((int) x, (int) y, (int) (x + width), (int) (y + height), paint);
             return this;
         }
 

@@ -7,6 +7,7 @@ import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -86,8 +87,14 @@ public class GamePanel extends JPanel {
         @Override
         public XImage<?> drawImage(XImage<?> image, double x, double y, double w, double h) {
             if (image.getWidth() != (int) w || image.getHeight() != (int) h) {
-                BufferedImage bufferedImage = (BufferedImage) image.getImage();
-                bufferedImage.getScaledInstance((int) w, (int) h, Image.SCALE_DEFAULT);
+                BufferedImage raw = (BufferedImage) image.getImage();
+                Image resizedImage = raw.getScaledInstance((int) w, (int) h, Image.SCALE_DEFAULT);
+                BufferedImage bufferedImage = new BufferedImage((int) w, (int) h, BufferedImage.TYPE_4BYTE_ABGR);
+                Graphics2D g = bufferedImage.createGraphics();
+                g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                        RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                g.drawImage(resizedImage, 0, 0, (int) w, (int) h, null);
+                g.dispose();
                 return drawImage(new XImageFactory().create(bufferedImage), x, y);
             } else {
                 return drawImage(image, x, y);

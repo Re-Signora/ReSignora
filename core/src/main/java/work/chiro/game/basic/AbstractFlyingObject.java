@@ -7,7 +7,6 @@ import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.compatible.XImage;
 import work.chiro.game.config.AbstractConfig;
-import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.resource.ImageManager;
 import work.chiro.game.utils.Utils;
@@ -76,12 +75,15 @@ public abstract class AbstractFlyingObject {
      */
     private boolean invincible = false;
 
-
     /**
      * 有效（生存）标记，
      * 通常标记为 false的对象会再下次刷新时清除
      */
     protected boolean isValid = true;
+    /**
+     * 缓存的图片
+     */
+    protected XImage<?> cachedImage = null;
 
     public AbstractFlyingObject(
             AbstractConfig config,
@@ -226,6 +228,9 @@ public abstract class AbstractFlyingObject {
             }
         }
         if (keepImage()) {
+            if (cachedImage != null) {
+                return cachedImage;
+            }
             return image;
         } else {
             XImage<?> loadedImage = image;
@@ -252,7 +257,7 @@ public abstract class AbstractFlyingObject {
 
     public double getHeight() {
         if (getSize() != null) {
-            height = getSize().getX();
+            height = getSize().getY();
             return height;
         }
         if (height == -1) {
@@ -310,10 +315,15 @@ public abstract class AbstractFlyingObject {
     }
 
     public void draw(XGraphics g, boolean center) {
-        g.setAlpha(getAlpha().getX())
+        XImage<?> newImage = g.setAlpha(getAlpha().getX())
                 .setRotation(getRotation(true).getX())
-                .drawImage(getImage(), (getLocationX() - (center ? getWidth() / 2 : 0)),
-                getLocationY() - (center ? getHeight() / 2 : 0));
+                .drawImage(getImage(),
+                        (getLocationX() - (center ? getWidth() / 2 : 0)),
+                        getLocationY() - (center ? getHeight() / 2 : 0),
+                        getWidth(), getHeight());
+        if (cachedImage != newImage) {
+            cachedImage = newImage;
+        }
     }
 
     public void draw(XGraphics g) {
