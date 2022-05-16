@@ -16,6 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
 import java.util.List;
 
+import work.chiro.game.aircraft.BossEnemy;
+import work.chiro.game.aircraft.BossEnemyFactory;
+import work.chiro.game.aircraft.HeroAircraftFactory;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.compatible.XGraphics;
@@ -82,6 +85,15 @@ public class MainActivity extends AppCompatActivity {
             return this;
         }
 
+        @Override
+        public XGraphics drawString(String text, double x, double y) {
+            Paint paint = new Paint();
+            paint.setColor(color);
+            paint.setTextSize(80);
+            getCanvas().drawText(text, (int) x, (int) y, paint);
+            return this;
+        }
+
         abstract protected Canvas getCanvas();
     }
 
@@ -106,7 +118,30 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+        paintInfo(xGraphics);
+
         surfaceHolder.unlockCanvasAndPost(canvas);
+    }
+
+    private void paintInfo(XGraphics g) {
+        int d = 80;
+        int x = 10;
+        int y = d;
+        g.setColor(0xcfcfcfcf);
+        // g.setFont(myFontBase);
+        g.drawString("SCORE:" + (int) (RunningConfig.score), x, y);
+        y = y + d;
+        g.drawString("LIFE:" + (int) (HeroAircraftFactory.getInstance().getHp()), x, y);
+        y = y + d;
+        BossEnemy boss = BossEnemyFactory.getInstance();
+        if (boss == null) {
+            g.drawString("Before Boss:" + (int) (game.getNextBossScore() - RunningConfig.score), x, y);
+        } else {
+            g.drawString("BOSS LIFE:" + (int) (boss.getHp()), x, y);
+        }
+        y = y + d;
+        g.drawString("FPS:" + game.getTimerController().getFps(), x, y);
     }
 
     @SuppressLint("ClickableViewAccessibility")

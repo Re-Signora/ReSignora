@@ -54,4 +54,13 @@ public interface XGraphics {
      * @return this
      */
     XGraphics fillRect(double x, double y, double width, double height);
+
+    /**
+     * 绘制文字
+     * @param text 文字
+     * @param x X坐标
+     * @param y Y坐标
+     * @return this
+     */
+    XGraphics drawString(String text, double x, double y);
 }

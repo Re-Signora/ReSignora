@@ -126,6 +126,12 @@ public class GamePanel extends JPanel {
             return this;
         }
 
+        @Override
+        public XGraphics drawString(String text, double x, double y) {
+            getGraphics().drawString(text, (int) x, (int) y);
+            return this;
+        }
+
         abstract protected Graphics getGraphics();
     }
 
