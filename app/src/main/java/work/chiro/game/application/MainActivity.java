@@ -13,9 +13,7 @@ import android.view.SurfaceView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import work.chiro.game.basic.AbstractFlyingObject;
@@ -130,22 +128,6 @@ public class MainActivity extends AppCompatActivity {
                     throw new IOException("file: " + path + " not found!");
                 }
                 return new XImageFactory().create(bitmap);
-            }
-
-            @Override
-            public byte[] getSoundBytesFromResource(String path) throws IOException {
-                InputStream fileInputStream = Utils.class.getResourceAsStream("/sounds/" + path);
-                if (fileInputStream == null) {
-                    throw new IOException("file: " + path + " not found!");
-                }
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                final int maxSize = 1024;
-                int len;
-                byte[] b = new byte[maxSize];
-                while ((len = fileInputStream.read(b)) != -1) {
-                    byteArrayOutputStream.write(b, 0, len);
-                }
-                return byteArrayOutputStream.toByteArray();
             }
         });
 
