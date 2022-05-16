@@ -2,6 +2,8 @@ package work.chiro.game.utils;
 
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.EnemyBulletFactory;
+import work.chiro.game.compatible.ResourceProvider;
+import work.chiro.game.compatible.XImage;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
@@ -10,7 +12,6 @@ import work.chiro.game.thread.MusicThreadFactory;
 import work.chiro.game.vector.Vec2;
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
@@ -64,18 +65,19 @@ public class Utils {
         return Math.max(down, Math.min(value, up));
     }
 
-    private static final Map<String, BufferedImage> CACHED_IMAGE = new HashMap<>();
+    private static final Map<String, XImage<?>> CACHED_IMAGE = new HashMap<>();
 
-    public static BufferedImage getCachedImage(String filePath) throws IOException {
+    public static XImage<?> getCachedImage(String filePath) throws IOException {
         synchronized (CACHED_IMAGE) {
             if (CACHED_IMAGE.containsKey(filePath)) {
                 return CACHED_IMAGE.get(filePath);
             }
             try {
-                BufferedImage image = ImageIO.read(Objects.requireNonNull(Utils.class.getResourceAsStream("/images/" + filePath)));
+                XImage<?> image = ResourceProvider.getInstance().getImageFromResource(filePath);
                 CACHED_IMAGE.put(filePath, image);
                 return image;
             } catch (NullPointerException e) {
+                e.printStackTrace();
                 System.exit(-1);
                 return null;
             }
@@ -110,7 +112,7 @@ public class Utils {
     }
 
     public static String convertDoubleToString(double val) {
-        BigDecimal bd = new BigDecimal(String.valueOf(Double.parseDouble(String.format("%.2f", val))));
+        BigDecimal bd = new BigDecimal(String.valueOf(Double.parseDouble(String.format(Locale.CHINA, "%.2f", val))));
         return bd.stripTrailingZeros().toPlainString();
     }
 }

@@ -3,6 +3,7 @@ package work.chiro.game.aircraft;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
+import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
@@ -98,22 +99,23 @@ public abstract class AbstractAircraft
      */
     public abstract LinkedList<AbstractProp> dropProps();
 
-    protected void drawHp(Graphics g, Color colorFront, Color colorBack) {
+    protected void drawHp(XGraphics g, Color colorFront, Color colorBack) {
         int hpBarHeight = Constants.DRAW_HP_BAR;
-        g.setColor(colorBack);
-        g.fillRect((int) (getLocationX() - getWidth() / 2), (int) (getLocationY() - getHeight() / 2),
-                (int) getWidth(), hpBarHeight);
-        g.setColor(colorFront);
-        g.fillRect((int) (getLocationX() - getWidth() / 2), (int) (getLocationY() - getHeight() / 2),
-                (int) (getWidth() / maxHp * getHp()), hpBarHeight);
+        // TODO: here
+//        g.setColor(colorBack);
+//        g.fillRect((int) (getLocationX() - getWidth() / 2), (int) (getLocationY() - getHeight() / 2),
+//                (int) getWidth(), hpBarHeight);
+//        g.setColor(colorFront);
+//        g.fillRect((int) (getLocationX() - getWidth() / 2), (int) (getLocationY() - getHeight() / 2),
+//                (int) (getWidth() / maxHp * getHp()), hpBarHeight);
     }
 
-    protected void drawHp(Graphics g) {
+    protected void drawHp(XGraphics g) {
         drawHp(g, Color.red, Color.gray);
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(XGraphics g) {
         super.draw(g);
         drawHp(g);
     }

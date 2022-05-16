@@ -58,6 +58,9 @@ dependencies {
 //    implementation(projects.libraryAndroid)
 //    implementation(projects.libraryKotlin)
 
+    // 对 `core` 模块的依赖
+    implementation(project(":core"))
+
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraint.layout)
     implementation(libs.androidx.core.ktx)

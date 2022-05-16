@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +18,8 @@ import work.chiro.game.aircraft.BossEnemy;
 import work.chiro.game.aircraft.BossEnemyFactory;
 import work.chiro.game.aircraft.HeroAircraftFactory;
 import work.chiro.game.basic.AbstractFlyingObject;
+import work.chiro.game.compatible.XGraphics;
+import work.chiro.game.compatible.XImage;
 import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.scene.SceneRun;
@@ -60,6 +66,33 @@ public class GamePanel extends JPanel {
         game.getTimerController().add(new Timer(100, this::requestFocus));
     }
 
+    private abstract static class XGraphicsPart implements XGraphics {
+        double alpha = 1.0;
+        double rotation = 0.0;
+
+        @Override
+        public XGraphics drawImage(XImage<?> image, double x, double y) {
+            AffineTransform af = AffineTransform.getTranslateInstance(x, y);
+            af.rotate(rotation, image.getWidth() * 1.0 / 2, image.getHeight() * 1.0 / 2);
+            ((Graphics2D) (getGraphics())).drawImage((Image) image.getImage(), af, null);
+            return this;
+        }
+
+        @Override
+        public XGraphics setAlpha(double alpha) {
+            this.alpha = alpha;
+            return this;
+        }
+
+        @Override
+        public XGraphics setRotation(double rotation) {
+            this.rotation = rotation;
+            return this;
+        }
+
+        abstract protected Graphics getGraphics();
+    }
+
     /**
      * 重写paint方法
      * 通过重复调用paint方法，实现游戏动画
@@ -72,13 +105,20 @@ public class GamePanel extends JPanel {
 
         List<List<? extends AbstractFlyingObject>> allObjects = game.getAllObjects();
 
+        XGraphics xGraphics = new XGraphicsPart() {
+            @Override
+            protected Graphics getGraphics() {
+                return g;
+            }
+        };
+
         // 绘制所有物体
         //noinspection SynchronizationOnLocalVariableOrMethodParameter
         synchronized (allObjects) {
             allObjects.forEach(objList -> {
                 //noinspection SynchronizationOnLocalVariableOrMethodParameter
                 synchronized (objList) {
-                    objList.forEach(obj -> obj.draw(g));
+                    objList.forEach(obj -> obj.draw(xGraphics));
                 }
             });
         }

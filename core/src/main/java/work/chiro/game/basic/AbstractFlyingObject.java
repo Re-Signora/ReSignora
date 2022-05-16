@@ -2,6 +2,8 @@ package work.chiro.game.basic;
 
 import work.chiro.game.aircraft.AbstractAircraft;
 import work.chiro.game.animate.AnimateContainer;
+import work.chiro.game.compatible.XGraphics;
+import work.chiro.game.compatible.XImage;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
 import work.chiro.game.resource.ImageManager;
@@ -12,7 +14,6 @@ import work.chiro.game.vector.Vec2;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 /**
@@ -52,7 +53,7 @@ public abstract class AbstractFlyingObject {
      * 图片,
      * null 表示未设置
      */
-    protected BufferedImage image = null;
+    protected XImage<?> image = null;
 
     /**
      * x 轴长度，根据图片尺寸获得
@@ -211,12 +212,12 @@ public abstract class AbstractFlyingObject {
         return getSpeed().get().get(1);
     }
 
-    public BufferedImage getImage() {
+    public XImage<?> getImage() {
         if (image == null) {
             try {
                 String filename = getImageFilename();
                 if (filename == null) {
-                    image = ImageManager.get(this);
+                    image = ImageManager.getInstance().get(this);
                 } else {
                     image = Utils.getCachedImage(filename);
                 }
@@ -228,7 +229,7 @@ public abstract class AbstractFlyingObject {
         if (keepImage()) {
             return image;
         } else {
-            BufferedImage loadedImage = image;
+            XImage<?> loadedImage = image;
             image = null;
             return loadedImage;
         }
@@ -309,38 +310,47 @@ public abstract class AbstractFlyingObject {
         return getRotation(false);
     }
 
-    private void drawImageWithAlphaAffineTransform(Graphics g, boolean center, AffineTransform affineTransform) {
-        Graphics2D graphics2D = (Graphics2D) g;
-        if (alpha != null) {
-            graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) alpha.getX()));
-        } else {
-            graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 1.0f));
+    private void drawImageWithAlphaRotation(XGraphics g, boolean center) {
+        if (getAlpha() != null) {
+            g.setAlpha(getAlpha().getX());
         }
-        if (affineTransform != null) {
-            graphics2D.drawImage(getImage(), affineTransform, null);
-        } else {
-            graphics2D.drawImage(
-                    getImage(),
-                    (int) (getLocationX() - (center ? getWidth() / 2 : 0)), (int) (getLocationY() - (center ? getHeight() / 2 : 0)),
-                    (int) getWidth(), (int) getHeight(),
-                    null);
+        if (getRotation() != null) {
+            g.setRotation(getRotation().getX());
         }
+        g.drawImage(getImage(), (getLocationX() - (center ? getWidth() / 2 : 0)),
+                getLocationY() - (center ? getHeight() / 2 : 0));
+//        Graphics2D graphics2D = (Graphics2D) g;
+//        if (alpha != null) {
+//            graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) alpha.getX()));
+//        } else {
+//            graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 1.0f));
+//        }
+//        if (affineTransform != null) {
+//            graphics2D.drawImage(getImage(), affineTransform, null);
+//        } else {
+//            graphics2D.drawImage(
+//                    getImage(),
+//                    (int) (getLocationX() - (center ? getWidth() / 2 : 0)), (int) (getLocationY() - (center ? getHeight() / 2 : 0)),
+//                    (int) getWidth(), (int) getHeight(),
+//                    null);
+//        }
     }
 
-    public void draw(Graphics g, boolean center) {
-        if (getRotation(true).getX() == 0) {
-            drawImageWithAlphaAffineTransform(g, center, null);
-        } else {
-            AffineTransform af = AffineTransform.getTranslateInstance(
-                    getLocationX() - (center ? getWidth() / 2 : 0),
-                    getLocationY() - (center ? getHeight() / 2 : 0)
-            );
-            af.rotate(getRotation(true).getX(), getWidth() / 2, getHeight() / 2);
-            drawImageWithAlphaAffineTransform(g, center, af);
-        }
+    public void draw(XGraphics g, boolean center) {
+//        if (getRotation(true).getX() == 0) {
+//            drawImageWithAlphaRotation(g, center, null);
+//        } else {
+//            AffineTransform af = AffineTransform.getTranslateInstance(
+//                    getLocationX() - (center ? getWidth() / 2 : 0),
+//                    getLocationY() - (center ? getHeight() / 2 : 0)
+//            );
+//            af.rotate(getRotation(true).getX(), getWidth() / 2, getHeight() / 2);
+//            drawImageWithAlphaRotation(g, center, af);
+//        }
+        drawImageWithAlphaRotation(g, center);
     }
 
-    public void draw(Graphics g) {
+    public void draw(XGraphics g) {
         draw(g, true);
     }
 

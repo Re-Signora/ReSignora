@@ -11,6 +11,8 @@ import android.view.SurfaceView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import work.chiro.game.config.Difficulty;
+
 public class MainActivity extends AppCompatActivity {
     private SurfaceView surfaceView = null;
     private Canvas canvas;
@@ -18,10 +20,15 @@ public class MainActivity extends AppCompatActivity {
     private boolean running = false;
     int x = 100;
     int y = 100;
+    private Game game = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        game = new Game(Difficulty.Easy, () -> false);
+        System.out.println("game = " + game);
+
         setContentView(R.layout.activity_main);
         surfaceView = findViewById(R.id.surfaceView);
         holder = surfaceView.getHolder();

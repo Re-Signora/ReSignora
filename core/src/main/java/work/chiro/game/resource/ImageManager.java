@@ -4,12 +4,12 @@ package work.chiro.game.resource;
 import work.chiro.game.aircraft.*;
 import work.chiro.game.bullet.EnemyBullet;
 import work.chiro.game.bullet.HeroBullet;
+import work.chiro.game.compatible.XImage;
 import work.chiro.game.prop.BloodProp;
 import work.chiro.game.prop.BombProp;
 import work.chiro.game.prop.BulletProp;
 import work.chiro.game.utils.Utils;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,20 +26,31 @@ public class ImageManager {
      * 类名-图片 映射，存储各基类的图片 <br>
      * 可使用 CLASSNAME_IMAGE_MAP.get( obj.getClass().getName() ) 获得 obj 所属基类对应的图片
      */
-    private static final Map<String, BufferedImage> CLASSNAME_IMAGE_MAP = new HashMap<>();
+    private final Map<String, XImage<?>> CLASSNAME_IMAGE_MAP = new HashMap<>();
 
-    public static BufferedImage HERO_IMAGE;
-    public static BufferedImage HERO_BULLET_IMAGE;
-    public static BufferedImage ENEMY_BULLET_IMAGE;
-    public static BufferedImage MOB_ENEMY_IMAGE;
-    public static BufferedImage ELITE_ENEMY_IMAGE;
-    public static BufferedImage BOSS_ENEMY_IMAGE;
-    public static BufferedImage BLOOD_PROP_IMAGE;
-    public static BufferedImage BOMB_PROP_IMAGE;
-    public static BufferedImage BULLET_PROP_IMAGE;
-    public static BufferedImage BOX_HERO;
+    public XImage<?> HERO_IMAGE;
+    public XImage<?> HERO_BULLET_IMAGE;
+    public XImage<?> ENEMY_BULLET_IMAGE;
+    public XImage<?> MOB_ENEMY_IMAGE;
+    public XImage<?> ELITE_ENEMY_IMAGE;
+    public XImage<?> BOSS_ENEMY_IMAGE;
+    public XImage<?> BLOOD_PROP_IMAGE;
+    public XImage<?> BOMB_PROP_IMAGE;
+    public XImage<?> BULLET_PROP_IMAGE;
+    public XImage<?> BOX_HERO;
 
-    static {
+    private static ImageManager instance = null;
+
+    public static ImageManager getInstance() {
+        if (instance == null) {
+            synchronized (ImageManager.class) {
+                instance = new ImageManager();
+            }
+        }
+        return instance;
+    }
+
+    ImageManager() {
         try {
             HERO_IMAGE = Utils.getCachedImage("hero.png");
             MOB_ENEMY_IMAGE = Utils.getCachedImage("mob.png");
@@ -69,11 +80,11 @@ public class ImageManager {
         }
     }
 
-    public static BufferedImage get(String className) {
+    public XImage<?> get(String className) {
         return CLASSNAME_IMAGE_MAP.get(className);
     }
 
-    public static BufferedImage get(Object obj) {
+    public XImage<?> get(Object obj) {
         if (obj == null) {
             return null;
         }

@@ -19,7 +19,7 @@ public class EliteEnemyFactory implements AbstractAircraftFactory {
     @Override
     public EliteEnemy create(AbstractConfig config) {
         config.getEnemyMagnification().update(Utils.getTimeMills());
-        Vec2 newPos = new Vec2((Math.random() * (Constants.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
+        Vec2 newPos = new Vec2((Math.random() * (Constants.WINDOW_WIDTH - ImageManager.getInstance().ELITE_ENEMY_IMAGE.getWidth())),
                 (Math.random() * Constants.WINDOW_HEIGHT * Constants.ELITE_CREATE_VERTICAL_RANGE));
         if (RunningConfig.difficulty == Difficulty.Easy) {
             return new EliteEnemy(

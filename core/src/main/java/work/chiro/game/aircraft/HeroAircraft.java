@@ -5,6 +5,7 @@ import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.HeroBulletFactory;
+import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
 import work.chiro.game.prop.AbstractProp;
@@ -122,12 +123,12 @@ public class HeroAircraft extends AbstractAircraft {
     }
 
     @Override
-    protected void drawHp(Graphics g) {
+    protected void drawHp(XGraphics g) {
         super.drawHp(g, Color.green, Color.lightGray);
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(XGraphics g) {
         super.draw(g);
         box.draw(g);
     }

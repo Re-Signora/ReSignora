@@ -16,7 +16,7 @@ public class MobEnemyFactory implements AbstractAircraftFactory {
 
     @Override
     public MobEnemy create(AbstractConfig config) {
-        Vec2 posNew = new Vec2(Math.random() * (Constants.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth()),
+        Vec2 posNew = new Vec2(Math.random() * (Constants.WINDOW_WIDTH - ImageManager.getInstance().MOB_ENEMY_IMAGE.getWidth()),
                 Math.random() * Constants.WINDOW_HEIGHT * 0.2);
         config.getEnemyMagnification().update(Utils.getTimeMills());
         return new MobEnemy(

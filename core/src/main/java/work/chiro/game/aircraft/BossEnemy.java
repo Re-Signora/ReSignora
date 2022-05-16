@@ -3,6 +3,7 @@ package work.chiro.game.aircraft;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.EnemyBulletFactory;
+import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.Difficulty;
@@ -65,11 +66,12 @@ public class BossEnemy extends AbstractAircraft {
     }
 
     @Override
-    protected void drawHp(Graphics g) {
+    protected void drawHp(XGraphics g) {
         int hpBarHeight = Constants.DRAW_HP_BAR * 3 / 2;
-        g.setColor(Color.gray);
-        g.fillRect(0, 0, Constants.WINDOW_WIDTH, hpBarHeight);
-        g.setColor(Color.red);
-        g.fillRect(0, 0, (int) ((double) (Constants.WINDOW_WIDTH) / maxHp * getHp()), hpBarHeight);
+        // TODO: Here
+//        g.setColor(Color.gray);
+//        g.fillRect(0, 0, Constants.WINDOW_WIDTH, hpBarHeight);
+//        g.setColor(Color.red);
+//        g.fillRect(0, 0, (int) ((double) (Constants.WINDOW_WIDTH) / maxHp * getHp()), hpBarHeight);
     }
 }
