@@ -1,5 +1,7 @@
 package work.chiro.game.application;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,7 +13,13 @@ import android.view.SurfaceView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
+import java.util.Objects;
+
+import work.chiro.game.compatible.ResourceProvider;
+import work.chiro.game.compatible.XImage;
 import work.chiro.game.config.Difficulty;
+import work.chiro.game.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
     private SurfaceView surfaceView = null;
@@ -25,6 +33,32 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ResourceProvider.setInstance(new ResourceProvider() {
+            @Override
+            public XImage<?> getImageFromResource(String path) throws IOException {
+                Bitmap bitmap = BitmapFactory.decodeStream(Utils.class.getResourceAsStream("/images/" + path));
+                if (bitmap == null) {
+                    throw new IOException("file: " + path + " not found!");
+                }
+                return new XImage<Bitmap>() {
+                    @Override
+                    public int getWidth() {
+                        return bitmap.getWidth();
+                    }
+
+                    @Override
+                    public int getHeight() {
+                        return bitmap.getHeight();
+                    }
+
+                    @Override
+                    public Bitmap getImage() {
+                        return bitmap;
+                    }
+                };
+            }
+        });
 
         game = new Game(Difficulty.Easy, () -> false);
         System.out.println("game = " + game);
