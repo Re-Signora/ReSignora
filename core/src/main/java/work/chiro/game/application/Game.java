@@ -31,7 +31,6 @@ import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.ConfigFactory;
 import work.chiro.game.config.Constants;
-import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.dao.HistoryImpl;
 import work.chiro.game.dao.HistoryObjectFactory;
@@ -69,7 +68,6 @@ public class Game {
     private String lastProvidedMessage = null;
     private final TimerController timerController = new TimerController();
     private AbstractConfig config;
-    private Difficulty difficulty;
     private BasicCallback onFinish = null;
     private BasicCallback onPaint = null;
     private BasicCallback onFrame = null;
@@ -81,8 +79,7 @@ public class Game {
         enemyBullets.clear();
         enemyAircrafts.clear();
         props.clear();
-        difficulty = RunningConfig.difficulty;
-        config = new ConfigFactory(difficulty).create();
+        config = new ConfigFactory(RunningConfig.difficulty).create();
         heroAircraft = new HeroAircraftFactory().clearInstance().create(config);
         heroAircrafts.clear();
         heroAircrafts.add(heroAircraft);
@@ -102,25 +99,19 @@ public class Game {
         return startedFlag;
     }
 
-    /**
-     * 周期（ms)
-     * 指示子弹的发射、敌机的产生频率
-     */
-    public Game(Difficulty difficulty, HeroController heroController) {
+    public Game(HeroController heroController) {
         this.heroController = heroController;
-        this.difficulty = difficulty;
-        config = new ConfigFactory(difficulty).create();
+        config = new ConfigFactory(RunningConfig.difficulty).create();
         nextBossScore = RunningConfig.score + config.getBossScoreThreshold().getScaleNow().getX();
         heroAircraft = new HeroAircraftFactory().create(config);
         heroAircrafts.add(heroAircraft);
-        // loadFont();
         flushBackground();
         System.out.println("Game instance created!");
     }
 
     public void flushBackground() {
         backgrounds.clear();
-        switch (difficulty) {
+        switch (RunningConfig.difficulty) {
             case Easy:
                 backgrounds.add(new OtherBackgroundFactory<>(new EasyBackground()).create());
                 break;
@@ -249,7 +240,7 @@ public class Game {
                                 name == null ? "Nanshi" : name.isEmpty() ? "Nanshi" : name,
                                 RunningConfig.score,
                                 message == null ? "NO MESSAGE" : message.isEmpty() ? "NO MESSAGE" : message,
-                                difficulty)
+                                RunningConfig.difficulty)
                                 .create());
             }
         } catch (Exception e) {

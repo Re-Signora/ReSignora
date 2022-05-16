@@ -23,7 +23,6 @@ import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.compatible.XImage;
 import work.chiro.game.compatible.XImageFactory;
-import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.scene.SceneRun;
 import work.chiro.game.timer.Timer;
@@ -50,8 +49,8 @@ public class GamePanel extends JPanel {
         addEvents();
     }
 
-    public GamePanel(Difficulty difficulty) {
-        game = new Game(difficulty, heroControllerImpl);
+    public GamePanel() {
+        game = new Game(heroControllerImpl);
         loadFont();
         System.out.println("GamePanel instance created!");
         game.setOnFinish(() -> {

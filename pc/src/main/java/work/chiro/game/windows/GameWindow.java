@@ -3,7 +3,6 @@ package work.chiro.game.windows;
 import javax.swing.JPanel;
 
 import work.chiro.game.application.GamePanel;
-import work.chiro.game.config.RunningConfig;
 import work.chiro.game.scene.AbstractSceneClient;
 
 /**
@@ -31,7 +30,7 @@ public class GameWindow extends AbstractSceneClient {
     public GamePanel getGamePanel() {
         if (game == null) {
             synchronized (GamePanel.class) {
-                game = new GamePanel(RunningConfig.difficulty);
+                game = new GamePanel();
             }
         }
         return game;

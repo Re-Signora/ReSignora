@@ -32,6 +32,7 @@ import work.chiro.game.utils.Utils;
 public class MainActivity extends AppCompatActivity {
     private SurfaceHolder surfaceHolder;
     private Game game = null;
+    SurfaceView surfaceView = null;
     private final HeroControllerAndroidImpl heroControllerAndroid = new HeroControllerAndroidImpl();
 
     private abstract static class XGraphicsPart implements XGraphics {
@@ -161,20 +162,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         setContentView(R.layout.activity_main);
-        SurfaceView surfaceView = findViewById(R.id.surfaceView);
+
+        surfaceView = findViewById(R.id.surfaceView);
         surfaceHolder = surfaceView.getHolder();
 
-        surfaceView.post(() -> {
-            RunningConfig.windowWidth = surfaceView.getMeasuredWidth();
-            RunningConfig.windowHeight = surfaceView.getMeasuredHeight();
+        surfaceView.post(this::onResize);
 
-            System.out.println("set window(" + RunningConfig.windowWidth + ", " + RunningConfig.windowHeight + ")");
-            game.flushBackground();
-        });
-
-        game = new Game(Difficulty.Easy, heroControllerAndroid);
-
-        game.setOnFinish(() -> System.out.println("on finish"));
+        RunningConfig.difficulty = Difficulty.Hard;
+        game = new Game(heroControllerAndroid);
 
         game.setOnPaint(() -> {
             if (surfaceHolder == null) {
@@ -185,12 +180,27 @@ public class MainActivity extends AppCompatActivity {
                 draw();
             }
         });
-        game.setOnFinish(() -> System.out.println("FINISH!!!"));
+        game.setOnFinish(() -> {
+            System.out.println("FINISH!!!");
+            game.resetStates();
+            game.action();
+        });
         surfaceView.setOnTouchListener((v, event) -> {
             heroControllerAndroid.onTouchEvent(event);
             v.performClick();
             return true;
         });
+    }
+
+    private void onResize() {
+        RunningConfig.windowWidth = surfaceView.getMeasuredWidth();
+        RunningConfig.windowHeight = surfaceView.getMeasuredHeight();
+
+        HeroAircraftFactory.getInstance().setPosition(RunningConfig.windowWidth * 1.0 / 2, RunningConfig.windowHeight * 0.8);
+
+        System.out.println("set window(" + RunningConfig.windowWidth + ", " + RunningConfig.windowHeight + "), place hero: " + HeroAircraftFactory.getInstance().getPosition());
+
+        game.flushBackground();
     }
 
     @Override
@@ -201,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            onResize();
             game.action();
         }).start();
         super.onStart();
