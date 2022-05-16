@@ -1,12 +1,14 @@
 package work.chiro.game.scene;
 
-import work.chiro.game.thread.MyThreadFactory;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.CardLayout;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import work.chiro.game.thread.MyThreadFactory;
 
 /**
  * @author Chiro
