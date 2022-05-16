@@ -1,8 +1,11 @@
 package work.chiro.game.aircraft;
 
+import java.util.LinkedList;
+
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.EnemyBulletFactory;
+import work.chiro.game.compatible.DrawColor;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
@@ -15,9 +18,6 @@ import work.chiro.game.prop.BulletPropFactory;
 import work.chiro.game.resource.MusicManager;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
-
-import java.awt.*;
-import java.util.LinkedList;
 
 /**
  * 精英敌机，可以射击
@@ -68,9 +68,9 @@ public class BossEnemy extends AbstractAircraft {
     @Override
     protected void drawHp(XGraphics g) {
         int hpBarHeight = Constants.DRAW_HP_BAR * 3 / 2;
-        g.setColor(Color.gray.getRGB())
+        g.setColor(DrawColor.gray)
                 .fillRect(0, 0, Constants.WINDOW_WIDTH, hpBarHeight)
-                .setColor(Color.red.getRGB())
+                .setColor(DrawColor.red)
                 .fillRect(0, 0, (double) Constants.WINDOW_WIDTH / maxHp * getHp(), hpBarHeight);
     }
 }

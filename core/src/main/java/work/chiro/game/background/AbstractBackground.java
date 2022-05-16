@@ -6,8 +6,6 @@ import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.config.Constants;
 import work.chiro.game.vector.Vec2;
 
-import java.awt.*;
-
 /**
  * 背景基类
  *

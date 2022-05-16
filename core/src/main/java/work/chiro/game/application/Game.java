@@ -38,6 +38,7 @@ import work.chiro.game.dao.HistoryObjectFactory;
 import work.chiro.game.prop.AbstractProp;
 import work.chiro.game.resource.MusicManager;
 import work.chiro.game.thread.MusicThreadFactory;
+import work.chiro.game.thread.MyThreadFactory;
 import work.chiro.game.timer.Timer;
 import work.chiro.game.timer.TimerController;
 import work.chiro.game.utils.Utils;
@@ -47,7 +48,7 @@ public class Game {
      * 线程池，自动管理
      */
     @SuppressWarnings("AlibabaThreadPoolCreation")
-    static private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(Constants.GAME_POOL_SIZE, MusicThreadFactory.getInstance());
+    static private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(Constants.GAME_POOL_SIZE, MyThreadFactory.getInstance());
 
     private HeroAircraft heroAircraft;
     private final List<AbstractAircraft> heroAircrafts = new LinkedList<>();

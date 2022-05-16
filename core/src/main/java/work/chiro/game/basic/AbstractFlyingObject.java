@@ -1,5 +1,7 @@
 package work.chiro.game.basic;
 
+import java.io.IOException;
+
 import work.chiro.game.aircraft.AbstractAircraft;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.compatible.XGraphics;
@@ -11,10 +13,6 @@ import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec;
 import work.chiro.game.vector.Vec2;
-
-import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.io.IOException;
 
 /**
  * 可飞行对象的父类

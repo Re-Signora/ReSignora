@@ -1,5 +1,6 @@
 package work.chiro.game.resource;
 
+import work.chiro.game.config.RunningConfig;
 import work.chiro.game.utils.Utils;
 
 import javax.sound.sampled.AudioFormat;
@@ -35,7 +36,9 @@ public class MusicManager {
     }
 
     static public void initAll() {
-        MUSIC_FILENAME_MAP.forEach((type, filename) -> get(type));
+        if (RunningConfig.musicEnable) {
+            MUSIC_FILENAME_MAP.forEach((type, filename) -> get(type));
+        }
     }
 
     static private byte[] getSamplesFromStream(AudioInputStream stream, AudioFormat audioFormat) {

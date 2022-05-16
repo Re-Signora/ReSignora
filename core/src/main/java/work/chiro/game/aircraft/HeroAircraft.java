@@ -1,10 +1,14 @@
 package work.chiro.game.aircraft;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import work.chiro.game.animate.Animate;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.HeroBulletFactory;
+import work.chiro.game.compatible.DrawColor;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
@@ -14,10 +18,6 @@ import work.chiro.game.thread.MyThreadFactory;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
-
-import java.awt.*;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * 英雄飞机，游戏玩家操控
@@ -124,7 +124,7 @@ public class HeroAircraft extends AbstractAircraft {
 
     @Override
     protected void drawHp(XGraphics g) {
-        super.drawHp(g, Color.green.getRGB(), Color.lightGray.getRGB());
+        super.drawHp(g, DrawColor.green, DrawColor.gray);
     }
 
     @Override

@@ -1,8 +1,11 @@
 package work.chiro.game.aircraft;
 
+import java.util.LinkedList;
+
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
+import work.chiro.game.compatible.DrawColor;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
@@ -13,9 +16,6 @@ import work.chiro.game.resource.MusicManager;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
-
-import java.awt.*;
-import java.util.LinkedList;
 
 /**
  * 所有种类飞机的抽象父类：
@@ -110,7 +110,7 @@ public abstract class AbstractAircraft
     }
 
     protected void drawHp(XGraphics g) {
-        drawHp(g, Color.red.getRGB(), Color.gray.getRGB());
+        drawHp(g, DrawColor.red, DrawColor.gray);
     }
 
     @Override
