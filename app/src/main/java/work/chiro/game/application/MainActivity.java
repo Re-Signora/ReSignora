@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         surfaceView = findViewById(R.id.surfaceView);
         surfaceHolder = surfaceView.getHolder();
 
-        surfaceView.post(this::onResize);
+        surfaceView.post(this::resetGame);
 
         RunningConfig.difficulty = Difficulty.Hard;
         game = new Game(heroControllerAndroid);
@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void onResize() {
+    private void resetGame() {
         heroControllerAndroid.reset();
 
         RunningConfig.windowWidth = surfaceView.getMeasuredWidth();
@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println("set window(" + RunningConfig.windowWidth + ", " + RunningConfig.windowHeight + "), place hero: " + HeroAircraftFactory.getInstance().getPosition());
 
-        game.flushBackground();
+        game.resetStates();
     }
 
     @Override
@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            onResize();
+            resetGame();
             game.action();
         }).start();
         super.onStart();
