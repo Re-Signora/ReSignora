@@ -19,7 +19,7 @@ import work.chiro.game.vector.Vec2;
  *
  * @author hitsz
  */
-public class HeroController {
+public class HeroControllerImpl implements HeroController {
     final static double MOVE_SPEED = 1;
 
     static public class KeyCode {
@@ -34,10 +34,10 @@ public class HeroController {
     }
 
     final private Set<Integer> pressedKeys = new HashSet<>();
-    private static HeroController instance = null;
+    private static HeroControllerImpl instance = null;
     private Double lastFrameTime = null;
 
-    public HeroController(GamePanel game) {
+    public HeroControllerImpl(GamePanel game) {
         KeyAdapter keyAdapter = new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -119,10 +119,10 @@ public class HeroController {
         lastFrameTime = now;
     }
 
-    static public HeroController getInstance(GamePanel game) {
+    static public HeroControllerImpl getInstance(GamePanel game) {
         if (instance == null) {
-            synchronized (HeroController.class) {
-                instance = new HeroController(game);
+            synchronized (HeroControllerImpl.class) {
+                instance = new HeroControllerImpl(game);
             }
         }
         return instance;
@@ -131,5 +131,9 @@ public class HeroController {
     public void clear() {
         lastFrameTime = null;
         pressedKeys.clear();
+    }
+
+    public boolean isShootPressed() {
+        return pressed(KeyCode.SHOOT);
     }
 }

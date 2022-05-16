@@ -25,10 +25,10 @@ public class GameWindow extends AbstractSceneClient {
 
     @Override
     public JPanel getPanel() {
-        return getGame();
+        return getGamePanel();
     }
 
-    public GamePanel getGame() {
+    public GamePanel getGamePanel() {
         if (game == null) {
             synchronized (GamePanel.class) {
                 game = new GamePanel(RunningConfig.difficulty);
@@ -39,7 +39,7 @@ public class GameWindow extends AbstractSceneClient {
 
     @Override
     public Object getWaitObject() {
-        return getGame().getWaitObject();
+        return getGamePanel().getWaitObject();
     }
 
     @Override
