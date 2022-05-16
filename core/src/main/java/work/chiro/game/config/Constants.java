@@ -17,4 +17,5 @@ public class Constants {
     public static final int DRAW_HP_BAR = 3;
     public static final int INVINCIBLE_TIME = 2000;
     public static final List<Double> HERO_ALPHA_DATA = List.of(0.3, 0.6, 0.8);
+    public static final int BLOOD_PROP_INCREASE = 1000;
 }
