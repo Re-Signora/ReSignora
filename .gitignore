@@ -57,3 +57,5 @@ hs_err_pid*
 build
 
 *.mp4
+
+/local.properties
