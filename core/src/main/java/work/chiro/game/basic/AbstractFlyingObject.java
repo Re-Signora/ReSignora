@@ -37,7 +37,7 @@ public abstract class AbstractFlyingObject {
     /**
      * 大小
      */
-    private final Vec2 size;
+    private Vec2 size;
     /**
      * 旋转角度（弧度制）
      */
@@ -218,11 +218,15 @@ public abstract class AbstractFlyingObject {
     }
 
     public XImage<?> getImage() {
+        return getImage(false);
+    }
+
+    public XImage<?> getImage(boolean getRawImage) {
         if (image == null) {
             try {
                 String filename = getImageFilename();
                 if (filename == null) {
-                    image = ImageManager.getInstance().get(this);
+                    image = ImageManager.getInstance().get(this.getClass());
                 } else {
                     image = Utils.getCachedImage(filename);
                 }
@@ -232,7 +236,7 @@ public abstract class AbstractFlyingObject {
             }
         }
         if (keepImage()) {
-            if (cachedImage != null) {
+            if (cachedImage != null && !getRawImage) {
                 return cachedImage;
             }
             return image;
@@ -293,6 +297,10 @@ public abstract class AbstractFlyingObject {
 
     public Vec2 getSize() {
         return size;
+    }
+
+    public void setSize(Vec2 size) {
+        this.size = size;
     }
 
     public Scale updateRotation() {

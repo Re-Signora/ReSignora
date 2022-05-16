@@ -12,6 +12,6 @@ public class OtherBackgroundFactory<T extends AbstractBackground> extends Abstra
 
     @Override
     public AbstractBackground create() {
-        return fakeInstance.newInstance(initPosition(), createAnimateContainer());
+        return fakeInstance.newInstance(initPosition(), createAnimateContainer(fakeInstance));
     }
 }

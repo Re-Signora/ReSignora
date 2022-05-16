@@ -88,11 +88,8 @@ public class ImageManager {
         return CLASSNAME_IMAGE_MAP.get(className);
     }
 
-    public XImage<?> get(Object obj) {
-        if (obj == null) {
-            return null;
-        }
-        return get(obj.getClass().getName());
+    public XImage<?> get(Class<?> clazz) {
+        return get(clazz.getName());
     }
 
 }

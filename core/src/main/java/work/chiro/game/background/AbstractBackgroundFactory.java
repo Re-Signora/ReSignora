@@ -2,8 +2,6 @@ package work.chiro.game.background;
 
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.animate.AnimateContainerFactory;
-import work.chiro.game.config.Constants;
-import work.chiro.game.config.RunningConfig;
 import work.chiro.game.vector.Vec2;
 
 /**
@@ -33,10 +31,10 @@ public abstract class AbstractBackgroundFactory {
      *
      * @return 动画容器
      */
-    public AnimateContainer createAnimateContainer() {
+    public AnimateContainer createAnimateContainer(AbstractBackground fakeInstance) {
         return new AnimateContainerFactory(AnimateContainerFactory.ContainerType.ConstSpeedLoop, position)
                 .setupSpeed(new Vec2(0, 0.5))
-                .setupRange(new Vec2(RunningConfig.windowWidth, RunningConfig.windowHeight))
+                .setupRange(new Vec2(fakeInstance.getWidth(), fakeInstance.getHeight()))
                 .create();
     }
 }

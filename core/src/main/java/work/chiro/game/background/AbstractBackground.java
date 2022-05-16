@@ -13,23 +13,35 @@ import work.chiro.game.vector.Vec2;
  * @author Chiro
  */
 public abstract class AbstractBackground extends AbstractFlyingObject {
+    private void init() {
+        initImageFilename = getInitImageFilename();
+
+        setSize(new Vec2(RunningConfig.windowWidth,
+                getScaledHeight(getImage(true).getWidth(), RunningConfig.windowWidth, getImage(true).getHeight())
+        ));
+    }
+
     public AbstractBackground(Vec2 posInit, AnimateContainer animateContainer) {
         super(null, posInit, animateContainer, new Vec2(RunningConfig.windowWidth, RunningConfig.windowHeight));
-        initImageFilename = getInitImageFilename();
+        init();
     }
 
     public AbstractBackground() {
         super(null, new Vec2());
-        initImageFilename = null;
+        init();
+    }
+
+    private static double getScaledHeight(double width, double windowWidth, double height) {
+        return windowWidth * height / width;
     }
 
     @Override
     public void draw(XGraphics g) {
-        XImage<?> newImage = g.drawImage(getImage(), getLocationX(), getLocationY(), RunningConfig.windowWidth, RunningConfig.windowHeight);
+        XImage<?> newImage = g.drawImage(getImage(), getLocationX(), getLocationY(), getWidth(), getHeight());
         if (cachedImage != newImage) {
             cachedImage = newImage;
         }
-        g.drawImage(cachedImage, getLocationX(), getLocationY() - RunningConfig.windowHeight, RunningConfig.windowWidth, RunningConfig.windowHeight);
+        g.drawImage(cachedImage, getLocationX(), getLocationY() - getHeight(), getWidth(), getHeight());
     }
 
     @Override
@@ -60,7 +72,7 @@ public abstract class AbstractBackground extends AbstractFlyingObject {
         return false;
     }
 
-    final private String initImageFilename;
+    private String initImageFilename;
 
     /**
      * 获取初始化的文件名
@@ -73,4 +85,8 @@ public abstract class AbstractBackground extends AbstractFlyingObject {
     public String getImageFilename() {
         return initImageFilename;
     }
+
+    // public XImage<?> getRawImage() throws IOException {
+    //     return Utils.getCachedImage(getImageFilename());
+    // }
 }
