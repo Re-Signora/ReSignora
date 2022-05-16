@@ -124,7 +124,7 @@ public class HeroAircraft extends AbstractAircraft {
 
     @Override
     protected void drawHp(XGraphics g) {
-        super.drawHp(g, DrawColor.green, DrawColor.gray);
+        super.drawHp(g, DrawColor.green, DrawColor.gray, true);
     }
 
     @Override

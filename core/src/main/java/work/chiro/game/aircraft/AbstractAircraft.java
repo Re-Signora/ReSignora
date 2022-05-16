@@ -99,7 +99,10 @@ public abstract class AbstractAircraft
      */
     public abstract LinkedList<AbstractProp> dropProps();
 
-    protected void drawHp(XGraphics g, int colorFront, int colorBack) {
+    protected void drawHp(XGraphics g, int colorFront, int colorBack, boolean forceDraw) {
+        if (getHp() == maxHp && !forceDraw) {
+            return;
+        }
         int hpBarHeight = Constants.DRAW_HP_BAR;
         g.setColor(colorBack)
                 .fillRect(getLocationX() - getWidth() / 2, getLocationY() - getHeight() / 2,
@@ -110,7 +113,7 @@ public abstract class AbstractAircraft
     }
 
     protected void drawHp(XGraphics g) {
-        drawHp(g, DrawColor.red, DrawColor.gray);
+        drawHp(g, DrawColor.red, DrawColor.gray, false);
     }
 
     @Override
