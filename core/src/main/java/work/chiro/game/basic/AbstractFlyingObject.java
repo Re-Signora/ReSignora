@@ -205,6 +205,10 @@ public abstract class AbstractFlyingObject {
         this.position.set(x, y);
     }
 
+    public void setPosition(Vec2 posNew) {
+        this.position.set(posNew);
+    }
+
     public Vec getSpeed() {
         return animateContainer.getSpeed(Utils.getTimeMills());
     }
