@@ -11,8 +11,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import javax.swing.JOptionPane;
-
 import work.chiro.game.aircraft.AbstractAircraft;
 import work.chiro.game.aircraft.BossEnemy;
 import work.chiro.game.aircraft.BossEnemyFactory;
@@ -32,8 +30,6 @@ import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.ConfigFactory;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
-import work.chiro.game.dao.HistoryImpl;
-import work.chiro.game.dao.HistoryObjectFactory;
 import work.chiro.game.prop.AbstractProp;
 import work.chiro.game.resource.MusicManager;
 import work.chiro.game.thread.MusicThreadFactory;
@@ -64,8 +60,6 @@ public class Game {
     private boolean startedFlag = false;
     private double nextBossScore;
     private Future<?> future = null;
-    private String lastProvidedName = null;
-    private String lastProvidedMessage = null;
     private final TimerController timerController = new TimerController();
     private AbstractConfig config;
     private BasicCallback onFinish = null;
@@ -216,40 +210,8 @@ public class Game {
         Utils.startMusic(MusicManager.MusicType.GAME_OVER, true);
         stopAllMusic();
         System.out.println("Game Over!");
-        try {
-            String name = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "Nanshi" : lastProvidedName);
-            if (name == null) {
-                String name2 = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "Nanshi" : lastProvidedName);
-                if (name2 == null) {
-                    int res = JOptionPane.showConfirmDialog(null, "不保存记录?", "Save Game", JOptionPane.OK_CANCEL_OPTION);
-                    if (res == JOptionPane.YES_OPTION) {
-                        throw new Exception();
-                    }
-                } else {
-                    lastProvidedName = name2;
-                }
-            } else {
-                lastProvidedName = name;
-            }
-            String message = JOptionPane.showInputDialog("输入额外的信息", lastProvidedMessage == null ? "NO MESSAGE" : lastProvidedMessage);
-            lastProvidedMessage = message;
-            // 保存游戏结果
-            if (RunningConfig.score > 0) {
-                HistoryImpl.getInstance().addOne(
-                        new HistoryObjectFactory(
-                                name == null ? "Nanshi" : name.isEmpty() ? "Nanshi" : name,
-                                RunningConfig.score,
-                                message == null ? "NO MESSAGE" : message.isEmpty() ? "NO MESSAGE" : message,
-                                RunningConfig.difficulty)
-                                .create());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Input exception: " + e);
-        } finally {
-            if (onFinish != null) {
-                onFinish.run();
-            }
+        if (onFinish != null) {
+            onFinish.run();
         }
     }
 
@@ -279,7 +241,7 @@ public class Game {
                 }
                 // repaint();
                 // 游戏结束检查和处理
-                if (heroAircraft.getHp() <= 0 && !Constants.DEBUG_NO_DEATH) {
+                if (heroAircraft.getHp() <= 0 && !Constants.DEBUG_NO_DEATH && !gameOverFlag) {
                     onGameOver();
                 }
                 timerController.done();

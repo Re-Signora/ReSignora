@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import work.chiro.game.aircraft.BossEnemy;
@@ -26,6 +27,8 @@ import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.compatible.XImage;
 import work.chiro.game.compatible.XImageFactory;
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.dao.HistoryImpl;
+import work.chiro.game.dao.HistoryObjectFactory;
 import work.chiro.game.resource.ImageManager;
 import work.chiro.game.scene.SceneRun;
 import work.chiro.game.timer.Timer;
@@ -40,6 +43,8 @@ public class GamePanel extends JPanel {
     private Font myFontBase = null;
     private final HeroControllerImpl heroControllerImpl = HeroControllerImpl.getInstance(this);
     private final Game game;
+    private String lastProvidedName = null;
+    private String lastProvidedMessage = null;
     private final Object waitObject = new Object();
 
     public void resetStates() {
@@ -57,9 +62,42 @@ public class GamePanel extends JPanel {
         loadFont();
         System.out.println("GamePanel instance created!");
         game.setOnFinish(() -> {
-            SceneRun.getInstance().setNextScene(HistoryWindow.class);
-            synchronized (waitObject) {
-                waitObject.notify();
+            System.out.println("finish!");
+            try {
+                String name = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "Nanshi" : lastProvidedName);
+                if (name == null) {
+                    String name2 = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "Nanshi" : lastProvidedName);
+                    if (name2 == null) {
+                        int res = JOptionPane.showConfirmDialog(null, "不保存记录?", "Save Game", JOptionPane.OK_CANCEL_OPTION);
+                        if (res == JOptionPane.YES_OPTION) {
+                            throw new Exception();
+                        }
+                    } else {
+                        lastProvidedName = name2;
+                    }
+                } else {
+                    lastProvidedName = name;
+                }
+                String message = JOptionPane.showInputDialog("输入额外的信息", lastProvidedMessage == null ? "NO MESSAGE" : lastProvidedMessage);
+                lastProvidedMessage = message;
+                // 保存游戏结果
+                if (RunningConfig.score > 0) {
+                    HistoryImpl.getInstance().addOne(
+                            new HistoryObjectFactory(
+                                    name == null ? "Nanshi" : name.isEmpty() ? "Nanshi" : name,
+                                    RunningConfig.score,
+                                    message == null ? "NO MESSAGE" : message.isEmpty() ? "NO MESSAGE" : message,
+                                    RunningConfig.difficulty)
+                                    .create());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Input exception: " + e);
+            } finally {
+                SceneRun.getInstance().setNextScene(HistoryWindow.class);
+                synchronized (waitObject) {
+                    waitObject.notify();
+                }
             }
         });
         game.setOnPaint(this::repaint);
