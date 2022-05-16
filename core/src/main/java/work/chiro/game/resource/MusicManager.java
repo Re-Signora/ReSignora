@@ -2,7 +2,6 @@ package work.chiro.game.resource;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -13,8 +12,8 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.config.RunningConfig;
-import work.chiro.game.utils.Utils;
 
 /**
  * @author Chiro
@@ -60,13 +59,8 @@ public class MusicManager {
 
     static private byte[] getMusicFileData(MusicType musicType) throws ErrorMusicTypeException {
         String filename = getFilename(musicType);
-        // InputStream fileInputStream = Utils.class.getResourceAsStream("/sounds/" + filename);
-        InputStream fileInputStream = Utils.class.getResourceAsStream("/sounds/" + filename);
         try {
-            if (fileInputStream == null) {
-                throw new FileNotFoundException();
-            }
-            byte[] data = fileInputStream.readAllBytes();
+            byte[] data = ResourceProvider.getInstance().getSoundBytesFromResource(filename);
             if (!MUSIC_DATA_MAP.containsKey(musicType)) {
                 MUSIC_DATA_MAP.put(musicType, data);
             }

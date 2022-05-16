@@ -15,4 +15,6 @@ public abstract class ResourceProvider {
     }
 
     public abstract XImage<?> getImageFromResource(String path) throws IOException;
+
+    public abstract byte[] getSoundBytesFromResource(String path) throws IOException;
 }
