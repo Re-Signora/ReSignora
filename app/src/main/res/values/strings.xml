@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Aircraft War</string>
     <string name="title_activity_game">GameActivity</string>
-    <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="button_mode_easy">简单</string>
+    <string name="button_mode_medium">中等</string>
+    <string name="button_mode_hard">困难</string>
+    <string name="button_history">排行榜</string>
+    <string name="checkbox_music">开启音效</string>
 </resources>

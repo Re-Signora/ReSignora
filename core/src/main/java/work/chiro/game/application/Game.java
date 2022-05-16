@@ -294,6 +294,7 @@ public class Game {
      * 游戏启动入口，执行游戏逻辑
      */
     public void action() {
+        System.out.println("Game action start with difficulty: " + RunningConfig.difficulty);
         startedFlag = true;
         addEvents();
         Utils.startLoopMusic(MusicManager.MusicType.BGM);
