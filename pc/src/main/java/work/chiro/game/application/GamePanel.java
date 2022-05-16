@@ -21,6 +21,7 @@ import work.chiro.game.aircraft.HeroAircraftFactory;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.compatible.XImage;
+import work.chiro.game.compatible.XImageFactory;
 import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.scene.SceneRun;
@@ -87,22 +88,7 @@ public class GamePanel extends JPanel {
             if (image.getWidth() != (int) w || image.getHeight() != (int) h) {
                 BufferedImage bufferedImage = (BufferedImage) image.getImage();
                 bufferedImage.getScaledInstance((int) w, (int) h, Image.SCALE_DEFAULT);
-                return drawImage(new XImage<BufferedImage>() {
-                    @Override
-                    public int getWidth() {
-                        return bufferedImage.getWidth();
-                    }
-
-                    @Override
-                    public int getHeight() {
-                        return bufferedImage.getHeight();
-                    }
-
-                    @Override
-                    public BufferedImage getImage() {
-                        return bufferedImage;
-                    }
-                }, x, y);
+                return drawImage(new XImageFactory().create(bufferedImage), x, y);
             } else {
                 return drawImage(image, x, y);
             }

@@ -20,6 +20,7 @@ import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.compatible.XImage;
+import work.chiro.game.compatible.XImageFactory;
 import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.thread.MyThreadFactory;
@@ -49,22 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 matrix.postScale((float) (w / image.getWidth()), (float) (h / image.getHeight()));
                 Bitmap scaledBitmap = Bitmap.createBitmap((Bitmap) image.getImage(), 0, 0, image.getWidth(), image.getHeight(), matrix, true);
                 getCanvas().drawBitmap((Bitmap) image.getImage(), matrix, getPaint());
-                return new XImage<Bitmap>() {
-                    @Override
-                    public int getWidth() {
-                        return scaledBitmap.getWidth();
-                    }
-
-                    @Override
-                    public int getHeight() {
-                        return scaledBitmap.getHeight();
-                    }
-
-                    @Override
-                    public Bitmap getImage() {
-                        return scaledBitmap;
-                    }
-                };
+                return new XImageFactory().create(scaledBitmap);
             } else {
                 return drawImage(image, x, y);
             }
@@ -141,22 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 if (bitmap == null) {
                     throw new IOException("file: " + path + " not found!");
                 }
-                return new XImage<Bitmap>() {
-                    @Override
-                    public int getWidth() {
-                        return bitmap.getWidth();
-                    }
-
-                    @Override
-                    public int getHeight() {
-                        return bitmap.getHeight();
-                    }
-
-                    @Override
-                    public Bitmap getImage() {
-                        return bitmap;
-                    }
-                };
+                return new XImageFactory().create(bitmap);
             }
         });
 
