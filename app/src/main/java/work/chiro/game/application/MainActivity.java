@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public XImage<?> drawImage(XImage<?> image, double x, double y) {
-            // System.out.printf(Locale.CHINA, "draw(%f, %f, %d, %d)%n", x, y, image.getWidth(), image.getHeight());
             Paint paint = new Paint();
             getCanvas().drawBitmap((Bitmap) image.getImage(), (int) x, (int) y, paint);
             return image;
