@@ -15,6 +15,7 @@ import work.chiro.game.compatible.XImage;
 import work.chiro.game.config.Constants;
 import work.chiro.game.scene.Scene;
 import work.chiro.game.scene.SceneRun;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.windows.GameWindow;
 import work.chiro.game.windows.HistoryWindow;
 import work.chiro.game.windows.MainWindow;
@@ -31,7 +32,7 @@ public class Main {
         ResourceProvider.setInstance(new ResourceProvider() {
             @Override
             public XImage<?> getImageFromResource(String path) throws IOException {
-                BufferedImage bufferedImage = ImageIO.read(Objects.requireNonNull(Main.class.getResourceAsStream("/images/" + path)));
+                BufferedImage bufferedImage = ImageIO.read(Objects.requireNonNull(Utils.class.getResourceAsStream("/images/" + path)));
                 return new XImage<BufferedImage>() {
                     @Override
                     public int getWidth() {
