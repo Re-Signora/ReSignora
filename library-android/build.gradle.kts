@@ -44,6 +44,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.constraint.layout)
     implementation(libs.androidx.core.ktx)
 
     testImplementation(libs.junit)
