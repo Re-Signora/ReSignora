@@ -1,23 +1,11 @@
 package work.chiro.game.application;
 
-import work.chiro.game.aircraft.*;
-import work.chiro.game.background.*;
-import work.chiro.game.basic.AbstractFlyingObject;
-import work.chiro.game.bullet.BaseBullet;
-import work.chiro.game.config.*;
-import work.chiro.game.dao.HistoryImpl;
-import work.chiro.game.dao.HistoryObjectFactory;
-import work.chiro.game.prop.AbstractProp;
-import work.chiro.game.resource.MusicManager;
-import work.chiro.game.scene.SceneRun;
-import work.chiro.game.thread.MusicThreadFactory;
-import work.chiro.game.timer.Timer;
-import work.chiro.game.timer.TimerController;
-import work.chiro.game.utils.Utils;
-import work.chiro.game.windows.HistoryWindow;
+import static work.chiro.game.config.Difficulty.Easy;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Graphics;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -29,14 +17,45 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static work.chiro.game.config.Difficulty.Easy;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import work.chiro.game.aircraft.AbstractAircraft;
+import work.chiro.game.aircraft.BossEnemy;
+import work.chiro.game.aircraft.BossEnemyFactory;
+import work.chiro.game.aircraft.EliteEnemyFactory;
+import work.chiro.game.aircraft.HeroAircraft;
+import work.chiro.game.aircraft.HeroAircraftFactory;
+import work.chiro.game.aircraft.MobEnemyFactory;
+import work.chiro.game.background.AbstractBackground;
+import work.chiro.game.background.EasyBackground;
+import work.chiro.game.background.HardBackground;
+import work.chiro.game.background.MediumBackground;
+import work.chiro.game.background.OtherBackgroundFactory;
+import work.chiro.game.basic.AbstractFlyingObject;
+import work.chiro.game.bullet.BaseBullet;
+import work.chiro.game.config.AbstractConfig;
+import work.chiro.game.config.ConfigFactory;
+import work.chiro.game.config.Constants;
+import work.chiro.game.config.Difficulty;
+import work.chiro.game.config.RunningConfig;
+import work.chiro.game.dao.HistoryImpl;
+import work.chiro.game.dao.HistoryObjectFactory;
+import work.chiro.game.prop.AbstractProp;
+import work.chiro.game.resource.MusicManager;
+import work.chiro.game.scene.SceneRun;
+import work.chiro.game.thread.MusicThreadFactory;
+import work.chiro.game.timer.Timer;
+import work.chiro.game.timer.TimerController;
+import work.chiro.game.utils.Utils;
+import work.chiro.game.windows.HistoryWindow;
 
 /**
  * 游戏主面板，游戏启动
  *
  * @author hitsz
  */
-public class Game extends JPanel {
+public class GamePanel extends JPanel {
     /**
      * 线程池，自动管理
      */
@@ -103,7 +122,7 @@ public class Game extends JPanel {
      * 周期（ms)
      * 指示子弹的发射、敌机的产生频率
      */
-    public Game(Difficulty difficulty) {
+    public GamePanel(Difficulty difficulty) {
         this.difficulty = difficulty;
         config = new ConfigFactory(difficulty).create();
         nextBossScore = RunningConfig.score + config.getBossScoreThreshold().getScaleNow().getX();

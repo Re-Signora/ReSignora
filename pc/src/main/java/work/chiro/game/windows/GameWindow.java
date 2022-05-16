@@ -1,10 +1,10 @@
 package work.chiro.game.windows;
 
-import work.chiro.game.application.Game;
+import javax.swing.JPanel;
+
+import work.chiro.game.application.GamePanel;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.scene.AbstractSceneClient;
-
-import javax.swing.*;
 
 /**
  * @author Chiro
@@ -21,17 +21,17 @@ public class GameWindow extends AbstractSceneClient {
         return gameWindow;
     }
 
-    static private Game game = null;
+    static private GamePanel game = null;
 
     @Override
     public JPanel getPanel() {
         return getGame();
     }
 
-    public Game getGame() {
+    public GamePanel getGame() {
         if (game == null) {
-            synchronized (Game.class) {
-                game = new Game(RunningConfig.difficulty);
+            synchronized (GamePanel.class) {
+                game = new GamePanel(RunningConfig.difficulty);
             }
         }
         return game;

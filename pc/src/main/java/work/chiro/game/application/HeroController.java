@@ -1,17 +1,17 @@
 package work.chiro.game.application;
 
-import work.chiro.game.aircraft.HeroAircraft;
-import work.chiro.game.aircraft.HeroAircraftFactory;
-import work.chiro.game.config.Constants;
-import work.chiro.game.utils.Utils;
-import work.chiro.game.vector.Vec2;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashSet;
 import java.util.Set;
+
+import work.chiro.game.aircraft.HeroAircraft;
+import work.chiro.game.aircraft.HeroAircraftFactory;
+import work.chiro.game.config.Constants;
+import work.chiro.game.utils.Utils;
+import work.chiro.game.vector.Vec2;
 
 /**
  * 英雄机控制类
@@ -37,7 +37,7 @@ public class HeroController {
     private static HeroController instance = null;
     private Double lastFrameTime = null;
 
-    public HeroController(Game game) {
+    public HeroController(GamePanel game) {
         KeyAdapter keyAdapter = new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -119,7 +119,7 @@ public class HeroController {
         lastFrameTime = now;
     }
 
-    static public HeroController getInstance(Game game) {
+    static public HeroController getInstance(GamePanel game) {
         if (instance == null) {
             synchronized (HeroController.class) {
                 instance = new HeroController(game);
