@@ -44,11 +44,15 @@ public class MainActivity extends AppCompatActivity {
         public XImage<?> drawImage(XImage<?> image, double x, double y) {
             Paint paint = new Paint();
             paint.setAlpha((int) (alpha * 255));
-            Matrix matrix = new Matrix();
-            matrix.postTranslate(-(float) image.getWidth() / 2, -(float) image.getHeight() / 2);
-            matrix.postRotate((float) (rotation * 180 / Math.PI));
-            matrix.postTranslate((float) (image.getWidth() / 2 + x), (float) (image.getHeight() / 2 + y));
-            getCanvas().drawBitmap((Bitmap) image.getImage(), matrix, paint);
+            if (alpha == 0) {
+                getCanvas().drawBitmap((Bitmap) image.getImage(), (float) x, (float) y, paint);
+            } else {
+                Matrix matrix = new Matrix();
+                matrix.postTranslate(-(float) image.getWidth() / 2, -(float) image.getHeight() / 2);
+                matrix.postRotate((float) (rotation * 180 / Math.PI));
+                matrix.postTranslate((float) (image.getWidth() / 2 + x), (float) (image.getHeight() / 2 + y));
+                getCanvas().drawBitmap((Bitmap) image.getImage(), matrix, paint);
+            }
             return image;
         }
 
