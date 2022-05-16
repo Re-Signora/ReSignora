@@ -42,6 +42,9 @@ public abstract class AbstractBackground extends AbstractFlyingObject {
             cachedImage = newImage;
         }
         g.drawImage(cachedImage, getLocationX(), getLocationY() - getHeight(), getWidth(), getHeight());
+        for (int i = 0; i <= RunningConfig.windowHeight / getHeight(); i++) {
+            g.drawImage(cachedImage, getLocationX(), getLocationY() + getHeight() * (i + 1), getWidth(), getHeight());
+        }
     }
 
     @Override
