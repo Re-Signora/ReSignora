@@ -44,13 +44,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public XImage<?> drawImage(XImage<?> image, double x, double y, double w, double h) {
-            // getCanvas().drawBitmap((Bitmap) image.getImage(), new Rect(0, 0, image.getWidth(), image.getHeight()), new Rect((int) x, (int) y, (int) (w + x), (int) (h + y)), getPaint());
             if (image.getWidth() != (int) w || image.getHeight() != (int) h) {
                 Matrix matrix = new Matrix();
                 matrix.postScale((float) (w / image.getWidth()), (float) (h / image.getHeight()));
                 Bitmap scaledBitmap = Bitmap.createBitmap((Bitmap) image.getImage(), 0, 0, image.getWidth(), image.getHeight(), matrix, true);
-                getCanvas().drawBitmap((Bitmap) image.getImage(), matrix, getPaint());
-                return new XImageFactory().create(scaledBitmap);
+                return drawImage(new XImageFactory().create(scaledBitmap), x, y);
             } else {
                 return drawImage(image, x, y);
             }
@@ -144,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         game = new Game(Difficulty.Easy, heroControllerAndroid);
-        System.out.println("game = " + game);
 
         game.setOnFinish(() -> System.out.println("on finish"));
 
