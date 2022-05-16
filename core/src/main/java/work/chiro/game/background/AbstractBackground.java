@@ -37,13 +37,13 @@ public abstract class AbstractBackground extends AbstractFlyingObject {
 
     @Override
     public void draw(XGraphics g) {
-        XImage<?> newImage = g.drawImage(getImage(), getLocationX(), getLocationY(), getWidth(), getHeight());
+        XImage<?> newImage = g.drawImage(getImage(), getLocationX(), getLocationY(), getWidth(), getHeight() + 2);
         if (cachedImage != newImage) {
             cachedImage = newImage;
         }
-        g.drawImage(cachedImage, getLocationX(), getLocationY() - getHeight(), getWidth(), getHeight());
+        g.drawImage(cachedImage, getLocationX(), getLocationY() - getHeight(), getWidth(), getHeight() + 2);
         for (int i = 0; i <= RunningConfig.windowHeight / getHeight(); i++) {
-            g.drawImage(cachedImage, getLocationX(), getLocationY() + getHeight() * (i + 1), getWidth(), getHeight());
+            g.drawImage(cachedImage, getLocationX(), getLocationY() + getHeight() * (i + 1), getWidth(), getHeight() + 2);
         }
     }
 

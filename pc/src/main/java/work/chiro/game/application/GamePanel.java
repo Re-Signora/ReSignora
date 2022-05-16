@@ -8,6 +8,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -24,6 +26,7 @@ import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.compatible.XImage;
 import work.chiro.game.compatible.XImageFactory;
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.resource.ImageManager;
 import work.chiro.game.scene.SceneRun;
 import work.chiro.game.timer.Timer;
 import work.chiro.game.windows.HistoryWindow;
@@ -61,6 +64,17 @@ public class GamePanel extends JPanel {
         });
         game.setOnPaint(this::repaint);
         game.setOnFrame(heroControllerImpl::onFrame);
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                game.resetStates();
+                RunningConfig.windowWidth = getWidth();
+                RunningConfig.windowHeight = getHeight();
+                HeroAircraftFactory.getInstance().setPosition(RunningConfig.windowWidth / 2.0, RunningConfig.windowHeight - ImageManager.getInstance().HERO_IMAGE.getHeight());
+                game.action();
+            }
+        });
     }
 
     public void addEvents() {

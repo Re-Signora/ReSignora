@@ -42,7 +42,7 @@ public class Main {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         JFrame frame = new JFrame();
         frame.setSize(RunningConfig.windowWidth, RunningConfig.windowHeight);
-        frame.setResizable(false);
+        // frame.setResizable(false);
         //设置窗口的大小和位置,居中放置
         frame.setBounds(((int) screenSize.getWidth() - RunningConfig.windowWidth) / 2, 0,
                 RunningConfig.windowWidth, RunningConfig.windowHeight);
