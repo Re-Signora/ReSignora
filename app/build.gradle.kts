@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.androidx.constraint.layout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)
+    implementation("androidx.appcompat:appcompat:1.4.1")
 
     testImplementation(libs.junit)
 
