@@ -1,17 +1,14 @@
 package work.chiro.game.application;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +20,7 @@ import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.compatible.XImage;
 import work.chiro.game.config.Difficulty;
+import work.chiro.game.config.RunningConfig;
 import work.chiro.game.thread.MyThreadFactory;
 import work.chiro.game.utils.Utils;
 
@@ -38,12 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public XGraphics drawImage(XImage<?> image, double x, double y) {
-//            AffineTransform af = AffineTransform.getTranslateInstance(x, y);
-//            af.rotate(rotation, image.getWidth() * 1.0 / 2, image.getHeight() * 1.0 / 2);
-//            Graphics2D graphics2D = (Graphics2D) (getGraphics());
-//            graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) alpha));
-//            graphics2D.drawImage((Image) image.getImage(), af, null);
-
             getCanvas().drawBitmap((Bitmap) image.getImage(), (int) x, (int) y, getPaint());
             return this;
         }
@@ -138,14 +130,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        setContentView(R.layout.activity_main);
+        SurfaceView surfaceView = findViewById(R.id.surfaceView);
+        surfaceHolder = surfaceView.getHolder();
+
+        surfaceView.post(() -> {
+            RunningConfig.windowWidth = surfaceView.getMeasuredWidth();
+            RunningConfig.windowHeight = surfaceView.getMeasuredHeight();
+
+            System.out.println("set window(" + RunningConfig.windowWidth + ", " + RunningConfig.windowHeight + ")");
+        });
+
         game = new Game(Difficulty.Easy, heroControllerAndroid);
         System.out.println("game = " + game);
 
         game.setOnFinish(() -> System.out.println("on finish"));
-
-        setContentView(R.layout.activity_main);
-        SurfaceView surfaceView = findViewById(R.id.surfaceView);
-        surfaceHolder = surfaceView.getHolder();
 
         game.setOnPaint(() -> {
             if (surfaceHolder == null) {
@@ -153,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
             }
             // noinspection SynchronizeOnNonFinalField
             synchronized (surfaceHolder) {
-                System.out.println("paint()!");
                 Paint paint = new Paint();
                 draw(paint);
             }

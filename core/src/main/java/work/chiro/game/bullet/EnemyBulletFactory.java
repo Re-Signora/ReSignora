@@ -5,6 +5,7 @@ import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.animate.AnimateContainerFactory;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
+import work.chiro.game.config.RunningConfig;
 import work.chiro.game.vector.Vec2;
 
 import java.util.Random;
@@ -44,7 +45,7 @@ public class EnemyBulletFactory extends BaseBulletFactory {
                 getPosition())
                 .setupSpeed(new Vec2(random.nextDouble() * 0.5 - 0.25, random.nextDouble() * 0.2 + 0.5))
                 .setupRange(new Vec2(2, 2))
-                .setupRange2(new Vec2(Constants.WINDOW_WIDTH - 2, Constants.WINDOW_HEIGHT - 2))
+                .setupRange2(new Vec2(RunningConfig.windowWidth - 2, RunningConfig.windowHeight - 2))
                 .setupTimeSpan(30000)
                 .create();
     }

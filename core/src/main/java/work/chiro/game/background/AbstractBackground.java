@@ -4,6 +4,7 @@ import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.config.Constants;
+import work.chiro.game.config.RunningConfig;
 import work.chiro.game.vector.Vec2;
 
 /**
@@ -25,7 +26,7 @@ public abstract class AbstractBackground extends AbstractFlyingObject {
     @Override
     public void draw(XGraphics g) {
         g.drawImage(getImage(), (int) getLocationX(), (int) getLocationY());
-        g.drawImage(getImage(), (int) getLocationX(), (int) getLocationY() - Constants.WINDOW_HEIGHT);
+        g.drawImage(getImage(), (int) getLocationX(), (int) getLocationY() - RunningConfig.windowHeight);
     }
 
     @Override

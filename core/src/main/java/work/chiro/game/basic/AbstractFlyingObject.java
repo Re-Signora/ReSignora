@@ -8,6 +8,7 @@ import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.compatible.XImage;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
+import work.chiro.game.config.RunningConfig;
 import work.chiro.game.resource.ImageManager;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;
@@ -136,9 +137,9 @@ public abstract class AbstractFlyingObject {
     }
 
     protected Boolean checkInBoundary() {
-        return !(getLocationX() > Constants.WINDOW_WIDTH ||
+        return !(getLocationX() > RunningConfig.windowWidth ||
                 getLocationX() < 0 ||
-                getLocationY() > Constants.WINDOW_HEIGHT ||
+                getLocationY() > RunningConfig.windowHeight ||
                 getLocationY() < 0);
     }
 
