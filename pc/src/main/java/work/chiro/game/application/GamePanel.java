@@ -1,5 +1,6 @@
 package work.chiro.game.application;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -75,7 +76,9 @@ public class GamePanel extends JPanel {
         public XGraphics drawImage(XImage<?> image, double x, double y) {
             AffineTransform af = AffineTransform.getTranslateInstance(x, y);
             af.rotate(rotation, image.getWidth() * 1.0 / 2, image.getHeight() * 1.0 / 2);
-            ((Graphics2D) (getGraphics())).drawImage((Image) image.getImage(), af, null);
+            Graphics2D graphics2D = (Graphics2D) (getGraphics());
+            graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) alpha));
+            graphics2D.drawImage((Image) image.getImage(), af, null);
             return this;
         }
 

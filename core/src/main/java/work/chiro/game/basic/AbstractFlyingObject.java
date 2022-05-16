@@ -96,7 +96,7 @@ public abstract class AbstractFlyingObject {
         this.animateContainer = animateContainer;
         this.size = sizeInit;
         this.rotation = updateRotation(rotationInit);
-        this.alpha = alpha;
+        this.alpha = alpha == null ? new Scale(1.0) : alpha;
     }
 
     public AbstractFlyingObject(
@@ -310,44 +310,11 @@ public abstract class AbstractFlyingObject {
         return getRotation(false);
     }
 
-    private void drawImageWithAlphaRotation(XGraphics g, boolean center) {
-        if (getAlpha() != null) {
-            g.setAlpha(getAlpha().getX());
-        }
-        if (getRotation() != null) {
-            g.setRotation(getRotation().getX());
-        }
-        g.drawImage(getImage(), (getLocationX() - (center ? getWidth() / 2 : 0)),
-                getLocationY() - (center ? getHeight() / 2 : 0));
-//        Graphics2D graphics2D = (Graphics2D) g;
-//        if (alpha != null) {
-//            graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) alpha.getX()));
-//        } else {
-//            graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 1.0f));
-//        }
-//        if (affineTransform != null) {
-//            graphics2D.drawImage(getImage(), affineTransform, null);
-//        } else {
-//            graphics2D.drawImage(
-//                    getImage(),
-//                    (int) (getLocationX() - (center ? getWidth() / 2 : 0)), (int) (getLocationY() - (center ? getHeight() / 2 : 0)),
-//                    (int) getWidth(), (int) getHeight(),
-//                    null);
-//        }
-    }
-
     public void draw(XGraphics g, boolean center) {
-//        if (getRotation(true).getX() == 0) {
-//            drawImageWithAlphaRotation(g, center, null);
-//        } else {
-//            AffineTransform af = AffineTransform.getTranslateInstance(
-//                    getLocationX() - (center ? getWidth() / 2 : 0),
-//                    getLocationY() - (center ? getHeight() / 2 : 0)
-//            );
-//            af.rotate(getRotation(true).getX(), getWidth() / 2, getHeight() / 2);
-//            drawImageWithAlphaRotation(g, center, af);
-//        }
-        drawImageWithAlphaRotation(g, center);
+        g.setAlpha(getAlpha().getX())
+                .setRotation(getRotation(true).getX())
+                .drawImage(getImage(), (getLocationX() - (center ? getWidth() / 2 : 0)),
+                getLocationY() - (center ? getHeight() / 2 : 0));
     }
 
     public void draw(XGraphics g) {
