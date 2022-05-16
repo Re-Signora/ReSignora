@@ -68,10 +68,9 @@ public class BossEnemy extends AbstractAircraft {
     @Override
     protected void drawHp(XGraphics g) {
         int hpBarHeight = Constants.DRAW_HP_BAR * 3 / 2;
-        // TODO: Here
-//        g.setColor(Color.gray);
-//        g.fillRect(0, 0, Constants.WINDOW_WIDTH, hpBarHeight);
-//        g.setColor(Color.red);
-//        g.fillRect(0, 0, (int) ((double) (Constants.WINDOW_WIDTH) / maxHp * getHp()), hpBarHeight);
+        g.setColor(Color.gray.getRGB())
+                .fillRect(0, 0, Constants.WINDOW_WIDTH, hpBarHeight)
+                .setColor(Color.red.getRGB())
+                .fillRect(0, 0, (double) Constants.WINDOW_WIDTH / maxHp * getHp(), hpBarHeight);
     }
 }

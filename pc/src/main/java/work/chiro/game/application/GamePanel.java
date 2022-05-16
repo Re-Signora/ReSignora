@@ -69,6 +69,7 @@ public class GamePanel extends JPanel {
     private abstract static class XGraphicsPart implements XGraphics {
         double alpha = 1.0;
         double rotation = 0.0;
+        int color = 0x0;
 
         @Override
         public XGraphics drawImage(XImage<?> image, double x, double y) {
@@ -87,6 +88,19 @@ public class GamePanel extends JPanel {
         @Override
         public XGraphics setRotation(double rotation) {
             this.rotation = rotation;
+            return this;
+        }
+
+        @Override
+        public XGraphics setColor(int color) {
+            this.color = color;
+            return this;
+        }
+
+        @Override
+        public XGraphics fillRect(double x, double y, double width, double height) {
+            getGraphics().setColor(new Color(color));
+            getGraphics().fillRect((int) x, (int) y, (int) width, (int) height);
             return this;
         }
 
