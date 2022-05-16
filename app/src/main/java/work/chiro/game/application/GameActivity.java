@@ -174,6 +174,8 @@ public class GameActivity extends AppCompatActivity {
         });
 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // 不息屏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
