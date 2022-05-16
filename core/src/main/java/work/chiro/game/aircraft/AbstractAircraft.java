@@ -68,6 +68,8 @@ public abstract class AbstractAircraft
         }
         if (decrease > 0) {
             playBeShootMusic();
+        } else {
+            maxHp = Math.max(maxHp, hp);
         }
     }
 
