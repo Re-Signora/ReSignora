@@ -14,9 +14,6 @@ import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.compatible.XImage;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Difficulty;
-import work.chiro.game.config.RunningConfig;
-import work.chiro.game.resource.MusicManager;
-import work.chiro.game.thread.MusicThreadFactory;
 import work.chiro.game.vector.Vec2;
 
 /**
@@ -42,26 +39,6 @@ public class Utils {
             timeStartGlobal = System.currentTimeMillis();
         }
         return (double) (System.currentTimeMillis() - timeStartGlobal);
-    }
-
-    public static void startMusic(MusicManager.MusicType type) {
-        startMusic(type, false);
-    }
-
-    public static void startMusic(MusicManager.MusicType type, Boolean noStop) {
-        if (RunningConfig.musicEnable) {
-            MusicThreadFactory.getInstance().newMusicThread(type, noStop).start();
-        }
-    }
-
-    public static void stopMusic(MusicManager.MusicType type) {
-        MusicThreadFactory.getInstance().stopMusic(type);
-    }
-
-    public static void startLoopMusic(MusicManager.MusicType type) {
-        if (RunningConfig.musicEnable) {
-            MusicThreadFactory.getInstance().newLoopMusicThread(type).start();
-        }
     }
 
     public static double setInRange(double value, double down, double up) {

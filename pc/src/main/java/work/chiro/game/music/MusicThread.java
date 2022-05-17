@@ -1,23 +1,28 @@
-package work.chiro.game.thread;
+package work.chiro.game.music;
 
-import work.chiro.game.resource.MusicManager;
-
-import javax.sound.sampled.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.SourceDataLine;
+
+import work.chiro.game.resource.MusicType;
 
 /**
  * @author Chiro
  */
 public class MusicThread implements Runnable {
-    private final MusicManager.MusicType musicType;
+    private final MusicType musicType;
     private boolean interrupted = false;
     private boolean stop = false;
     private boolean willStop = true;
     private Runnable onStop = null;
 
-    public MusicThread(MusicManager.MusicType type) {
+    public MusicThread(MusicType type) {
         this.musicType = type;
     }
 
@@ -43,7 +48,7 @@ public class MusicThread implements Runnable {
     }
 
     protected AudioFormat getAudioFormat() {
-        return MusicManager.getMusicAudioFormat(musicType);
+        return MusicManagerPC.getMusicAudioFormat(musicType);
     }
 
     public void play(InputStream source) {
@@ -73,7 +78,7 @@ public class MusicThread implements Runnable {
     }
 
     protected byte[] getSamples() {
-        return MusicManager.get(musicType);
+        return MusicManagerPC.get(musicType);
     }
 
     @Override
@@ -119,7 +124,7 @@ public class MusicThread implements Runnable {
         return "MusicThread{" + "type=" + musicType + '}';
     }
 
-    public MusicManager.MusicType getMusicType() {
+    public MusicType getMusicType() {
         return musicType;
     }
 }

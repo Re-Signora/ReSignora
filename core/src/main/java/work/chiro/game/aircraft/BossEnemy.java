@@ -6,6 +6,7 @@ import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.EnemyBulletFactory;
 import work.chiro.game.compatible.DrawColor;
+import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
@@ -15,7 +16,7 @@ import work.chiro.game.prop.AbstractProp;
 import work.chiro.game.prop.BloodPropFactory;
 import work.chiro.game.prop.BombPropFactory;
 import work.chiro.game.prop.BulletPropFactory;
-import work.chiro.game.resource.MusicManager;
+import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
@@ -32,8 +33,8 @@ public class BossEnemy extends AbstractAircraft {
     @Override
     public void vanish() {
         super.vanish();
-        Utils.stopMusic(MusicManager.MusicType.BGM_BOSS);
-        Utils.startMusic(MusicManager.MusicType.BGM);
+        ResourceProvider.getInstance().stopMusic(MusicType.BGM_BOSS);
+        ResourceProvider.getInstance().startMusic(MusicType.BGM);
         BossEnemyFactory.clearInstance();
     }
 

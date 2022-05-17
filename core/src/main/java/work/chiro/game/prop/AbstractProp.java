@@ -1,16 +1,16 @@
 package work.chiro.game.prop;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import work.chiro.game.aircraft.AbstractAircraft;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
+import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.config.AbstractConfig;
-import work.chiro.game.resource.MusicManager;
-import work.chiro.game.utils.Utils;
+import work.chiro.game.resource.MusicType;
 import work.chiro.game.vector.Vec2;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * 道具类。
@@ -27,7 +27,7 @@ abstract public class AbstractProp extends AbstractFlyingObject {
     }
 
     protected void playSupplyMusic() {
-        Utils.startMusic(MusicManager.MusicType.PROPS);
+        ResourceProvider.getInstance().startMusic(MusicType.PROPS);
     }
 
     public AbstractProp subscribeEnemyAircrafts(List<AbstractAircraft> enemyAircrafts) {

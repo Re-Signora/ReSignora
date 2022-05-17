@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
 
 public abstract class ResourceProvider {
@@ -34,4 +35,18 @@ public abstract class ResourceProvider {
         }
         return byteArrayOutputStream.toByteArray();
     }
+
+    public abstract void musicLoadAll();
+
+    public void startMusic(MusicType type) {
+        startMusic(type, false);
+    }
+
+    public abstract void startMusic(MusicType type, Boolean noStop);
+
+    public abstract void stopMusic(MusicType type);
+
+    public abstract void stopAllMusic();
+
+    public abstract void startLoopMusic(MusicType type);
 }

@@ -2,10 +2,10 @@ package work.chiro.game.aircraft;
 
 import work.chiro.game.animate.AnimateContainerFactory;
 import work.chiro.game.basic.BasicCallback;
+import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.config.AbstractConfig;
-import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
-import work.chiro.game.resource.MusicManager;
+import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
@@ -33,8 +33,8 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
         if (instance == null) {
             config.getEnemyMagnification().update(Utils.getTimeMills());
             config.getBossInitialHp().update(Utils.getTimeMills());
-            Utils.stopMusic(MusicManager.MusicType.BGM);
-            Utils.startMusic(MusicManager.MusicType.BGM_BOSS);
+            ResourceProvider.getInstance().stopMusic(MusicType.BGM);
+            ResourceProvider.getInstance().startMusic(MusicType.BGM_BOSS);
             synchronized (BossEnemyFactory.class) {
                 Vec2 posNew = new Vec2(0, 10);
                 instance = new BossEnemy(

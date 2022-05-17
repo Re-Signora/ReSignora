@@ -6,13 +6,14 @@ import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.compatible.DrawColor;
+import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.prop.AbstractProp;
 import work.chiro.game.prop.PropHandler;
-import work.chiro.game.resource.MusicManager;
+import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
@@ -76,7 +77,7 @@ public abstract class AbstractAircraft
     protected void playBeShootMusic() {
         double now = Utils.getTimeMills();
         if (now - lastPlayMusic > Constants.MUSIC_SHOOT_MIN_CYCLE_MS) {
-            Utils.startMusic(MusicManager.MusicType.HERO_HIT);
+            ResourceProvider.getInstance().startMusic(MusicType.HERO_HIT);
             lastPlayMusic = now;
         }
     }

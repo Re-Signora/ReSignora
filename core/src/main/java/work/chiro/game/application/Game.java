@@ -26,13 +26,13 @@ import work.chiro.game.background.OtherBackgroundFactory;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.basic.BasicCallback;
 import work.chiro.game.bullet.BaseBullet;
+import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.ConfigFactory;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.prop.AbstractProp;
-import work.chiro.game.resource.MusicManager;
-import work.chiro.game.thread.MusicThreadFactory;
+import work.chiro.game.resource.MusicType;
 import work.chiro.game.thread.MyThreadFactory;
 import work.chiro.game.timer.Timer;
 import work.chiro.game.timer.TimerController;
@@ -139,7 +139,7 @@ public class Game {
     }
 
     public void addEvents() {
-        MusicManager.initAll();
+        ResourceProvider.getInstance().musicLoadAll();
         timerController.init(Utils.getTimeMills());
         // 英雄射击事件
         timerController.add(new Timer(config.getHeroShoot(), () -> {
@@ -195,11 +195,6 @@ public class Game {
         }
     }
 
-    private void stopAllMusic() {
-        System.out.println("stopping all music");
-        MusicThreadFactory.getInstance().interruptAll();
-    }
-
     private void onGameOver() {
         // 游戏结束
         if (future != null) {
@@ -207,8 +202,8 @@ public class Game {
         }
         // 游戏结束
         gameOverFlag = true;
-        Utils.startMusic(MusicManager.MusicType.GAME_OVER, true);
-        stopAllMusic();
+        ResourceProvider.getInstance().startMusic(MusicType.GAME_OVER, true);
+        ResourceProvider.getInstance().stopAllMusic();
         System.out.println("Game Over!");
         if (onFinish != null) {
             onFinish.run();
@@ -259,7 +254,7 @@ public class Game {
         System.out.println("Game action start with difficulty: " + RunningConfig.difficulty);
         startedFlag = true;
         addEvents();
-        Utils.startLoopMusic(MusicManager.MusicType.BGM);
+        ResourceProvider.getInstance().startLoopMusic(MusicType.BGM);
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable mainTask = getMainTask();
         int timeInterval = 1;

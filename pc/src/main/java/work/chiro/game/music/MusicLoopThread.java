@@ -1,10 +1,11 @@
-package work.chiro.game.thread;
+package work.chiro.game.music;
 
-import work.chiro.game.resource.MusicManager;
-
-import javax.sound.sampled.SourceDataLine;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+
+import javax.sound.sampled.SourceDataLine;
+
+import work.chiro.game.resource.MusicType;
 
 /**
  * 循环音乐
@@ -12,7 +13,7 @@ import java.io.InputStream;
  * @author Chiro
  */
 public class MusicLoopThread extends MusicThread {
-    public MusicLoopThread(MusicManager.MusicType type) {
+    public MusicLoopThread(MusicType type) {
         super(type);
     }
 

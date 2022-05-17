@@ -1,4 +1,4 @@
-package work.chiro.game.resource;
+package work.chiro.game.music;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -13,36 +13,17 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import work.chiro.game.compatible.ResourceProvider;
-import work.chiro.game.config.RunningConfig;
+import work.chiro.game.resource.MusicType;
 
 /**
  * @author Chiro
  */
-public class MusicManager {
-    public enum MusicType {
-        // 背景音乐
-        BGM,
-        // Boss 下的背景音乐
-        BGM_BOSS,
-        // 炸弹爆炸
-        BOMB_EXPLOSION,
-        // 本机发射
-        HERO_SHOOT,
-        // 飞机被击中
-        HERO_HIT,
-        // 道具生效
-        PROPS,
-        // 游戏结束
-        GAME_OVER
-    }
-
+public class MusicManagerPC {
     static class ErrorMusicTypeException extends Throwable {
     }
 
     static public void initAll() {
-        if (RunningConfig.musicEnable) {
-            MUSIC_FILENAME_MAP.forEach((type, filename) -> get(type));
-        }
+        MUSIC_FILENAME_MAP.forEach((type, filename) -> get(type));
     }
 
     static private byte[] getSamplesFromStream(AudioInputStream stream, AudioFormat audioFormat) {

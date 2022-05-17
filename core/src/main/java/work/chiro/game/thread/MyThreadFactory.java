@@ -3,6 +3,7 @@ package work.chiro.game.thread;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ThreadFactory;
 
 /**
@@ -27,7 +28,7 @@ public class MyThreadFactory implements ThreadFactory {
         return instance;
     }
 
-    MyThreadFactory(String name) {
+    protected MyThreadFactory(String name) {
         counter = 0;
         this.name = name;
         stats = new ArrayList<>();
@@ -45,7 +46,7 @@ public class MyThreadFactory implements ThreadFactory {
     public Thread newThread(Runnable run) {
         Thread t = new Thread(run, name + "-Thread-" + counter);
         counter++;
-        String logString = String.format("Created thread %d with name %s on%s\n", t.getId(), t.getName(), new Date());
+        String logString = String.format(Locale.CHINA, "Created thread %d with name %s on%s\n", t.getId(), t.getName(), new Date());
         stats.add(logString);
         if (debug) {
             System.out.print(logString);

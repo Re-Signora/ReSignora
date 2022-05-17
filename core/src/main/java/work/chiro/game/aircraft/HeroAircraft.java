@@ -9,11 +9,12 @@ import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.HeroBulletFactory;
 import work.chiro.game.compatible.DrawColor;
+import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
 import work.chiro.game.prop.AbstractProp;
-import work.chiro.game.resource.MusicManager;
+import work.chiro.game.resource.MusicType;
 import work.chiro.game.thread.MyThreadFactory;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;
@@ -142,7 +143,7 @@ public class HeroAircraft extends AbstractAircraft {
     protected void playBeShootMusic() {
         double now = Utils.getTimeMills();
         if (now - heroLastPlayMusic > Constants.MUSIC_HERO_HURT_MIN_CYCLE_MS) {
-            Utils.startMusic(MusicManager.MusicType.HERO_SHOOT);
+            ResourceProvider.getInstance().startMusic(MusicType.HERO_SHOOT);
             heroLastPlayMusic = now;
         }
     }

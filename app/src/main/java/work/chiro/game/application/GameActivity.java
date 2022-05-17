@@ -30,6 +30,7 @@ import work.chiro.game.compatible.XImage;
 import work.chiro.game.compatible.XImageFactory;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.resource.ImageManager;
+import work.chiro.game.resource.MusicType;
 import work.chiro.game.thread.MyThreadFactory;
 import work.chiro.game.utils.Utils;
 
@@ -181,6 +182,31 @@ public class GameActivity extends AppCompatActivity {
                     throw new IOException("file: " + path + " not found!");
                 }
                 return new XImageFactory().create(bitmap);
+            }
+
+            @Override
+            public void musicLoadAll() {
+
+            }
+
+            @Override
+            public void startMusic(MusicType type, Boolean noStop) {
+
+            }
+
+            @Override
+            public void stopMusic(MusicType type) {
+
+            }
+
+            @Override
+            public void stopAllMusic() {
+                
+            }
+
+            @Override
+            public void startLoopMusic(MusicType type) {
+
             }
         });
 
