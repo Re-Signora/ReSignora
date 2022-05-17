@@ -235,4 +235,10 @@ public class GameActivity extends AppCompatActivity {
         }).start();
         super.onStart();
     }
+
+    @Override
+    protected void onStop() {
+        resetGame();
+        super.onStop();
+    }
 }
