@@ -32,7 +32,7 @@
 
 ### 直接运行编译好的 Jar 文件
 
-如果您是助教，我已经程序编译打包为单个`.jar`文件，直接双击 `run_jar.bat`即可运行。
+如果您是助教，我已经程序编译打包为 `*.jar` 文件，直接双击 `run_jar.bat` 即可自动打包并运行。
 
 编译好的 Jar 文件放在 `pc/build/libs/pc.jar;core/build/libs/core.jar`。
 
