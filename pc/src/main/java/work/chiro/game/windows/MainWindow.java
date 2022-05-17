@@ -1,13 +1,19 @@
 package work.chiro.game.windows;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.scene.AbstractSceneClient;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 /**
  * @author Chiro
@@ -71,12 +77,14 @@ public class MainWindow extends AbstractSceneClient {
         });
         musicOnCheckBox.setSelected(true);
         musicOnCheckBox.setText("打开音效");
+        musicOnCheckBox.setSelected(RunningConfig.musicEnable);
         autoShootCheckBox.addActionListener(e -> {
             RunningConfig.autoShoot = autoShootCheckBox.isSelected();
             System.out.println("auto shoot: " + autoShootCheckBox.isSelected());
         });
         autoShootCheckBox.setSelected(true);
         autoShootCheckBox.setText("自动射击");
+        autoShootCheckBox.setSelected(RunningConfig.autoShoot);
         JPanel innerPanel = new JPanel();
         innerPanel.setLayout(new GridLayout(5, 1, 10, 80));
         innerPanel.add(easyModeButton);
