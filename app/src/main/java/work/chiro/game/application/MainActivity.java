@@ -3,6 +3,7 @@ package work.chiro.game.application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,5 +31,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, GameActivity.class));
             });
         });
+
+        CheckBox musicEnable = findViewById(R.id.musicEnableCheckBox);
+        musicEnable.setChecked(RunningConfig.musicEnable);
+        musicEnable.setOnCheckedChangeListener((buttonView, isChecked) -> RunningConfig.musicEnable = isChecked);
     }
 }
