@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -14,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,6 +38,7 @@ public class GameActivity extends AppCompatActivity {
     private Game game = null;
     SurfaceView surfaceView = null;
     private final HeroControllerAndroidImpl heroControllerAndroid = new HeroControllerAndroidImpl();
+    private Typeface font;
 
     private abstract static class XGraphicsPart implements XGraphics {
         double alpha = 1.0;
@@ -99,24 +102,32 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public XGraphics drawString(String text, double x, double y) {
-            Paint paint = new Paint();
+            Paint paint = getPaint();
             paint.setColor(color);
-            paint.setTextSize(80);
+            paint.setTextSize(60);
             getCanvas().drawText(text, (int) x, (int) y, paint);
             return this;
         }
 
         abstract protected Canvas getCanvas();
+
+        abstract protected Paint getPaint();
     }
 
     private void draw() {
         List<List<? extends AbstractFlyingObject>> allObjects = game.getAllObjects();
         // Canvas canvas = surfaceHolder.lockCanvas();
         Canvas canvas = surfaceHolder.lockHardwareCanvas();
-        XGraphics xGraphics = new XGraphicsPart() {
+        Paint paint = new Paint();
+        XGraphicsPart xGraphics = new XGraphicsPart() {
             @Override
             protected Canvas getCanvas() {
                 return canvas;
+            }
+
+            @Override
+            protected Paint getPaint() {
+                return paint;
             }
         };
         canvas.drawColor(Color.BLACK);
@@ -137,12 +148,12 @@ public class GameActivity extends AppCompatActivity {
         surfaceHolder.unlockCanvasAndPost(canvas);
     }
 
-    private void paintInfo(XGraphics g) {
-        int d = 80;
+    private void paintInfo(XGraphicsPart g) {
+        int d = 60;
         int x = 10;
         int y = d;
         g.setColor(0xcfcfcfcf);
-        // g.setFont(myFontBase);
+        g.getPaint().setTypeface(font);
         g.drawString("SCORE:" + (int) (RunningConfig.score), x, y);
         y = y + d;
         g.drawString("LIFE:" + (int) (HeroAircraftFactory.getInstance().getHp()), x, y);
@@ -180,6 +191,7 @@ public class GameActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_game);
+        font = ResourcesCompat.getFont(this, R.font.genshin);
 
         surfaceView = findViewById(R.id.gameSurfaceView);
         surfaceHolder = surfaceView.getHolder();
