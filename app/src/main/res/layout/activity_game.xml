@@ -5,7 +5,6 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/fullscreenBackgroundColor"
     tools:context=".GameActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
