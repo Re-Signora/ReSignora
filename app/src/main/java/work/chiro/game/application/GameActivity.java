@@ -34,7 +34,6 @@ import work.chiro.game.compatible.XImage;
 import work.chiro.game.compatible.XImageFactory;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
-import work.chiro.game.resource.ImageManager;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.thread.MyThreadFactory;
 import work.chiro.game.utils.Utils;
@@ -45,6 +44,7 @@ public class GameActivity extends AppCompatActivity {
     SurfaceView surfaceView = null;
     private final HeroControllerAndroidImpl heroControllerAndroid = new HeroControllerAndroidImpl();
     private Typeface font;
+    private float canvasScale = 1.0f;
 
     private abstract static class XGraphicsPart implements XGraphics {
         double alpha = 1.0;
@@ -123,7 +123,9 @@ public class GameActivity extends AppCompatActivity {
     private void draw() {
         List<List<? extends AbstractFlyingObject>> allObjects = game.getAllObjects();
         // Canvas canvas = surfaceHolder.lockCanvas();
+        // 使用硬件加速
         Canvas canvas = surfaceHolder.lockHardwareCanvas();
+        canvas.scale(canvasScale, canvasScale);
         Paint paint = new Paint();
         XGraphicsPart xGraphics = new XGraphicsPart() {
             @Override
@@ -305,12 +307,14 @@ public class GameActivity extends AppCompatActivity {
     private void resetGame() {
         heroControllerAndroid.reset();
 
-        RunningConfig.windowWidth = surfaceView.getMeasuredWidth();
-        RunningConfig.windowHeight = surfaceView.getMeasuredHeight();
+        int windowWidth = surfaceView.getMeasuredWidth();
+        int windowHeight = surfaceView.getMeasuredHeight();
+        float scaleWidth = windowWidth * 1.0f / RunningConfig.windowWidth;
+        float scaleHeight = windowHeight * 1.0f / RunningConfig.windowHeight;
+        canvasScale = Math.min(scaleWidth, scaleHeight);
 
-        HeroAircraftFactory.getInstance().setPosition(RunningConfig.windowWidth / 2.0, RunningConfig.windowHeight - ImageManager.getInstance().HERO_IMAGE.getHeight());
-
-        System.out.println("set window(" + RunningConfig.windowWidth + ", " + RunningConfig.windowHeight + "), place hero: " + HeroAircraftFactory.getInstance().getPosition());
+        // HeroAircraftFactory.getInstance().setPosition(RunningConfig.windowWidth / 2.0, RunningConfig.windowHeight - ImageManager.getInstance().HERO_IMAGE.getHeight());
+        // System.out.println("set window(" + RunningConfig.windowWidth + ", " + RunningConfig.windowHeight + "), place hero: " + HeroAircraftFactory.getInstance().getPosition());
 
         game.resetStates();
     }
