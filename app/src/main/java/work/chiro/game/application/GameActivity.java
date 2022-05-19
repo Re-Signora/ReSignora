@@ -339,6 +339,8 @@ public class GameActivity extends AppCompatActivity {
         int windowHeight = surfaceView.getMeasuredHeight();
 
         if (RunningConfig.allowResize) {
+            RunningConfig.windowWidth = windowWidth;
+            RunningConfig.windowHeight = windowHeight;
             HeroAircraftFactory.getInstance().setPosition(RunningConfig.windowWidth / 2.0, RunningConfig.windowHeight - ImageManager.getInstance().HERO_IMAGE.getHeight());
             System.out.println("set window(" + RunningConfig.windowWidth + ", " + RunningConfig.windowHeight + "), place hero: " + HeroAircraftFactory.getInstance().getPosition());
             heroControllerAndroid.setScale(1.0);

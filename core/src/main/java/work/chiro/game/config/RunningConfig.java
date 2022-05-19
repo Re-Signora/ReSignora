@@ -15,7 +15,8 @@ public class RunningConfig {
     public static int windowWidth = 512;
     public static int windowHeight = 768;
 
-    public static boolean allowResize = false;
+    // public static boolean allowResize = false;
+    public static boolean allowResize = true;
 
     public static void increaseScore(double increase) {
         score += increase;
