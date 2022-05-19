@@ -45,7 +45,8 @@ public class GameActivity extends AppCompatActivity {
     SurfaceView surfaceView = null;
     private final HeroControllerAndroidImpl heroControllerAndroid = new HeroControllerAndroidImpl();
     private Typeface font;
-    private float canvasScale = 1.0f;
+    static private float canvasScale = 1.0f;
+    static private final int fontSize = 20;
 
     private abstract static class XGraphicsPart implements XGraphics {
         double alpha = 1.0;
@@ -111,7 +112,7 @@ public class GameActivity extends AppCompatActivity {
         public XGraphics drawString(String text, double x, double y) {
             Paint paint = getPaint();
             paint.setColor(color);
-            paint.setTextSize(60);
+            paint.setTextSize(fontSize * 3.0f / canvasScale);
             getCanvas().drawText(text, (int) x, (int) y, paint);
             return this;
         }
@@ -162,7 +163,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void paintInfo(XGraphicsPart g) {
-        int d = 60;
+        int d = (int) (fontSize * 3.0f / canvasScale);
         int x = 10;
         int y = d;
         g.setColor(0xcfcfcfcf);
