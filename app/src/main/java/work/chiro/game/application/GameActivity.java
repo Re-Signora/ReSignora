@@ -49,9 +49,9 @@ public class GameActivity extends AppCompatActivity {
     static private final int fontSize = 20;
 
     private abstract static class XGraphicsPart implements XGraphics {
-        double alpha = 1.0;
-        double rotation = 0.0;
-        int color = 0x0;
+        private double alpha = 1.0;
+        private double rotation = 0.0;
+        private int color = 0x0;
 
         @Override
         public XImage<?> drawImage(XImage<?> image, double x, double y) {
@@ -130,6 +130,9 @@ public class GameActivity extends AppCompatActivity {
         if (RunningConfig.allowResize) {
             canvas.scale(1.0f, 1.0f);
         } else {
+            int windowWidth = surfaceView.getMeasuredWidth();
+            int windowHeight = surfaceView.getMeasuredHeight();
+            canvas.translate((windowWidth * 1.0f - RunningConfig.windowWidth * canvasScale) / 2, (windowHeight * 1.0f - RunningConfig.windowHeight * canvasScale) / 2);
             canvas.scale(canvasScale, canvasScale);
         }
         Paint paint = new Paint();
