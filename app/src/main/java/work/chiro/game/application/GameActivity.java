@@ -341,10 +341,12 @@ public class GameActivity extends AppCompatActivity {
         if (RunningConfig.allowResize) {
             HeroAircraftFactory.getInstance().setPosition(RunningConfig.windowWidth / 2.0, RunningConfig.windowHeight - ImageManager.getInstance().HERO_IMAGE.getHeight());
             System.out.println("set window(" + RunningConfig.windowWidth + ", " + RunningConfig.windowHeight + "), place hero: " + HeroAircraftFactory.getInstance().getPosition());
+            heroControllerAndroid.setScale(1.0);
         } else {
             float scaleWidth = windowWidth * 1.0f / RunningConfig.windowWidth;
             float scaleHeight = windowHeight * 1.0f / RunningConfig.windowHeight;
             canvasScale = Math.min(scaleWidth, scaleHeight);
+            heroControllerAndroid.setScale(canvasScale);
         }
 
         game.resetStates();

@@ -10,6 +10,7 @@ import work.chiro.game.vector.Vec2;
 
 public class HeroControllerAndroidImpl implements HeroController {
     private Vec2 offset = new Vec2();
+    private double scale = 1.0;
 
     @Override
     public boolean isShootPressed() {
@@ -23,12 +24,16 @@ public class HeroControllerAndroidImpl implements HeroController {
     public void onTouchEvent(MotionEvent e) {
         HeroAircraft heroAircraft = HeroAircraftFactory.getInstance();
         if (heroAircraft != null) {
-            Vec2 now = new Vec2(e.getX(), e.getY());
+            Vec2 now = offset.fromVector(new Vec2(e.getX(), e.getY()).divide(scale));
             if (e.getAction() == MotionEvent.ACTION_DOWN) {
                 offset = heroAircraft.getPosition().minus(now);
             }
             now.set(now.plus(offset));
             heroAircraft.setPosition(Utils.setInRange(now.getX(), 0, RunningConfig.windowWidth), Utils.setInRange(now.getY(), 0, RunningConfig.windowHeight));
         }
+    }
+
+    public void setScale(double scale) {
+        this.scale = scale;
     }
 }
