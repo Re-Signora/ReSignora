@@ -127,6 +127,9 @@ public class GameActivity extends AppCompatActivity {
         // Canvas canvas = surfaceHolder.lockCanvas();
         // 使用硬件加速
         Canvas canvas = surfaceHolder.lockHardwareCanvas();
+        // 储存当前 canvas 设置
+        canvas.save();
+        // 设置缩放和偏移
         if (RunningConfig.allowResize) {
             canvas.scale(1.0f, 1.0f);
         } else {
@@ -161,8 +164,17 @@ public class GameActivity extends AppCompatActivity {
         }
 
         paintInfo(xGraphics);
+        // 恢复 canvas 设置之后绘制遮罩
+        canvas.restore();
+        paintMask(xGraphics);
 
         surfaceHolder.unlockCanvasAndPost(canvas);
+    }
+
+    private void paintMask(XGraphicsPart g) {
+        Paint paint = new Paint();
+        paint.setColor(0x0);
+        // g.getCanvas().drawRect(0, 0, );
     }
 
     private void paintInfo(XGraphicsPart g) {
