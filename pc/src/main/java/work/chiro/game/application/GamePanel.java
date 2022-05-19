@@ -107,9 +107,11 @@ public class GamePanel extends JPanel {
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
                 game.resetStates();
-                RunningConfig.windowWidth = getWidth();
-                RunningConfig.windowHeight = getHeight();
-                HeroAircraftFactory.getInstance().setPosition(RunningConfig.windowWidth / 2.0, RunningConfig.windowHeight - ImageManager.getInstance().HERO_IMAGE.getHeight());
+                if (RunningConfig.allowResize) {
+                    RunningConfig.windowWidth = getWidth();
+                    RunningConfig.windowHeight = getHeight();
+                    HeroAircraftFactory.getInstance().setPosition(RunningConfig.windowWidth / 2.0, RunningConfig.windowHeight - ImageManager.getInstance().HERO_IMAGE.getHeight());
+                }
                 game.action();
             }
         });
