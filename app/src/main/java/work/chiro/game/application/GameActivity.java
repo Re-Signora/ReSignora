@@ -28,12 +28,14 @@ import work.chiro.game.aircraft.BossEnemy;
 import work.chiro.game.aircraft.BossEnemyFactory;
 import work.chiro.game.aircraft.HeroAircraftFactory;
 import work.chiro.game.basic.AbstractFlyingObject;
+import work.chiro.game.compatible.HistoryImplAndroid;
 import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.compatible.XImage;
 import work.chiro.game.compatible.XImageFactory;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.history.HistoryObjectFactory;
 import work.chiro.game.resource.ImageManager;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.thread.MyThreadFactory;
@@ -315,15 +317,28 @@ public class GameActivity extends AppCompatActivity {
         });
         game.setOnFinish(() -> {
             System.out.println("FINISH!!!");
-            MyThreadFactory.getInstance().newThread(() -> {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                game.resetStates();
-                game.action();
-            }).start();
+            // MyThreadFactory.getInstance().newThread(() -> {
+            //     try {
+            //         Thread.sleep(1000);
+            //     } catch (InterruptedException e) {
+            //         e.printStackTrace();
+            //     }
+            //     game.resetStates();
+            //     game.action();
+            // }).start();
+            String name = "Nanashi";
+            String message = "message";
+            // 保存游戏结果
+            if (RunningConfig.score > 0) {
+                HistoryImplAndroid.getInstance(this).addOne(
+                        new HistoryObjectFactory(
+                                name == null ? "Nanshi" : name.isEmpty() ? "Nanshi" : name,
+                                RunningConfig.score,
+                                message == null ? "NO MESSAGE" : message.isEmpty() ? "NO MESSAGE" : message,
+                                RunningConfig.difficulty)
+                                .create());
+            }
+            HistoryImplAndroid.getInstance(this).display();
         });
         surfaceView.setOnTouchListener((v, event) -> {
             heroControllerAndroid.onTouchEvent(event);
@@ -364,6 +379,7 @@ public class GameActivity extends AppCompatActivity {
             }
             resetGame();
             game.action();
+            HistoryImplAndroid.getInstance(this);
         }).start();
         super.onStart();
     }

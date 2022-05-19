@@ -3,6 +3,8 @@ package work.chiro.game.history;
 import java.util.List;
 import java.util.Optional;
 
+import work.chiro.game.config.Difficulty;
+
 /**
  * 历史记录数据对象接口
  * @author Chiro
@@ -56,4 +58,22 @@ public interface HistoryDAO {
      * 读取磁盘数据
      */
     void load();
+
+    /**
+     * 排序内部数据
+     */
+    void sort();
+
+    /**
+     * 直接设置内部数据
+     * @param data 数据列表
+     */
+    void set(List<HistoryObject> data);
+
+    /**
+     * 依据难度筛选数据
+     * @param difficulty 难度
+     * @return 数据列表
+     */
+    List<HistoryObject> getByDifficulty(Difficulty difficulty);
 }

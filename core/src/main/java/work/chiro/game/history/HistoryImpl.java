@@ -28,30 +28,29 @@ public class HistoryImpl implements HistoryDAO {
     synchronized public static HistoryImpl getInstance() {
         if (history == null) {
             synchronized (HistoryImpl.class) {
-                history = new HistoryImpl();
+                history = new HistoryImpl(true);
             }
         }
         history.sort();
         return history;
     }
 
-    HistoryImpl() {
+    protected HistoryImpl(boolean loadNow) {
         data = new ArrayList<>();
-        load();
+        if (loadNow) {
+            load();
+        }
     }
 
-    @Override
     synchronized public List<HistoryObject> getAll() {
         load();
         return data;
     }
 
-    @Override
     synchronized public Optional<HistoryObject> getByName(String name) {
         return Optional.empty();
     }
 
-    @Override
     synchronized public Boolean updateByTime(long time, HistoryObject newHistory) {
         List<HistoryObject> dataNew = data.stream().filter(item -> item.getTime() == time).collect(Collectors.toList());
         if (!dataNew.isEmpty()) {
@@ -62,26 +61,22 @@ public class HistoryImpl implements HistoryDAO {
         return false;
     }
 
-    @Override
     synchronized public Boolean deleteByTime(long time) {
         boolean r = data.removeIf(item -> item.getTime() == time);
         dump();
         return r;
     }
 
-    @Override
     synchronized public void deleteAll() {
         data.clear();
         dump();
     }
 
-    @Override
     synchronized public void addOne(HistoryObject historyObject) {
         data.add(historyObject);
         dump();
     }
 
-    @Override
     synchronized public void dump() {
         sort();
         try {
@@ -100,7 +95,7 @@ public class HistoryImpl implements HistoryDAO {
         }
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
     synchronized public void load() {
         try {
             File file = new File(FILENAME);
