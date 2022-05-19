@@ -1,11 +1,12 @@
-package work.chiro.game.dao;
-
-import work.chiro.game.config.Difficulty;
+package work.chiro.game.history;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+
+import work.chiro.game.config.Difficulty;
 
 /**
  * 历史记录储存类
@@ -47,13 +48,14 @@ public class HistoryObject implements Serializable {
         return new HistoryObject(getName(), getScore(), newTime, getMessage(), difficulty);
     }
 
+    @SuppressWarnings("SimpleDateFormat")
     public String getTimeString() {
         return new SimpleDateFormat().format(time);
     }
 
     @Override
     public String toString() {
-        return "" + difficulty + "\t" + name + "\t" + String.format("%9d", (int) (score)) + "\t" + getTimeString() + "\t" + message;
+        return "" + difficulty + "\t" + name + "\t" + String.format(Locale.CHINA, "%9d", (int) (score)) + "\t" + getTimeString() + "\t" + message;
     }
 
     static public List<String> getLabels() {

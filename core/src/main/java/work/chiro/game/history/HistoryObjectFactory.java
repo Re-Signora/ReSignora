@@ -1,4 +1,4 @@
-package work.chiro.game.dao;
+package work.chiro.game.history;
 
 import work.chiro.game.config.Difficulty;
 
