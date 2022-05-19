@@ -315,8 +315,15 @@ public class GameActivity extends AppCompatActivity {
         });
         game.setOnFinish(() -> {
             System.out.println("FINISH!!!");
-            game.resetStates();
-            game.action();
+            MyThreadFactory.getInstance().newThread(() -> {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                game.resetStates();
+                game.action();
+            }).start();
         });
         surfaceView.setOnTouchListener((v, event) -> {
             heroControllerAndroid.onTouchEvent(event);
