@@ -7,4 +7,6 @@
     <string name="button_mode_hard">困难</string>
     <string name="button_history">排行榜</string>
     <string name="checkbox_music">开启音效</string>
+    <string name="default_text">TextView</string>
+    <string name="button_delete_item">删除</string>
 </resources>
