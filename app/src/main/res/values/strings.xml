@@ -9,4 +9,10 @@
     <string name="checkbox_music">开启音效</string>
     <string name="default_text">TextView</string>
     <string name="button_delete_item">删除</string>
+    <string name="dialog_input_name_title">输入名字</string>
+    <string name="dialog_input_name_default">Nanashi</string>
+    <string name="dialog_input_message_title">输入额外的信息</string>
+    <string name="dialog_input_message_default">message</string>
+    <string name="button_ok">确定</string>
+    <string name="button_cancel">取消</string>
 </resources>

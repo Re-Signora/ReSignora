@@ -1,6 +1,7 @@
 package work.chiro.game.application;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -15,7 +16,9 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
@@ -28,6 +31,7 @@ import work.chiro.game.aircraft.BossEnemy;
 import work.chiro.game.aircraft.BossEnemyFactory;
 import work.chiro.game.aircraft.HeroAircraftFactory;
 import work.chiro.game.basic.AbstractFlyingObject;
+import work.chiro.game.basic.BasicCallback;
 import work.chiro.game.compatible.HeroControllerAndroidImpl;
 import work.chiro.game.compatible.HistoryImplAndroid;
 import work.chiro.game.compatible.ResourceProvider;
@@ -36,7 +40,6 @@ import work.chiro.game.compatible.XImage;
 import work.chiro.game.compatible.XImageFactory;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
-import work.chiro.game.history.HistoryObjectFactory;
 import work.chiro.game.resource.ImageManager;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.thread.MyThreadFactory;
@@ -318,28 +321,38 @@ public class GameActivity extends AppCompatActivity {
         });
         game.setOnFinish(() -> {
             System.out.println("FINISH!!!");
-            // MyThreadFactory.getInstance().newThread(() -> {
-            //     try {
-            //         Thread.sleep(1000);
-            //     } catch (InterruptedException e) {
-            //         e.printStackTrace();
-            //     }
-            //     game.resetStates();
-            //     game.action();
-            // }).start();
-            String name = "Nanashi";
-            String message = "message";
-            // 保存游戏结果
-            if (RunningConfig.score > 0) {
-                HistoryImplAndroid.getInstance(this).addOne(
-                        new HistoryObjectFactory(
-                                name == null ? "Nanshi" : name.isEmpty() ? "Nanshi" : name,
-                                RunningConfig.score,
-                                message == null ? "NO MESSAGE" : message.isEmpty() ? "NO MESSAGE" : message,
-                                RunningConfig.difficulty)
-                                .create());
-            }
-            HistoryImplAndroid.getInstance(this).display();
+            EditText editName = new EditText(this);
+            EditText editMessage = new EditText(this);
+            editName.setText(R.string.dialog_input_name_default);
+            editMessage.setText(R.string.dialog_input_message_default);
+            BasicCallback goHistory = () -> {
+                startActivity(new Intent(getApplicationContext(), HistoryActivity.class));
+                // finish();
+            };
+            // if (RunningConfig.score > 0 || true) {
+            new AlertDialog.Builder(getApplicationContext()).setTitle(R.string.dialog_input_name_title)
+                    .setView(editName)
+                    .setNegativeButton(R.string.button_cancel, (d, w) -> goHistory.run())
+                    // .setPositiveButton(R.string.button_ok, (dialogName, witch) -> {
+                    //     String name = editName.getText().toString();
+                    //     new AlertDialog.Builder(getApplicationContext()).setTitle(R.string.dialog_input_message_title)
+                    //             .setView(editMessage)
+                    //             .setNegativeButton(R.string.button_cancel, (d, w) -> goHistory.run())
+                    //             .setPositiveButton(R.string.button_ok, (dialogMessage, witch2) -> {
+                    //                 String message = editMessage.getText().toString();
+                    //                 HistoryImplAndroid.getInstance(getApplicationContext()).addOne(
+                    //                         new HistoryObjectFactory(
+                    //                                 name,
+                    //                                 RunningConfig.score,
+                    //                                 message,
+                    //                                 RunningConfig.difficulty)
+                    //                                 .create()
+                    //                 );
+                    //             }).show();
+                    // })
+                    .show();
+            System.out.println("build done");
+            // }
         });
         surfaceView.setOnTouchListener((v, event) -> {
             heroControllerAndroid.onTouchEvent(event);
@@ -383,6 +396,37 @@ public class GameActivity extends AppCompatActivity {
             HistoryImplAndroid.getInstance(this);
         }).start();
         super.onStart();
+        EditText editName = new EditText(this);
+        EditText editMessage = new EditText(this);
+        editName.setText(R.string.dialog_input_name_default);
+        editMessage.setText(R.string.dialog_input_message_default);
+        BasicCallback goHistory = () -> {
+            startActivity(new Intent(getApplicationContext(), HistoryActivity.class));
+            // finish();
+        };
+        // if (RunningConfig.score > 0 || true) {
+        new AlertDialog.Builder(getApplicationContext()).setTitle(R.string.dialog_input_name_title)
+                .setView(editName)
+                .setNegativeButton(R.string.button_cancel, (d, w) -> goHistory.run())
+                // .setPositiveButton(R.string.button_ok, (dialogName, witch) -> {
+                //     String name = editName.getText().toString();
+                //     new AlertDialog.Builder(getApplicationContext()).setTitle(R.string.dialog_input_message_title)
+                //             .setView(editMessage)
+                //             .setNegativeButton(R.string.button_cancel, (d, w) -> goHistory.run())
+                //             .setPositiveButton(R.string.button_ok, (dialogMessage, witch2) -> {
+                //                 String message = editMessage.getText().toString();
+                //                 HistoryImplAndroid.getInstance(getApplicationContext()).addOne(
+                //                         new HistoryObjectFactory(
+                //                                 name,
+                //                                 RunningConfig.score,
+                //                                 message,
+                //                                 RunningConfig.difficulty)
+                //                                 .create()
+                //                 );
+                //             }).show();
+                // })
+                .show();
+        System.out.println("build done");
     }
 
     @Override
