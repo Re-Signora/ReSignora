@@ -32,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
             });
         });
 
+        Button historyButton = findViewById(R.id.historyButton);
+        // historyButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, HistoryActivity.class)));
+
         CheckBox musicEnable = findViewById(R.id.musicEnableCheckBox);
         musicEnable.setChecked(RunningConfig.musicEnable);
         musicEnable.setOnCheckedChangeListener((buttonView, isChecked) -> RunningConfig.musicEnable = isChecked);

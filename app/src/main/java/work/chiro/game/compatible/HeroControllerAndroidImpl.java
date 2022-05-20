@@ -1,9 +1,10 @@
-package work.chiro.game.application;
+package work.chiro.game.compatible;
 
 import android.view.MotionEvent;
 
 import work.chiro.game.aircraft.HeroAircraft;
 import work.chiro.game.aircraft.HeroAircraftFactory;
+import work.chiro.game.application.HeroController;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;

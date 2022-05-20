@@ -28,6 +28,7 @@ import work.chiro.game.aircraft.BossEnemy;
 import work.chiro.game.aircraft.BossEnemyFactory;
 import work.chiro.game.aircraft.HeroAircraftFactory;
 import work.chiro.game.basic.AbstractFlyingObject;
+import work.chiro.game.compatible.HeroControllerAndroidImpl;
 import work.chiro.game.compatible.HistoryImplAndroid;
 import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.compatible.XGraphics;
