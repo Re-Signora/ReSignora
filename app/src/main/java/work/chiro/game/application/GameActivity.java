@@ -297,20 +297,7 @@ public class GameActivity extends AppCompatActivity {
                 startMusic(type, false, true);
             }
         });
-
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        // 不息屏
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        // 显示区域扩展到刘海
-        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
-        layoutParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
-        getWindow().setAttributes(layoutParams);
-        // 设置页面全屏显示
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-
         setContentView(R.layout.activity_game);
         font = ResourcesCompat.getFont(this, R.font.genshin);
 
@@ -427,5 +414,23 @@ public class GameActivity extends AppCompatActivity {
     protected void onStop() {
         resetGame();
         super.onStop();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        // 隐藏导航条 // 设置页面全屏显示
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        decorView.setSystemUiVisibility(uiOptions);
+        // 不息屏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // 显示区域扩展到刘海
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        layoutParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        getWindow().setAttributes(layoutParams);
     }
 }
