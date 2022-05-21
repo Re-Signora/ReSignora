@@ -1,44 +1,60 @@
-# Aircraft-War
+# Re Signora
 
 [toc]
 
 ## 说明
 
-本代码可以通过 Gradle 同时编译出同一游戏逻辑的 Swing 版本和 Android 版本。
+本代码为客户端代码。
 
-## UML
-
-所有 UML 图见 [AircraftWar-all.puml](uml/AircraftWar-all.puml)，其部分子图位于 `uml/*.puml`。
+本代码可以同时编译出同一游戏逻辑的 Swing 版本和 Android 版本。
 
 ## 运行
 
 ### 注意事项
 
-1. 本项目使用 Gradle 管理，使用 IDEA 打开项目工程时请加载 Gradle 项目。
-
-### 操作说明
+1. 本项目使用的 Gradle DSL 为 Kotlin DSL，Android Studio 并不完全支持，每次添加/删除控件等的时候请查看 `build.gradle.kts` 是否有不合法修改。
 
 #### 电脑
 
-1. 鼠标拖动或者方向键（`↑/↓/←/→`）移动英雄机
-2. `z`键发射子弹
-3. 按下`shift`可以减慢移动速度（微操）
-4. 英雄机判定点不是整个飞机，而是飞机中间的小点，方便操作
+1. `W/S/A/D` 移动角色
+2. `Shift` 冲刺
+3. `E` 元素战技
+4. `Q` 元素爆发
+5. `1/2/3/4` 切换角色
+6. ……大致与原神电脑版一致
 
 #### 手机
 
-1. 单指触摸拖拽英雄机移动
-2. 判定点等如上
+1. 左手使用虚拟摇杆控制角色方向
+2. 右手触摸按钮
+3. ……大致与原神手机版一致
 
-### 直接运行编译好的 Jar 文件
+### 编译运行
 
-如果您是助教，我已经程序编译打包为 `*.jar` 文件，直接双击 `run_jar.bat` 即可自动打包并运行。
+1. 电脑
+   1. `gradlew :pc:run` 或者运行 `run_jar.bat`
+2. 手机
+   1. `adb connect # ip_of_android:port`
+   2. `gradlew :app:assembleDebug`
+   3. `adb install /path/to/apk`
 
-编译好的 Jar 文件放在 `pc/build/libs/pc.jar;core/build/libs/core.jar`。
+## ToDo List
 
-### 运行
+- [x] 从原代码适配图像显示、声音播放、记录储存、窗口逻辑
+- [ ] 更改桌面端和移动端框架……？
+  - [ ] SDL？
+    - [ ] 需要 NDK，多架构支持堪忧...
+    - [ ] 好处是绘图、事件等代码统一
+  - [ ] LibGDX？
+    - [ ] 开源，非常受欢迎，支持多个平台，支持Tiled，Box2D等，良好的文档资料
+    - [ ] based on OpenGL (ES) that works on Windows, Linux, macOS, Android, your browser and iOS.[Get started](https://libgdx.com/dev/)
+- [ ] 修改为横版
+  - [ ] 横屏
+    - [ ] Android 横屏
+    - [ ] pc 横屏+缩放
+  - [ ] 
 
-1. 使用 Android Studio 打开项目文件夹（即此 `README.md` 文件所在文件夹）
-2. 等待 Android Studio 加载 Gradle 完成
-3. 运行 `app` 选项为 Android 程序
-4. 运行 `AircraftWar[run]` 选项为电脑端 Swing 程序
+## Notes
+
+1. 左侧虚拟摇杆：https://github.com/kongqw/AndroidRocker
+2. 
