@@ -12,11 +12,11 @@ public class RunningConfig {
     public static Boolean autoShoot = true;
     public static double score = 0;
 
-    public static int windowWidth = 512;
-    public static int windowHeight = 768;
+    public static int windowWidth = 2400;
+    public static int windowHeight = 1080;
 
-    // public static boolean allowResize = false;
-    public static boolean allowResize = true;
+    public static boolean allowResize = false;
+    // public static boolean allowResize = true;
 
     public static void increaseScore(double increase) {
         score += increase;

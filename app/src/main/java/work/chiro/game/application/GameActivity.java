@@ -2,6 +2,8 @@ package work.chiro.game.application;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -369,6 +371,14 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void resetGame() {
+        if (RunningConfig.windowWidth > RunningConfig.windowHeight) {
+            if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            }
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        }
+
         heroControllerAndroid.reset();
 
         int windowWidth = surfaceView.getMeasuredWidth();
@@ -403,9 +413,6 @@ public class GameActivity extends AppCompatActivity {
             HistoryImplAndroid.getInstance(this);
         }).start();
         super.onStart();
-        // new AlertDialog.Builder(GameActivity.this, R.style.AlertDialogCustom).setTitle(R.string.dialog_input_name_title)
-        //         .show();
-        // System.out.println("build done");
     }
 
     @Override
