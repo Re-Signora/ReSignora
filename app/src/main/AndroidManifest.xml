@@ -11,13 +11,14 @@
         android:theme="@style/Theme.AircraftWar">
         <activity
             android:name=".HistoryActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:label="@string/title_activity_history" />
         <activity
             android:name=".GameActivity"
             android:configChanges="keyboardHidden"
             android:exported="true"
             android:label="@string/title_activity_game"
-            android:theme="@style/Theme.AircraftWar.Fullscreen"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

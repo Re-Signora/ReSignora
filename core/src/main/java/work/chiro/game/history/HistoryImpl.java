@@ -23,7 +23,7 @@ import work.chiro.game.config.Difficulty;
 public class HistoryImpl implements HistoryDAO {
     private static HistoryImpl history = null;
     private final static String FILENAME = "save.ser";
-    private List<HistoryObject> data;
+    protected List<HistoryObject> data;
 
     synchronized public static HistoryImpl getInstance() {
         if (history == null) {

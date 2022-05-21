@@ -69,5 +69,6 @@ public class HistoryActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerViewHistory);
         recyclerView.setAdapter(new HistoryListAdapter());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        getHistory().display();
     }
 }

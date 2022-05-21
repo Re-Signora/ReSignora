@@ -1,7 +1,5 @@
 package work.chiro.game.compatible;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
@@ -11,7 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import work.chiro.game.history.HistoryImpl;
@@ -20,9 +18,7 @@ import work.chiro.game.history.HistoryObject;
 public class HistoryImplAndroid extends HistoryImpl {
     private static HistoryImplAndroid history = null;
     private final static String FILENAME = "save.ser";
-    private final static int FILE_MODE = MODE_PRIVATE;
     private final SharedPreferences sp;
-    private List<HistoryObject> data;
 
     synchronized public static HistoryImplAndroid getInstance(Context context) {
         if (history == null) {
@@ -36,25 +32,26 @@ public class HistoryImplAndroid extends HistoryImpl {
 
     private HistoryImplAndroid(Context context) {
         super(false);
-        sp = context.getSharedPreferences(FILENAME, FILE_MODE);
+        sp = context.getSharedPreferences(FILENAME, Context.MODE_PRIVATE);
         load();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public synchronized void load() {
-        String gotString = sp.getString("data", null);
-        if (gotString == null) {
-            data = new LinkedList<>();
+        String base64Data = sp.getString("data", null);
+        // System.out.println("got base64 String: " + base64Data);
+        if (base64Data == null) {
+            data = new ArrayList<>();
         } else {
-            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(Base64.decode(gotString, Base64.DEFAULT));
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(Base64.decode(base64Data, Base64.DEFAULT));
             try {
                 ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
                 // noinspection unchecked
                 data = (List<HistoryObject>) objectInputStream.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 System.out.println("WARN: history data err");
-                data = new LinkedList<>();
+                data = new ArrayList<>();
                 dump();
             }
         }
@@ -72,6 +69,10 @@ public class HistoryImplAndroid extends HistoryImpl {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        sp.edit().putString("data", Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT)).apply();
+        // System.out.println("bao size: " + byteArrayOutputStream.size());
+        byte[] bytesData = byteArrayOutputStream.toByteArray();
+        String base64Data = Base64.encodeToString(bytesData, Base64.DEFAULT);
+        // System.out.println("bao size: " + byteArrayOutputStream.size() + "; write Data: " + base64Data);
+        sp.edit().putString("data", base64Data).apply();
     }
 }
