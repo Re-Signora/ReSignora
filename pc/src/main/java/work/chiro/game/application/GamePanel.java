@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.image.VolatileImage;
 import java.io.IOException;
 import java.util.List;
@@ -24,6 +23,7 @@ import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.compatible.XGraphicsPC;
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.config.RunningConfigPC;
 import work.chiro.game.history.HistoryImpl;
 import work.chiro.game.history.HistoryObjectFactory;
 import work.chiro.game.resource.ImageManager;
@@ -139,7 +139,8 @@ public class GamePanel extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         double timeStart = Utils.getTimeMills();
-        VolatileImage thisFrame = getGraphicsConfiguration().createCompatibleVolatileImage(RunningConfig.windowWidth, RunningConfig.windowHeight);
+        // VolatileImage thisFrame = getGraphicsConfiguration().createCompatibleVolatileImage(RunningConfig.windowWidth, RunningConfig.windowHeight);
+        VolatileImage thisFrame = getGraphicsConfiguration().createCompatibleVolatileImage(RunningConfigPC.displayWindowWidth, RunningConfigPC.displayWindowHeight);
         Graphics2D graphicsNew = thisFrame.createGraphics();
 
         List<List<? extends AbstractFlyingObject>> allObjects = game.getAllObjects();
@@ -178,12 +179,12 @@ public class GamePanel extends JPanel {
         double timePaintInfo = Utils.getTimeMills();
 
         // resize 到显示帧
-        AffineTransform af = AffineTransform.getScaleInstance(scale, scale);
-        Graphics2D g2d = (Graphics2D) g;
-        // g.drawImage(thisFrame, 0, 0, null);
-        g2d.drawImage(thisFrame, af, null);
+        // AffineTransform af = AffineTransform.getScaleInstance(scale, scale);
+        // Graphics2D g2d = (Graphics2D) g;
+        g.drawImage(thisFrame, 0, 0, null);
+        // g2d.drawImage(thisFrame, af, null);
         double timeResize = Utils.getTimeMills();
-        g2d.dispose();
+        // g2d.dispose();
         graphicsNew.dispose();
         Utils.getLogger().debug("paint -- object: {}, info: {}, resize: {}", timePaint - timeStart, timePaintInfo - timePaint, timeResize - timePaintInfo);
     }

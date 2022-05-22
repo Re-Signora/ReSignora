@@ -10,6 +10,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.VolatileImage;
 
+import work.chiro.game.application.GamePanel;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.utils.Utils;
 
@@ -20,8 +21,10 @@ public abstract class XGraphicsPC implements XGraphics {
 
     @Override
     public XImage<?> drawImage(XImage<?> image, double x, double y) {
-        AffineTransform af = AffineTransform.getTranslateInstance(x, y);
-        af.rotate(rotation, image.getWidth() * 1.0 / 2, image.getHeight() * 1.0 / 2);
+        AffineTransform af = AffineTransform
+                .getTranslateInstance(x * GamePanel.getScale(), y * GamePanel.getScale());
+        af.scale(GamePanel.getScale(), GamePanel.getScale());
+        af.rotate(rotation, image.getWidth() * GamePanel.getScale() / 2, image.getHeight() * GamePanel.getScale() / 2);
         Graphics2D graphics2D = getGraphics();
         graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) alpha));
         graphics2D.drawImage((Image) image.getImage(), af, null);
@@ -85,13 +88,13 @@ public abstract class XGraphicsPC implements XGraphics {
     @Override
     public XGraphics fillRect(double x, double y, double width, double height) {
         getGraphics().setColor(new Color(color));
-        getGraphics().fillRect((int) x, (int) y, (int) width, (int) height);
+        getGraphics().fillRect((int) (x * GamePanel.getScale()), (int) (y * GamePanel.getScale()), (int) (width * GamePanel.getScale()), (int) (height * GamePanel.getScale()));
         return this;
     }
 
     @Override
     public XGraphics drawString(String text, double x, double y) {
-        getGraphics().drawString(text, (int) x, (int) y);
+        getGraphics().drawString(text, (int) (x * GamePanel.getScale()), (int) (y * GamePanel.getScale()));
         return this;
     }
 
