@@ -14,6 +14,7 @@ import java.util.List;
 
 import work.chiro.game.history.HistoryImpl;
 import work.chiro.game.history.HistoryObject;
+import work.chiro.game.utils.Utils;
 
 public class HistoryImplAndroid extends HistoryImpl {
     private static HistoryImplAndroid history = null;
@@ -40,7 +41,7 @@ public class HistoryImplAndroid extends HistoryImpl {
     @Override
     public synchronized void load() {
         String base64Data = sp.getString("data", null);
-        // System.out.println("got base64 String: " + base64Data);
+        Utils.getLogger().debug("got base64 String: {}", base64Data);
         if (base64Data == null) {
             data = new ArrayList<>();
         } else {
@@ -50,7 +51,7 @@ public class HistoryImplAndroid extends HistoryImpl {
                 // noinspection unchecked
                 data = (List<HistoryObject>) objectInputStream.readObject();
             } catch (IOException | ClassNotFoundException e) {
-                System.out.println("WARN: history data err");
+                Utils.getLogger().warn("history data err");
                 data = new ArrayList<>();
                 dump();
             }
@@ -69,10 +70,10 @@ public class HistoryImplAndroid extends HistoryImpl {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // System.out.println("bao size: " + byteArrayOutputStream.size());
+        Utils.getLogger().debug("bao size: {}", byteArrayOutputStream.size());
         byte[] bytesData = byteArrayOutputStream.toByteArray();
         String base64Data = Base64.encodeToString(bytesData, Base64.DEFAULT);
-        // System.out.println("bao size: " + byteArrayOutputStream.size() + "; write Data: " + base64Data);
+        Utils.getLogger().debug("bao size: {}; write Data: {}", byteArrayOutputStream.size(), base64Data);
         sp.edit().putString("data", base64Data).apply();
     }
 }

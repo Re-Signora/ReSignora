@@ -98,7 +98,7 @@ public class GamePanel extends JPanel {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("Input exception: " + e);
+                Utils.getLogger().warn("Input exception: " + e);
             } finally {
                 SceneRun.getInstance().setNextScene(HistoryWindow.class);
                 synchronized (waitObject) {

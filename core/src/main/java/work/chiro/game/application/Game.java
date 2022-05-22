@@ -242,7 +242,7 @@ public class Game {
                 timerController.done();
                 Thread.sleep(1);
             } catch (InterruptedException e) {
-                System.out.println("this thread will exit: " + e);
+                Utils.getLogger().warn("this thread will exit: " + e);
             }
         };
     }

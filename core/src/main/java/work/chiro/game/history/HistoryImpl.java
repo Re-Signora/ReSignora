@@ -113,11 +113,11 @@ public class HistoryImpl implements HistoryDAO {
                 // noinspection unchecked
                 data = (List<HistoryObject>) objectInputStream.readObject();
             } catch (ClassNotFoundException | EOFException e) {
-                System.out.println("Warning: class not found! " + e);
+                Utils.getLogger().warn("Warning: class not found! " + e);
                 data = new ArrayList<>();
                 dump();
             } catch (InvalidClassException | ClassCastException e) {
-                System.out.println("Warning: save file has wrong version with running one! " + e);
+                Utils.getLogger().warn("Warning: save file has wrong version with running one! " + e);
                 data = new ArrayList<>();
                 dump();
             }

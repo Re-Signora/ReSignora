@@ -1,5 +1,7 @@
 package work.chiro.game.scene;
 
+import work.chiro.game.utils.Utils;
+
 /**
  * @author Chiro
  */
@@ -20,7 +22,7 @@ public abstract class AbstractSceneRunnable implements Runnable {
                 waitObject.wait();
             }
         } catch (InterruptedException e) {
-            System.out.println("window exception: " + e);
+            Utils.getLogger().warn("window exception: " + e);
         }
         synchronized (this) {
             this.notify();

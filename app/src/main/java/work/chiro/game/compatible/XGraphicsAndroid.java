@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 
+import work.chiro.game.utils.Utils;
+
 public abstract class XGraphicsAndroid implements XGraphics {
     static private float canvasScale = 1.0f;
     static private final int fontSize = 20;
@@ -31,7 +33,7 @@ public abstract class XGraphicsAndroid implements XGraphics {
     @Override
     public XImage<?> drawImage(XImage<?> image, double x, double y, double w, double h) {
         if (image.getWidth() != (int) w || image.getHeight() != (int) h) {
-            System.out.println("WARN: update cache image");
+            Utils.getLogger().warn("update cache image");
             Matrix matrix = new Matrix();
             matrix.postScale((float) (w / image.getWidth()), (float) (h / image.getHeight()));
             Bitmap scaledBitmap = Bitmap.createBitmap((Bitmap) image.getImage(), 0, 0, image.getWidth(), image.getHeight(), matrix, true);

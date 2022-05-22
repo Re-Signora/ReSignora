@@ -84,7 +84,6 @@ public class Animate {
         @Override
         public Boolean update(double timeNow) {
             Boolean done = isDone(timeNow);
-            // System.out.println("timeNow - timeStart = " + (timeNow - timeStart));
             T deltaNew = getSource().fromVector(speed.times(timeNow - timeStart));
             getVector().set(getSource().plus(deltaNew));
             return done;
