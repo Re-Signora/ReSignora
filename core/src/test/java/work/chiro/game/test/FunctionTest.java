@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.logger.AbstractLogger;
 import work.chiro.game.logger.BasicLogger;
-import work.chiro.game.ui.XLayout;
-import work.chiro.game.ui.XLayoutBuilder;
 
 public class FunctionTest {
     AbstractLogger logger = new BasicLogger();

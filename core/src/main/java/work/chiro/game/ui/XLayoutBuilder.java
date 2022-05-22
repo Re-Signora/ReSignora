@@ -14,8 +14,7 @@ public class XLayoutBuilder {
     }
 
     public XLayout build(XLayoutBean layoutBean) {
-        XLayout layout = new XLayout() {
-        };
+        XLayout layout = new XLayout();
         layoutBean.views.forEach(viewBean -> layout.addView(new XView(
                 new Vec2(viewBean.position.get(0), viewBean.position.get(1))
         ) {

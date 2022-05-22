@@ -35,6 +35,7 @@ import work.chiro.game.resource.MusicType;
 import work.chiro.game.thread.MyThreadFactory;
 import work.chiro.game.timer.Timer;
 import work.chiro.game.timer.TimerController;
+import work.chiro.game.ui.XLayout;
 import work.chiro.game.utils.Utils;
 
 public class Game {
@@ -52,8 +53,9 @@ public class Game {
     private final List<BaseBullet> heroBullets = new LinkedList<>();
     private final List<BaseBullet> enemyBullets = new LinkedList<>();
     private final List<AbstractProp> props = new LinkedList<>();
+    private XLayout layout = new XLayout();
     private final List<List<? extends AbstractObject>> allObjects = Arrays.asList(
-            backgrounds, heroBullets, heroAircrafts, enemyBullets, enemyAircrafts, bossAircrafts, props
+            backgrounds, heroBullets, heroAircrafts, enemyBullets, enemyAircrafts, bossAircrafts, props, layout
     );
     private boolean gameOverFlag = false;
     private boolean startedFlag = false;
