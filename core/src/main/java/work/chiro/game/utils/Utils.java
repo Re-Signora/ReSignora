@@ -100,4 +100,10 @@ public class Utils {
     public static AbstractLogger getLogger() {
         return ResourceProvider.getInstance().getLogger();
     }
+
+    private static int idNow = 0;
+
+    public static int idGenerator() {
+        return idNow++;
+    }
 }
