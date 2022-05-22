@@ -27,6 +27,12 @@ public class Main {
         ResourceProvider.setInstance(new ResourceProviderPC());
         Utils.getLogger().info("Hello Aircraft War");
 
+        if (RunningConfigPC.enableHardwareSpeedup) {
+            System.setProperty("sun.java2d.opengl", "true");
+            System.setProperty("swing.aatext", "true");
+            System.setProperty("sun.java2d.ddscale", "true");
+        }
+
         // 获得屏幕的分辨率，初始化 Frame
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         if (screenSize.getWidth() * RunningConfigPC.ProportionForScreen < RunningConfigPC.displayWindowWidth ||

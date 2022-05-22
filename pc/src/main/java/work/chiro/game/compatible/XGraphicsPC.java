@@ -8,9 +8,11 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.image.VolatileImage;
 
 import work.chiro.game.application.GamePanel;
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.config.RunningConfigPC;
 import work.chiro.game.utils.Utils;
 
 public abstract class XGraphicsPC implements XGraphics {
@@ -41,34 +43,47 @@ public abstract class XGraphicsPC implements XGraphics {
             Image raw = (Image) image.getImage();
             Image resizedImage = raw.getScaledInstance((int) w, (int) h, Image.SCALE_DEFAULT);
             // 硬件加速
-            // VolatileImage bufferedImage = getXGraphicsConfiguration().createCompatibleVolatileImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()));
-            BufferedImage bufferedImage = getXGraphicsConfiguration().createCompatibleImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()));
-            Graphics2D g = bufferedImage.createGraphics();
+            Graphics2D g;
+            Image bufferedImage;
+            if (RunningConfigPC.enableHardwareSpeedup) {
+                bufferedImage = getXGraphicsConfiguration().createCompatibleVolatileImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()));
+                g = ((VolatileImage) bufferedImage).createGraphics();
+            } else {
+                bufferedImage = getXGraphicsConfiguration().createCompatibleImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()));
+                g = ((BufferedImage) bufferedImage).createGraphics();
+            }
             g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                     RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g.drawImage(resizedImage, 0, 0, (int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()), null);
             g.dispose();
-            return drawImage(new XImage<>() {
-                @Override
-                public int getWidth() {
-                    return bufferedImage.getWidth();
-                }
+            if (RunningConfigPC.enableHardwareSpeedup) {
+                assert bufferedImage instanceof VolatileImage;
+                VolatileImage im = (VolatileImage) bufferedImage;
+                return drawImage(new XImage<>() {
+                    @Override
+                    public int getWidth() {
+                        return im.getWidth();
+                    }
 
-                @Override
-                public int getHeight() {
-                    return bufferedImage.getHeight();
-                }
+                    @Override
+                    public int getHeight() {
+                        return im.getHeight();
+                    }
 
-                @Override
-                public BufferedImage getImage() {
-                    return bufferedImage;
-                }
+                    @Override
+                    public VolatileImage getImage() {
+                        return im;
+                    }
 
-                @Override
-                public boolean isScaled() {
-                    return true;
-                }
-            }, x, y);
+                    @Override
+                    public boolean isScaled() {
+                        return true;
+                    }
+                }, x, y);
+            } else {
+                assert bufferedImage instanceof BufferedImage;
+                return drawImage(new XImageFactoryPC().createScaled((BufferedImage) bufferedImage), x, y);
+            }
         } else {
             return drawImage(image, x, y);
         }
