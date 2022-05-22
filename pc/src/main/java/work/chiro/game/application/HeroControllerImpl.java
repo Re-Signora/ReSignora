@@ -56,7 +56,7 @@ public class HeroControllerImpl implements HeroController {
                 super.mouseDragged(e);
                 HeroAircraft heroAircraft = HeroAircraftFactory.getInstance();
                 if (heroAircraft != null) {
-                    heroAircraft.setPosition(Utils.setInRange(e.getX(), 0, RunningConfig.windowWidth), Utils.setInRange(e.getY(), 0, RunningConfig.windowHeight));
+                    heroAircraft.setPosition(new Vec2().fromVector(new Vec2(Utils.setInRange(e.getX(), 0, RunningConfig.windowWidth), Utils.setInRange(e.getY(), 0, RunningConfig.windowHeight)).divide(GamePanel.getScale())));
                 }
             }
 

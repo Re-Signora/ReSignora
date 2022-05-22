@@ -48,6 +48,10 @@ public class GamePanel extends JPanel {
         GamePanel.scale = scale;
     }
 
+    public static double getScale() {
+        return scale;
+    }
+
     public void resetStates() {
         heroControllerImpl.clear();
         game.resetStates();
