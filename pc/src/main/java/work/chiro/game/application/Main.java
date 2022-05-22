@@ -1,6 +1,7 @@
 package work.chiro.game.application;
 
 import java.awt.Dimension;
+import java.awt.DisplayMode;
 import java.awt.Toolkit;
 import java.util.Arrays;
 
@@ -48,7 +49,24 @@ public class Main {
                 RunningConfigPC.displayWindowWidth, RunningConfigPC.displayWindowHeight);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // 无边框
-        frame.setUndecorated(true);
+        if (RunningConfigPC.fullScreen) {
+            frame.setUndecorated(true);
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            frame.setAlwaysOnTop(true);
+            frame.setResizable(false);
+            frame.getGraphicsConfiguration().getDevice()
+                    .setFullScreenWindow(frame);
+            frame.getGraphicsConfiguration().getDevice().getFullScreenWindow().setIgnoreRepaint(true);
+            Utils.getLogger().warn("screenSize: {}", screenSize);
+            frame.getGraphicsConfiguration().getDevice()
+                    .setDisplayMode(new DisplayMode(
+                            1920,
+                            1080,
+                            32,
+                            60));
+        } else {
+            frame.setUndecorated(true);
+        }
 
         try {
             SceneRun.newInstance(frame, Arrays.asList(
