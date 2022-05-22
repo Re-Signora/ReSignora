@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import work.chiro.game.logger.AbstractLogger;
+import work.chiro.game.logger.BasicLogger;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
 
@@ -49,4 +51,10 @@ public abstract class ResourceProvider {
     public abstract void stopAllMusic();
 
     public abstract void startLoopMusic(MusicType type);
+
+    private static final BasicLogger basicLogger = new BasicLogger();
+
+    public AbstractLogger getLogger() {
+        return basicLogger;
+    }
 }

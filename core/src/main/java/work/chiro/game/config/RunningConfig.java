@@ -6,6 +6,8 @@ package work.chiro.game.config;
  * @author Chiro
  */
 public class RunningConfig {
+    public static boolean debug = true;
+
     public static Difficulty difficulty = Difficulty.Easy;
     // public static Boolean musicEnable = true;
     public static Boolean musicEnable = false;
