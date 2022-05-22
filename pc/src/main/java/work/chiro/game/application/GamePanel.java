@@ -18,7 +18,7 @@ import work.chiro.game.aircraft.BossEnemyFactory;
 import work.chiro.game.aircraft.HeroAircraftFactory;
 import work.chiro.game.basic.AbstractFlyingObject;
 import work.chiro.game.compatible.XGraphics;
-import work.chiro.game.compatible.XGraphicsPartPC;
+import work.chiro.game.compatible.XGraphicsPC;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.history.HistoryImpl;
 import work.chiro.game.history.HistoryObjectFactory;
@@ -127,7 +127,7 @@ public class GamePanel extends JPanel {
 
         List<List<? extends AbstractFlyingObject>> allObjects = game.getAllObjects();
 
-        XGraphics xGraphics = new XGraphicsPartPC() {
+        XGraphics xGraphics = new XGraphicsPC() {
             @Override
             protected Graphics getGraphics() {
                 return g;

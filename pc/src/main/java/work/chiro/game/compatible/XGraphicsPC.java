@@ -9,7 +9,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-public abstract class XGraphicsPartPC implements XGraphics {
+public abstract class XGraphicsPC implements XGraphics {
     double alpha = 1.0;
     double rotation = 0.0;
     int color = 0x0;

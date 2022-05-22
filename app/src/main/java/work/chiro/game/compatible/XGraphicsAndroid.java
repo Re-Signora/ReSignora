@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 
-public abstract class XGraphicsPartAndroid implements XGraphics {
+public abstract class XGraphicsAndroid implements XGraphics {
     static private float canvasScale = 1.0f;
     static private final int fontSize = 20;
     private double alpha = 1.0;
@@ -85,7 +85,7 @@ public abstract class XGraphicsPartAndroid implements XGraphics {
     }
 
     public static void setCanvasScale(float canvasScale) {
-        XGraphicsPartAndroid.canvasScale = canvasScale;
+        XGraphicsAndroid.canvasScale = canvasScale;
     }
 
     public static int getFontSize() {
