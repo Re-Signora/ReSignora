@@ -25,11 +25,6 @@ dependencies {
 
     // This dependency is used by the application.
     implementation("com.google.guava:guava:30.1.1-jre")
-
-    // for logging
-    implementation("ch.qos.logback:logback-core:1.2.11")
-    implementation("ch.qos.logback:logback-classic:1.2.11")
-    implementation("org.slf4j:slf4j-simple:1.7.36")
 }
 
 tasks.withType<JavaCompile> {

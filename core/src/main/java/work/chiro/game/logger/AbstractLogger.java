@@ -1,15 +1,15 @@
 package work.chiro.game.logger;
 
 public interface AbstractLogger {
-    void log(String message, Level level);
+    void log(String format, Object ... args);
 
-    void debug(String message);
+    void debug(String format, Object ... args);
 
-    void info(String message);
+    void info(String format, Object ... args);
 
-    void warn(String message);
+    void warn(String format, Object ... args);
 
-    void error(String message);
+    void error(String format, Object ... args);
 
-    void fatal(String message);
+    void fatal(String format, Object ... args);
 }
