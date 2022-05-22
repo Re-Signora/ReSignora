@@ -9,6 +9,8 @@ import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
+import work.chiro.game.config.RunningConfig;
+
 public abstract class XGraphicsPC implements XGraphics {
     double alpha = 1.0;
     double rotation = 0.0;
@@ -26,6 +28,9 @@ public abstract class XGraphicsPC implements XGraphics {
 
     @Override
     public XImage<?> drawImage(XImage<?> image, double x, double y, double w, double h) {
+        if (x + w < 0 || y + h < 0 || x > RunningConfig.windowWidth || y > RunningConfig.windowHeight) {
+            return image;
+        }
         if (image.getWidth() != (int) w || image.getHeight() != (int) h) {
             BufferedImage raw = (BufferedImage) image.getImage();
             Image resizedImage = raw.getScaledInstance((int) w, (int) h, Image.SCALE_DEFAULT);

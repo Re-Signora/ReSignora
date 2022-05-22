@@ -154,13 +154,13 @@ public class GamePanel extends JPanel {
         //noinspection SynchronizationOnLocalVariableOrMethodParameter
         synchronized (allObjects) {
             allObjects.forEach(objList -> {
-                //noinspection SynchronizationOnLocalVariableOrMethodParameter
                 double s = Utils.getTimeMills();
+                //noinspection SynchronizationOnLocalVariableOrMethodParameter
                 synchronized (objList) {
                     objList.forEach(obj -> obj.draw(xGraphics));
                 }
                 double e = Utils.getTimeMills();
-                System.out.printf("\t-- %d: %s\n", (int) (e - s), objList.toString());
+                System.out.printf("\t-- %d: %s\n", (int) (e - s), objList);
             });
         }
 
