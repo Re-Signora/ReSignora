@@ -87,7 +87,7 @@ public class MainWindow extends AbstractSceneClient {
         autoShootCheckBox.setText("自动射击");
         autoShootCheckBox.setSelected(RunningConfig.autoShoot);
         JPanel innerPanel = new JPanel();
-        innerPanel.setLayout(new GridLayout(5, 1, 10, 80));
+        innerPanel.setLayout(new GridLayout(5, 1, 10, 8));
         innerPanel.add(easyModeButton);
         innerPanel.add(mediumModeButton);
         innerPanel.add(hardModeButton);

@@ -26,10 +26,10 @@ import work.chiro.game.config.RunningConfig;
 import work.chiro.game.config.RunningConfigPC;
 import work.chiro.game.history.HistoryImpl;
 import work.chiro.game.history.HistoryObjectFactory;
-import work.chiro.game.resource.ImageManager;
 import work.chiro.game.scene.SceneRun;
 import work.chiro.game.timer.Timer;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.UtilsPC;
 import work.chiro.game.windows.HistoryWindow;
 
 /**
@@ -45,6 +45,7 @@ public class GamePanel extends JPanel {
     private String lastProvidedMessage = null;
     private final Object waitObject = new Object();
     private static double scale = 1.0;
+    private static boolean justResized = false;
 
     public static void setScale(double scale) {
         GamePanel.scale = scale;
@@ -52,6 +53,10 @@ public class GamePanel extends JPanel {
 
     public static double getScale() {
         return scale;
+    }
+
+    public static boolean getJustResized() {
+        return GamePanel.justResized;
     }
 
     public void resetStates() {
@@ -113,13 +118,10 @@ public class GamePanel extends JPanel {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
-                game.resetStates();
-                if (RunningConfig.allowResize) {
-                    RunningConfig.windowWidth = getWidth();
-                    RunningConfig.windowHeight = getHeight();
-                    HeroAircraftFactory.getInstance().setPosition(RunningConfig.windowWidth / 2.0, RunningConfig.windowHeight - ImageManager.getInstance().HERO_IMAGE.getHeight());
-                }
-                game.action();
+                // if (RunningConfig.allowResize) {
+                UtilsPC.refreshWindowSize(getWidth(), getHeight());
+                justResized = true;
+                // }
             }
         });
     }
@@ -187,6 +189,8 @@ public class GamePanel extends JPanel {
         // g2d.dispose();
         graphicsNew.dispose();
         Utils.getLogger().debug("paint -- object: {}, info: {}, resize: {}", timePaint - timeStart, timePaintInfo - timePaint, timeResize - timePaintInfo);
+
+        justResized = false;
     }
 
     private void paintInfo(Graphics g) {

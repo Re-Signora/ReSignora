@@ -38,7 +38,7 @@ public abstract class XGraphicsPC implements XGraphics {
         if (x + w < 0 || y + h < 0 || x > RunningConfig.windowWidth || y > RunningConfig.windowHeight) {
             return image;
         }
-        if ((image.getWidth() != (int) w || image.getHeight() != (int) h) && !image.isScaled()) {
+        if (((image.getWidth() != (int) w) || (image.getHeight() != (int) h)) && (!image.isScaled() || (image.isScaled() && GamePanel.getJustResized()))) {
             Utils.getLogger().warn("flush image cache!");
             Image raw = (Image) image.getImage();
             Image resizedImage = raw.getScaledInstance((int) w, (int) h, Image.SCALE_DEFAULT);

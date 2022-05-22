@@ -13,6 +13,7 @@ import work.chiro.game.config.RunningConfigPC;
 import work.chiro.game.scene.Scene;
 import work.chiro.game.scene.SceneRun;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.UtilsPC;
 import work.chiro.game.windows.GameWindow;
 import work.chiro.game.windows.HistoryWindow;
 import work.chiro.game.windows.MainWindow;
@@ -35,15 +36,7 @@ public class Main {
 
         // 获得屏幕的分辨率，初始化 Frame
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        if (screenSize.getWidth() * RunningConfigPC.ProportionForScreen < RunningConfigPC.displayWindowWidth ||
-                screenSize.getHeight() * RunningConfigPC.ProportionForScreen < RunningConfigPC.displayWindowHeight) {
-            double scaleWidth = screenSize.getWidth() / RunningConfig.windowWidth;
-            double scaleHeight = screenSize.getHeight() / RunningConfig.windowHeight;
-            double scale = Math.min(scaleWidth, scaleHeight);
-            GamePanel.setScale(scale);
-            RunningConfigPC.displayWindowWidth = (int) (1.0 * RunningConfig.windowWidth * scale);
-            RunningConfigPC.displayWindowHeight = (int) (1.0 * RunningConfig.windowHeight * scale);
-        }
+        UtilsPC.refreshWindowSize();
         JFrame frame = new JFrame();
         frame.setSize(RunningConfigPC.displayWindowWidth, RunningConfigPC.displayWindowHeight);
         if (!RunningConfig.allowResize) {
@@ -54,6 +47,8 @@ public class Main {
                 ((int) screenSize.getHeight() - RunningConfigPC.displayWindowHeight) / 2,
                 RunningConfigPC.displayWindowWidth, RunningConfigPC.displayWindowHeight);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // 无边框
+        frame.setUndecorated(true);
 
         try {
             SceneRun.newInstance(frame, Arrays.asList(
