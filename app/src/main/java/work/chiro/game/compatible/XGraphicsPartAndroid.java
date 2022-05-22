@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 
-public abstract class XGraphicsPart implements XGraphics {
+public abstract class XGraphicsPartAndroid implements XGraphics {
     static private float canvasScale = 1.0f;
     static private final int fontSize = 20;
     private double alpha = 1.0;
@@ -35,7 +35,7 @@ public abstract class XGraphicsPart implements XGraphics {
             Matrix matrix = new Matrix();
             matrix.postScale((float) (w / image.getWidth()), (float) (h / image.getHeight()));
             Bitmap scaledBitmap = Bitmap.createBitmap((Bitmap) image.getImage(), 0, 0, image.getWidth(), image.getHeight(), matrix, true);
-            return drawImage(new XImageFactory().create(scaledBitmap), x, y);
+            return drawImage(new XImageFactoryAndroid().create(scaledBitmap), x, y);
         } else {
             return drawImage(image, x, y);
         }
@@ -85,7 +85,7 @@ public abstract class XGraphicsPart implements XGraphics {
     }
 
     public static void setCanvasScale(float canvasScale) {
-        XGraphicsPart.canvasScale = canvasScale;
+        XGraphicsPartAndroid.canvasScale = canvasScale;
     }
 
     public static int getFontSize() {

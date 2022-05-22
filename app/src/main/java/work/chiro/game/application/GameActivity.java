@@ -32,7 +32,7 @@ import work.chiro.game.compatible.HeroControllerAndroidImpl;
 import work.chiro.game.compatible.HistoryImplAndroid;
 import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.compatible.ResourceProviderAndroid;
-import work.chiro.game.compatible.XGraphicsPart;
+import work.chiro.game.compatible.XGraphicsPartAndroid;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.history.HistoryObjectFactory;
 import work.chiro.game.resource.ImageManager;
@@ -58,12 +58,12 @@ public class GameActivity extends AppCompatActivity {
         } else {
             int windowWidth = surfaceView.getMeasuredWidth();
             int windowHeight = surfaceView.getMeasuredHeight();
-            canvas.translate((windowWidth * 1.0f - RunningConfig.windowWidth * XGraphicsPart.getCanvasScale()) / 2,
-                    (windowHeight * 1.0f - RunningConfig.windowHeight * XGraphicsPart.getCanvasScale()) / 2);
-            canvas.scale(XGraphicsPart.getCanvasScale(), XGraphicsPart.getCanvasScale());
+            canvas.translate((windowWidth * 1.0f - RunningConfig.windowWidth * XGraphicsPartAndroid.getCanvasScale()) / 2,
+                    (windowHeight * 1.0f - RunningConfig.windowHeight * XGraphicsPartAndroid.getCanvasScale()) / 2);
+            canvas.scale(XGraphicsPartAndroid.getCanvasScale(), XGraphicsPartAndroid.getCanvasScale());
         }
         Paint paint = new Paint();
-        XGraphicsPart xGraphics = new XGraphicsPart() {
+        XGraphicsPartAndroid xGraphics = new XGraphicsPartAndroid() {
             @Override
             protected Canvas getCanvas() {
                 return canvas;
@@ -94,8 +94,8 @@ public class GameActivity extends AppCompatActivity {
         surfaceHolder.unlockCanvasAndPost(canvas);
     }
 
-    private void paintInfo(XGraphicsPart g) {
-        int d = (int) (XGraphicsPart.getFontSize() * 3.0f / XGraphicsPart.getCanvasScale());
+    private void paintInfo(XGraphicsPartAndroid g) {
+        int d = (int) (XGraphicsPartAndroid.getFontSize() * 3.0f / XGraphicsPartAndroid.getCanvasScale());
         int x = 10;
         int y = d;
         g.setColor(0xcfcfcfcf);
@@ -215,8 +215,8 @@ public class GameActivity extends AppCompatActivity {
         } else {
             float scaleWidth = windowWidth * 1.0f / RunningConfig.windowWidth;
             float scaleHeight = windowHeight * 1.0f / RunningConfig.windowHeight;
-            XGraphicsPart.setCanvasScale(Math.min(scaleWidth, scaleHeight));
-            heroControllerAndroid.setScale(XGraphicsPart.getCanvasScale());
+            XGraphicsPartAndroid.setCanvasScale(Math.min(scaleWidth, scaleHeight));
+            heroControllerAndroid.setScale(XGraphicsPartAndroid.getCanvasScale());
         }
 
         game.resetStates();

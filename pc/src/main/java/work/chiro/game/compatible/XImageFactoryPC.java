@@ -1,10 +1,10 @@
 package work.chiro.game.compatible;
 
-import android.graphics.Bitmap;
+import java.awt.image.BufferedImage;
 
-public class XImageFactory implements XImageFactoryInterface<Bitmap> {
+public class XImageFactoryPC implements XImageFactoryInterface<BufferedImage> {
     @Override
-    public XImage<Bitmap> create(Bitmap image) {
+    public XImage<BufferedImage> create(BufferedImage image) {
         return new XImage<>() {
             @Override
             public int getWidth() {
@@ -17,7 +17,7 @@ public class XImageFactory implements XImageFactoryInterface<Bitmap> {
             }
 
             @Override
-            public Bitmap getImage() {
+            public BufferedImage getImage() {
                 return image;
             }
         };
