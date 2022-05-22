@@ -14,9 +14,19 @@ public abstract class XView extends AbstractObject {
     protected String id = "View" + Utils.idGenerator();
     private final Map<XEventType, XViewCallback> listeners = new HashMap<>();
     private List<Vec2> box = null;
+    private String imageResource = null;
 
     public XView(Vec2 posInit, Vec2 sizeInit) {
         super(posInit, new AnimateContainer(), sizeInit);
+    }
+
+    public XView(Vec2 posInit) {
+        super(posInit, new AnimateContainer());
+    }
+
+    public XView setImageResource(String imageResource) {
+        this.imageResource = imageResource;
+        return this;
     }
 
     public XView setText(String text) {
@@ -48,5 +58,12 @@ public abstract class XView extends AbstractObject {
 
     public XView setOnClick(XViewCallback callback) {
         return addListener(XEventType.Touch, callback);
+    }
+
+    @Override
+    protected String getImageFilename() {
+        if (imageResource == null)
+            return super.getImageFilename();
+        else return imageResource;
     }
 }

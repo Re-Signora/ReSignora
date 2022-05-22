@@ -1,18 +1,19 @@
 package work.chiro.game.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import work.chiro.game.compatible.XGraphics;
 
-public abstract class XContainer {
-    private List<XView> viewList;
+public abstract class XLayout {
+    private final List<XView> viewList = new ArrayList<>();
 
     /**
      * 绘制当前容器内所有 UI 物体
      * @param g XGraphics
      * @return this
      */
-    public XContainer show(XGraphics g) {
+    public XLayout show(XGraphics g) {
         viewList.forEach(view -> view.draw(g));
         return this;
     }
@@ -22,7 +23,7 @@ public abstract class XContainer {
      * @param event 事件
      * @return this
      */
-    public XContainer trigger(XEvent event) {
+    public XLayout trigger(XEvent event) {
         viewList.forEach(view -> view.trigger(event));
         return this;
     }
@@ -32,7 +33,7 @@ public abstract class XContainer {
      * @param view 控件
      * @return this
      */
-    public XContainer addView(XView view) {
+    public XLayout addView(XView view) {
         viewList.add(view);
         return this;
     }
@@ -41,7 +42,7 @@ public abstract class XContainer {
      * 清除所有控件
      * @return this
      */
-    public XContainer clearView() {
+    public XLayout clearView() {
         viewList.clear();
         return this;
     }

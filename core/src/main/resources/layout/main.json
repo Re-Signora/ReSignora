@@ -5,6 +5,7 @@
       "id": "buttonBattleMode",
       "text": "对战\n模式",
       "image": "ui/battleMode.png",
+      "position": [638, 45],
       "box": [
         [677, 254], [840, 0], [1024, 263], [857, 432]
       ]

@@ -8,4 +8,5 @@ public class XViewBean {
     public String text;
     public String image;
     public List<List<Double>> box;
+    public List<Double> position;
 }
