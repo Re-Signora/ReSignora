@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import work.chiro.game.thread.MyThreadFactory;
+import work.chiro.game.utils.Utils;
 
 /**
  * @author Chiro
@@ -57,7 +58,7 @@ public class SceneRun {
         synchronized (nowRunning) {
             try {
                 frame.setTitle("Aircraft War - " + nextScene.getName());
-                System.out.println("will show: " + nextScene.getSceneRunnable().getClient().getClass().getName());
+                Utils.getLogger().info("will show: " + nextScene.getSceneRunnable().getClient().getClass().getName());
                 cardLayout.show(wrapperPanel, nextScene.getSceneRunnable().getClient().getClass().getName());
                 nowRunning.setDaemon(false);
                 nowRunning.start();
@@ -66,11 +67,11 @@ public class SceneRun {
                 nowRunning.wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
-                System.out.println("Scene run: will quit!");
+                Utils.getLogger().info("Scene run: will quit!");
                 System.exit(0);
             }
         }
-        System.out.println("Scene Run done");
+        Utils.getLogger().info("Scene Run done");
         if (nextScene != null) {
             run();
         }

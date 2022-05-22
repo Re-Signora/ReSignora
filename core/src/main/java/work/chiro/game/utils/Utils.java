@@ -14,6 +14,7 @@ import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.compatible.XImage;
 import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Difficulty;
+import work.chiro.game.logger.AbstractLogger;
 import work.chiro.game.vector.Vec2;
 
 /**
@@ -94,5 +95,9 @@ public class Utils {
     public static String convertDoubleToString(double val) {
         BigDecimal bd = new BigDecimal(String.valueOf(Double.parseDouble(String.format(Locale.CHINA, "%.2f", val))));
         return bd.stripTrailingZeros().toPlainString();
+    }
+
+    public static AbstractLogger getLogger() {
+        return ResourceProvider.getInstance().getLogger();
     }
 }

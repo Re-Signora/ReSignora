@@ -37,6 +37,7 @@ import work.chiro.game.config.RunningConfig;
 import work.chiro.game.history.HistoryObjectFactory;
 import work.chiro.game.resource.ImageManager;
 import work.chiro.game.thread.MyThreadFactory;
+import work.chiro.game.utils.Utils;
 
 public class GameActivity extends AppCompatActivity {
     private SurfaceHolder surfaceHolder;
@@ -146,7 +147,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
         game.setOnFinish(() -> {
-            System.out.println("FINISH!!!");
+            Utils.getLogger().info("FINISH!!!");
             surfaceView.post(() -> {
                 EditText editName = new EditText(this);
                 EditText editMessage = new EditText(this);
@@ -210,7 +211,7 @@ public class GameActivity extends AppCompatActivity {
             RunningConfig.windowWidth = windowWidth;
             RunningConfig.windowHeight = windowHeight;
             HeroAircraftFactory.getInstance().setPosition(RunningConfig.windowWidth / 2.0, RunningConfig.windowHeight - ImageManager.getInstance().HERO_IMAGE.getHeight());
-            System.out.println("set window(" + RunningConfig.windowWidth + ", " + RunningConfig.windowHeight + "), place hero: " + HeroAircraftFactory.getInstance().getPosition());
+            Utils.getLogger().info("set window(" + RunningConfig.windowWidth + ", " + RunningConfig.windowHeight + "), place hero: " + HeroAircraftFactory.getInstance().getPosition());
             heroControllerAndroid.setScale(1.0);
         } else {
             float scaleWidth = windowWidth * 1.0f / RunningConfig.windowWidth;

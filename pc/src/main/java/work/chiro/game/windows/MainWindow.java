@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.scene.AbstractSceneClient;
+import work.chiro.game.utils.Utils;
 
 /**
  * @author Chiro
@@ -73,14 +74,14 @@ public class MainWindow extends AbstractSceneClient {
 
         musicOnCheckBox.addActionListener(e -> {
             RunningConfig.musicEnable = musicOnCheckBox.isSelected();
-            System.out.println("music enable: " + musicOnCheckBox.isSelected());
+            Utils.getLogger().info("music enable: " + musicOnCheckBox.isSelected());
         });
         musicOnCheckBox.setSelected(true);
         musicOnCheckBox.setText("打开音效");
         musicOnCheckBox.setSelected(RunningConfig.musicEnable);
         autoShootCheckBox.addActionListener(e -> {
             RunningConfig.autoShoot = autoShootCheckBox.isSelected();
-            System.out.println("auto shoot: " + autoShootCheckBox.isSelected());
+            Utils.getLogger().info("auto shoot: " + autoShootCheckBox.isSelected());
         });
         autoShootCheckBox.setSelected(true);
         autoShootCheckBox.setText("自动射击");

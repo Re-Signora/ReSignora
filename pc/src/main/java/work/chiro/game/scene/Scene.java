@@ -1,5 +1,7 @@
 package work.chiro.game.scene;
 
+import work.chiro.game.utils.Utils;
+
 /**
  * @author Chiro
  */
@@ -25,7 +27,7 @@ public class Scene {
     }
 
     public void run() {
-        System.out.println("Scene start: " + name);
+        Utils.getLogger().info("Scene start: " + name);
         sceneRunnable.run();
     }
 }

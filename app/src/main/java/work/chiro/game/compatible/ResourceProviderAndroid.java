@@ -13,6 +13,7 @@ import java.util.Map;
 import work.chiro.game.application.R;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.logger.AbstractLogger;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
 
@@ -101,5 +102,12 @@ public abstract class ResourceProviderAndroid extends ResourceProvider {
     @Override
     public void startLoopMusic(MusicType type) {
         startMusic(type, false, true);
+    }
+
+    static private final AbstractLogger logger = new LoggerAndroid();
+
+    @Override
+    public AbstractLogger getLogger() {
+        return logger;
     }
 }

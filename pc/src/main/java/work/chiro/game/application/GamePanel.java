@@ -66,9 +66,9 @@ public class GamePanel extends JPanel {
     public GamePanel() {
         game = new Game(heroControllerImpl);
         loadFont();
-        System.out.println("GamePanel instance created!");
+        Utils.getLogger().info("GamePanel instance created!");
         game.setOnFinish(() -> {
-            System.out.println("finish!");
+            Utils.getLogger().info("finish!");
             try {
                 String name = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "Nanshi" : lastProvidedName);
                 if (name == null) {
@@ -160,7 +160,7 @@ public class GamePanel extends JPanel {
                     objList.forEach(obj -> obj.draw(xGraphics));
                 }
                 double e = Utils.getTimeMills();
-                System.out.printf("\t-- %d: %s\n", (int) (e - s), objList);
+                Utils.getLogger().debug("\t-- {}: {}", (int) (e - s), objList);
             });
         }
 
@@ -179,7 +179,7 @@ public class GamePanel extends JPanel {
         double timeResize = Utils.getTimeMills();
         g2d.dispose();
         graphicsNew.dispose();
-        System.out.printf("paint -- object: %f, info: %f, resize: %f\n", timePaint - timeStart, timePaintInfo - timePaint, timeResize - timePaintInfo);
+        Utils.getLogger().debug("paint -- object: {}, info: {}, resize: {}", timePaint - timeStart, timePaintInfo - timePaint, timeResize - timePaintInfo);
     }
 
     private void paintInfo(Graphics g) {

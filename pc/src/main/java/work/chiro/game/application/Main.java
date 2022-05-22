@@ -12,6 +12,7 @@ import work.chiro.game.config.RunningConfig;
 import work.chiro.game.config.RunningConfigPC;
 import work.chiro.game.scene.Scene;
 import work.chiro.game.scene.SceneRun;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.windows.GameWindow;
 import work.chiro.game.windows.HistoryWindow;
 import work.chiro.game.windows.MainWindow;
@@ -23,9 +24,8 @@ import work.chiro.game.windows.MainWindow;
  */
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello Aircraft War");
-
         ResourceProvider.setInstance(new ResourceProviderPC());
+        Utils.getLogger().info("Hello Aircraft War");
 
         // 获得屏幕的分辨率，初始化 Frame
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -58,7 +58,7 @@ public class Main {
                     .setNextScene(MainWindow.class)
                     .run();
         } catch (SceneRun.SceneRunDoneException e) {
-            System.out.println("All scene run done.");
+            Utils.getLogger().info("All scene run done.");
         }
         System.exit(0);
     }

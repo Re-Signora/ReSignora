@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import work.chiro.game.config.Difficulty;
+import work.chiro.game.utils.Utils;
 
 /**
  * @author Chiro
@@ -131,13 +132,13 @@ public class HistoryImpl implements HistoryDAO {
     }
 
     synchronized public void display() {
-        System.out.println("\t\t[ ======= HISTORY ======= ]");
-        System.out.println("  Name\t   Score\t\t   Time\t\t   Message");
+        Utils.getLogger().info("\t\t[ ======= HISTORY ======= ]");
+        Utils.getLogger().info("  Name\t   Score\t\t   Time\t\t   Message");
         sort();
         for (HistoryObject historyObject : data) {
-            System.out.println(historyObject.toString());
+            Utils.getLogger().info(historyObject.toString());
         }
-        System.out.println("\t\t[ ======= ------- ======= ]");
+        Utils.getLogger().info("\t\t[ ======= ------- ======= ]");
     }
 
     synchronized public void set(List<HistoryObject> data) {

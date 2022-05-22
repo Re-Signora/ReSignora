@@ -100,7 +100,7 @@ public class Game {
         heroAircraft = new HeroAircraftFactory().create(config);
         heroAircrafts.add(heroAircraft);
         flushBackground();
-        System.out.println("Game instance created!");
+        Utils.getLogger().info("Game instance created!");
     }
 
     public void flushBackground() {
@@ -191,7 +191,7 @@ public class Game {
         if (RunningConfig.difficulty != Easy) {
             timerController.add(new Timer(2000, () -> config.printNow()));
         } else {
-            System.out.println("简单模式 Config 将不会改变: " + config);
+            Utils.getLogger().info("简单模式 Config 将不会改变: " + config);
         }
     }
 
@@ -204,7 +204,7 @@ public class Game {
         gameOverFlag = true;
         ResourceProvider.getInstance().startMusic(MusicType.GAME_OVER, true);
         ResourceProvider.getInstance().stopAllMusic();
-        System.out.println("Game Over!");
+        Utils.getLogger().info("Game Over!");
         if (onFinish != null) {
             onFinish.run();
         }
@@ -251,7 +251,7 @@ public class Game {
      * 游戏启动入口，执行游戏逻辑
      */
     public void action() {
-        System.out.println("Game action start with difficulty: " + RunningConfig.difficulty);
+        Utils.getLogger().info("Game action start with difficulty: " + RunningConfig.difficulty);
         startedFlag = true;
         addEvents();
         ResourceProvider.getInstance().startLoopMusic(MusicType.BGM);

@@ -1,6 +1,7 @@
 package work.chiro.game.config;
 
 import work.chiro.game.timer.TimerLinearChange;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
 /**
@@ -75,7 +76,7 @@ public abstract class AbstractConfig {
     }
 
     public void printNow() {
-        System.out.println(this);
+        Utils.getLogger().info(this.toString());
     }
 
     public int getHeroBoxSize() {

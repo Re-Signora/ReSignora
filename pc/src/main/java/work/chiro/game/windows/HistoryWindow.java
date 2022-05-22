@@ -46,7 +46,7 @@ public class HistoryWindow extends AbstractSceneClient {
                     return;
                 }
                 for (int selectedRow : selectedRows) {
-                    System.out.println("selectedRow = " + selectedRow + ", data = " + data.get(selectedRow));
+                    Utils.getLogger().info("selectedRow = " + selectedRow + ", data = " + data.get(selectedRow));
                     selected.add(data.get(selectedRow));
                 }
                 for (HistoryObject selectedHistoryObject : selected) {
