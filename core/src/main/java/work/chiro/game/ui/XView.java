@@ -6,6 +6,7 @@ import java.util.Map;
 
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.basic.AbstractObject;
+import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
@@ -65,5 +66,15 @@ public abstract class XView extends AbstractObject {
         if (imageResource == null)
             return super.getImageFilename();
         else return imageResource;
+    }
+
+    @Override
+    public void draw(XGraphics g) {
+        super.draw(g, false);
+    }
+
+    @Override
+    public void vanish() {
+        // 不会消失
     }
 }
