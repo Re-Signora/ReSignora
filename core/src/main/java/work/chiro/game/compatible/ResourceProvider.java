@@ -42,6 +42,7 @@ public abstract class ResourceProvider {
         return byteArrayOutputStream.toByteArray();
     }
 
+    @SuppressWarnings("StringOperationCanBeSimplified")
     public XLayoutBean getLayoutBeanFromResource(String name) throws IOException {
         InputStream fileInputStream = Utils.class.getResourceAsStream("/layout/" + name + ".json");
         if (fileInputStream == null) {
@@ -54,7 +55,8 @@ public abstract class ResourceProvider {
         while ((len = fileInputStream.read(b)) != -1) {
             byteArrayOutputStream.write(b, 0, len);
         }
-        String jsonString = byteArrayOutputStream.toString(StandardCharsets.UTF_8);
+        // String jsonString = byteArrayOutputStream.toString(StandardCharsets.UTF_8);
+        String jsonString = new String(byteArrayOutputStream.toByteArray(), StandardCharsets.UTF_8);
         return new Gson().fromJson(jsonString, XLayoutBean.class);
     }
 

@@ -1,13 +1,59 @@
 {
   "views": [
     {
-      "type":  "Button",
+      "type": "Button",
       "id": "buttonBattleMode",
       "text": "对战\n模式",
       "image": "ui/battleMode.png",
-      "position": [638, 45],
+      "position": [
+        638,
+        45
+      ],
       "box": [
-        [677, 254], [840, 0], [1024, 263], [857, 432]
+        [
+          677,
+          254
+        ],
+        [
+          840,
+          0
+        ],
+        [
+          1024,
+          263
+        ],
+        [
+          857,
+          432
+        ]
+      ]
+    },
+    {
+      "type": "Button",
+      "id": "buttonStoryMode",
+      "text": "故事\n模式",
+      "image": "ui/storyMode.png",
+      "position": [
+        948,
+        186
+      ],
+      "box": [
+        [
+          965,
+          491
+        ],
+        [
+          1133,
+          194
+        ],
+        [
+          1314,
+          500
+        ],
+        [
+          1143,
+          669
+        ]
       ]
     }
   ]
