@@ -10,7 +10,30 @@ import work.chiro.game.compatible.XGraphics;
 
 @SuppressWarnings("NullableProblems")
 public abstract class XAbstractLayout implements List<XView> {
-    private final List<XView> viewList = new ArrayList<>();
+    private final String name;
+    private List<XView> viewList = new ArrayList<>();
+
+    public String getName() {
+        return name;
+    }
+
+    public XAbstractLayout(String name) {
+        this.name = name;
+    }
+
+    public XAbstractLayout() {
+        this(null);
+    }
+
+    /**
+     * 替换内容
+     * @param that 另一个 XLayout 对象
+     * @return this
+     */
+    public XAbstractLayout replaceLayout(XAbstractLayout that) {
+        viewList = that.viewList;
+        return this;
+    }
 
     /**
      * 绘制当前容器内所有 UI 物体

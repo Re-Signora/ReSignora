@@ -35,6 +35,7 @@ import work.chiro.game.resource.MusicType;
 import work.chiro.game.thread.MyThreadFactory;
 import work.chiro.game.timer.Timer;
 import work.chiro.game.timer.TimerController;
+import work.chiro.game.ui.LayoutManager;
 import work.chiro.game.ui.XLayout;
 import work.chiro.game.utils.Utils;
 
@@ -81,6 +82,7 @@ public class Game {
         BossEnemyFactory.clearInstance();
         timerController.clear();
         nextBossScore = RunningConfig.score + RunningConfig.config.getBossScoreThreshold().getScaleNow().getX();
+        layout.replaceLayout(LayoutManager.getInstance().getLayout("main"));
 
         flushBackground();
     }
@@ -100,6 +102,7 @@ public class Game {
         heroAircraft = new HeroAircraftFactory().create();
         heroAircrafts.add(heroAircraft);
         flushBackground();
+        layout.replaceLayout(LayoutManager.getInstance().getLayout("main"));
         Utils.getLogger().info("Game instance created!");
     }
 
