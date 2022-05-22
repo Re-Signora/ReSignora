@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.compatible.ResourceProviderPC;
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.config.RunningConfigPC;
 import work.chiro.game.scene.Scene;
 import work.chiro.game.scene.SceneRun;
 import work.chiro.game.windows.GameWindow;
@@ -28,14 +29,24 @@ public class Main {
 
         // 获得屏幕的分辨率，初始化 Frame
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        if (screenSize.getWidth() * RunningConfigPC.ProportionForScreen < RunningConfigPC.displayWindowWidth ||
+                screenSize.getHeight() * RunningConfigPC.ProportionForScreen < RunningConfigPC.displayWindowHeight) {
+            double scaleWidth = screenSize.getWidth() / RunningConfig.windowWidth;
+            double scaleHeight = screenSize.getHeight() / RunningConfig.windowHeight;
+            double scale = Math.min(scaleWidth, scaleHeight);
+            GamePanel.setScale(scale);
+            RunningConfigPC.displayWindowWidth = (int) (1.0 * RunningConfig.windowWidth * scale);
+            RunningConfigPC.displayWindowHeight = (int) (1.0 * RunningConfig.windowHeight * scale);
+        }
         JFrame frame = new JFrame();
-        frame.setSize(RunningConfig.windowWidth, RunningConfig.windowHeight);
+        frame.setSize(RunningConfigPC.displayWindowWidth, RunningConfigPC.displayWindowHeight);
         if (!RunningConfig.allowResize) {
             frame.setResizable(false);
         }
-        //设置窗口的大小和位置,居中放置
-        frame.setBounds(((int) screenSize.getWidth() - RunningConfig.windowWidth) / 2, 0,
-                RunningConfig.windowWidth, RunningConfig.windowHeight);
+        // 设置窗口的大小和位置,居中放置
+        frame.setBounds(((int) screenSize.getWidth() - RunningConfigPC.displayWindowWidth) / 2,
+                ((int) screenSize.getHeight() - RunningConfigPC.displayWindowHeight) / 2,
+                RunningConfigPC.displayWindowWidth, RunningConfigPC.displayWindowHeight);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         try {
