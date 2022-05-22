@@ -22,7 +22,7 @@ public abstract class XGraphicsPC implements XGraphics {
     public XImage<?> drawImage(XImage<?> image, double x, double y) {
         AffineTransform af = AffineTransform.getTranslateInstance(x, y);
         af.rotate(rotation, image.getWidth() * 1.0 / 2, image.getHeight() * 1.0 / 2);
-        Graphics2D graphics2D = (Graphics2D) (getGraphics());
+        Graphics2D graphics2D = getGraphics();
         graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) alpha));
         graphics2D.drawImage((Image) image.getImage(), af, null);
         return image;
