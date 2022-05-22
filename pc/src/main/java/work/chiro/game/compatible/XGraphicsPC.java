@@ -2,14 +2,16 @@ package work.chiro.game.compatible;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.image.VolatileImage;
 
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.utils.Utils;
 
 public abstract class XGraphicsPC implements XGraphics {
     double alpha = 1.0;
@@ -32,15 +34,31 @@ public abstract class XGraphicsPC implements XGraphics {
             return image;
         }
         if (image.getWidth() != (int) w || image.getHeight() != (int) h) {
+            Utils.getLogger().warn("flush image cache!");
             BufferedImage raw = (BufferedImage) image.getImage();
             Image resizedImage = raw.getScaledInstance((int) w, (int) h, Image.SCALE_DEFAULT);
-            BufferedImage bufferedImage = new BufferedImage((int) w, (int) h, BufferedImage.TYPE_4BYTE_ABGR);
+            VolatileImage bufferedImage = getXGraphicsConfiguration().createCompatibleVolatileImage((int) w, (int) h);
             Graphics2D g = bufferedImage.createGraphics();
             g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                     RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g.drawImage(resizedImage, 0, 0, (int) w, (int) h, null);
             g.dispose();
-            return drawImage(new XImageFactoryPC().create(bufferedImage), x, y);
+            return drawImage(new XImage<>() {
+                @Override
+                public int getWidth() {
+                    return bufferedImage.getWidth();
+                }
+
+                @Override
+                public int getHeight() {
+                    return bufferedImage.getHeight();
+                }
+
+                @Override
+                public VolatileImage getImage() {
+                    return bufferedImage;
+                }
+            }, x, y);
         } else {
             return drawImage(image, x, y);
         }
@@ -77,5 +95,7 @@ public abstract class XGraphicsPC implements XGraphics {
         return this;
     }
 
-    abstract protected Graphics getGraphics();
+    abstract protected Graphics2D getGraphics();
+
+    abstract protected GraphicsConfiguration getXGraphicsConfiguration();
 }

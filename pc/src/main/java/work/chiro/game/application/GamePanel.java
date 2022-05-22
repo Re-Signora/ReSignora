@@ -5,10 +5,11 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
+import java.awt.image.VolatileImage;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -138,15 +139,20 @@ public class GamePanel extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         double timeStart = Utils.getTimeMills();
-        BufferedImage thisFrame = getGraphicsConfiguration().createCompatibleImage(RunningConfig.windowWidth, RunningConfig.windowHeight);
+        VolatileImage thisFrame = getGraphicsConfiguration().createCompatibleVolatileImage(RunningConfig.windowWidth, RunningConfig.windowHeight);
         Graphics2D graphicsNew = thisFrame.createGraphics();
 
         List<List<? extends AbstractFlyingObject>> allObjects = game.getAllObjects();
 
         XGraphics xGraphics = new XGraphicsPC() {
             @Override
-            protected Graphics getGraphics() {
+            protected Graphics2D getGraphics() {
                 return graphicsNew;
+            }
+
+            @Override
+            protected GraphicsConfiguration getXGraphicsConfiguration() {
+                return getGraphicsConfiguration();
             }
         };
 
@@ -175,7 +181,7 @@ public class GamePanel extends JPanel {
         AffineTransform af = AffineTransform.getScaleInstance(scale, scale);
         Graphics2D g2d = (Graphics2D) g;
         // g.drawImage(thisFrame, 0, 0, null);
-        g2d.drawRenderedImage(thisFrame, af);
+        g2d.drawImage(thisFrame, af, null);
         double timeResize = Utils.getTimeMills();
         g2d.dispose();
         graphicsNew.dispose();
