@@ -3,12 +3,11 @@ package work.chiro.game.aircraft;
 import java.util.LinkedList;
 
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.basic.AbstractFlyingObject;
+import work.chiro.game.basic.AbstractObject;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.compatible.DrawColor;
 import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.compatible.XGraphics;
-import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.prop.AbstractProp;
@@ -25,7 +24,7 @@ import work.chiro.game.vector.Vec2;
  * @author hitsz
  */
 public abstract class AbstractAircraft
-        extends AbstractFlyingObject
+        extends AbstractObject
         implements PropHandler {
     /**
      * 生命值
@@ -40,25 +39,23 @@ public abstract class AbstractAircraft
     }
 
     public AbstractAircraft(
-            AbstractConfig config,
             Vec2 posInit,
             AnimateContainer animateContainer,
             double hp,
             double score,
             Scale alpha) {
-        super(config, posInit, animateContainer, alpha);
+        super(posInit, animateContainer, alpha);
         this.hp = hp;
         this.maxHp = hp;
         this.score = score;
     }
 
     public AbstractAircraft(
-            AbstractConfig config,
             Vec2 posInit,
             AnimateContainer animateContainer,
             double hp,
             double score) {
-        this(config, posInit, animateContainer, hp, score, null);
+        this(posInit, animateContainer, hp, score, null);
     }
 
     public void decreaseHp(double decrease) {

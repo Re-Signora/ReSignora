@@ -1,8 +1,6 @@
 package work.chiro.game.aircraft;
 
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.config.AbstractConfig;
-import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.resource.ImageManager;
 import work.chiro.game.vector.Vec2;
@@ -34,16 +32,15 @@ public class HeroAircraftFactory implements AbstractAircraftFactory {
     }
 
     @Override
-    public HeroAircraft create(AbstractConfig config) {
+    public HeroAircraft create() {
         // Double-checked locking
         if (heroInstance == null) {
             synchronized (HeroAircraftFactory.class) {
                 heroInstance = new HeroAircraft(
-                        config,
                         new Vec2(RunningConfig.windowWidth / 2.0,
                         RunningConfig.windowHeight - ImageManager.getInstance().HERO_IMAGE.getHeight()),
-                        new AnimateContainer(), new Vec2(config.getHeroBoxSize(), config.getHeroBoxSize()),
-                        config.getHeroInitialHp());
+                        new AnimateContainer(), new Vec2(RunningConfig.config.getHeroBoxSize(), RunningConfig.config.getHeroBoxSize()),
+                        RunningConfig.config.getHeroInitialHp());
             }
         }
         return heroInstance;

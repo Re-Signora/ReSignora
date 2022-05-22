@@ -7,12 +7,12 @@ import work.chiro.game.vector.Vec2;
  * @author Chiro
  */
 public class BulletPropFactory extends AbstractPropFactory {
-    public BulletPropFactory(AbstractConfig config, Vec2 posInit) {
-        super(config, posInit);
+    public BulletPropFactory(Vec2 posInit) {
+        super(posInit);
     }
 
     @Override
     public BulletProp create() {
-        return new BulletProp(config, getPosition(), getAnimateContainer());
+        return new BulletProp(getPosition(), getAnimateContainer());
     }
 }

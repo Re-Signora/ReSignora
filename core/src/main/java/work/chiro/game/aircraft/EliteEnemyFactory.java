@@ -1,7 +1,6 @@
 package work.chiro.game.aircraft;
 
 import work.chiro.game.animate.AnimateContainerFactory;
-import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
@@ -17,40 +16,38 @@ public class EliteEnemyFactory implements AbstractAircraftFactory {
     }
 
     @Override
-    public EliteEnemy create(AbstractConfig config) {
-        config.getEnemyMagnification().update(Utils.getTimeMills());
+    public EliteEnemy create() {
+        RunningConfig.config.getEnemyMagnification().update(Utils.getTimeMills());
         Vec2 newPos = new Vec2((Math.random() * (RunningConfig.windowWidth - ImageManager.getInstance().ELITE_ENEMY_IMAGE.getWidth())),
                 (Math.random() * RunningConfig.windowHeight * Constants.ELITE_CREATE_VERTICAL_RANGE));
         if (RunningConfig.difficulty == Difficulty.Easy) {
             return new EliteEnemy(
-                    config,
                     newPos,
                     new AnimateContainerFactory(
                             AnimateContainerFactory.ContainerType.ConstSpeed, newPos)
-                            .setupSpeed(new Vec2(0, 0.08 * config.getEnemyMagnification().getScaleNow().getX()))
+                            .setupSpeed(new Vec2(0, 0.08 * RunningConfig.config.getEnemyMagnification().getScaleNow().getX()))
                             .create(),
-                    60 * config.getEnemyMagnification().getScaleNow().getX()
+                    60 * RunningConfig.config.getEnemyMagnification().getScaleNow().getX()
             );
         } else {
             return new EliteEnemy(
-                    config,
                     newPos,
                     new AnimateContainerFactory(
                             AnimateContainerFactory.ContainerType.SmoothTo, newPos)
-                            .setupTimeSpan(config.getEliteJumpTime())
-                            .setupTarget(newPos.plus(Utils.randomPosition(new Vec2(-config.getEliteJumpRange().getX(), 0), new Vec2(config.getEliteJumpRange().getX(), config.getEliteJumpRange().getY()))))
+                            .setupTimeSpan(RunningConfig.config.getEliteJumpTime())
+                            .setupTarget(newPos.plus(Utils.randomPosition(new Vec2(-RunningConfig.config.getEliteJumpRange().getX(), 0), new Vec2(RunningConfig.config.getEliteJumpRange().getX(), RunningConfig.config.getEliteJumpRange().getY()))))
                             .setupAnimateCallback(animateContainer -> {
                                 animateContainer.clearAllAnimates()
                                         .addAnimate(
                                                 new AnimateContainerFactory(AnimateContainerFactory.ContainerType.SmoothTo, newPos)
-                                                        .setupTimeSpan(config.getEliteJumpTime())
-                                                        .setupTarget(newPos.plus(Utils.randomPosition(new Vec2(-config.getEliteJumpRange().getX(), 0), new Vec2(config.getEliteJumpRange().getX(), config.getEliteJumpRange().getY()))))
+                                                        .setupTimeSpan(RunningConfig.config.getEliteJumpTime())
+                                                        .setupTarget(newPos.plus(Utils.randomPosition(new Vec2(-RunningConfig.config.getEliteJumpRange().getX(), 0), new Vec2(RunningConfig.config.getEliteJumpRange().getX(), RunningConfig.config.getEliteJumpRange().getY()))))
                                                         .createAnimate()
                                         );
                                 return false;
                             })
                             .create(),
-                    90 * config.getEnemyMagnification().getScaleNow().getX()
+                    90 * RunningConfig.config.getEnemyMagnification().getScaleNow().getX()
             );
         }
     }

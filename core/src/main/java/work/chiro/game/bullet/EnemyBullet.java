@@ -8,7 +8,7 @@ import work.chiro.game.vector.Vec2;
  * @author hitsz
  */
 public class EnemyBullet extends BaseBullet {
-    public EnemyBullet(AbstractConfig config, Vec2 posInit, AnimateContainer animateContainer, int power) {
-        super(config, posInit, animateContainer, power);
+    public EnemyBullet(Vec2 posInit, AnimateContainer animateContainer, int power) {
+        super(posInit, animateContainer, power);
     }
 }

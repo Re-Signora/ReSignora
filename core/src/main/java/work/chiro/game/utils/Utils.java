@@ -23,9 +23,9 @@ import work.chiro.game.vector.Vec2;
  * @author Chiro
  */
 public class Utils {
-    public static LinkedList<BaseBullet> letEnemyShoot(AbstractConfig config, Vec2 position) {
+    public static LinkedList<BaseBullet> letEnemyShoot(Vec2 position) {
         LinkedList<BaseBullet> ret = new LinkedList<>();
-        ret.add(new EnemyBulletFactory(config, position, EnemyBulletFactory.BulletType.Direct).create());
+        ret.add(new EnemyBulletFactory(position, EnemyBulletFactory.BulletType.Direct).create());
         return ret;
     }
 

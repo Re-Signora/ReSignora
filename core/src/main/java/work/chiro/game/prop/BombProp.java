@@ -13,8 +13,8 @@ import work.chiro.game.vector.Vec2;
  * @author Chiro
  */
 public class BombProp extends AbstractProp {
-    public BombProp(AbstractConfig config,  Vec2 posInit, AnimateContainer animateContainer) {
-        super(config, posInit, animateContainer);
+    public BombProp( Vec2 posInit, AnimateContainer animateContainer) {
+        super(posInit, animateContainer);
     }
 
     @Override

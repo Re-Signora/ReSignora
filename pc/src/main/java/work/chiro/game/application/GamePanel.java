@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import work.chiro.game.aircraft.BossEnemy;
 import work.chiro.game.aircraft.BossEnemyFactory;
 import work.chiro.game.aircraft.HeroAircraftFactory;
-import work.chiro.game.basic.AbstractFlyingObject;
+import work.chiro.game.basic.AbstractObject;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.compatible.XGraphicsPC;
 import work.chiro.game.config.RunningConfig;
@@ -145,7 +145,7 @@ public class GamePanel extends JPanel {
         VolatileImage thisFrame = getGraphicsConfiguration().createCompatibleVolatileImage(RunningConfigPC.displayWindowWidth, RunningConfigPC.displayWindowHeight);
         Graphics2D graphicsNew = thisFrame.createGraphics();
 
-        List<List<? extends AbstractFlyingObject>> allObjects = game.getAllObjects();
+        List<List<? extends AbstractObject>> allObjects = game.getAllObjects();
 
         XGraphics xGraphics = new XGraphicsPC() {
             @Override

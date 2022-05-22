@@ -10,8 +10,8 @@ import work.chiro.game.vector.Vec2;
  * @author Chiro
  */
 public class AircraftHeroBox extends AircraftBox {
-    public AircraftHeroBox(AbstractConfig config, Vec2 posInit, Vec2 sizeInit) {
-        super(config, posInit, sizeInit);
+    public AircraftHeroBox(Vec2 posInit, Vec2 sizeInit) {
+        super(posInit, sizeInit);
     }
 
     @Override

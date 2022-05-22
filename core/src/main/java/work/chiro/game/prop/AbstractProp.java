@@ -5,7 +5,7 @@ import java.util.List;
 
 import work.chiro.game.aircraft.AbstractAircraft;
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.basic.AbstractFlyingObject;
+import work.chiro.game.basic.AbstractObject;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.config.AbstractConfig;
@@ -18,12 +18,12 @@ import work.chiro.game.vector.Vec2;
  *
  * @author hitsz
  */
-abstract public class AbstractProp extends AbstractFlyingObject {
+abstract public class AbstractProp extends AbstractObject {
     protected List<AbstractAircraft> enemyAircrafts = new LinkedList<>();
     protected List<BaseBullet> enemyBullets = new LinkedList<>();
 
-    public AbstractProp(AbstractConfig config, Vec2 posInit, AnimateContainer animateContainer) {
-        super(config, posInit, animateContainer);
+    public AbstractProp(Vec2 posInit, AnimateContainer animateContainer) {
+        super(posInit, animateContainer);
     }
 
     protected void playSupplyMusic() {

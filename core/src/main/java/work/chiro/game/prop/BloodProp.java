@@ -10,8 +10,8 @@ import work.chiro.game.vector.Vec2;
  */
 public class BloodProp extends AbstractProp {
     int increaseHp;
-    public BloodProp(AbstractConfig config,  Vec2 posInit, AnimateContainer animateContainer, int increaseHp) {
-        super(config, posInit, animateContainer);
+    public BloodProp( Vec2 posInit, AnimateContainer animateContainer, int increaseHp) {
+        super(posInit, animateContainer);
         this.increaseHp = increaseHp;
     }
 

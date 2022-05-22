@@ -1,16 +1,15 @@
 package work.chiro.game.bullet;
 
-import work.chiro.game.aircraft.AbstractAircraft;
-import work.chiro.game.aircraft.HeroAircraftFactory;
-import work.chiro.game.animate.AnimateContainerFactory;
-import work.chiro.game.config.AbstractConfig;
-import work.chiro.game.vector.Vec2;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import work.chiro.game.aircraft.AbstractAircraft;
+import work.chiro.game.aircraft.HeroAircraftFactory;
+import work.chiro.game.animate.AnimateContainerFactory;
+import work.chiro.game.vector.Vec2;
 
 /**
  * @author Chiro
@@ -18,15 +17,14 @@ import java.util.stream.Collectors;
 public class HeroBulletFactory extends BaseBulletFactory {
     final private List<AbstractAircraft> enemyAircrafts = new LinkedList<>();
 
-    public HeroBulletFactory(AbstractConfig config, Vec2 posInit, List<List<? extends AbstractAircraft>> allEnemyAircrafts) {
-        super(config, posInit);
+    public HeroBulletFactory(Vec2 posInit, List<List<? extends AbstractAircraft>> allEnemyAircrafts) {
+        super(posInit);
         allEnemyAircrafts.forEach(enemyAircrafts::addAll);
     }
 
     private BaseBullet createDirectBullet(int index, int shootNum) {
         Vec2 posCopy = getPosition().copy();
         return new HeroBullet(
-                config,
                 posCopy,
                 new AnimateContainerFactory(
                         AnimateContainerFactory.ContainerType.ConstSpeed,
@@ -47,7 +45,6 @@ public class HeroBulletFactory extends BaseBulletFactory {
         for (int i = 0; i < required; i++) {
             Vec2 posCopy = getPosition().copy();
             res.add(new HeroBullet(
-                    config,
                     posCopy,
                     new AnimateContainerFactory(
                             AnimateContainerFactory.ContainerType.ConstSpeedToTarget,

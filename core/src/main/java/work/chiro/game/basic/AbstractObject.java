@@ -6,7 +6,6 @@ import work.chiro.game.aircraft.AbstractAircraft;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.compatible.XImage;
-import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.resource.ImageManager;
 import work.chiro.game.utils.Utils;
@@ -19,7 +18,7 @@ import work.chiro.game.vector.Vec2;
  *
  * @author hitsz
  */
-public abstract class AbstractFlyingObject {
+public abstract class AbstractObject {
 
     public Vec2 getPosition() {
         return position;
@@ -66,11 +65,6 @@ public abstract class AbstractFlyingObject {
     protected double height = -1;
 
     /**
-     * 此物体适用的配置信息
-     */
-    final protected AbstractConfig config;
-
-    /**
      * 是否为无敌状态
      */
     private boolean invincible = false;
@@ -85,14 +79,12 @@ public abstract class AbstractFlyingObject {
      */
     protected XImage<?> cachedImage = null;
 
-    public AbstractFlyingObject(
-            AbstractConfig config,
+    public AbstractObject(
             Vec2 posInit,
             AnimateContainer animateContainer,
             Vec2 sizeInit,
             Scale rotationInit,
             Scale alpha) {
-        this.config = config;
         this.position = posInit;
         this.animateContainer = animateContainer;
         this.size = sizeInit;
@@ -100,42 +92,37 @@ public abstract class AbstractFlyingObject {
         this.alpha = alpha == null ? new Scale(1.0) : alpha;
     }
 
-    public AbstractFlyingObject(
-            AbstractConfig config,
+    public AbstractObject(
             Vec2 posInit,
             AnimateContainer animateContainer,
             Vec2 sizeInit,
             Scale rotationInit) {
-        this(config, posInit, animateContainer, sizeInit, rotationInit, null);
+        this(posInit, animateContainer, sizeInit, rotationInit, null);
     }
 
-    public AbstractFlyingObject(
-            AbstractConfig config,
+    public AbstractObject(
             Vec2 posInit,
             AnimateContainer animateContainer,
             Vec2 sizeInit) {
-        this(config, posInit, animateContainer, sizeInit, null, null);
+        this(posInit, animateContainer, sizeInit, null, null);
     }
 
-    public AbstractFlyingObject(
-            AbstractConfig config,
+    public AbstractObject(
             Vec2 posInit,
             AnimateContainer animateContainer) {
-        this(config, posInit, animateContainer, null, null, null);
+        this(posInit, animateContainer, null, null, null);
     }
 
-    public AbstractFlyingObject(
-            AbstractConfig config,
+    public AbstractObject(
             Vec2 posInit,
             AnimateContainer animateContainer,
             Scale alpha) {
-        this(config, posInit, animateContainer, null, null, alpha);
+        this(posInit, animateContainer, null, null, alpha);
     }
 
-    public AbstractFlyingObject(
-            AbstractConfig config,
+    public AbstractObject(
             Vec2 posInit) {
-        this(config, posInit, new AnimateContainer(), null, null, null);
+        this(posInit, new AnimateContainer(), null, null, null);
     }
 
     protected Boolean checkInBoundary() {
@@ -167,21 +154,21 @@ public abstract class AbstractFlyingObject {
      * 横向，[x - width/2, x + width/2]
      * 纵向，[y - height/4, y + height/4]
      *
-     * @param abstractFlyingObject 撞击对方
+     * @param abstractObject 撞击对方
      * @return true: 我方被击中; false 我方未被击中
      */
-    public boolean crash(AbstractFlyingObject abstractFlyingObject, double locationX, double locationY, double width, double height) {
-        if (isInvincible() || abstractFlyingObject.isInvincible()) {
+    public boolean crash(AbstractObject abstractObject, double locationX, double locationY, double width, double height) {
+        if (isInvincible() || abstractObject.isInvincible()) {
             return false;
         }
         // 缩放因子，用于控制 y轴方向区域范围
         int factor = this instanceof AbstractAircraft ? 2 : 1;
-        int fFactor = abstractFlyingObject instanceof AbstractAircraft ? 2 : 1;
+        int fFactor = abstractObject instanceof AbstractAircraft ? 2 : 1;
 
-        double x = abstractFlyingObject.getLocationX();
-        double y = abstractFlyingObject.getLocationY();
-        double fWidth = abstractFlyingObject.getWidth();
-        double fHeight = abstractFlyingObject.getHeight();
+        double x = abstractObject.getLocationX();
+        double y = abstractObject.getLocationY();
+        double fWidth = abstractObject.getWidth();
+        double fHeight = abstractObject.getHeight();
 
         double w = (fWidth + width);
         double h = (fHeight / fFactor + height / factor) / 2;
@@ -189,8 +176,8 @@ public abstract class AbstractFlyingObject {
                 && y + h > locationY && y - h < locationY;
     }
 
-    public boolean crash(AbstractFlyingObject abstractFlyingObject) {
-        return crash(abstractFlyingObject, getLocationX(), getLocationY(), getWidth(), getHeight());
+    public boolean crash(AbstractObject abstractObject) {
+        return crash(abstractObject, getLocationX(), getLocationY(), getWidth(), getHeight());
     }
 
     public double getLocationX() {

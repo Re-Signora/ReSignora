@@ -8,7 +8,6 @@ import work.chiro.game.bullet.EnemyBulletFactory;
 import work.chiro.game.compatible.DrawColor;
 import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.compatible.XGraphics;
-import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
@@ -26,8 +25,8 @@ import work.chiro.game.vector.Vec2;
  * @author hitsz
  */
 public class BossEnemy extends AbstractAircraft {
-    public BossEnemy(AbstractConfig config, Vec2 posInit, AnimateContainer animateContainer, double hp) {
-        super(config, posInit, animateContainer, hp, 500);
+    public BossEnemy(Vec2 posInit, AnimateContainer animateContainer, double hp) {
+        super(posInit, animateContainer, hp, 500);
     }
 
     @Override
@@ -46,12 +45,12 @@ public class BossEnemy extends AbstractAircraft {
     @Override
     public LinkedList<BaseBullet> shoot() {
         LinkedList<BaseBullet> ret = new LinkedList<>();
-        ret.add(new EnemyBulletFactory(config, getPosition().copy(), EnemyBulletFactory.BulletType.Tracking).create());
+        ret.add(new EnemyBulletFactory(getPosition().copy(), EnemyBulletFactory.BulletType.Tracking).create());
         if (RunningConfig.difficulty == Difficulty.Medium || RunningConfig.difficulty == Difficulty.Hard) {
-            ret.add(new EnemyBulletFactory(config, getPosition().copy(), EnemyBulletFactory.BulletType.Direct).create());
+            ret.add(new EnemyBulletFactory(getPosition().copy(), EnemyBulletFactory.BulletType.Direct).create());
         }
         if (RunningConfig.difficulty == Difficulty.Hard) {
-            ret.add(new EnemyBulletFactory(config, getPosition().copy(), EnemyBulletFactory.BulletType.Scatter).create());
+            ret.add(new EnemyBulletFactory(getPosition().copy(), EnemyBulletFactory.BulletType.Scatter).create());
         }
         return ret;
     }
@@ -60,9 +59,9 @@ public class BossEnemy extends AbstractAircraft {
     public LinkedList<AbstractProp> dropProps() {
         LinkedList<AbstractProp> props = new LinkedList<>();
         double range = Constants.BOSS_DROP_RANGE;
-        props.add(new BloodPropFactory(config, getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
-        props.add(new BombPropFactory(config, getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
-        props.add(new BulletPropFactory(config, getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
+        props.add(new BloodPropFactory(getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
+        props.add(new BombPropFactory(getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
+        props.add(new BulletPropFactory(getPosition().plus(Utils.randomPosition(new Vec2(-range, 0), new Vec2(range, range)))).create());
         return props;
     }
 

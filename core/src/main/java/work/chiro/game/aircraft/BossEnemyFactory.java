@@ -3,7 +3,6 @@ package work.chiro.game.aircraft;
 import work.chiro.game.animate.AnimateContainerFactory;
 import work.chiro.game.basic.BasicCallback;
 import work.chiro.game.compatible.ResourceProvider;
-import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
@@ -29,22 +28,22 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
     }
 
     @Override
-    public BossEnemy create(AbstractConfig config) {
+    public BossEnemy create() {
         if (instance == null) {
-            config.getEnemyMagnification().update(Utils.getTimeMills());
-            config.getBossInitialHp().update(Utils.getTimeMills());
+            RunningConfig.config.getEnemyMagnification().update(Utils.getTimeMills());
+            RunningConfig.config.getEnemyMagnification().update(Utils.getTimeMills());
+            RunningConfig.config.getBossInitialHp().update(Utils.getTimeMills());
             ResourceProvider.getInstance().stopMusic(MusicType.BGM);
             ResourceProvider.getInstance().startMusic(MusicType.BGM_BOSS);
             synchronized (BossEnemyFactory.class) {
                 Vec2 posNew = new Vec2(0, 10);
                 instance = new BossEnemy(
-                        config,
                         posNew,
                         new AnimateContainerFactory(AnimateContainerFactory.ContainerType.ConstSpeedRebound, posNew)
-                                .setupSpeed(new Vec2(0.03 * config.getEnemyMagnification().getScaleNow().getX(), 0))
+                                .setupSpeed(new Vec2(0.03 * RunningConfig.config.getEnemyMagnification().getScaleNow().getX(), 0))
                                 .setupRange(new Vec2(0, 0))
                                 .setupRange2(new Vec2(RunningConfig.windowWidth, RunningConfig.windowHeight))
-                                .create(), config.getBossInitialHp().getScaleNow().getX());
+                                .create(), RunningConfig.config.getBossInitialHp().getScaleNow().getX());
             }
         }
         instance.setOnVanish(onVanish);

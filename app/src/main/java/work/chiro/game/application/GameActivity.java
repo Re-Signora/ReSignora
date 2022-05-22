@@ -26,7 +26,7 @@ import java.util.List;
 import work.chiro.game.aircraft.BossEnemy;
 import work.chiro.game.aircraft.BossEnemyFactory;
 import work.chiro.game.aircraft.HeroAircraftFactory;
-import work.chiro.game.basic.AbstractFlyingObject;
+import work.chiro.game.basic.AbstractObject;
 import work.chiro.game.basic.BasicCallback;
 import work.chiro.game.compatible.HeroControllerAndroidImpl;
 import work.chiro.game.compatible.HistoryImplAndroid;
@@ -47,7 +47,7 @@ public class GameActivity extends AppCompatActivity {
     private Typeface font;
 
     private void draw() {
-        List<List<? extends AbstractFlyingObject>> allObjects = game.getAllObjects();
+        List<List<? extends AbstractObject>> allObjects = game.getAllObjects();
         // Canvas canvas = surfaceHolder.lockCanvas();
         // 使用硬件加速
         Canvas canvas = surfaceHolder.lockHardwareCanvas();

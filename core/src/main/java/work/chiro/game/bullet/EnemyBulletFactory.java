@@ -1,14 +1,12 @@
 package work.chiro.game.bullet;
 
+import java.util.Random;
+
 import work.chiro.game.aircraft.HeroAircraftFactory;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.animate.AnimateContainerFactory;
-import work.chiro.game.config.AbstractConfig;
-import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.vector.Vec2;
-
-import java.util.Random;
 
 /**
  * @author Chiro
@@ -26,8 +24,8 @@ public class EnemyBulletFactory extends BaseBulletFactory {
     final private Random random = new Random();
     final private BulletType bulletType;
 
-    public EnemyBulletFactory(AbstractConfig config, Vec2 posInit, BulletType bulletType) {
-        super(config, posInit);
+    public EnemyBulletFactory(Vec2 posInit, BulletType bulletType) {
+        super(posInit);
         this.bulletType = bulletType;
     }
 
@@ -63,7 +61,6 @@ public class EnemyBulletFactory extends BaseBulletFactory {
     @Override
     public BaseBullet create() {
         return new EnemyBullet(
-                config,
                 getPosition(),
                 bulletType == BulletType.Direct ? getDirectAnimateContainer() :
                         bulletType == BulletType.Tracking ? getTrackingAnimateContainer() :

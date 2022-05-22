@@ -1,7 +1,7 @@
 package work.chiro.game.background;
 
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.basic.AbstractFlyingObject;
+import work.chiro.game.basic.AbstractObject;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.compatible.XImage;
 import work.chiro.game.config.RunningConfig;
@@ -12,7 +12,7 @@ import work.chiro.game.vector.Vec2;
  *
  * @author Chiro
  */
-public abstract class AbstractBackground extends AbstractFlyingObject {
+public abstract class AbstractBackground extends AbstractObject {
     private void init() {
         initImageFilename = getInitImageFilename();
 
@@ -22,12 +22,12 @@ public abstract class AbstractBackground extends AbstractFlyingObject {
     }
 
     public AbstractBackground(Vec2 posInit, AnimateContainer animateContainer) {
-        super(null, posInit, animateContainer, new Vec2(RunningConfig.windowWidth, RunningConfig.windowHeight));
+        super(posInit, animateContainer, new Vec2(RunningConfig.windowWidth, RunningConfig.windowHeight));
         init();
     }
 
     public AbstractBackground() {
-        super(null, new Vec2());
+        super(new Vec2());
         init();
     }
 

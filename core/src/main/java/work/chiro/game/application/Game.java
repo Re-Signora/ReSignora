@@ -23,11 +23,10 @@ import work.chiro.game.background.EasyBackground;
 import work.chiro.game.background.HardBackground;
 import work.chiro.game.background.MediumBackground;
 import work.chiro.game.background.OtherBackgroundFactory;
-import work.chiro.game.basic.AbstractFlyingObject;
+import work.chiro.game.basic.AbstractObject;
 import work.chiro.game.basic.BasicCallback;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.compatible.ResourceProvider;
-import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.ConfigFactory;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
@@ -53,7 +52,7 @@ public class Game {
     private final List<BaseBullet> heroBullets = new LinkedList<>();
     private final List<BaseBullet> enemyBullets = new LinkedList<>();
     private final List<AbstractProp> props = new LinkedList<>();
-    private final List<List<? extends AbstractFlyingObject>> allObjects = Arrays.asList(
+    private final List<List<? extends AbstractObject>> allObjects = Arrays.asList(
             backgrounds, heroBullets, heroAircrafts, enemyBullets, enemyAircrafts, bossAircrafts, props
     );
     private boolean gameOverFlag = false;
@@ -61,7 +60,6 @@ public class Game {
     private double nextBossScore;
     private Future<?> future = null;
     private final TimerController timerController = new TimerController();
-    private AbstractConfig config;
     private BasicCallback onFinish = null;
     private BasicCallback onPaint = null;
     private BasicCallback onFrame = null;
@@ -73,14 +71,14 @@ public class Game {
         enemyBullets.clear();
         enemyAircrafts.clear();
         props.clear();
-        config = new ConfigFactory(RunningConfig.difficulty).create();
-        heroAircraft = new HeroAircraftFactory().clearInstance().create(config);
+        RunningConfig.config = new ConfigFactory(RunningConfig.difficulty).create();
+        heroAircraft = new HeroAircraftFactory().clearInstance().create();
         heroAircrafts.clear();
         heroAircrafts.add(heroAircraft);
         bossAircrafts.clear();
         BossEnemyFactory.clearInstance();
         timerController.clear();
-        nextBossScore = RunningConfig.score + config.getBossScoreThreshold().getScaleNow().getX();
+        nextBossScore = RunningConfig.score + RunningConfig.config.getBossScoreThreshold().getScaleNow().getX();
 
         flushBackground();
     }
@@ -95,9 +93,9 @@ public class Game {
 
     public Game(HeroController heroController) {
         this.heroController = heroController;
-        config = new ConfigFactory(RunningConfig.difficulty).create();
-        nextBossScore = RunningConfig.score + config.getBossScoreThreshold().getScaleNow().getX();
-        heroAircraft = new HeroAircraftFactory().create(config);
+        RunningConfig.config = new ConfigFactory(RunningConfig.difficulty).create();
+        nextBossScore = RunningConfig.score + RunningConfig.config.getBossScoreThreshold().getScaleNow().getX();
+        heroAircraft = new HeroAircraftFactory().create();
         heroAircrafts.add(heroAircraft);
         flushBackground();
         Utils.getLogger().info("Game instance created!");
@@ -142,7 +140,7 @@ public class Game {
         ResourceProvider.getInstance().musicLoadAll();
         timerController.init(Utils.getTimeMills());
         // 英雄射击事件
-        timerController.add(new Timer(config.getHeroShoot(), () -> {
+        timerController.add(new Timer(RunningConfig.config.getHeroShoot(), () -> {
             if (RunningConfig.autoShoot) {
                 heroShoot();
             } else {
@@ -152,46 +150,46 @@ public class Game {
             }
         }));
         // 产生精英敌机事件
-        timerController.add(new Timer(config.getEliteCreate(), () -> {
+        timerController.add(new Timer(RunningConfig.config.getEliteCreate(), () -> {
             synchronized (enemyAircrafts) {
-                enemyAircrafts.add(new EliteEnemyFactory().create(config));
+                enemyAircrafts.add(new EliteEnemyFactory().create());
             }
         }));
         // 产生普通敌机事件
-        timerController.add(new Timer(config.getMobCreate(), () -> {
+        timerController.add(new Timer(RunningConfig.config.getMobCreate(), () -> {
             synchronized (enemyAircrafts) {
-                enemyAircrafts.add(new MobEnemyFactory().create(config));
+                enemyAircrafts.add(new MobEnemyFactory().create());
             }
         }));
         // 敌机射击事件
-        timerController.add(new Timer(config.getEnemyShoot(), () -> {
+        timerController.add(new Timer(RunningConfig.config.getEnemyShoot(), () -> {
             synchronized (enemyBullets) {
                 enemyAircrafts.forEach(enemyAircraft -> enemyBullets.addAll(enemyAircraft.shoot()));
             }
         }));
         // boss射击事件
-        timerController.add(new Timer(config.getBossShoot(), () -> {
+        timerController.add(new Timer(RunningConfig.config.getBossShoot(), () -> {
             synchronized (enemyBullets) {
                 bossAircrafts.forEach(bossEnemy -> enemyBullets.addAll(bossEnemy.shoot()));
             }
         }));
         // boss 生成事件
         timerController.add(new Timer(10, () -> {
-            config.getBossScoreThreshold().update(Utils.getTimeMills());
+            RunningConfig.config.getBossScoreThreshold().update(Utils.getTimeMills());
             if (RunningConfig.score > nextBossScore && bossAircrafts.isEmpty()) {
                 synchronized (bossAircrafts) {
                     bossAircrafts.add(new BossEnemyFactory(() -> {
-                        nextBossScore = config.getBossScoreThreshold().getScaleNow().getX() + RunningConfig.score;
+                        nextBossScore = RunningConfig.config.getBossScoreThreshold().getScaleNow().getX() + RunningConfig.score;
                         BossEnemyFactory.clearInstance();
-                    }).create(config));
+                    }).create());
                 }
             }
         }));
         // 输出当前 config
         if (RunningConfig.difficulty != Easy) {
-            timerController.add(new Timer(2000, () -> config.printNow()));
+            timerController.add(new Timer(2000, () -> RunningConfig.config.printNow()));
         } else {
-            Utils.getLogger().info("简单模式 Config 将不会改变: " + config);
+            Utils.getLogger().info("简单模式 Config 将不会改变: " + RunningConfig.config);
         }
     }
 
@@ -222,13 +220,13 @@ public class Game {
                 }
                 // 所有物体移动
                 synchronized (allObjects) {
-                    allObjects.forEach(objList -> objList.forEach(AbstractFlyingObject::forward));
+                    allObjects.forEach(objList -> objList.forEach(AbstractObject::forward));
                 }
                 // 撞击检测
                 crashCheckAction();
                 // 后处理
                 synchronized (allObjects) {
-                    allObjects.forEach(objList -> objList.removeIf(AbstractFlyingObject::notValid));
+                    allObjects.forEach(objList -> objList.removeIf(AbstractObject::notValid));
                 }
                 // 每个时刻重绘界面
                 if (onPaint != null) {
@@ -315,7 +313,7 @@ public class Game {
             // 英雄机 与 敌机 相撞
             if (heroAircraft.crash(enemyAircraft)) {
                 enemyAircraft.vanish(true);
-                heroAircraft.decreaseHp(config.getAircraftCrashDecreaseHp());
+                heroAircraft.decreaseHp(RunningConfig.config.getAircraftCrashDecreaseHp());
                 heroAircraft.startInvincibleState();
             }
         }
@@ -348,7 +346,7 @@ public class Game {
         }
     }
 
-    public List<List<? extends AbstractFlyingObject>> getAllObjects() {
+    public List<List<? extends AbstractObject>> getAllObjects() {
         return allObjects;
     }
 

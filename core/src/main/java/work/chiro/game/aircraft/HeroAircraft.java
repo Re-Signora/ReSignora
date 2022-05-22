@@ -5,7 +5,7 @@ import java.util.List;
 
 import work.chiro.game.animate.Animate;
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.basic.AbstractFlyingObject;
+import work.chiro.game.basic.AbstractObject;
 import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.HeroBulletFactory;
 import work.chiro.game.compatible.DrawColor;
@@ -33,9 +33,9 @@ public class HeroAircraft extends AbstractAircraft {
     private int shootNum = 1;
     final private AircraftHeroBox box;
 
-    public HeroAircraft(AbstractConfig config, Vec2 posInit, AnimateContainer animateContainer, Vec2 boxSize, double hp) {
-        super(config, posInit, animateContainer, hp, 0, new Scale(1));
-        box = new AircraftHeroBox(config, posInit, boxSize);
+    public HeroAircraft(Vec2 posInit, AnimateContainer animateContainer, Vec2 boxSize, double hp) {
+        super(posInit, animateContainer, hp, 0, new Scale(1));
+        box = new AircraftHeroBox(posInit, boxSize);
         startInvincibleState();
     }
 
@@ -91,14 +91,14 @@ public class HeroAircraft extends AbstractAircraft {
         LinkedList<BaseBullet> res = new LinkedList<>();
         for (int i = 0; i < shootNum; i++) {
             // 子弹发射位置相对飞机位置向前偏移
-            BaseBullet baseBullet = new HeroBulletFactory(config, getPosition().copy(), List.of()).create();
+            BaseBullet baseBullet = new HeroBulletFactory(getPosition().copy(), List.of()).create();
             res.add(baseBullet);
         }
         return res;
     }
 
     public LinkedList<BaseBullet> shoot(List<List<? extends AbstractAircraft>> allEnemyAircrafts) {
-        return new LinkedList<>(new HeroBulletFactory(config, getPosition(), allEnemyAircrafts).createMany(getShootNum()));
+        return new LinkedList<>(new HeroBulletFactory(getPosition(), allEnemyAircrafts).createMany(getShootNum()));
     }
 
     @Override
@@ -119,8 +119,8 @@ public class HeroAircraft extends AbstractAircraft {
     }
 
     @Override
-    public boolean crash(AbstractFlyingObject abstractFlyingObject) {
-        return box.crash(abstractFlyingObject);
+    public boolean crash(AbstractObject abstractObject) {
+        return box.crash(abstractObject);
     }
 
     @Override

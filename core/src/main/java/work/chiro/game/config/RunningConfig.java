@@ -15,6 +15,8 @@ public class RunningConfig {
     public static Boolean autoShoot = true;
     public static double score = 0;
 
+    public static AbstractConfig config = new EasyConfig();
+
     public static int windowWidth = 2400;
     public static int windowHeight = 1080;
 

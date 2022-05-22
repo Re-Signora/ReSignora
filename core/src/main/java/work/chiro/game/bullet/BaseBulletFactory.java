@@ -1,10 +1,9 @@
 package work.chiro.game.bullet;
 
-import work.chiro.game.config.AbstractConfig;
-import work.chiro.game.vector.Vec2;
-
 import java.util.Collections;
 import java.util.List;
+
+import work.chiro.game.vector.Vec2;
 
 /**
  * 子弹工厂接口
@@ -18,12 +17,9 @@ public abstract class BaseBulletFactory {
 
     protected final Vec2 position;
 
-    BaseBulletFactory(AbstractConfig config, Vec2 posInit) {
-        this.config = config;
+    BaseBulletFactory(Vec2 posInit) {
         this.position = posInit;
     }
-
-    protected final AbstractConfig config;
 
     /**
      * 创建新的子弹
