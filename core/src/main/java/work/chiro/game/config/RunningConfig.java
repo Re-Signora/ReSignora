@@ -7,6 +7,7 @@ package work.chiro.game.config;
  */
 public class RunningConfig {
     public static boolean debug = true;
+    // public static boolean debug = false;
 
     public static Difficulty difficulty = Difficulty.Easy;
     // public static Boolean musicEnable = true;

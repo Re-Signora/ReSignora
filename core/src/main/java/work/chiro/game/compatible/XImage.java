@@ -1,7 +1,13 @@
 package work.chiro.game.compatible;
 
-public interface XImage<T> {
-    int getWidth();
-    int getHeight();
-    T getImage();
+public abstract class XImage<T> {
+    public abstract int getWidth();
+
+    public abstract int getHeight();
+
+    public abstract T getImage();
+
+    public boolean isScaled() {
+        return false;
+    }
 }

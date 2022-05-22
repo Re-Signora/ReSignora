@@ -8,7 +8,6 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.awt.image.VolatileImage;
 
 import work.chiro.game.application.GamePanel;
 import work.chiro.game.config.RunningConfig;
@@ -21,10 +20,11 @@ public abstract class XGraphicsPC implements XGraphics {
 
     @Override
     public XImage<?> drawImage(XImage<?> image, double x, double y) {
+        double scale = image.isScaled() ? 1.0 : GamePanel.getScale();
         AffineTransform af = AffineTransform
                 .getTranslateInstance(x * GamePanel.getScale(), y * GamePanel.getScale());
-        af.scale(GamePanel.getScale(), GamePanel.getScale());
-        af.rotate(rotation, image.getWidth() * GamePanel.getScale() / 2, image.getHeight() * GamePanel.getScale() / 2);
+        af.scale(scale, scale);
+        af.rotate(rotation, image.getWidth() * scale / 2, image.getHeight() * scale / 2);
         Graphics2D graphics2D = getGraphics();
         graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) alpha));
         graphics2D.drawImage((Image) image.getImage(), af, null);
@@ -36,15 +36,17 @@ public abstract class XGraphicsPC implements XGraphics {
         if (x + w < 0 || y + h < 0 || x > RunningConfig.windowWidth || y > RunningConfig.windowHeight) {
             return image;
         }
-        if (image.getWidth() != (int) w || image.getHeight() != (int) h) {
+        if ((image.getWidth() != (int) w || image.getHeight() != (int) h) && !image.isScaled()) {
             Utils.getLogger().warn("flush image cache!");
-            BufferedImage raw = (BufferedImage) image.getImage();
+            Image raw = (Image) image.getImage();
             Image resizedImage = raw.getScaledInstance((int) w, (int) h, Image.SCALE_DEFAULT);
-            VolatileImage bufferedImage = getXGraphicsConfiguration().createCompatibleVolatileImage((int) w, (int) h);
+            // 硬件加速
+            // VolatileImage bufferedImage = getXGraphicsConfiguration().createCompatibleVolatileImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()));
+            BufferedImage bufferedImage = getXGraphicsConfiguration().createCompatibleImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()));
             Graphics2D g = bufferedImage.createGraphics();
             g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                     RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-            g.drawImage(resizedImage, 0, 0, (int) w, (int) h, null);
+            g.drawImage(resizedImage, 0, 0, (int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()), null);
             g.dispose();
             return drawImage(new XImage<>() {
                 @Override
@@ -58,8 +60,13 @@ public abstract class XGraphicsPC implements XGraphics {
                 }
 
                 @Override
-                public VolatileImage getImage() {
+                public BufferedImage getImage() {
                     return bufferedImage;
+                }
+
+                @Override
+                public boolean isScaled() {
+                    return true;
                 }
             }, x, y);
         } else {
