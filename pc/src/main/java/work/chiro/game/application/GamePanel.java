@@ -28,6 +28,7 @@ import work.chiro.game.history.HistoryObjectFactory;
 import work.chiro.game.resource.ImageManager;
 import work.chiro.game.scene.SceneRun;
 import work.chiro.game.timer.Timer;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.windows.HistoryWindow;
 
 /**
@@ -136,6 +137,7 @@ public class GamePanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        double timeStart = Utils.getTimeMills();
         BufferedImage thisFrame = getGraphicsConfiguration().createCompatibleImage(RunningConfig.windowWidth, RunningConfig.windowHeight);
         Graphics2D graphicsNew = thisFrame.createGraphics();
 
@@ -153,21 +155,31 @@ public class GamePanel extends JPanel {
         synchronized (allObjects) {
             allObjects.forEach(objList -> {
                 //noinspection SynchronizationOnLocalVariableOrMethodParameter
+                double s = Utils.getTimeMills();
                 synchronized (objList) {
                     objList.forEach(obj -> obj.draw(xGraphics));
                 }
+                double e = Utils.getTimeMills();
+                System.out.printf("\t-- %d: %s\n", (int) (e - s), objList.toString());
             });
         }
 
+        double timePaint = Utils.getTimeMills();
+
         //绘制得分和生命值
         paintInfo(graphicsNew);
+
+        double timePaintInfo = Utils.getTimeMills();
 
         // resize 到显示帧
         AffineTransform af = AffineTransform.getScaleInstance(scale, scale);
         Graphics2D g2d = (Graphics2D) g;
         // g.drawImage(thisFrame, 0, 0, null);
         g2d.drawRenderedImage(thisFrame, af);
+        double timeResize = Utils.getTimeMills();
         g2d.dispose();
+        graphicsNew.dispose();
+        System.out.printf("paint -- object: %f, info: %f, resize: %f\n", timePaint - timeStart, timePaintInfo - timePaint, timeResize - timePaintInfo);
     }
 
     private void paintInfo(Graphics g) {
