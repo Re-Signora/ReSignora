@@ -15,12 +15,14 @@ public class XLayoutBuilder {
     public XLayout build(XLayoutBean layoutBean) {
         XLayout layout = new XLayout(layoutName)
                 .setBackground(layoutBean.background);
-        layoutBean.views.forEach(viewBean -> layout.addView(new XView(
-                new Vec2(viewBean.position.get(0), viewBean.position.get(1))
-        ) {
-        }.setId(viewBean.id)
-                .setText(viewBean.text)
-                .setImageResource(viewBean.image)));
+        layoutBean.views.forEach(viewBean -> layout.addView(new XViewBuilder(
+                        XView.stringToType(viewBean.type),
+                        new Vec2(viewBean.position.get(0), viewBean.position.get(1))
+                ).build()
+                        .setId(viewBean.id)
+                        .setText(viewBean.text)
+                        .setImageResource(viewBean.image)
+        ));
         return layout;
     }
 

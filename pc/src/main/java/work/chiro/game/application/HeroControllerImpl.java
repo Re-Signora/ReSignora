@@ -51,6 +51,7 @@ public class HeroControllerImpl implements HeroController {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
+                // Utils.getLogger().info("mouseDragged!");
                 HeroAircraft heroAircraft = HeroAircraftFactory.getInstance();
                 if (heroAircraft != null) {
                     heroAircraft.setPosition(new Vec2().fromVector(new Vec2(Utils.setInRange(e.getX(), 0, RunningConfig.windowWidth), Utils.setInRange(e.getY(), 0, RunningConfig.windowHeight)).divide(GamePanel.getScale())));
@@ -60,7 +61,14 @@ public class HeroControllerImpl implements HeroController {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
+                Utils.getLogger().info("mousePressed!");
                 game.requestFocus();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                Utils.getLogger().info("mouseReleased!");
             }
         };
 

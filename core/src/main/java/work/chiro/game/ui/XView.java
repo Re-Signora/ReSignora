@@ -9,11 +9,12 @@ import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
-public abstract class XView extends AbstractObject {
+public class XView extends AbstractObject {
     protected String text = "";
     protected String id = "View" + Utils.idGenerator();
     private final Map<XEventType, XViewCallback> listeners = new HashMap<>();
-    private String imageResource = null;
+    protected String imageResource = null;
+    protected XViewType type;
 
     public XView(Vec2 posInit, Vec2 sizeInit) {
         super(posInit, new AnimateContainer(), sizeInit);
@@ -35,6 +36,11 @@ public abstract class XView extends AbstractObject {
 
     public XView setId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public XView setType(XViewType viewType) {
+        this.type = viewType;
         return this;
     }
 
@@ -69,5 +75,14 @@ public abstract class XView extends AbstractObject {
     @Override
     public void vanish() {
         // 不会消失
+    }
+
+    private final static Map<String, XViewType> viewTypeStringMap = Map.of(
+            "View", XViewType.View,
+            "Button", XViewType.Button
+    );
+
+    public static XViewType stringToType(String type) {
+        return viewTypeStringMap.get(type);
     }
 }
