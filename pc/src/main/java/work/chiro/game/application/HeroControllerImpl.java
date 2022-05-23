@@ -23,14 +23,11 @@ public class HeroControllerImpl implements HeroController {
     final static double MOVE_SPEED = 1;
 
     static public class KeyCode {
-        public final static int UP = 38;
-        public final static int DOWN = 40;
-        public final static int LEFT = 37;
-        public final static int RIGHT = 39;
-        public final static int SLOW = 16;
-        public final static int BUFF = 88;
-        public final static int SHOOT = 90;
-        public final static int QUIT = 81;
+        public final static int UP = KeyEvent.VK_W;
+        public final static int DOWN = KeyEvent.VK_S;
+        public final static int LEFT = KeyEvent.VK_A;
+        public final static int RIGHT = KeyEvent.VK_D;
+        public final static int QUIT = KeyEvent.VK_ENTER;
     }
 
     final private Set<Integer> pressedKeys = new HashSet<>();
@@ -86,9 +83,7 @@ public class HeroControllerImpl implements HeroController {
         double now = Utils.getTimeMills();
         double frameTime = now - lastFrameTime;
         Vec2 next = new Vec2();
-        double scaleFast = 0.26;
-        double scaleSlow = 0.1;
-        double scale = pressed(KeyCode.SLOW) ? scaleSlow : scaleFast;
+        double scale = 0.26;
         for (int pressedKey : pressedKeys) {
             switch (pressedKey) {
                 case KeyCode.UP:
@@ -134,6 +129,6 @@ public class HeroControllerImpl implements HeroController {
     }
 
     public boolean isShootPressed() {
-        return pressed(KeyCode.SHOOT);
+        return true;
     }
 }
