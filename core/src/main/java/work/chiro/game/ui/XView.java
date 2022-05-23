@@ -19,10 +19,7 @@ public class XView extends AbstractObject {
     private final Map<XEventType, XViewCallback> listeners = new HashMap<>();
     protected String imageResource = null;
     protected XViewType type;
-
-    // public XView(Vec2 posInit, Vec2 sizeInit) {
-    //     super(posInit, new AnimateContainer(), sizeInit);
-    // }
+    private boolean isEntered = false;
 
     public XView(Vec2 posInit) {
         super(posInit, new AnimateContainer());
@@ -69,6 +66,10 @@ public class XView extends AbstractObject {
         return addListener(XEventType.Enter, callback);
     }
 
+    public XView setOnLeft(XViewCallback callback) {
+        return addListener(XEventType.Left, callback);
+    }
+
     @Override
     protected String getImageFilename() {
         if (imageResource == null)
@@ -110,5 +111,18 @@ public class XView extends AbstractObject {
         } catch (ArrayIndexOutOfBoundsException e) {
             return false;
         }
+    }
+
+    public void setEntered(boolean entered) {
+        isEntered = entered;
+        if (entered) {
+            trigger(new XEvent(XEventType.Enter));
+        } else {
+            trigger(new XEvent(XEventType.Left));
+        }
+    }
+
+    public boolean isEntered() {
+        return isEntered;
     }
 }

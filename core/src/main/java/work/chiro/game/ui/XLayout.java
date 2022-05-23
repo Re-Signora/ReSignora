@@ -86,14 +86,31 @@ public class XLayout extends ArrayList<XView> {
         return this;
     }
 
-    public void actionPointerDragged(Vec2 pos) {
+    public void actionPointerPressed(Vec2 pos) {
+        actionPointerDragged(pos);
+    }
 
+    public void actionPointerDragged(Vec2 pos) {
+        forEach(view -> {
+            if (view.isIn(pos.minus(view.getPosition()))) {
+                if (!view.isEntered()) {
+                    view.setEntered(true);
+                }
+            } else {
+                if (view.isEntered()) {
+                    view.setEntered(false);
+                }
+            }
+        });
     }
 
     public void actionPointerRelease(Vec2 pos) {
         forEach(view -> {
             if (view.isIn(pos.minus(view.getPosition()))) {
                 view.trigger(new XEvent(XEventType.Click));
+                if (view.isEntered()) {
+                    view.setEntered(false);
+                }
             }
         });
     }

@@ -44,7 +44,7 @@ public abstract class AbstractObject {
     /**
      * 透明度 (0~1)
      */
-    private final Scale alpha;
+    private Scale alpha;
 
     /**
      * 图片,
@@ -367,6 +367,10 @@ public abstract class AbstractObject {
 
     public Scale getAlpha() {
         return alpha;
+    }
+
+    public void setAlpha(Scale alpha) {
+        this.alpha = alpha;
     }
 }
 
