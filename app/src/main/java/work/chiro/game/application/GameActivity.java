@@ -41,10 +41,14 @@ import work.chiro.game.utils.Utils;
 
 public class GameActivity extends AppCompatActivity {
     private SurfaceHolder surfaceHolder;
-    private Game game = null;
+    private static Game game = null;
     SurfaceView surfaceView = null;
     private final HeroControllerAndroidImpl heroControllerAndroid = new HeroControllerAndroidImpl();
     private Typeface font;
+
+    public static Game getGame() {
+        return game;
+    }
 
     private void draw() {
         List<List<? extends AbstractObject>> allObjects = game.getAllObjects();
