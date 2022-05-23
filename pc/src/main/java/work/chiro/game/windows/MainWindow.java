@@ -35,26 +35,12 @@ public class MainWindow extends AbstractSceneClient {
     }
 
     public MainWindow() {
-        JButton easyModeButton = new JButton();
-        easyModeButton.addActionListener(e -> {
+        JButton startButton = new JButton();
+        startButton.addActionListener(e -> {
             RunningConfig.difficulty = Difficulty.Easy;
             nextScene(GameWindow.class);
         });
-        easyModeButton.setText("简单模式");
-
-        JButton mediumModeButton = new JButton();
-        mediumModeButton.addActionListener(e -> {
-            RunningConfig.difficulty = Difficulty.Medium;
-            nextScene(GameWindow.class);
-        });
-        mediumModeButton.setText("普通模式");
-
-        JButton hardModeButton = new JButton();
-        hardModeButton.addActionListener(e -> {
-            RunningConfig.difficulty = Difficulty.Hard;
-            nextScene(GameWindow.class);
-        });
-        hardModeButton.setText("困难模式");
+        startButton.setText("开始游戏");
 
         JButton historyButton = new JButton();
         historyButton.addActionListener(e -> {
@@ -88,9 +74,7 @@ public class MainWindow extends AbstractSceneClient {
         autoShootCheckBox.setSelected(RunningConfig.autoShoot);
         JPanel innerPanel = new JPanel();
         innerPanel.setLayout(new GridLayout(5, 1, 10, 8));
-        innerPanel.add(easyModeButton);
-        innerPanel.add(mediumModeButton);
-        innerPanel.add(hardModeButton);
+        innerPanel.add(startButton);
         JPanel checkBoxPanel = new JPanel();
         checkBoxPanel.add(musicOnCheckBox);
         checkBoxPanel.add(autoShootCheckBox);

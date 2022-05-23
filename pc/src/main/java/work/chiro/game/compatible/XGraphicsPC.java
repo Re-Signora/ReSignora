@@ -14,6 +14,7 @@ import work.chiro.game.application.GamePanel;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.config.RunningConfigPC;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.vector.Vec2;
 
 public abstract class XGraphicsPC implements XGraphics {
     double alpha = 1.0;
@@ -78,6 +79,11 @@ public abstract class XGraphicsPC implements XGraphics {
                     @Override
                     public boolean isScaled() {
                         return true;
+                    }
+
+                    @Override
+                    public int getPixel(Vec2 pos) {
+                        return im.getSnapshot().getRGB((int) pos.getX(), (int) pos.getY());
                     }
                 }, x, y);
             } else {

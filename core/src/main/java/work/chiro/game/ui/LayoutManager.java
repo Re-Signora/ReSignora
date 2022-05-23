@@ -9,7 +9,7 @@ public class LayoutManager {
     static private final List<String> layoutNames = List.of("main");
     static private LayoutManager instance = null;
     private final Map<String, XLayout> layouts;
-    private final Map<String, Optional<XView>> viewIDMap = new HashMap<>();
+    private static final Map<String, Optional<XView>> viewIDMap = new HashMap<>();
 
     public static LayoutManager getInstance() {
         if (instance == null) {
@@ -28,7 +28,7 @@ public class LayoutManager {
         });
     }
 
-    public Map<String, Optional<XView>> getViewIDMap() {
+    static public Map<String, Optional<XView>> getViewIDMap() {
         return viewIDMap;
     }
 
@@ -36,7 +36,7 @@ public class LayoutManager {
         return layouts.get(name);
     }
 
-    public Optional<XView> getViewByID(String id) {
+    public static Optional<XView> getViewByID(String id) {
         return viewIDMap.get(id);
     }
 }

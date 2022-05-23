@@ -39,7 +39,7 @@ public class XView extends AbstractObject {
 
     public XView setId(String id) {
         this.id = id;
-        LayoutManager.getInstance().getViewIDMap().put(id, Optional.of(this));
+        LayoutManager.getViewIDMap().put(id, Optional.of(this));
         return this;
     }
 
