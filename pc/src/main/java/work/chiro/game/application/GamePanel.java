@@ -139,7 +139,6 @@ public class GamePanel extends JPanel {
      */
     @Override
     public void paint(Graphics g) {
-        super.paint(g);
         double timeStart = Utils.getTimeMills();
         // VolatileImage thisFrame = getGraphicsConfiguration().createCompatibleVolatileImage(RunningConfig.windowWidth, RunningConfig.windowHeight);
         VolatileImage thisFrame = getGraphicsConfiguration().createCompatibleVolatileImage(RunningConfigPC.displayWindowWidth, RunningConfigPC.displayWindowHeight);
