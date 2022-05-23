@@ -92,7 +92,7 @@ public class XLayout extends ArrayList<XView> {
 
     public void actionPointerRelease(Vec2 pos) {
         forEach(view -> {
-            if (view.isIn(pos)) {
+            if (view.isIn(pos.minus(view.getPosition()))) {
                 view.trigger(new XEvent(XEventType.Click));
             }
         });

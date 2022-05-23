@@ -82,7 +82,7 @@ public abstract class XGraphicsPC implements XGraphics {
                     }
 
                     @Override
-                    public int getPixel(Vec2 pos) {
+                    public int getPixel(Vec2 pos) throws ArrayIndexOutOfBoundsException {
                         return im.getSnapshot().getRGB((int) pos.getX(), (int) pos.getY());
                     }
                 }, x, y);

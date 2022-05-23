@@ -71,7 +71,7 @@ public class HeroControllerImpl implements HeroController {
                 super.mouseReleased(e);
                 Utils.getLogger().info("mouseReleased! {}", e);
                 GameWindow.getInstance().getGamePanel().getGame().getLayout().actionPointerRelease(
-                        new Vec2(e.getX(), e.getY())
+                        new Vec2().fromVector(new Vec2(e.getX(), e.getY()).divide(GamePanel.getScale()))
                 );
             }
         };

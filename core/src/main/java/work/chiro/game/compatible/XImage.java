@@ -13,5 +13,5 @@ public abstract class XImage<T> {
         return false;
     }
 
-    public abstract int getPixel(Vec2 pos);
+    public abstract int getPixel(Vec2 pos) throws ArrayIndexOutOfBoundsException;
 }

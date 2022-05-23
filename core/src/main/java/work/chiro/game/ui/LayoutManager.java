@@ -36,7 +36,8 @@ public class LayoutManager {
         return layouts.get(name);
     }
 
-    public static Optional<XView> getViewByID(String id) {
-        return viewIDMap.get(id);
+    public static XView getViewByID(String id) {
+        Optional<XView> d = viewIDMap.get(id);
+        return d.orElse(null);
     }
 }

@@ -24,7 +24,7 @@ public class XImageFactoryPC implements XImageFactoryInterface<BufferedImage> {
             }
 
             @Override
-            public int getPixel(Vec2 pos) {
+            public int getPixel(Vec2 pos) throws ArrayIndexOutOfBoundsException {
                 return image.getRGB((int) pos.getX(), (int) pos.getY());
             }
         };
@@ -53,7 +53,7 @@ public class XImageFactoryPC implements XImageFactoryInterface<BufferedImage> {
             }
 
             @Override
-            public int getPixel(Vec2 pos) {
+            public int getPixel(Vec2 pos) throws ArrayIndexOutOfBoundsException {
                 return image.getRGB((int) pos.getX(), (int) pos.getY());
             }
         };

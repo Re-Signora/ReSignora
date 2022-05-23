@@ -24,7 +24,7 @@ public class XImageFactoryAndroid implements XImageFactoryInterface<Bitmap> {
             }
 
             @Override
-            public int getPixel(Vec2 pos) {
+            public int getPixel(Vec2 pos) throws ArrayIndexOutOfBoundsException {
                 // return image.getColor((int) pos.getX(), (int) pos.getY()).toArgb();
                 return image.getPixel((int) pos.getX(), (int) pos.getY());
             }

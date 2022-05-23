@@ -1,6 +1,7 @@
 package work.chiro.game.ui;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -96,10 +97,18 @@ public class XView extends AbstractObject {
 
     public boolean isIn(Vec2 pos) {
         XImage<?> im = getImage();
+        Utils.getLogger().info("isIn({})", pos);
         if (im == null) {
             Utils.getLogger().warn("empty image when isIn({})", pos);
             return false;
         }
-        return (im.getPixel(pos) & 0xFF000000) > Constants.UI_CLICK_ALPHA_THRESHOLD;
+        try {
+            int pixel = im.getPixel(pos);
+            int alpha = pixel >> 24 & 0xff;
+            Utils.getLogger().warn("isIn({}) got alpha: {} pixel: {}", pos, String.format(Locale.CHINA, "0x%02x", alpha), String.format(Locale.CHINA, "0x%08x", pixel));
+            return alpha > Constants.UI_CLICK_ALPHA_THRESHOLD;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        }
     }
 }

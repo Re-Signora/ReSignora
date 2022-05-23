@@ -33,6 +33,7 @@ import work.chiro.game.thread.MyThreadFactory;
 import work.chiro.game.timer.Timer;
 import work.chiro.game.timer.TimerController;
 import work.chiro.game.ui.LayoutManager;
+import work.chiro.game.ui.XButton;
 import work.chiro.game.ui.XLayout;
 import work.chiro.game.utils.Utils;
 
@@ -100,6 +101,10 @@ public class Game {
         layout.replaceLayout(LayoutManager.getInstance().getLayout("main"));
         flushBackground();
         Utils.getLogger().info("Game instance created!");
+
+        XButton buttonStory = (XButton) LayoutManager.getViewByID("buttonStoryMode");
+        Utils.getLogger().info("buttonStory: {}", buttonStory);
+        buttonStory.setOnClick((xView, xEvent) -> Utils.getLogger().info("story button click: {}, {}", xView, xEvent));
     }
 
     public void flushBackground() {
