@@ -19,10 +19,7 @@ import work.chiro.game.aircraft.HeroAircraft;
 import work.chiro.game.aircraft.HeroAircraftFactory;
 import work.chiro.game.aircraft.MobEnemyFactory;
 import work.chiro.game.background.AbstractBackground;
-import work.chiro.game.background.EasyBackground;
-import work.chiro.game.background.HardBackground;
-import work.chiro.game.background.MediumBackground;
-import work.chiro.game.background.OtherBackgroundFactory;
+import work.chiro.game.background.BasicBackgroundFactory;
 import work.chiro.game.basic.AbstractObject;
 import work.chiro.game.basic.BasicCallback;
 import work.chiro.game.bullet.BaseBullet;
@@ -83,7 +80,6 @@ public class Game {
         timerController.clear();
         nextBossScore = RunningConfig.score + RunningConfig.config.getBossScoreThreshold().getScaleNow().getX();
         layout.replaceLayout(LayoutManager.getInstance().getLayout("main"));
-
         flushBackground();
     }
 
@@ -101,26 +97,14 @@ public class Game {
         nextBossScore = RunningConfig.score + RunningConfig.config.getBossScoreThreshold().getScaleNow().getX();
         heroAircraft = new HeroAircraftFactory().create();
         heroAircrafts.add(heroAircraft);
-        flushBackground();
         layout.replaceLayout(LayoutManager.getInstance().getLayout("main"));
+        flushBackground();
         Utils.getLogger().info("Game instance created!");
     }
 
     public void flushBackground() {
         backgrounds.clear();
-        switch (RunningConfig.difficulty) {
-            case Easy:
-                backgrounds.add(new OtherBackgroundFactory<>(new EasyBackground()).create());
-                break;
-            case Medium:
-                backgrounds.add(new OtherBackgroundFactory<>(new MediumBackground()).create());
-                break;
-            case Hard:
-                backgrounds.add(new OtherBackgroundFactory<>(new HardBackground()).create());
-                break;
-            default:
-                break;
-        }
+        backgrounds.add(new BasicBackgroundFactory(layout.getBackground()).create());
     }
 
     private void heroShoot() {

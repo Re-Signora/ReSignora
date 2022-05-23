@@ -5,6 +5,7 @@ import work.chiro.game.basic.AbstractObject;
 import work.chiro.game.compatible.XGraphics;
 import work.chiro.game.compatible.XImage;
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
 /**
@@ -13,12 +14,15 @@ import work.chiro.game.vector.Vec2;
  * @author Chiro
  */
 public abstract class AbstractBackground extends AbstractObject {
-    private void init() {
+    protected void init() {
         initImageFilename = getInitImageFilename();
+        Utils.getLogger().info("initImageFilename: {}", initImageFilename);
 
-        setSize(new Vec2(RunningConfig.windowWidth,
-                getScaledHeight(getImage(true).getWidth(), RunningConfig.windowWidth, getImage(true).getHeight())
-        ));
+        if (getImage(true) != null) {
+            setSize(new Vec2(RunningConfig.windowWidth,
+                    getScaledHeight(getImage(true).getWidth(), RunningConfig.windowWidth, getImage(true).getHeight())
+            ));
+        }
     }
 
     public AbstractBackground(Vec2 posInit, AnimateContainer animateContainer) {
@@ -69,7 +73,7 @@ public abstract class AbstractBackground extends AbstractObject {
      * @param animateContainer 动画容器
      * @return 生成新对象
      */
-    abstract AbstractBackground newInstance(Vec2 posInit, AnimateContainer animateContainer);
+    public abstract AbstractBackground newInstance(Vec2 posInit, AnimateContainer animateContainer);
 
     @Override
     protected Boolean keepImage() {
@@ -83,7 +87,7 @@ public abstract class AbstractBackground extends AbstractObject {
      *
      * @return 文件名
      */
-    abstract String getInitImageFilename();
+    public abstract String getInitImageFilename();
 
     @Override
     public String getImageFilename() {

@@ -1,7 +1,6 @@
 package work.chiro.game.ui;
 
 import java.io.IOException;
-import java.util.stream.Collectors;
 
 import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.vector.Vec2;
@@ -14,12 +13,12 @@ public class XLayoutBuilder {
     }
 
     public XLayout build(XLayoutBean layoutBean) {
-        XLayout layout = new XLayout();
+        XLayout layout = new XLayout(layoutName)
+                .setBackground(layoutBean.background);
         layoutBean.views.forEach(viewBean -> layout.addView(new XView(
                 new Vec2(viewBean.position.get(0), viewBean.position.get(1))
         ) {
         }.setId(viewBean.id)
-                .setBox(viewBean.box.stream().map(item -> new Vec2(item.get(0), item.get(1))).collect(Collectors.toList()))
                 .setText(viewBean.text)
                 .setImageResource(viewBean.image)));
         return layout;

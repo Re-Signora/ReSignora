@@ -15,7 +15,11 @@ import work.chiro.game.utils.Utils;
 public class ResourceProviderPC extends ResourceProvider {
     @Override
     public XImage<?> getImageFromResource(String path) throws IOException {
+        Utils.getLogger().info("getImageFromResource({})", path);
         BufferedImage bufferedImage = ImageIO.read(Objects.requireNonNull(Utils.class.getResourceAsStream("/images/" + path)));
+        if (bufferedImage == null) {
+            Utils.getLogger().warn("get image failed: {}", path);
+        }
         return new XImageFactoryPC().create(bufferedImage);
     }
 

@@ -1,7 +1,6 @@
 package work.chiro.game.ui;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import work.chiro.game.animate.AnimateContainer;
@@ -14,7 +13,6 @@ public abstract class XView extends AbstractObject {
     protected String text = "";
     protected String id = "View" + Utils.idGenerator();
     private final Map<XEventType, XViewCallback> listeners = new HashMap<>();
-    private List<Vec2> box = null;
     private String imageResource = null;
 
     public XView(Vec2 posInit, Vec2 sizeInit) {
@@ -37,11 +35,6 @@ public abstract class XView extends AbstractObject {
 
     public XView setId(String id) {
         this.id = id;
-        return this;
-    }
-
-    public XView setBox(List<Vec2> box) {
-        this.box = box;
         return this;
     }
 

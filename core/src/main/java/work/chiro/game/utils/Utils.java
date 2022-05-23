@@ -12,7 +12,6 @@ import work.chiro.game.bullet.BaseBullet;
 import work.chiro.game.bullet.EnemyBulletFactory;
 import work.chiro.game.compatible.ResourceProvider;
 import work.chiro.game.compatible.XImage;
-import work.chiro.game.config.AbstractConfig;
 import work.chiro.game.config.Difficulty;
 import work.chiro.game.logger.AbstractLogger;
 import work.chiro.game.vector.Vec2;
