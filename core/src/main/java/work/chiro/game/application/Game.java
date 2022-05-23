@@ -346,4 +346,8 @@ public class Game {
     public TimerController getTimerController() {
         return timerController;
     }
+
+    public XLayout getLayout() {
+        return layout;
+    }
 }

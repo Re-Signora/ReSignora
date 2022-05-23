@@ -19,4 +19,5 @@ public class Constants {
     public static final List<Double> HERO_ALPHA_DATA = List.of(0.3, 0.6, 0.8);
     public static final int BLOOD_PROP_INCREASE = 1000;
     public static final int ANDROID_SOUND_STREAM_MAX = 30;
+    public static final int UI_CLICK_ALPHA_THRESHOLD = 0x10;
 }

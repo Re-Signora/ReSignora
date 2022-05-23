@@ -47,6 +47,10 @@ public class GamePanel extends JPanel {
     private static double scale = 1.0;
     private static boolean justResized = false;
 
+    public Game getGame() {
+        return game;
+    }
+
     public static void setScale(double scale) {
         GamePanel.scale = scale;
     }

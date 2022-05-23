@@ -2,10 +2,13 @@ package work.chiro.game.ui;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.basic.AbstractObject;
 import work.chiro.game.compatible.XGraphics;
+import work.chiro.game.compatible.XImage;
+import work.chiro.game.config.Constants;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 
@@ -16,9 +19,9 @@ public class XView extends AbstractObject {
     protected String imageResource = null;
     protected XViewType type;
 
-    public XView(Vec2 posInit, Vec2 sizeInit) {
-        super(posInit, new AnimateContainer(), sizeInit);
-    }
+    // public XView(Vec2 posInit, Vec2 sizeInit) {
+    //     super(posInit, new AnimateContainer(), sizeInit);
+    // }
 
     public XView(Vec2 posInit) {
         super(posInit, new AnimateContainer());
@@ -36,6 +39,7 @@ public class XView extends AbstractObject {
 
     public XView setId(String id) {
         this.id = id;
+        LayoutManager.getInstance().getViewIDMap().put(id, Optional.of(this));
         return this;
     }
 
@@ -57,7 +61,11 @@ public class XView extends AbstractObject {
     }
 
     public XView setOnClick(XViewCallback callback) {
-        return addListener(XEventType.Touch, callback);
+        return addListener(XEventType.Click, callback);
+    }
+
+    public XView setOnEnter(XViewCallback callback) {
+        return addListener(XEventType.Enter, callback);
     }
 
     @Override
@@ -84,5 +92,14 @@ public class XView extends AbstractObject {
 
     public static XViewType stringToType(String type) {
         return viewTypeStringMap.get(type);
+    }
+
+    public boolean isIn(Vec2 pos) {
+        XImage<?> im = getImage();
+        if (im == null) {
+            Utils.getLogger().warn("empty image when isIn({})", pos);
+            return false;
+        }
+        return (im.getPixel(pos) & 0xFF000000) > Constants.UI_CLICK_ALPHA_THRESHOLD;
     }
 }

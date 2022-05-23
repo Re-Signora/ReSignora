@@ -12,6 +12,7 @@ import work.chiro.game.aircraft.HeroAircraftFactory;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.windows.GameWindow;
 
 /**
  * 英雄机控制类
@@ -61,14 +62,17 @@ public class HeroControllerImpl implements HeroController {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
-                Utils.getLogger().info("mousePressed!");
+                Utils.getLogger().info("mousePressed! {}", e);
                 game.requestFocus();
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-                Utils.getLogger().info("mouseReleased!");
+                Utils.getLogger().info("mouseReleased! {}", e);
+                GameWindow.getInstance().getGamePanel().getGame().getLayout().actionPointerRelease(
+                        new Vec2(e.getX(), e.getY())
+                );
             }
         };
 

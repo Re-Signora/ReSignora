@@ -1,5 +1,7 @@
 package work.chiro.game.compatible;
 
+import work.chiro.game.vector.Vec2;
+
 public abstract class XImage<T> {
     public abstract int getWidth();
 
@@ -10,4 +12,6 @@ public abstract class XImage<T> {
     public boolean isScaled() {
         return false;
     }
+
+    public abstract int getPixel(Vec2 pos);
 }

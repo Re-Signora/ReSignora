@@ -3,6 +3,7 @@ package work.chiro.game.ui;
 import java.util.ArrayList;
 
 import work.chiro.game.compatible.XGraphics;
+import work.chiro.game.vector.Vec2;
 
 public class XLayout extends ArrayList<XView> {
     private String name;
@@ -83,5 +84,17 @@ public class XLayout extends ArrayList<XView> {
     public XLayout clearView() {
         clear();
         return this;
+    }
+
+    public void actionPointerDragged(Vec2 pos) {
+
+    }
+
+    public void actionPointerRelease(Vec2 pos) {
+        forEach(view -> {
+            if (view.isIn(pos)) {
+                view.trigger(new XEvent(XEventType.Click));
+            }
+        });
     }
 }
