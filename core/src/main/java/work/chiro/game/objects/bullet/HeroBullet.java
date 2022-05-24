@@ -13,6 +13,6 @@ public class HeroBullet extends BaseBullet {
 
     @Override
     protected String getImageFilename() {
-        return "characters/la-signora/butterfly.png";
+        return "characters/la-signora/attack.png";
     }
 }

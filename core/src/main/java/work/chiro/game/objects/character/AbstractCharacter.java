@@ -10,12 +10,13 @@ import work.chiro.game.vector.Vec2;
 public abstract class AbstractCharacter extends AbstractFlyingObject {
     final private String labelName;
     final private CharacterBasicAttributes basicAttributes;
-
+    private String imageDisplaying;
 
     public AbstractCharacter(String labelName, Vec2 posInit, AnimateContainer animateContainer, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super(posInit, animateContainer, sizeInit, rotationInit, alpha);
         this.labelName = labelName;
         basicAttributes = AttributesBuilder.buildFromResource(labelName, CharacterBasicAttributes.class);
+        imageDisplaying = getSelfImageFilename();
     }
 
     public String getLabelName() {
@@ -28,5 +29,18 @@ public abstract class AbstractCharacter extends AbstractFlyingObject {
 
     public CharacterBasicAttributes getBasicAttributes() {
         return basicAttributes;
+    }
+
+    @Override
+    protected String getImageFilename() {
+        return imageDisplaying;
+    }
+
+    public void setImageDisplaying(String imageDisplaying) {
+        this.imageDisplaying = imageDisplaying;
+    }
+
+    public String getSelfImageFilename() {
+        return "characters/" + getLabelName() + "/self.png";
     }
 }

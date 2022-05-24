@@ -149,6 +149,6 @@ public class HeroAircraft extends AbstractAircraft {
 
     @Override
     protected String getImageFilename() {
-        return "characters/la-signora/la_signora.png";
+        return "characters/la-signora/self.png";
     }
 }
