@@ -1,5 +1,6 @@
 package work.chiro.game.application;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -9,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Map;
 
+import work.chiro.game.compatible.ResourceProvider;
+import work.chiro.game.compatible.ResourceProviderAndroid;
 import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
 
@@ -17,6 +20,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ResourceProvider.setInstance(new ResourceProviderAndroid() {
+            @Override
+            protected Context getContext() {
+                return MainActivity.this;
+            }
+        });
 
         Map<Integer, Difficulty> buttonMap = Map.of(
                 R.id.button_mode_easy, Difficulty.Easy,
