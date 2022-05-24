@@ -2,10 +2,10 @@ package work.chiro.game.test;
 
 import org.junit.jupiter.api.Test;
 
-import work.chiro.game.compatible.ResourceProvider;
+import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.compatible.ResourceProviderPC;
-import work.chiro.game.ui.XLayout;
-import work.chiro.game.ui.XLayoutBuilder;
+import work.chiro.game.x.ui.XLayout;
+import work.chiro.game.x.ui.XLayoutBuilder;
 import work.chiro.game.utils.Utils;
 
 public class PCTest {

@@ -1,8 +1,8 @@
 package work.chiro.game.windows;
 
 import work.chiro.game.config.Difficulty;
-import work.chiro.game.history.HistoryImpl;
-import work.chiro.game.history.HistoryObject;
+import work.chiro.game.storage.history.HistoryImpl;
+import work.chiro.game.storage.history.HistoryObject;
 import work.chiro.game.scene.AbstractSceneClient;
 import work.chiro.game.utils.Utils;
 

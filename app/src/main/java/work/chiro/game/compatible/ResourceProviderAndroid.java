@@ -13,9 +13,11 @@ import java.util.Map;
 import work.chiro.game.application.R;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
-import work.chiro.game.logger.AbstractLogger;
+import work.chiro.game.x.logger.AbstractLogger;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.x.compatible.ResourceProvider;
+import work.chiro.game.x.compatible.XImage;
 
 public abstract class ResourceProviderAndroid extends ResourceProvider {
     @Override

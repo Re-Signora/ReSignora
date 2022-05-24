@@ -1,6 +1,6 @@
 package work.chiro.game.config;
 
-import work.chiro.game.timer.TimerLinearChange;
+import work.chiro.game.utils.timer.TimerLinearChange;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 

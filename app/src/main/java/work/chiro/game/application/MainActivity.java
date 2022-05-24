@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Map;
 
-import work.chiro.game.compatible.ResourceProvider;
+import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.compatible.ResourceProviderAndroid;
 import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;

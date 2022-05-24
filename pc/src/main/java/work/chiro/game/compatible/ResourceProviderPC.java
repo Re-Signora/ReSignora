@@ -11,6 +11,8 @@ import work.chiro.game.music.MusicManagerPC;
 import work.chiro.game.music.MusicThreadFactory;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.x.compatible.ResourceProvider;
+import work.chiro.game.x.compatible.XImage;
 
 public class ResourceProviderPC extends ResourceProvider {
     @Override

@@ -3,6 +3,8 @@ package work.chiro.game.compatible;
 import android.graphics.Bitmap;
 
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.compatible.XImage;
+import work.chiro.game.x.compatible.XImageFactoryInterface;
 
 public class XImageFactoryAndroid implements XImageFactoryInterface<Bitmap> {
     @Override

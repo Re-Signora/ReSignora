@@ -12,7 +12,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import work.chiro.game.compatible.ResourceProvider;
+import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.resource.MusicType;
 
 /**

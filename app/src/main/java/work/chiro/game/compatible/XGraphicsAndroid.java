@@ -6,6 +6,8 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 
 import work.chiro.game.utils.Utils;
+import work.chiro.game.x.compatible.XGraphics;
+import work.chiro.game.x.compatible.XImage;
 
 public abstract class XGraphicsAndroid implements XGraphics {
     static private float canvasScale = 1.0f;

@@ -23,20 +23,21 @@ import androidx.core.content.res.ResourcesCompat;
 
 import java.util.List;
 
-import work.chiro.game.aircraft.BossEnemy;
-import work.chiro.game.aircraft.BossEnemyFactory;
-import work.chiro.game.aircraft.HeroAircraftFactory;
-import work.chiro.game.basic.AbstractObject;
-import work.chiro.game.basic.BasicCallback;
+import work.chiro.game.objects.aircraft.BossEnemy;
+import work.chiro.game.objects.aircraft.BossEnemyFactory;
+import work.chiro.game.objects.aircraft.HeroAircraftFactory;
+import work.chiro.game.game.Game;
+import work.chiro.game.objects.AbstractObject;
+import work.chiro.game.utils.callback.BasicCallback;
 import work.chiro.game.compatible.HeroControllerAndroidImpl;
 import work.chiro.game.compatible.HistoryImplAndroid;
-import work.chiro.game.compatible.ResourceProvider;
+import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.compatible.ResourceProviderAndroid;
 import work.chiro.game.compatible.XGraphicsAndroid;
 import work.chiro.game.config.RunningConfig;
-import work.chiro.game.history.HistoryObjectFactory;
+import work.chiro.game.storage.history.HistoryObjectFactory;
 import work.chiro.game.resource.ImageManager;
-import work.chiro.game.thread.MyThreadFactory;
+import work.chiro.game.utils.thread.MyThreadFactory;
 import work.chiro.game.utils.Utils;
 
 public class GameActivity extends AppCompatActivity {

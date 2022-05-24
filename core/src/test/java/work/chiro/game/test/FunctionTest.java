@@ -3,8 +3,8 @@ package work.chiro.game.test;
 import org.junit.jupiter.api.Test;
 
 import work.chiro.game.config.RunningConfig;
-import work.chiro.game.logger.AbstractLogger;
-import work.chiro.game.logger.BasicLogger;
+import work.chiro.game.x.logger.AbstractLogger;
+import work.chiro.game.x.logger.BasicLogger;
 
 public class FunctionTest {
     AbstractLogger logger = new BasicLogger();

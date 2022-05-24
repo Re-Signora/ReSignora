@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import javax.swing.JFrame;
 
-import work.chiro.game.compatible.ResourceProvider;
+import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.compatible.ResourceProviderPC;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.config.RunningConfigPC;

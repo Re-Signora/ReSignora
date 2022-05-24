@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import work.chiro.game.resource.MusicType;
-import work.chiro.game.thread.MyThreadFactory;
+import work.chiro.game.utils.thread.MyThreadFactory;
 
 /**
  * @author Chiro

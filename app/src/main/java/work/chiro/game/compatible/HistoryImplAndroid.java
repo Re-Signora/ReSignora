@@ -12,8 +12,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import work.chiro.game.history.HistoryImpl;
-import work.chiro.game.history.HistoryObject;
+import work.chiro.game.storage.history.HistoryImpl;
+import work.chiro.game.storage.history.HistoryObject;
 import work.chiro.game.utils.Utils;
 
 public class HistoryImplAndroid extends HistoryImpl {

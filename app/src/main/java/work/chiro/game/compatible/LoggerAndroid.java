@@ -3,7 +3,7 @@ package work.chiro.game.compatible;
 import android.util.Log;
 
 import work.chiro.game.config.RunningConfig;
-import work.chiro.game.logger.AbstractLogger;
+import work.chiro.game.x.logger.AbstractLogger;
 
 public class LoggerAndroid implements AbstractLogger {
     static public final String TAG = "RE_SIGNORA";

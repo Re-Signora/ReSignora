@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import work.chiro.game.compatible.HistoryImplAndroid;
-import work.chiro.game.history.HistoryObject;
+import work.chiro.game.storage.history.HistoryObject;
 import work.chiro.game.utils.Utils;
 
 public class HistoryActivity extends AppCompatActivity {

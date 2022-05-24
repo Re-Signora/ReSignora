@@ -5,17 +5,17 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import work.chiro.game.aircraft.AircraftHeroBox;
-import work.chiro.game.aircraft.BossEnemy;
-import work.chiro.game.aircraft.EliteEnemy;
-import work.chiro.game.aircraft.HeroAircraft;
-import work.chiro.game.aircraft.MobEnemy;
-import work.chiro.game.bullet.EnemyBullet;
-import work.chiro.game.bullet.HeroBullet;
-import work.chiro.game.compatible.XImage;
-import work.chiro.game.prop.BloodProp;
-import work.chiro.game.prop.BombProp;
-import work.chiro.game.prop.BulletProp;
+import work.chiro.game.objects.aircraft.AircraftHeroBox;
+import work.chiro.game.objects.aircraft.BossEnemy;
+import work.chiro.game.objects.aircraft.EliteEnemy;
+import work.chiro.game.objects.aircraft.HeroAircraft;
+import work.chiro.game.objects.aircraft.MobEnemy;
+import work.chiro.game.objects.bullet.EnemyBullet;
+import work.chiro.game.objects.bullet.HeroBullet;
+import work.chiro.game.x.compatible.XImage;
+import work.chiro.game.objects.prop.BloodProp;
+import work.chiro.game.objects.prop.BombProp;
+import work.chiro.game.objects.prop.BulletProp;
 import work.chiro.game.utils.Utils;
 
 /**

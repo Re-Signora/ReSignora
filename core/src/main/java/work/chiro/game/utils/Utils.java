@@ -8,12 +8,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
-import work.chiro.game.bullet.BaseBullet;
-import work.chiro.game.bullet.EnemyBulletFactory;
-import work.chiro.game.compatible.ResourceProvider;
-import work.chiro.game.compatible.XImage;
+import work.chiro.game.objects.bullet.BaseBullet;
+import work.chiro.game.objects.bullet.EnemyBulletFactory;
+import work.chiro.game.x.compatible.ResourceProvider;
+import work.chiro.game.x.compatible.XImage;
 import work.chiro.game.config.Difficulty;
-import work.chiro.game.logger.AbstractLogger;
+import work.chiro.game.x.logger.AbstractLogger;
 import work.chiro.game.vector.Vec2;
 
 /**

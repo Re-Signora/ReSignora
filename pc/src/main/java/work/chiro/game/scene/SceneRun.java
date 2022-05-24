@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import work.chiro.game.thread.MyThreadFactory;
+import work.chiro.game.utils.thread.MyThreadFactory;
 import work.chiro.game.utils.Utils;
 
 /**

@@ -15,6 +15,8 @@ import work.chiro.game.config.RunningConfig;
 import work.chiro.game.config.RunningConfigPC;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.compatible.XGraphics;
+import work.chiro.game.x.compatible.XImage;
 
 public abstract class XGraphicsPC implements XGraphics {
     double alpha = 1.0;
