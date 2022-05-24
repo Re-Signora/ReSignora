@@ -131,7 +131,7 @@ public class Game {
         this.onFrame = onFrame;
     }
 
-    public void addEvents() {
+    public void addTimers() {
         ResourceProvider.getInstance().musicLoadAll();
         timerController.init(Utils.getTimeMills());
         // 英雄射击事件
@@ -246,7 +246,7 @@ public class Game {
     public void action() {
         Utils.getLogger().info("Game action start with difficulty: " + RunningConfig.difficulty);
         startedFlag = true;
-        addEvents();
+        addTimers();
         ResourceProvider.getInstance().startLoopMusic(MusicType.BGM);
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable mainTask = getMainTask();
