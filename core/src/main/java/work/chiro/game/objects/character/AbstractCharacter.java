@@ -6,7 +6,15 @@ import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 
 public abstract class AbstractCharacter extends AbstractFlyingObject {
-    public AbstractCharacter(Vec2 posInit, AnimateContainer animateContainer, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
+    final private String name;
+
+
+    public AbstractCharacter(String name, Vec2 posInit, AnimateContainer animateContainer, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super(posInit, animateContainer, sizeInit, rotationInit, alpha);
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }

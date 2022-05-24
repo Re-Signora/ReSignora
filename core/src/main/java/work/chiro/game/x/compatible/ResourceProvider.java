@@ -5,15 +5,15 @@ import com.google.gson.Gson;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import work.chiro.game.objects.character.attributes.BasicAttributes;
+import work.chiro.game.resource.MusicType;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.x.logger.AbstractLogger;
 import work.chiro.game.x.logger.BasicLogger;
-import work.chiro.game.resource.MusicType;
 import work.chiro.game.x.ui.XLayoutBean;
-import work.chiro.game.utils.Utils;
 
 public abstract class ResourceProvider {
     static private ResourceProvider instance = null;
@@ -54,22 +54,9 @@ public abstract class ResourceProvider {
         return byteArrayOutputStream.toByteArray();
     }
 
-    @SuppressWarnings("StringOperationCanBeSimplified")
     public XLayoutBean getLayoutBeanFromResource(String name) throws IOException {
-        InputStream fileInputStream = Utils.class.getResourceAsStream("/layout/" + name + ".json");
-        if (fileInputStream == null) {
-            throw new IOException("file: " + name + ".json not found!");
-        }
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        final int maxSize = 1024;
-        int len;
-        byte[] b = new byte[maxSize];
-        while ((len = fileInputStream.read(b)) != -1) {
-            byteArrayOutputStream.write(b, 0, len);
-        }
-        // String jsonString = byteArrayOutputStream.toString(StandardCharsets.UTF_8);
-        String jsonString = new String(byteArrayOutputStream.toByteArray(), StandardCharsets.UTF_8);
-        return new Gson().fromJson(jsonString, XLayoutBean.class);
+        String path = "/layout/" + name + ".json";
+        return new Gson().fromJson(Utils.getStringFromResource(path), XLayoutBean.class);
     }
 
     public abstract void musicLoadAll();
@@ -95,4 +82,9 @@ public abstract class ResourceProvider {
     protected Map<String, XFont<?>> cachedFont = new HashMap<>();
 
     public abstract XFont<?> getFont(String name);
+
+    public <T extends BasicAttributes> T getAttributesFromResource(String name, Class<T> clazz) throws IOException {
+        String path = "/config/characters/" + name + "/basic-attributes.json";
+        return new Gson().fromJson(Utils.getStringFromResource(path), clazz);
+    }
 }

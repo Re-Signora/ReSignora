@@ -1,7 +1,10 @@
 package work.chiro.game.utils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Locale;
@@ -104,5 +107,22 @@ public class Utils {
 
     public static int idGenerator() {
         return idNow++;
+    }
+
+    @SuppressWarnings("StringOperationCanBeSimplified")
+    public static String getStringFromResource(String path) throws IOException {
+        InputStream fileInputStream = Utils.class.getResourceAsStream(path);
+        if (fileInputStream == null) {
+            throw new IOException(path + " not found!");
+        }
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        final int maxSize = 1024;
+        int len;
+        byte[] b = new byte[maxSize];
+        while ((len = fileInputStream.read(b)) != -1) {
+            byteArrayOutputStream.write(b, 0, len);
+        }
+        // String str = byteArrayOutputStream.toString(StandardCharsets.UTF_8);
+        return new String(byteArrayOutputStream.toByteArray(), StandardCharsets.UTF_8);
     }
 }
