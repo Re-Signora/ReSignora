@@ -3,13 +3,13 @@ package work.chiro.game.objects.prop;
 import java.util.LinkedList;
 import java.util.List;
 
-import work.chiro.game.objects.aircraft.AbstractAircraft;
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.objects.AbstractObject;
+import work.chiro.game.objects.AbstractFlyingObject;
+import work.chiro.game.objects.aircraft.AbstractAircraft;
 import work.chiro.game.objects.bullet.BaseBullet;
-import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.compatible.ResourceProvider;
 
 /**
  * 道具类。
@@ -17,7 +17,7 @@ import work.chiro.game.vector.Vec2;
  *
  * @author hitsz
  */
-abstract public class AbstractProp extends AbstractObject {
+abstract public class AbstractProp extends AbstractFlyingObject {
     protected List<AbstractAircraft> enemyAircrafts = new LinkedList<>();
     protected List<BaseBullet> enemyBullets = new LinkedList<>();
 

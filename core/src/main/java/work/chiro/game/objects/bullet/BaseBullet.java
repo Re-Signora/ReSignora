@@ -1,7 +1,7 @@
 package work.chiro.game.objects.bullet;
 
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.objects.AbstractObject;
+import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.objects.prop.PropHandler;
 import work.chiro.game.vector.Vec2;
 
@@ -11,7 +11,7 @@ import work.chiro.game.vector.Vec2;
  *
  * @author hitsz
  */
-public class BaseBullet extends AbstractObject implements PropHandler {
+public class BaseBullet extends AbstractFlyingObject implements PropHandler {
 
     private final int power;
 

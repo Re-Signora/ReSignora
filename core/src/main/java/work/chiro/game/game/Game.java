@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import work.chiro.game.config.ConfigFactory;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.objects.AbstractObject;
 import work.chiro.game.objects.aircraft.AbstractAircraft;
 import work.chiro.game.objects.aircraft.BossEnemy;
@@ -55,8 +56,8 @@ public class Game {
     private final List<BaseBullet> enemyBullets = new LinkedList<>();
     private final List<AbstractProp> props = new LinkedList<>();
     private final XLayout layout = new XLayout();
-    private final List<List<? extends AbstractObject>> allObjects = Arrays.asList(
-            backgrounds, heroBullets, heroAircrafts, enemyBullets, enemyAircrafts, bossAircrafts, props, layout
+    private final List<List<? extends AbstractFlyingObject>> allFlyingObjects = Arrays.asList(
+            heroBullets, heroAircrafts, enemyBullets, enemyAircrafts, bossAircrafts, props
     );
     private boolean gameOverFlag = false;
     private double nextBossScore;
@@ -112,6 +113,10 @@ public class Game {
         });
         activityManager.startActivityWithBundle(HomeActivity.class);
         Utils.getLogger().info("Game instance created!");
+    }
+
+    public List<AbstractBackground> getBackgrounds() {
+        return backgrounds;
     }
 
     private void heroShoot() {
@@ -214,14 +219,14 @@ public class Game {
                     onFrame.run();
                 }
                 // 所有物体移动
-                synchronized (allObjects) {
-                    allObjects.forEach(objList -> objList.forEach(AbstractObject::forward));
+                synchronized (allFlyingObjects) {
+                    allFlyingObjects.forEach(objList -> objList.forEach(AbstractObject::forward));
                 }
                 // 撞击检测
                 crashCheckAction();
                 // 后处理
-                synchronized (allObjects) {
-                    allObjects.forEach(objList -> objList.removeIf(AbstractObject::notValid));
+                synchronized (allFlyingObjects) {
+                    allFlyingObjects.forEach(objList -> objList.removeIf(AbstractObject::notValid));
                 }
                 // 每个时刻重绘界面
                 if (onPaint != null) {
@@ -341,8 +346,8 @@ public class Game {
         }
     }
 
-    public List<List<? extends AbstractObject>> getAllObjects() {
-        return allObjects;
+    public List<List<? extends AbstractFlyingObject>> getAllFlyingObjects() {
+        return allFlyingObjects;
     }
 
     public double getNextBossScore() {

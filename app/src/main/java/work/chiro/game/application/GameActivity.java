@@ -23,11 +23,11 @@ import androidx.core.content.res.ResourcesCompat;
 
 import java.util.List;
 
+import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.objects.aircraft.BossEnemy;
 import work.chiro.game.objects.aircraft.BossEnemyFactory;
 import work.chiro.game.objects.aircraft.HeroAircraftFactory;
 import work.chiro.game.game.Game;
-import work.chiro.game.objects.AbstractObject;
 import work.chiro.game.utils.callback.BasicCallback;
 import work.chiro.game.compatible.HeroControllerAndroidImpl;
 import work.chiro.game.compatible.HistoryImplAndroid;
@@ -52,7 +52,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void draw() {
-        List<List<? extends AbstractObject>> allObjects = game.getAllObjects();
+        List<List<? extends AbstractFlyingObject>> allFlyingObjects = game.getAllFlyingObjects();
         // Canvas canvas = surfaceHolder.lockCanvas();
         // 使用硬件加速
         Canvas canvas = surfaceHolder.lockHardwareCanvas();
@@ -84,8 +84,8 @@ public class GameActivity extends AppCompatActivity {
 
         // 绘制所有物体
         //noinspection SynchronizationOnLocalVariableOrMethodParameter
-        synchronized (allObjects) {
-            allObjects.forEach(objList -> {
+        synchronized (allFlyingObjects) {
+            allFlyingObjects.forEach(objList -> {
                 //noinspection SynchronizationOnLocalVariableOrMethodParameter
                 synchronized (objList) {
                     objList.forEach(obj -> obj.draw(xGraphics));

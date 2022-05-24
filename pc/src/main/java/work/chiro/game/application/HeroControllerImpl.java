@@ -59,7 +59,10 @@ public class HeroControllerImpl implements HeroController {
                 super.mouseDragged(e);
                 HeroAircraft heroAircraft = HeroAircraftFactory.getInstance();
                 if (heroAircraft != null) {
-                    heroAircraft.setPosition(new Vec2().fromVector(new Vec2(Utils.setInRange(e.getX(), 0, RunningConfig.windowWidth), Utils.setInRange(e.getY(), 0, RunningConfig.windowHeight)).divide(GamePanel.getScale())));
+                    heroAircraft.setPosition(new Vec2().fromVector(new Vec2(
+                            Utils.setInRange(e.getX(), 0, RunningConfig.windowWidth),
+                            Utils.setInRange(e.getY(), 0, RunningConfig.windowHeight)
+                    ).divide(GamePanel.getScale())));
                 }
                 GameWindow.getInstance().getGamePanel().getGame().getLayout().actionPointerDragged(getScaledPosition(e));
             }
@@ -125,7 +128,10 @@ public class HeroControllerImpl implements HeroController {
         Vec2 newPos = HeroAircraftFactory.getInstance().getPosition().plus(nextScaled);
         HeroAircraftFactory.getInstance().setPosition(
                 Utils.setInRange(newPos.getX(), 0, RunningConfig.windowWidth),
-                Utils.setInRange(newPos.getY(), 0, RunningConfig.windowHeight - HeroAircraftFactory.getInstance().getHeight() / 2)
+                Utils.setInRange(newPos.getY(), 0,
+                        // RunningConfig.windowHeight - HeroAircraftFactory.getInstance().getHeight() / 2
+                        RunningConfig.windowHeight
+                )
         );
         lastFrameTime = now;
     }

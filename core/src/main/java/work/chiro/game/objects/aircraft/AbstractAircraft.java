@@ -3,19 +3,19 @@ package work.chiro.game.objects.aircraft;
 import java.util.LinkedList;
 
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.objects.AbstractObject;
-import work.chiro.game.objects.bullet.BaseBullet;
-import work.chiro.game.x.compatible.DrawColor;
-import work.chiro.game.x.compatible.ResourceProvider;
-import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.objects.AbstractFlyingObject;
+import work.chiro.game.objects.bullet.BaseBullet;
 import work.chiro.game.objects.prop.AbstractProp;
 import work.chiro.game.objects.prop.PropHandler;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.compatible.DrawColor;
+import work.chiro.game.x.compatible.ResourceProvider;
+import work.chiro.game.x.compatible.XGraphics;
 
 /**
  * 所有种类飞机的抽象父类：
@@ -24,7 +24,7 @@ import work.chiro.game.vector.Vec2;
  * @author hitsz
  */
 public abstract class AbstractAircraft
-        extends AbstractObject
+        extends AbstractFlyingObject
         implements PropHandler {
     /**
      * 生命值

@@ -10,34 +10,36 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.VolatileImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import work.chiro.game.objects.aircraft.BossEnemy;
-import work.chiro.game.objects.aircraft.BossEnemyFactory;
-import work.chiro.game.objects.aircraft.HeroAircraftFactory;
-import work.chiro.game.game.Game;
-import work.chiro.game.objects.AbstractObject;
-import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.compatible.XGraphicsPC;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.config.RunningConfigPC;
+import work.chiro.game.game.Game;
+import work.chiro.game.objects.AbstractFlyingObject;
+import work.chiro.game.objects.aircraft.BossEnemy;
+import work.chiro.game.objects.aircraft.BossEnemyFactory;
+import work.chiro.game.objects.aircraft.HeroAircraftFactory;
+import work.chiro.game.scene.SceneRun;
 import work.chiro.game.storage.history.HistoryImpl;
 import work.chiro.game.storage.history.HistoryObjectFactory;
-import work.chiro.game.scene.SceneRun;
-import work.chiro.game.utils.timer.Timer;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.UtilsPC;
+import work.chiro.game.utils.timer.Timer;
 import work.chiro.game.windows.HistoryWindow;
+import work.chiro.game.x.compatible.XGraphics;
 
 /**
  * 游戏主面板，游戏启动
  *
  * @author hitsz
  */
+@SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
 public class GamePanel extends JPanel {
     private Font myFontBase = null;
     private final HeroControllerImpl heroControllerImpl = HeroControllerImpl.getInstance(this);
@@ -145,11 +147,18 @@ public class GamePanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         double timeStart = Utils.getTimeMills();
-        // VolatileImage thisFrame = getGraphicsConfiguration().createCompatibleVolatileImage(RunningConfig.windowWidth, RunningConfig.windowHeight);
         VolatileImage thisFrame = getGraphicsConfiguration().createCompatibleVolatileImage(RunningConfigPC.displayWindowWidth, RunningConfigPC.displayWindowHeight);
         Graphics2D graphicsNew = thisFrame.createGraphics();
 
-        List<List<? extends AbstractObject>> allObjects = game.getAllObjects();
+        List<List<? extends AbstractFlyingObject>> allFlyingObjects = game.getAllFlyingObjects();
+        List<AbstractFlyingObject> sortedFlyingObjects = new ArrayList<>();
+
+        synchronized (allFlyingObjects) {
+            allFlyingObjects.forEach(sortedFlyingObjects::addAll);
+        }
+        Utils.getLogger().debug("before sort: {}", sortedFlyingObjects);
+        sortedFlyingObjects.sort((a, b) -> (a.getAnchor().getY() >= b.getAnchor().getY()) ? (a.getAnchor().getY() == b.getAnchor().getY() ? 0 : 1) : -1);
+        Utils.getLogger().debug("after sort: {}", sortedFlyingObjects);
 
         XGraphics xGraphics = new XGraphicsPC() {
             @Override
@@ -163,24 +172,45 @@ public class GamePanel extends JPanel {
             }
         };
 
-        // 绘制所有物体
-        //noinspection SynchronizationOnLocalVariableOrMethodParameter
-        synchronized (allObjects) {
-            for (List<? extends AbstractObject> objList : allObjects) {
-                double s = Utils.getTimeMills();
-                //noinspection SynchronizationOnLocalVariableOrMethodParameter
-                synchronized (objList) {
-                    try {
-                        objList.forEach(obj -> obj.draw(xGraphics));
-                    } catch (Exception e) {
-                        // e.printStackTrace();
-                        Utils.getLogger().error("error when paint: {}", e);
-                    }
-                }
-                double e = Utils.getTimeMills();
-                Utils.getLogger().debug("\t-- {}: {}", (int) (e - s), objList);
+        // 绘制背景
+        game.getBackgrounds().forEach(background -> {
+            synchronized (background) {
+                background.draw(xGraphics);
             }
-        }
+        });
+
+        // 绘制飞行的物体
+        sortedFlyingObjects.forEach(flyingObject -> {
+            synchronized (flyingObject) {
+                flyingObject.draw(xGraphics);
+            }
+        });
+
+        // 绘制 UI
+        game.getLayout().forEach(view -> {
+            synchronized (view) {
+                view.draw(xGraphics);
+            }
+        });
+
+        // // 绘制所有物体
+        // //noinspection SynchronizationOnLocalVariableOrMethodParameter
+        // synchronized (allFlyingObjects) {
+        //     for (List<? extends AbstractObject> objList : allFlyingObjects) {
+        //         double s = Utils.getTimeMills();
+        //         //noinspection SynchronizationOnLocalVariableOrMethodParameter
+        //         synchronized (objList) {
+        //             try {
+        //                 objList.forEach(obj -> obj.draw(xGraphics));
+        //             } catch (Exception e) {
+        //                 // e.printStackTrace();
+        //                 Utils.getLogger().error("error when paint: {}", e);
+        //             }
+        //         }
+        //         double e = Utils.getTimeMills();
+        //         Utils.getLogger().debug("\t-- {}: {}", (int) (e - s), objList);
+        //     }
+        // }
 
         double timePaint = Utils.getTimeMills();
 
