@@ -38,6 +38,12 @@
    2. `gradlew :app:assembleDebug`
    3. `adb install /path/to/apk`
 
+## 资源
+
+请从 [Re-Signora/resources (github.com)](https://github.com/Re-Signora/resources) 下载资源。
+
+1. `genshin.ttf` => `app/src/main/res/font`, `core/src/main/resources/fonts`
+
 ## ToDo List
 
 - [x] 从原代码适配图像显示、声音播放、记录储存、窗口逻辑
