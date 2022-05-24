@@ -11,6 +11,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import work.chiro.game.config.ConfigFactory;
+import work.chiro.game.config.Constants;
+import work.chiro.game.config.RunningConfig;
+import work.chiro.game.objects.AbstractObject;
 import work.chiro.game.objects.aircraft.AbstractAircraft;
 import work.chiro.game.objects.aircraft.BossEnemy;
 import work.chiro.game.objects.aircraft.BossEnemyFactory;
@@ -20,23 +24,19 @@ import work.chiro.game.objects.aircraft.HeroAircraftFactory;
 import work.chiro.game.objects.aircraft.MobEnemyFactory;
 import work.chiro.game.objects.background.AbstractBackground;
 import work.chiro.game.objects.background.BasicBackgroundFactory;
-import work.chiro.game.objects.AbstractObject;
-import work.chiro.game.utils.callback.BasicCallback;
 import work.chiro.game.objects.bullet.BaseBullet;
-import work.chiro.game.x.compatible.HeroController;
-import work.chiro.game.x.compatible.ResourceProvider;
-import work.chiro.game.config.ConfigFactory;
-import work.chiro.game.config.Constants;
-import work.chiro.game.config.RunningConfig;
 import work.chiro.game.objects.prop.AbstractProp;
 import work.chiro.game.resource.MusicType;
+import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.callback.BasicCallback;
 import work.chiro.game.utils.thread.MyThreadFactory;
 import work.chiro.game.utils.timer.Timer;
 import work.chiro.game.utils.timer.TimerController;
-import work.chiro.game.x.ui.XLayoutManager;
-import work.chiro.game.x.ui.XButton;
+import work.chiro.game.x.activity.XActivityManager;
+import work.chiro.game.x.compatible.HeroController;
+import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.x.ui.XLayout;
-import work.chiro.game.utils.Utils;
+import work.chiro.game.x.ui.XLayoutManager;
 
 public class Game {
     /**
@@ -66,6 +66,16 @@ public class Game {
     private BasicCallback onPaint = null;
     private BasicCallback onFrame = null;
     private final HeroController heroController;
+    // private final XLayoutManager layoutManager = new XLayoutManager();
+    private final XActivityManager activityManager = new XActivityManager();
+
+    public XActivityManager getActivityManager() {
+        return activityManager;
+    }
+
+    public XLayoutManager getLayoutManager() {
+        return activityManager.getLayoutManager();
+    }
 
     public void resetStates() {
         gameOverFlag = false;
@@ -103,9 +113,9 @@ public class Game {
         flushBackground();
         Utils.getLogger().info("Game instance created!");
 
-        XButton buttonStory = (XButton) XLayoutManager.getViewByID("buttonStoryMode");
-        Utils.getLogger().info("buttonStory: {}", buttonStory);
-        buttonStory.setOnClick((xView, xEvent) -> Utils.getLogger().info("story button click: {}, {}", xView, xEvent));
+        // XButton buttonStory = (XButton) XLayoutManager.getViewByID("buttonStoryMode");
+        // Utils.getLogger().info("buttonStory: {}", buttonStory);
+        // buttonStory.setOnClick((xView, xEvent) -> Utils.getLogger().info("story button click: {}, {}", xView, xEvent));
     }
 
     public void flushBackground() {

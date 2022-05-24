@@ -6,10 +6,10 @@ import java.util.Map;
 import java.util.Optional;
 
 public class XLayoutManager {
-    static private final List<String> layoutNames = List.of("main");
+    private final List<String> layoutNames = List.of("main");
     static private XLayoutManager instance = null;
     private final Map<String, XLayout> layouts;
-    private static final Map<String, Optional<XView>> viewIDMap = new HashMap<>();
+    private final Map<String, Optional<XView>> viewIDMap = new HashMap<>();
 
     public static XLayoutManager getInstance() {
         if (instance == null) {
@@ -23,12 +23,12 @@ public class XLayoutManager {
     private XLayoutManager() {
         layouts = new HashMap<>();
         layoutNames.forEach(name -> {
-            XLayout layout = new XLayoutBuilder(name).build();
+            XLayout layout = new XLayoutBuilder(this, name).build();
             layouts.put(name, layout);
         });
     }
 
-    static public Map<String, Optional<XView>> getViewIDMap() {
+    public Map<String, Optional<XView>> getViewIDMap() {
         return viewIDMap;
     }
 
@@ -36,8 +36,12 @@ public class XLayoutManager {
         return layouts.get(name);
     }
 
-    public static XView getViewByID(String id) {
+    public XView getViewByID(String id) {
         Optional<XView> d = viewIDMap.get(id);
         return d.orElse(null);
+    }
+
+    public void putViewByID(String id, XView view) {
+        viewIDMap.put(id, Optional.of(view));
     }
 }

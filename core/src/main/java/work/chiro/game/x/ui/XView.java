@@ -3,15 +3,15 @@ package work.chiro.game.x.ui;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.objects.AbstractObject;
-import work.chiro.game.x.compatible.XGraphics;
-import work.chiro.game.x.compatible.XImage;
 import work.chiro.game.config.Constants;
+import work.chiro.game.objects.AbstractObject;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.activity.XActivity;
+import work.chiro.game.x.compatible.XGraphics;
+import work.chiro.game.x.compatible.XImage;
 
 public class XView extends AbstractObject {
     protected String text = "";
@@ -20,6 +20,7 @@ public class XView extends AbstractObject {
     protected String imageResource = null;
     protected XViewType type;
     private boolean isEntered = false;
+    private XActivity bindingActivity = null;
 
     public XView(Vec2 posInit) {
         super(posInit, new AnimateContainer());
@@ -37,7 +38,6 @@ public class XView extends AbstractObject {
 
     public XView setId(String id) {
         this.id = id;
-        XLayoutManager.getViewIDMap().put(id, Optional.of(this));
         return this;
     }
 
@@ -124,5 +124,14 @@ public class XView extends AbstractObject {
 
     public boolean isEntered() {
         return isEntered;
+    }
+
+    public XView setBindingActivity(XActivity bindingActivity) {
+        this.bindingActivity = bindingActivity;
+        return this;
+    }
+
+    public XActivity getBindingActivity() {
+        return bindingActivity;
     }
 }

@@ -1,6 +1,7 @@
 package work.chiro.game.x.activity;
 
 import work.chiro.game.game.Game;
+import work.chiro.game.x.ui.XView;
 
 public abstract class XActivity {
     final protected Game game;
@@ -13,6 +14,17 @@ public abstract class XActivity {
     }
 
     final protected void setContentView(String layoutName) {
+    }
+
+    final protected XView findViewById(String id) {
+        return game.getLayoutManager().getViewByID(id);
+    }
+
+    final protected void finish() {
+    }
+
+    final Game getGame() {
+        return game;
     }
 
     // ================ For inherit ================

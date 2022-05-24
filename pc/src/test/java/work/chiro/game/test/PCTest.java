@@ -7,6 +7,7 @@ import work.chiro.game.compatible.ResourceProviderPC;
 import work.chiro.game.x.ui.XLayout;
 import work.chiro.game.x.ui.XLayoutBuilder;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.x.ui.XLayoutManager;
 
 public class PCTest {
     PCTest() {
@@ -15,7 +16,8 @@ public class PCTest {
 
     @Test
     void testLayoutBuilder() {
-        XLayoutBuilder builder = new XLayoutBuilder("main");
+        XLayoutManager layoutManager = XLayoutManager.getInstance();
+        XLayoutBuilder builder = new XLayoutBuilder(layoutManager, "main");
         XLayout layout = builder.build();
         Utils.getLogger().info("layout: {}", layout);
     }
