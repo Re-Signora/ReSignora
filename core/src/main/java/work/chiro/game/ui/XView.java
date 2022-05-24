@@ -37,7 +37,7 @@ public class XView extends AbstractObject {
 
     public XView setId(String id) {
         this.id = id;
-        LayoutManager.getViewIDMap().put(id, Optional.of(this));
+        XLayoutManager.getViewIDMap().put(id, Optional.of(this));
         return this;
     }
 
@@ -98,7 +98,7 @@ public class XView extends AbstractObject {
 
     public boolean isIn(Vec2 pos) {
         XImage<?> im = getImage();
-        Utils.getLogger().info("isIn({})", pos);
+        Utils.getLogger().debug("isIn({})", pos);
         if (im == null) {
             Utils.getLogger().warn("empty image when isIn({})", pos);
             return false;
@@ -106,7 +106,7 @@ public class XView extends AbstractObject {
         try {
             int pixel = im.getPixel(pos);
             int alpha = pixel >> 24 & 0xff;
-            Utils.getLogger().warn("isIn({}) got alpha: {} pixel: {}", pos, String.format(Locale.CHINA, "0x%02x", alpha), String.format(Locale.CHINA, "0x%08x", pixel));
+            Utils.getLogger().debug("isIn({}) got alpha: {} pixel: {}", pos, String.format(Locale.CHINA, "0x%02x", alpha), String.format(Locale.CHINA, "0x%08x", pixel));
             return alpha > Constants.UI_CLICK_ALPHA_THRESHOLD;
         } catch (ArrayIndexOutOfBoundsException e) {
             return false;

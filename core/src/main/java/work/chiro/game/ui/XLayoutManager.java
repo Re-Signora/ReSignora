@@ -5,22 +5,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class LayoutManager {
+public class XLayoutManager {
     static private final List<String> layoutNames = List.of("main");
-    static private LayoutManager instance = null;
+    static private XLayoutManager instance = null;
     private final Map<String, XLayout> layouts;
     private static final Map<String, Optional<XView>> viewIDMap = new HashMap<>();
 
-    public static LayoutManager getInstance() {
+    public static XLayoutManager getInstance() {
         if (instance == null) {
-            synchronized (LayoutManager.class) {
-                instance = new LayoutManager();
+            synchronized (XLayoutManager.class) {
+                instance = new XLayoutManager();
             }
         }
         return instance;
     }
 
-    private LayoutManager() {
+    private XLayoutManager() {
         layouts = new HashMap<>();
         layoutNames.forEach(name -> {
             XLayout layout = new XLayoutBuilder(name).build();
