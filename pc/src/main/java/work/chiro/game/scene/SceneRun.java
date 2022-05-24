@@ -57,7 +57,7 @@ public class SceneRun {
         //noinspection SynchronizationOnLocalVariableOrMethodParameter
         synchronized (nowRunning) {
             try {
-                frame.setTitle("Aircraft War - " + nextScene.getName());
+                frame.setTitle("Re-Signora - " + nextScene.getName());
                 Utils.getLogger().info("will show: " + nextScene.getSceneRunnable().getClient().getClass().getName());
                 cardLayout.show(wrapperPanel, nextScene.getSceneRunnable().getClient().getClass().getName());
                 nowRunning.setDaemon(false);

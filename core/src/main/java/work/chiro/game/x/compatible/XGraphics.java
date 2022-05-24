@@ -1,7 +1,7 @@
 package work.chiro.game.x.compatible;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
@@ -82,10 +82,12 @@ public abstract class XGraphics {
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public List<AbstractFlyingObject> getSortedFlyingObjects(Game game) {
         List<List<? extends AbstractFlyingObject>> allFlyingObjects = game.getAllFlyingObjects();
-        List<AbstractFlyingObject> sortedFlyingObjects = new ArrayList<>();
-        synchronized (allFlyingObjects) {
-            allFlyingObjects.forEach(sortedFlyingObjects::addAll);
-        }
+        List<AbstractFlyingObject> sortedFlyingObjects = new CopyOnWriteArrayList<>();
+        allFlyingObjects.forEach(abstractFlyingObjects -> {
+            synchronized (abstractFlyingObjects) {
+                sortedFlyingObjects.addAll(abstractFlyingObjects);
+            }
+        });
         Utils.getLogger().debug("before sort: {}", sortedFlyingObjects);
         sortedFlyingObjects.sort((a, b) -> (a.getAnchor().getY() >= b.getAnchor().getY()) ? (a.getAnchor().getY() == b.getAnchor().getY() ? 0 : 1) : -1);
         Utils.getLogger().debug("after sort: {}", sortedFlyingObjects);

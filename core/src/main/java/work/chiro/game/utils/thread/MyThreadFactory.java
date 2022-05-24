@@ -22,7 +22,7 @@ public class MyThreadFactory implements ThreadFactory {
     public static MyThreadFactory getInstance() {
         if (instance == null) {
             synchronized (MyThreadFactory.class) {
-                instance = new MyThreadFactory("AircraftWar");
+                instance = new MyThreadFactory("ReSignora");
             }
         }
         return instance;

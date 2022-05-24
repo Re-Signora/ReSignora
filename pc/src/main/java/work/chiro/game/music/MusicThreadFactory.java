@@ -17,7 +17,7 @@ public class MusicThreadFactory extends MyThreadFactory {
     public static MusicThreadFactory getInstance() {
         if (instance == null) {
             synchronized (MusicThreadFactory.class) {
-                instance = new MusicThreadFactory("AircraftWar-Music");
+                instance = new MusicThreadFactory("ReSignora-Music");
             }
         }
         return instance;

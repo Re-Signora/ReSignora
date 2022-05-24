@@ -1,12 +1,12 @@
 pluginManagement {
     resolutionStrategy {
         eachPlugin {
-            if (requested.id.id == "com.android.library") {
-                useModule("com.android.tools.build:gradle:${requested.version}")
-            }
-            if (requested.id.id == "com.android.application") {
-                useModule("com.android.tools.build:gradle:${requested.version}")
-            }
+            // if (requested.id.id == "com.android.library") {
+            //     useModule("com.android.tools.build:gradle:${requested.version}")
+            // }
+            // if (requested.id.id == "com.android.application") {
+            //     useModule("com.android.tools.build:gradle:${requested.version}")
+            // }
         }
     }
     repositories {
@@ -26,13 +26,7 @@ dependencyResolutionManagement {
 enableFeaturePreview("VERSION_CATALOGS")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-//include(
-//    "app",
-//    "library-android",
-//    "library-kotlin"
-//)
-
-rootProject.name = "aircraft-war"
+rootProject.name = "re-signora"
 include(
     "core",
     "pc",

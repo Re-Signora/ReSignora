@@ -27,7 +27,7 @@ import work.chiro.game.windows.MainWindow;
 public class Main {
     public static void main(String[] args) {
         ResourceProvider.setInstance(new ResourceProviderPC());
-        Utils.getLogger().info("Hello Aircraft War");
+        Utils.getLogger().info("Hello Re-Signora");
 
         if (RunningConfigPC.enableHardwareSpeedup) {
             System.setProperty("sun.java2d.opengl", "true");

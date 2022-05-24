@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Aircraft War</string>
+    <string name="app_name">Re Signora</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="title_activity_history">排行榜</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
