@@ -1,22 +1,22 @@
 package work.chiro.game.objects.character.attributes;
 
 public class BasicAttributes {
-    private int maxHp = 400;
-    private int speed = 10;
-    private int ATK = 20;
-    private int DEF = 5;
+    public int maxHp = 400;
+    public int speed = 10;
+    public int ATK = 20;
+    public int DEF = 5;
     /**
      * 暴击率
      */
-    private int CRIT_Rate = 5;
+    public int CRIT_Rate = 5;
     /**
      * 暴击伤害
      */
-    private int CRIT_DMG = 105;
+    public int CRIT_DMG = 105;
     /**
      * 穿透
      */
-    private int pierce = 0;
+    public int pierce = 0;
 
     public int getMaxHp() {
         return maxHp;

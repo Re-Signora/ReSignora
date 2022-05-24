@@ -20,9 +20,4 @@ public class FunctionTest {
         RunningConfig.debug = false;
         logger.debug("disable debug");
     }
-
-    @Test
-    void testLoadAttributes() {
-
-    }
 }

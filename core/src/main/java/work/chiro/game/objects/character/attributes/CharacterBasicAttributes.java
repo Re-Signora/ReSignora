@@ -4,11 +4,11 @@ public class CharacterBasicAttributes extends BasicAttributes {
     /**
      * 统帅
      */
-    private int st = 8;
+    public int st = 8;
     /**
      * 隐藏伤害倍率
      */
-    private int extraDMGRate = 0;
+    public int extraDMGRate = 0;
 
     public int getSt() {
         return st;
