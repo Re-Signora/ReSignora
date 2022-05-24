@@ -1,4 +1,4 @@
-package work.chiro.game.calculate;
+package work.chiro.game.logic;
 
 public enum Element {
     // 无元素

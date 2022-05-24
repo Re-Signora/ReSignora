@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import work.chiro.game.objects.character.attributes.BasicAttributes;
+import work.chiro.game.logic.attributes.BasicAttributes;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.x.logger.AbstractLogger;

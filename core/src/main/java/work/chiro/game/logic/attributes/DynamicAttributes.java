@@ -1,4 +1,4 @@
-package work.chiro.game.objects.character.attributes;
+package work.chiro.game.logic.attributes;
 
 public class DynamicAttributes extends BasicAttributes {
 }
