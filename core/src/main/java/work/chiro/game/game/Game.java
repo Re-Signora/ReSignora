@@ -53,7 +53,7 @@ public class Game {
     private final List<BaseBullet> heroBullets = new LinkedList<>();
     private final List<BaseBullet> enemyBullets = new LinkedList<>();
     private final List<AbstractProp> props = new LinkedList<>();
-    private XLayout layout = new XLayout();
+    private final XLayout layout = new XLayout();
     private final List<List<? extends AbstractObject>> allObjects = Arrays.asList(
             backgrounds, heroBullets, heroAircrafts, enemyBullets, enemyAircrafts, bossAircrafts, props, layout
     );
@@ -67,7 +67,7 @@ public class Game {
     private BasicCallback onFrame = null;
     private final HeroController heroController;
     // private final XLayoutManager layoutManager = new XLayoutManager();
-    private final XActivityManager activityManager = new XActivityManager();
+    private final XActivityManager activityManager = new XActivityManager(this);
 
     public XActivityManager getActivityManager() {
         return activityManager;
@@ -92,7 +92,6 @@ public class Game {
         timerController.clear();
         nextBossScore = RunningConfig.score + RunningConfig.config.getBossScoreThreshold().getScaleNow().getX();
         layout.replaceLayout(XLayoutManager.getInstance().getLayout("main"));
-        flushBackground();
     }
 
     public boolean getGameOverFlag() {
@@ -109,18 +108,14 @@ public class Game {
         nextBossScore = RunningConfig.score + RunningConfig.config.getBossScoreThreshold().getScaleNow().getX();
         heroAircraft = new HeroAircraftFactory().create();
         heroAircrafts.add(heroAircraft);
+        activityManager.setOnSwitchActivity(newActivity -> {
+            if (newActivity == null) return;
+            layout.replaceLayout(newActivity.getLayout());
+            backgrounds.clear();
+            backgrounds.add(new BasicBackgroundFactory(layout.getBackground()).create());
+        });
         layout.replaceLayout(XLayoutManager.getInstance().getLayout("main"));
-        flushBackground();
         Utils.getLogger().info("Game instance created!");
-
-        // XButton buttonStory = (XButton) XLayoutManager.getViewByID("buttonStoryMode");
-        // Utils.getLogger().info("buttonStory: {}", buttonStory);
-        // buttonStory.setOnClick((xView, xEvent) -> Utils.getLogger().info("story button click: {}, {}", xView, xEvent));
-    }
-
-    public void flushBackground() {
-        backgrounds.clear();
-        backgrounds.add(new BasicBackgroundFactory(layout.getBackground()).create());
     }
 
     private void heroShoot() {
