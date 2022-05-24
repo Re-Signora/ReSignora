@@ -69,6 +69,11 @@
     - [ ] XJoySticks
     - [ ] XMediaPlayer
 
+## Roadmap
+
+- [ ] 作战功能
+  - [ ] ……
+
 ## Notes
 
 1. 左侧虚拟摇杆：https://github.com/kongqw/AndroidRocker
