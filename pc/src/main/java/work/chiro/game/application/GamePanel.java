@@ -166,15 +166,20 @@ public class GamePanel extends JPanel {
         // 绘制所有物体
         //noinspection SynchronizationOnLocalVariableOrMethodParameter
         synchronized (allObjects) {
-            allObjects.forEach(objList -> {
+            for (List<? extends AbstractObject> objList : allObjects) {
                 double s = Utils.getTimeMills();
                 //noinspection SynchronizationOnLocalVariableOrMethodParameter
                 synchronized (objList) {
-                    objList.forEach(obj -> obj.draw(xGraphics));
+                    try {
+                        objList.forEach(obj -> obj.draw(xGraphics));
+                    } catch (Exception e) {
+                        // e.printStackTrace();
+                        Utils.getLogger().error("error when paint: {}", e);
+                    }
                 }
                 double e = Utils.getTimeMills();
                 Utils.getLogger().debug("\t-- {}: {}", (int) (e - s), objList);
-            });
+            }
         }
 
         double timePaint = Utils.getTimeMills();

@@ -34,16 +34,20 @@ public class XActivityManager {
         try {
             XActivity activity = activityClazz.getConstructor(Game.class).newInstance(game);
             activities.add(activity);
+            activity.onCreate(bundle);
             if (onSwitchActivity != null) {
                 onSwitchActivity.run(activities.getLast());
             }
-            activity.onCreate(bundle);
             activity.onStart();
             return true;
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public <T extends XActivity> boolean startActivityWithBundle(Class<T> activityClazz) {
+        return startActivityWithBundle(activityClazz, null);
     }
 
     public boolean finishActivity(XActivity activity) {

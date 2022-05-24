@@ -1,14 +1,12 @@
 package work.chiro.game.x.ui;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public class XLayoutManager {
-    private final List<String> layoutNames = List.of("main");
     static private XLayoutManager instance = null;
-    private final Map<String, XLayout> layouts;
+    private final Map<String, XLayout> layouts = new HashMap<>();
     private final Map<String, Optional<XView>> viewIDMap = new HashMap<>();
 
     public static XLayoutManager getInstance() {
@@ -20,12 +18,13 @@ public class XLayoutManager {
         return instance;
     }
 
+    private XLayout buildNewLayout(String name) {
+        XLayout layout = new XLayoutBuilder(this, name).build();
+        layouts.put(name, layout);
+        return layout;
+    }
+
     private XLayoutManager() {
-        layouts = new HashMap<>();
-        layoutNames.forEach(name -> {
-            XLayout layout = new XLayoutBuilder(this, name).build();
-            layouts.put(name, layout);
-        });
     }
 
     public Map<String, Optional<XView>> getViewIDMap() {
@@ -33,7 +32,11 @@ public class XLayoutManager {
     }
 
     public XLayout getLayout(String name) {
-        return layouts.get(name);
+        XLayout res = layouts.get(name);
+        if (res == null) {
+            return buildNewLayout(name);
+        }
+        return res;
     }
 
     public XView getViewByID(String id) {

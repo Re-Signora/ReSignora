@@ -37,6 +37,7 @@ import work.chiro.game.x.compatible.HeroController;
 import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.x.ui.XLayout;
 import work.chiro.game.x.ui.XLayoutManager;
+import work.chiro.game.xactivity.HomeActivity;
 
 public class Game {
     /**
@@ -66,7 +67,6 @@ public class Game {
     private BasicCallback onPaint = null;
     private BasicCallback onFrame = null;
     private final HeroController heroController;
-    // private final XLayoutManager layoutManager = new XLayoutManager();
     private final XActivityManager activityManager = new XActivityManager(this);
 
     public XActivityManager getActivityManager() {
@@ -91,15 +91,8 @@ public class Game {
         BossEnemyFactory.clearInstance();
         timerController.clear();
         nextBossScore = RunningConfig.score + RunningConfig.config.getBossScoreThreshold().getScaleNow().getX();
-        layout.replaceLayout(XLayoutManager.getInstance().getLayout("main"));
-    }
-
-    public boolean getGameOverFlag() {
-        return gameOverFlag;
-    }
-
-    public boolean getStartedFlag() {
-        return startedFlag;
+        // layout.replaceLayout(XLayoutManager.getInstance().getLayout("main"));
+        activityManager.startActivityWithBundle(HomeActivity.class);
     }
 
     public Game(HeroController heroController) {
@@ -110,6 +103,8 @@ public class Game {
         heroAircrafts.add(heroAircraft);
         activityManager.setOnSwitchActivity(newActivity -> {
             if (newActivity == null) return;
+            if (newActivity.getLayout() == null) return;
+            Utils.getLogger().info("setOnSwitchActivity({})", newActivity);
             layout.replaceLayout(newActivity.getLayout());
             backgrounds.clear();
             backgrounds.add(new BasicBackgroundFactory(layout.getBackground()).create());

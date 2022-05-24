@@ -1,0 +1,16 @@
+{
+  "name": "stageSelect",
+  "background": "ui/stageSelectBackground.png",
+  "views": [
+    {
+      "type": "Button",
+      "id": "buttonStage02",
+      "text": "",
+      "image": "ui/stage02Button.png",
+      "position": [
+        1362,
+        469
+      ]
+    }
+  ]
+}

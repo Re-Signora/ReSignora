@@ -1,11 +1,11 @@
 package work.chiro.game.x.ui;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.compatible.XGraphics;
 
-public class XLayout extends ArrayList<XView> {
+public class XLayout extends CopyOnWriteArrayList<XView> {
     private String name;
     private String background = null;
 
@@ -32,6 +32,7 @@ public class XLayout extends ArrayList<XView> {
 
     /**
      * 替换内容
+     *
      * @param that 另一个 XLayout 对象
      * @return this
      */
