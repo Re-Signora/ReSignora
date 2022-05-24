@@ -29,6 +29,16 @@ public abstract class ResourceProvider {
 
     public abstract XImage<?> getImageFromResource(String path) throws IOException;
 
+    final static public Map<MusicType, String> MUSIC_FILENAME_MAP = Map.of(
+            MusicType.BGM, "bgm.wav",
+            MusicType.BGM_BOSS, "bgm_boss.wav",
+            MusicType.BOMB_EXPLOSION, "bomb_explosion.wav",
+            MusicType.HERO_SHOOT, "bullet.wav",
+            MusicType.HERO_HIT, "bullet_hit.wav",
+            MusicType.PROPS, "get_supply.wav",
+            MusicType.GAME_OVER, "game_over.wav"
+    );
+
     public byte[] getSoundBytesFromResource(String path) throws IOException {
         InputStream fileInputStream = Utils.class.getResourceAsStream("/sounds/" + path);
         if (fileInputStream == null) {

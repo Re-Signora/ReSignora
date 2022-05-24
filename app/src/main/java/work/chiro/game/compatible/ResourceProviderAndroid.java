@@ -9,6 +9,9 @@ import android.media.SoundPool;
 
 import androidx.core.content.res.ResourcesCompat;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,15 +36,6 @@ public abstract class ResourceProviderAndroid extends ResourceProvider {
         return new XImageFactoryAndroid().create(bitmap);
     }
 
-    private final Map<MusicType, Integer> musicResource = Map.of(
-            MusicType.BGM, R.raw.bgm,
-            MusicType.BGM_BOSS, R.raw.bgm_boss,
-            MusicType.GAME_OVER, R.raw.game_over,
-            MusicType.BOMB_EXPLOSION, R.raw.bomb_explosion,
-            MusicType.HERO_HIT, R.raw.bullet_hit,
-            MusicType.HERO_SHOOT, R.raw.bullet,
-            MusicType.PROPS, R.raw.get_supply
-    );
     private final Map<MusicType, Integer> musicIDMap = new HashMap<>();
     private final Map<MusicType, Boolean> musicNoStop = new HashMap<>();
     private SoundPool soundPool = null;
@@ -65,7 +59,21 @@ public abstract class ResourceProviderAndroid extends ResourceProvider {
         spb.setAudioAttributes(audioAttributes);
         // 创建SoundPool对象
         soundPool = spb.build();
-        musicResource.forEach((type, resourceID) -> musicIDMap.put(type, soundPool.load(getContext(), resourceID, 1)));
+        ResourceProvider.MUSIC_FILENAME_MAP.forEach((musicType, s) -> {
+            try {
+                byte[] data = getSoundBytesFromResource(s);
+                File tmp = File.createTempFile(s, null, getContext().getCacheDir());
+                FileOutputStream fileOutputStream = new FileOutputStream(tmp);
+                fileOutputStream.write(data);
+                fileOutputStream.close();
+                FileInputStream fileInputStream = new FileInputStream(tmp);
+                int id = soundPool.load(fileInputStream.getFD(),0, data.length, 1);
+                Utils.getLogger().debug("load music {}: id = {}", s, id);
+                musicIDMap.put(musicType, id);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void startMusic(MusicType type, Boolean noStop, Boolean loop) {

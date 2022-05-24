@@ -1,5 +1,7 @@
 package work.chiro.game.music;
 
+import static work.chiro.game.x.compatible.ResourceProvider.MUSIC_FILENAME_MAP;
+
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -74,15 +76,6 @@ public class MusicManagerPC {
 
     final static private Map<MusicType, byte[]> MUSIC_SAMPLES_MAP = new HashMap<>();
     final static private Map<MusicType, byte[]> MUSIC_DATA_MAP = new HashMap<>();
-    final static private Map<MusicType, String> MUSIC_FILENAME_MAP = Map.of(
-            MusicType.BGM, "bgm.wav",
-            MusicType.BGM_BOSS, "bgm_boss.wav",
-            MusicType.BOMB_EXPLOSION, "bomb_explosion.wav",
-            MusicType.HERO_SHOOT, "bullet.wav",
-            MusicType.HERO_HIT, "bullet_hit.wav",
-            MusicType.PROPS, "get_supply.wav",
-            MusicType.GAME_OVER, "game_over.wav"
-    );
     final static private Map<MusicType, AudioFormat> MUSIC_AUDIO_FORMAT_MAP = new HashMap<>();
 
     static public byte[] get(MusicType type) {
