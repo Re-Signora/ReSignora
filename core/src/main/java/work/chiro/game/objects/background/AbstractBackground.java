@@ -16,7 +16,7 @@ import work.chiro.game.vector.Vec2;
 public abstract class AbstractBackground extends AbstractObject {
     protected void init() {
         initImageFilename = getInitImageFilename();
-        Utils.getLogger().info("initImageFilename: {}", initImageFilename);
+        Utils.getLogger().debug("initImageFilename: {}", initImageFilename);
 
         if (getImage(true) != null) {
             if (RunningConfig.scaleBackground) {
