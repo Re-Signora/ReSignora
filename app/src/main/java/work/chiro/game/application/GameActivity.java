@@ -124,6 +124,8 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        RunningConfig.scaleBackground = false;
+
         ResourceProvider.setInstance(new ResourceProviderAndroid() {
             @Override
             protected Context getContext() {

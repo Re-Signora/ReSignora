@@ -19,11 +19,15 @@ public abstract class AbstractBackground extends AbstractObject {
         Utils.getLogger().info("initImageFilename: {}", initImageFilename);
 
         if (getImage(true) != null) {
-            Vec2 scaledSize = new Vec2(RunningConfig.windowWidth,
-                    getScaledHeight(getImage(true).getWidth(), RunningConfig.windowWidth, getImage(true).getHeight())
-            );
-            Utils.getLogger().info("background set size: {}", scaledSize);
-            setSize(scaledSize);
+            if (RunningConfig.scaleBackground) {
+                Vec2 scaledSize = new Vec2(RunningConfig.windowWidth,
+                        getScaledHeight(getImage(true).getWidth(), RunningConfig.windowWidth, getImage(true).getHeight())
+                );
+                Utils.getLogger().info("background set size: {}", scaledSize);
+                setSize(scaledSize);
+            } else {
+                setSize(new Vec2(RunningConfig.windowWidth, RunningConfig.windowHeight));
+            }
         }
     }
 

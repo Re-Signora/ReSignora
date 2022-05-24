@@ -23,6 +23,9 @@ public class RunningConfig {
     public static boolean allowResize = false;
     // public static boolean allowResize = true;
 
+    // set this when running on android
+    public static boolean scaleBackground = true;
+
     public static void increaseScore(double increase) {
         score += increase;
     }
