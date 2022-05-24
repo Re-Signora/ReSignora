@@ -3,8 +3,12 @@ package work.chiro.game.x.compatible;
 import java.util.ArrayList;
 import java.util.List;
 
+import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.objects.AbstractFlyingObject;
+import work.chiro.game.objects.aircraft.BossEnemy;
+import work.chiro.game.objects.aircraft.BossEnemyFactory;
+import work.chiro.game.objects.aircraft.HeroAircraftFactory;
 import work.chiro.game.utils.Utils;
 
 public abstract class XGraphics {
@@ -112,5 +116,52 @@ public abstract class XGraphics {
                 view.draw(this);
             }
         });
+    }
+
+    private XFont<?> font = null;
+
+    // override this to apply font
+    public XGraphics setFont(XFont<?> font) {
+        this.font = font;
+        return this;
+    }
+
+    public XFont<?> getFont() {
+        return font;
+    }
+
+    static private float canvasScale = 1.0f;
+    static private final int fontSize = 20;
+
+    public static float getCanvasScale() {
+        return canvasScale;
+    }
+
+    public static void setCanvasScale(float canvasScale) {
+        XGraphics.canvasScale = canvasScale;
+    }
+
+    public static int getFontSize() {
+        return fontSize;
+    }
+
+    public void paintInfo(Game game) {
+        int d = (int) (getFontSize() * 3.0f / getCanvasScale());
+        int x = 10;
+        int y = d;
+        setColor(0xcfcfcfcf);
+        setFont(ResourceProvider.getInstance().getFont("genshin"));
+        drawString("SCORE:" + (int) (RunningConfig.score), x, y);
+        y = y + d;
+        drawString("LIFE:" + (int) (HeroAircraftFactory.getInstance().getHp()), x, y);
+        y = y + d;
+        BossEnemy boss = BossEnemyFactory.getInstance();
+        if (boss == null) {
+            drawString("Before Boss:" + (int) (game.getNextBossScore() - RunningConfig.score), x, y);
+        } else {
+            drawString("BOSS LIFE:" + (int) (boss.getHp()), x, y);
+        }
+        y = y + d;
+        drawString("FPS:" + game.getTimerController().getFps(), x, y);
     }
 }

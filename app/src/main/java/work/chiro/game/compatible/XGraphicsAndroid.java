@@ -4,14 +4,14 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 
 import work.chiro.game.utils.Utils;
+import work.chiro.game.x.compatible.XFont;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
 
 public abstract class XGraphicsAndroid extends XGraphics {
-    static private float canvasScale = 1.0f;
-    static private final int fontSize = 20;
     private double alpha = 1.0;
     private double rotation = 0.0;
     private int color = 0x0;
@@ -75,7 +75,7 @@ public abstract class XGraphicsAndroid extends XGraphics {
     public XGraphics drawString(String text, double x, double y) {
         Paint paint = getPaint();
         paint.setColor(color);
-        paint.setTextSize(fontSize * 3.0f / canvasScale);
+        paint.setTextSize(getFontSize() * 3.0f / getCanvasScale());
         getCanvas().drawText(text, (int) x, (int) y, paint);
         return this;
     }
@@ -84,15 +84,10 @@ public abstract class XGraphicsAndroid extends XGraphics {
 
     public abstract Paint getPaint();
 
-    public static float getCanvasScale() {
-        return canvasScale;
-    }
-
-    public static void setCanvasScale(float canvasScale) {
-        XGraphicsAndroid.canvasScale = canvasScale;
-    }
-
-    public static int getFontSize() {
-        return fontSize;
+    @Override
+    public XGraphics setFont(XFont<?> font) {
+        super.setFont(font);
+        getPaint().setTypeface((Typeface) getFont().getFont());
+        return this;
     }
 }

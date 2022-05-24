@@ -2,6 +2,7 @@ package work.chiro.game.compatible;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.Image;
@@ -15,6 +16,7 @@ import work.chiro.game.config.RunningConfig;
 import work.chiro.game.config.RunningConfigPC;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.compatible.XFont;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
 
@@ -131,4 +133,11 @@ public abstract class XGraphicsPC extends XGraphics {
     abstract protected Graphics2D getGraphics();
 
     abstract protected GraphicsConfiguration getXGraphicsConfiguration();
+
+    @Override
+    public XGraphics setFont(XFont<?> font) {
+        super.setFont(font);
+        getGraphics().setFont((Font) font.getFont());
+        return this;
+    }
 }

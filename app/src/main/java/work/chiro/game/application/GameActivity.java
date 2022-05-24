@@ -8,7 +8,6 @@ import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -29,8 +28,6 @@ import work.chiro.game.compatible.XGraphicsAndroid;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.objects.AbstractFlyingObject;
-import work.chiro.game.objects.aircraft.BossEnemy;
-import work.chiro.game.objects.aircraft.BossEnemyFactory;
 import work.chiro.game.objects.aircraft.HeroAircraftFactory;
 import work.chiro.game.resource.ImageManager;
 import work.chiro.game.storage.history.HistoryObjectFactory;
@@ -82,32 +79,34 @@ public class GameActivity extends AppCompatActivity {
 
         xGraphics.paintInOrdered(game);
 
-        paintInfo(xGraphics);
+        // paintInfo(xGraphics);
+        xGraphics.paintInfo(game);
         // 恢复 canvas 设置之后绘制遮罩
         // canvas.restore();
 
         surfaceHolder.unlockCanvasAndPost(canvas);
     }
 
-    private void paintInfo(XGraphicsAndroid g) {
-        int d = (int) (XGraphicsAndroid.getFontSize() * 3.0f / XGraphicsAndroid.getCanvasScale());
-        int x = 10;
-        int y = d;
-        g.setColor(0xcfcfcfcf);
-        g.getPaint().setTypeface((Typeface) ResourceProvider.getInstance().getFont("genshin").getFont());
-        g.drawString("SCORE:" + (int) (RunningConfig.score), x, y);
-        y = y + d;
-        g.drawString("LIFE:" + (int) (HeroAircraftFactory.getInstance().getHp()), x, y);
-        y = y + d;
-        BossEnemy boss = BossEnemyFactory.getInstance();
-        if (boss == null) {
-            g.drawString("Before Boss:" + (int) (game.getNextBossScore() - RunningConfig.score), x, y);
-        } else {
-            g.drawString("BOSS LIFE:" + (int) (boss.getHp()), x, y);
-        }
-        y = y + d;
-        g.drawString("FPS:" + game.getTimerController().getFps(), x, y);
-    }
+    // private void paintInfo(XGraphics g) {
+    //     int d = (int) (XGraphics.getFontSize() * 3.0f / XGraphicsAndroid.getCanvasScale());
+    //     int x = 10;
+    //     int y = d;
+    //     g.setColor(0xcfcfcfcf);
+    //     // g.getPaint().setTypeface((Typeface) ResourceProvider.getInstance().getFont("genshin").getFont());
+    //     g.setFont(ResourceProvider.getInstance().getFont("genshin"));
+    //     g.drawString("SCORE:" + (int) (RunningConfig.score), x, y);
+    //     y = y + d;
+    //     g.drawString("LIFE:" + (int) (HeroAircraftFactory.getInstance().getHp()), x, y);
+    //     y = y + d;
+    //     BossEnemy boss = BossEnemyFactory.getInstance();
+    //     if (boss == null) {
+    //         g.drawString("Before Boss:" + (int) (game.getNextBossScore() - RunningConfig.score), x, y);
+    //     } else {
+    //         g.drawString("BOSS LIFE:" + (int) (boss.getHp()), x, y);
+    //     }
+    //     y = y + d;
+    //     g.drawString("FPS:" + game.getTimerController().getFps(), x, y);
+    // }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
