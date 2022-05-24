@@ -6,8 +6,8 @@ import java.util.List;
 import work.chiro.game.x.ui.XLayoutManager;
 
 public class XActivityManager {
-    private List<XActivity> activities = new LinkedList<>();
-    private XLayoutManager layoutManager;
+    private final List<XActivity> activities = new LinkedList<>();
+    private final XLayoutManager layoutManager;
 
     public XActivityManager() {
         layoutManager = XLayoutManager.getInstance();

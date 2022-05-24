@@ -218,7 +218,7 @@ public class GamePanel extends JPanel {
 
     private void loadFont() {
         try {
-            myFontBase = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getResourceAsStream("/fonts/Genshin.ttf"))).deriveFont(22f);
+            myFontBase = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getResourceAsStream("/fonts/genshin.ttf"))).deriveFont(22f);
         } catch (FontFormatException | IOException e) {
             myFontBase = new Font("SansSerif", Font.PLAIN, 22);
         }
