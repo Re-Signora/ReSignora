@@ -1,5 +1,7 @@
 package work.chiro.game.compatible;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
@@ -12,6 +14,7 @@ import work.chiro.game.music.MusicThreadFactory;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.x.compatible.ResourceProvider;
+import work.chiro.game.x.compatible.XFont;
 import work.chiro.game.x.compatible.XImage;
 
 public class ResourceProviderPC extends ResourceProvider {
@@ -54,5 +57,16 @@ public class ResourceProviderPC extends ResourceProvider {
         if (RunningConfig.musicEnable) {
             MusicThreadFactory.getInstance().newLoopMusicThread(type).start();
         }
+    }
+
+    @Override
+    public XFont<?> getFont(String name) {
+        Font font;
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getResourceAsStream("/fonts/genshin.ttf"))).deriveFont(22f);
+        } catch (FontFormatException | IOException e) {
+            font = new Font("SansSerif", Font.PLAIN, 22);
+        }
+        return new XFont<>(font);
     }
 }

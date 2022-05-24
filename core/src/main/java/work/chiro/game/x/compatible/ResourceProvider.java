@@ -79,4 +79,6 @@ public abstract class ResourceProvider {
     public AbstractLogger getLogger() {
         return basicLogger;
     }
+
+    public abstract XFont<?> getFont(String name);
 }

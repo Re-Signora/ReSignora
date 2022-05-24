@@ -3,8 +3,11 @@ package work.chiro.game.compatible;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
+
+import androidx.core.content.res.ResourcesCompat;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,11 +16,12 @@ import java.util.Map;
 import work.chiro.game.application.R;
 import work.chiro.game.config.Constants;
 import work.chiro.game.config.RunningConfig;
-import work.chiro.game.x.logger.AbstractLogger;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.x.compatible.ResourceProvider;
+import work.chiro.game.x.compatible.XFont;
 import work.chiro.game.x.compatible.XImage;
+import work.chiro.game.x.logger.AbstractLogger;
 
 public abstract class ResourceProviderAndroid extends ResourceProvider {
     @Override
@@ -111,5 +115,16 @@ public abstract class ResourceProviderAndroid extends ResourceProvider {
     @Override
     public AbstractLogger getLogger() {
         return logger;
+    }
+
+    private final Map<String, Integer> resourceMap = Map.of(
+            "genshin", R.font.genshin
+    );
+
+    @SuppressWarnings("ConstantConditions")
+    @Override
+    public XFont<?> getFont(String name) {
+        Typeface font = ResourcesCompat.getFont(getContext(), resourceMap.getOrDefault(name, R.font.genshin));
+        return new XFont<>(font);
     }
 }

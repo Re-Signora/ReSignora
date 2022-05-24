@@ -19,33 +19,31 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
 import java.util.List;
 
+import work.chiro.game.compatible.HeroControllerAndroidImpl;
+import work.chiro.game.compatible.HistoryImplAndroid;
+import work.chiro.game.compatible.ResourceProviderAndroid;
+import work.chiro.game.compatible.XGraphicsAndroid;
+import work.chiro.game.config.RunningConfig;
+import work.chiro.game.game.Game;
 import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.objects.aircraft.BossEnemy;
 import work.chiro.game.objects.aircraft.BossEnemyFactory;
 import work.chiro.game.objects.aircraft.HeroAircraftFactory;
-import work.chiro.game.game.Game;
-import work.chiro.game.utils.callback.BasicCallback;
-import work.chiro.game.compatible.HeroControllerAndroidImpl;
-import work.chiro.game.compatible.HistoryImplAndroid;
-import work.chiro.game.x.compatible.ResourceProvider;
-import work.chiro.game.compatible.ResourceProviderAndroid;
-import work.chiro.game.compatible.XGraphicsAndroid;
-import work.chiro.game.config.RunningConfig;
-import work.chiro.game.storage.history.HistoryObjectFactory;
 import work.chiro.game.resource.ImageManager;
-import work.chiro.game.utils.thread.MyThreadFactory;
+import work.chiro.game.storage.history.HistoryObjectFactory;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.callback.BasicCallback;
+import work.chiro.game.utils.thread.MyThreadFactory;
+import work.chiro.game.x.compatible.ResourceProvider;
 
 public class GameActivity extends AppCompatActivity {
     private SurfaceHolder surfaceHolder;
     private static Game game = null;
     SurfaceView surfaceView = null;
     private final HeroControllerAndroidImpl heroControllerAndroid = new HeroControllerAndroidImpl();
-    private Typeface font;
 
     public static Game getGame() {
         return game;
@@ -96,7 +94,7 @@ public class GameActivity extends AppCompatActivity {
         int x = 10;
         int y = d;
         g.setColor(0xcfcfcfcf);
-        g.getPaint().setTypeface(font);
+        g.getPaint().setTypeface((Typeface) ResourceProvider.getInstance().getFont("genshin").getFont());
         g.drawString("SCORE:" + (int) (RunningConfig.score), x, y);
         y = y + d;
         g.drawString("LIFE:" + (int) (HeroAircraftFactory.getInstance().getHp()), x, y);
@@ -126,7 +124,6 @@ public class GameActivity extends AppCompatActivity {
         });
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_game);
-        font = ResourcesCompat.getFont(this, R.font.genshin);
 
         surfaceView = findViewById(R.id.gameSurfaceView);
         surfaceHolder = surfaceView.getHolder();
