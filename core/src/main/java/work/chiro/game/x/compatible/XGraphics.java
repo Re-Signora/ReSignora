@@ -149,8 +149,8 @@ public abstract class XGraphics {
         int d = (int) (getFontSize() * 3.0f / getCanvasScale());
         int x = 10;
         int y = d;
-        setColor(0xcfcfcfcf);
         setFont(ResourceProvider.getInstance().getFont("genshin"));
+        setColor(0xcfcfcfcf);
         drawString("SCORE:" + (int) (RunningConfig.score), x, y);
         y = y + d;
         drawString("LIFE:" + (int) (HeroAircraftFactory.getInstance().getHp()), x, y);

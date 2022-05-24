@@ -114,6 +114,7 @@ public abstract class XGraphicsPC extends XGraphics {
     @Override
     public XGraphics setColor(int color) {
         this.color = color;
+        getGraphics().setColor(new Color(color));
         return this;
     }
 
@@ -126,6 +127,7 @@ public abstract class XGraphicsPC extends XGraphics {
 
     @Override
     public XGraphics drawString(String text, double x, double y) {
+        getGraphics().setColor(new Color(color));
         getGraphics().drawString(text, (int) (x * GamePanel.getScale()), (int) (y * GamePanel.getScale()));
         return this;
     }
