@@ -82,16 +82,7 @@ public class GameActivity extends AppCompatActivity {
         };
         canvas.drawColor(Color.BLACK);
 
-        // 绘制所有物体
-        //noinspection SynchronizationOnLocalVariableOrMethodParameter
-        synchronized (allFlyingObjects) {
-            allFlyingObjects.forEach(objList -> {
-                //noinspection SynchronizationOnLocalVariableOrMethodParameter
-                synchronized (objList) {
-                    objList.forEach(obj -> obj.draw(xGraphics));
-                }
-            });
-        }
+        xGraphics.paintInOrdered(game);
 
         paintInfo(xGraphics);
         // 恢复 canvas 设置之后绘制遮罩

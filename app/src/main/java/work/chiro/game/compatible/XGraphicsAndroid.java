@@ -9,7 +9,7 @@ import work.chiro.game.utils.Utils;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
 
-public abstract class XGraphicsAndroid implements XGraphics {
+public abstract class XGraphicsAndroid extends XGraphics {
     static private float canvasScale = 1.0f;
     static private final int fontSize = 20;
     private double alpha = 1.0;

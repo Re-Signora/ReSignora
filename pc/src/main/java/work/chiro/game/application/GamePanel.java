@@ -10,8 +10,6 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.VolatileImage;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import javax.swing.JOptionPane;
@@ -21,7 +19,6 @@ import work.chiro.game.compatible.XGraphicsPC;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.config.RunningConfigPC;
 import work.chiro.game.game.Game;
-import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.objects.aircraft.BossEnemy;
 import work.chiro.game.objects.aircraft.BossEnemyFactory;
 import work.chiro.game.objects.aircraft.HeroAircraftFactory;
@@ -39,7 +36,6 @@ import work.chiro.game.x.compatible.XGraphics;
  *
  * @author hitsz
  */
-@SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
 public class GamePanel extends JPanel {
     private Font myFontBase = null;
     private final HeroControllerImpl heroControllerImpl = HeroControllerImpl.getInstance(this);
@@ -150,16 +146,6 @@ public class GamePanel extends JPanel {
         VolatileImage thisFrame = getGraphicsConfiguration().createCompatibleVolatileImage(RunningConfigPC.displayWindowWidth, RunningConfigPC.displayWindowHeight);
         Graphics2D graphicsNew = thisFrame.createGraphics();
 
-        List<List<? extends AbstractFlyingObject>> allFlyingObjects = game.getAllFlyingObjects();
-        List<AbstractFlyingObject> sortedFlyingObjects = new ArrayList<>();
-
-        synchronized (allFlyingObjects) {
-            allFlyingObjects.forEach(sortedFlyingObjects::addAll);
-        }
-        Utils.getLogger().debug("before sort: {}", sortedFlyingObjects);
-        sortedFlyingObjects.sort((a, b) -> (a.getAnchor().getY() >= b.getAnchor().getY()) ? (a.getAnchor().getY() == b.getAnchor().getY() ? 0 : 1) : -1);
-        Utils.getLogger().debug("after sort: {}", sortedFlyingObjects);
-
         XGraphics xGraphics = new XGraphicsPC() {
             @Override
             protected Graphics2D getGraphics() {
@@ -172,45 +158,7 @@ public class GamePanel extends JPanel {
             }
         };
 
-        // 绘制背景
-        game.getBackgrounds().forEach(background -> {
-            synchronized (background) {
-                background.draw(xGraphics);
-            }
-        });
-
-        // 绘制飞行的物体
-        sortedFlyingObjects.forEach(flyingObject -> {
-            synchronized (flyingObject) {
-                flyingObject.draw(xGraphics);
-            }
-        });
-
-        // 绘制 UI
-        game.getLayout().forEach(view -> {
-            synchronized (view) {
-                view.draw(xGraphics);
-            }
-        });
-
-        // // 绘制所有物体
-        // //noinspection SynchronizationOnLocalVariableOrMethodParameter
-        // synchronized (allFlyingObjects) {
-        //     for (List<? extends AbstractObject> objList : allFlyingObjects) {
-        //         double s = Utils.getTimeMills();
-        //         //noinspection SynchronizationOnLocalVariableOrMethodParameter
-        //         synchronized (objList) {
-        //             try {
-        //                 objList.forEach(obj -> obj.draw(xGraphics));
-        //             } catch (Exception e) {
-        //                 // e.printStackTrace();
-        //                 Utils.getLogger().error("error when paint: {}", e);
-        //             }
-        //         }
-        //         double e = Utils.getTimeMills();
-        //         Utils.getLogger().debug("\t-- {}: {}", (int) (e - s), objList);
-        //     }
-        // }
+        xGraphics.paintInOrdered(game);
 
         double timePaint = Utils.getTimeMills();
 
@@ -220,12 +168,8 @@ public class GamePanel extends JPanel {
         double timePaintInfo = Utils.getTimeMills();
 
         // resize 到显示帧
-        // AffineTransform af = AffineTransform.getScaleInstance(scale, scale);
-        // Graphics2D g2d = (Graphics2D) g;
         g.drawImage(thisFrame, 0, 0, null);
-        // g2d.drawImage(thisFrame, af, null);
         double timeResize = Utils.getTimeMills();
-        // g2d.dispose();
         graphicsNew.dispose();
         Utils.getLogger().debug("paint -- object: {}, info: {}, resize: {}", timePaint - timeStart, timePaintInfo - timePaint, timeResize - timePaintInfo);
 

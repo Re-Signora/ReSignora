@@ -18,7 +18,7 @@ import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
 
-public abstract class XGraphicsPC implements XGraphics {
+public abstract class XGraphicsPC extends XGraphics {
     double alpha = 1.0;
     double rotation = 0.0;
     int color = 0x0;
