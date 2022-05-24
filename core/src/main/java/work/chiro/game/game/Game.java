@@ -59,7 +59,6 @@ public class Game {
             backgrounds, heroBullets, heroAircrafts, enemyBullets, enemyAircrafts, bossAircrafts, props, layout
     );
     private boolean gameOverFlag = false;
-    private boolean startedFlag = false;
     private double nextBossScore;
     private Future<?> future = null;
     private final TimerController timerController = new TimerController();
@@ -77,22 +76,24 @@ public class Game {
         return activityManager.getLayoutManager();
     }
 
-    public void resetStates() {
-        gameOverFlag = false;
-        RunningConfig.score = 0;
+    public void clearFlyingObjects() {
         enemyBullets.clear();
         enemyAircrafts.clear();
         props.clear();
-        RunningConfig.config = new ConfigFactory(RunningConfig.difficulty).create();
         heroAircraft = new HeroAircraftFactory().clearInstance().create();
         heroAircrafts.clear();
         heroAircrafts.add(heroAircraft);
         bossAircrafts.clear();
         BossEnemyFactory.clearInstance();
         timerController.clear();
+    }
+
+    public void resetStates() {
+        gameOverFlag = false;
+        RunningConfig.score = 0;
+        RunningConfig.config = new ConfigFactory(RunningConfig.difficulty).create();
+        clearFlyingObjects();
         nextBossScore = RunningConfig.score + RunningConfig.config.getBossScoreThreshold().getScaleNow().getX();
-        // layout.replaceLayout(XLayoutManager.getInstance().getLayout("main"));
-        activityManager.startActivityWithBundle(HomeActivity.class);
     }
 
     public Game(HeroController heroController) {
@@ -109,7 +110,7 @@ public class Game {
             backgrounds.clear();
             backgrounds.add(new BasicBackgroundFactory(layout.getBackground()).create());
         });
-        layout.replaceLayout(XLayoutManager.getInstance().getLayout("main"));
+        activityManager.startActivityWithBundle(HomeActivity.class);
         Utils.getLogger().info("Game instance created!");
     }
 
@@ -132,7 +133,6 @@ public class Game {
     }
 
     public void addTimers() {
-        ResourceProvider.getInstance().musicLoadAll();
         timerController.init(Utils.getTimeMills());
         // 英雄射击事件
         timerController.add(new Timer(RunningConfig.config.getHeroShoot(), () -> {
@@ -244,8 +244,8 @@ public class Game {
      * 游戏启动入口，执行游戏逻辑
      */
     public void action() {
+        ResourceProvider.getInstance().musicLoadAll();
         Utils.getLogger().info("Game action start with difficulty: " + RunningConfig.difficulty);
-        startedFlag = true;
         addTimers();
         ResourceProvider.getInstance().startLoopMusic(MusicType.BGM);
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
