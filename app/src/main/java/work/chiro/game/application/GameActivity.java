@@ -87,27 +87,6 @@ public class GameActivity extends AppCompatActivity {
         surfaceHolder.unlockCanvasAndPost(canvas);
     }
 
-    // private void paintInfo(XGraphics g) {
-    //     int d = (int) (XGraphics.getFontSize() * 3.0f / XGraphicsAndroid.getCanvasScale());
-    //     int x = 10;
-    //     int y = d;
-    //     g.setColor(0xcfcfcfcf);
-    //     // g.getPaint().setTypeface((Typeface) ResourceProvider.getInstance().getFont("genshin").getFont());
-    //     g.setFont(ResourceProvider.getInstance().getFont("genshin"));
-    //     g.drawString("SCORE:" + (int) (RunningConfig.score), x, y);
-    //     y = y + d;
-    //     g.drawString("LIFE:" + (int) (HeroAircraftFactory.getInstance().getHp()), x, y);
-    //     y = y + d;
-    //     BossEnemy boss = BossEnemyFactory.getInstance();
-    //     if (boss == null) {
-    //         g.drawString("Before Boss:" + (int) (game.getNextBossScore() - RunningConfig.score), x, y);
-    //     } else {
-    //         g.drawString("BOSS LIFE:" + (int) (boss.getHp()), x, y);
-    //     }
-    //     y = y + d;
-    //     g.drawString("FPS:" + game.getTimerController().getFps(), x, y);
-    // }
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

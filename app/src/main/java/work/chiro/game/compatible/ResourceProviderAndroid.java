@@ -124,7 +124,10 @@ public abstract class ResourceProviderAndroid extends ResourceProvider {
     @SuppressWarnings("ConstantConditions")
     @Override
     public XFont<?> getFont(String name) {
+        if (cachedFont.containsKey(name)) return cachedFont.get(name);
         Typeface font = ResourcesCompat.getFont(getContext(), resourceMap.getOrDefault(name, R.font.genshin));
-        return new XFont<>(font);
+        XFont<?> f = new XFont<>(font);
+        cachedFont.put(name, f);
+        return f;
     }
 }

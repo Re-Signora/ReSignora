@@ -159,7 +159,6 @@ public class GamePanel extends JPanel {
         double timePaint = Utils.getTimeMills();
 
         //绘制得分和生命值
-        // paintInfo(graphicsNew);
         xGraphics.paintInfo(game);
 
         double timePaintInfo = Utils.getTimeMills();
@@ -172,25 +171,6 @@ public class GamePanel extends JPanel {
 
         justResized = false;
     }
-
-    // private void paintInfo(Graphics g) {
-    //     int x = 10;
-    //     int y = 25;
-    //     g.setColor(new Color(0xcfcfcfcf));
-    //     g.setFont(myFontBase);
-    //     g.drawString("SCORE:" + (int) (RunningConfig.score), x, y);
-    //     y = y + 20;
-    //     g.drawString("LIFE:" + (int) (HeroAircraftFactory.getInstance().getHp()), x, y);
-    //     y = y + 20;
-    //     BossEnemy boss = BossEnemyFactory.getInstance();
-    //     if (boss == null) {
-    //         g.drawString("Before Boss:" + (int) (game.getNextBossScore() - RunningConfig.score), x, y);
-    //     } else {
-    //         g.drawString("BOSS LIFE:" + (int) (boss.getHp()), x, y);
-    //     }
-    //     y = y + 20;
-    //     g.drawString("FPS:" + game.getTimerController().getFps(), x, y);
-    // }
 
     private void loadFont() {
         try {

@@ -6,6 +6,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 import work.chiro.game.x.logger.AbstractLogger;
 import work.chiro.game.x.logger.BasicLogger;
@@ -79,6 +81,8 @@ public abstract class ResourceProvider {
     public AbstractLogger getLogger() {
         return basicLogger;
     }
+
+    protected Map<String, XFont<?>> cachedFont = new HashMap<>();
 
     public abstract XFont<?> getFont(String name);
 }

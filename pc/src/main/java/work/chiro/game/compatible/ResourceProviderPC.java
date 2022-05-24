@@ -61,12 +61,15 @@ public class ResourceProviderPC extends ResourceProvider {
 
     @Override
     public XFont<?> getFont(String name) {
-        Font font;
+        if (cachedFont.containsKey(name)) return cachedFont.get(name);
+        Font f;
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getResourceAsStream("/fonts/genshin.ttf"))).deriveFont(22f);
+            f = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getResourceAsStream("/fonts/genshin.ttf"))).deriveFont(22f);
         } catch (FontFormatException | IOException e) {
-            font = new Font("SansSerif", Font.PLAIN, 22);
+            f = new Font("SansSerif", Font.PLAIN, 22);
         }
-        return new XFont<>(font);
+        XFont<?> font = new XFont<>(f);
+        cachedFont.put(name, font);
+        return font;
     }
 }
