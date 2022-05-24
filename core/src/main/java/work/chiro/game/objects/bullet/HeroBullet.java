@@ -10,4 +10,9 @@ public class HeroBullet extends BaseBullet {
     public HeroBullet(Vec2 posInit, AnimateContainer animateContainer, int power) {
         super(posInit, animateContainer, power);
     }
+
+    @Override
+    protected String getImageFilename() {
+        return "characters/la-signora/butterfly.png";
+    }
 }

@@ -146,4 +146,9 @@ public class HeroAircraft extends AbstractAircraft {
             heroLastPlayMusic = now;
         }
     }
+
+    @Override
+    protected String getImageFilename() {
+        return "characters/la-signora/la_signora.png";
+    }
 }
