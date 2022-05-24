@@ -55,12 +55,21 @@
     - [ ] 开源，非常受欢迎，支持多个平台，支持Tiled，Box2D等，良好的文档资料
     - [ ] based on OpenGL (ES) that works on Windows, Linux, macOS, Android, your browser and iOS.[Get started](https://libgdx.com/dev/)
 - [ ] 修改为横版
-  - [ ] 横屏
-    - [ ] Android 横屏
-    - [ ] pc 横屏+缩放
-  - [ ] 
+  - [x] 横屏
+    - [x] Android 横屏
+    - [x] pc 横屏+缩放
+  - [ ] 物体横向移动
+- [ ] XSytem
+  - [x] XLayout
+  - [x] XLayoutManager
+  - [x] XActivity
+  - [x] XActivityManager
+  - [ ] XView
+    - [x] XButton
+    - [ ] XJoySticks
+    - [ ] XMediaPlayer
 
 ## Notes
 
 1. 左侧虚拟摇杆：https://github.com/kongqw/AndroidRocker
-2. 
+
