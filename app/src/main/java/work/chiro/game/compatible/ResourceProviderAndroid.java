@@ -62,13 +62,18 @@ public abstract class ResourceProviderAndroid extends ResourceProvider {
         ResourceProvider.MUSIC_FILENAME_MAP.forEach((musicType, s) -> {
             try {
                 byte[] data = getSoundBytesFromResource(s);
-                File tmp = File.createTempFile(s, null, getContext().getCacheDir());
+                // File tmp = File.createTempFile("music-cache-" + s, "-music-cache", getContext().getCacheDir());
+                File tmp = new File(getContext().getCacheDir(), s);
+                if (tmp.exists() && tmp.length() == data.length) {
+                    Utils.getLogger().debug("cache file exist: [{}] {}", tmp.length(), tmp.getPath());
+                    return;
+                }
                 FileOutputStream fileOutputStream = new FileOutputStream(tmp);
                 fileOutputStream.write(data);
                 fileOutputStream.close();
                 FileInputStream fileInputStream = new FileInputStream(tmp);
                 int id = soundPool.load(fileInputStream.getFD(),0, data.length, 1);
-                Utils.getLogger().debug("load music {}: id = {}", s, id);
+                Utils.getLogger().debug("load music {}, cache: {}, id = {}", s, tmp.getPath(), id);
                 musicIDMap.put(musicType, id);
             } catch (IOException e) {
                 e.printStackTrace();
