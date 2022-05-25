@@ -1,7 +1,7 @@
 package work.chiro.game.animate.action;
 
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.objects.character.AbstractThings;
+import work.chiro.game.objects.thing.character.AbstractThing;
 
 /**
  * 相比 Animate 增加更多功能：<br/>
@@ -11,13 +11,13 @@ import work.chiro.game.objects.character.AbstractThings;
  * @author Chiro
  */
 public class AbstractAction extends AnimateContainer {
-    private final AbstractThings character;
+    private final AbstractThing<?> thing;
 
-    public AbstractAction(AbstractThings character) {
-        this.character = character;
+    public AbstractAction(AbstractThing<?> thing) {
+        this.thing = thing;
     }
 
-    public AbstractThings getCharacter() {
-        return character;
+    public AbstractThing<?> getThing() {
+        return thing;
     }
 }

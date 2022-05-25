@@ -1,4 +1,4 @@
-package work.chiro.game.objects.character;
+package work.chiro.game.objects.thing.character;
 
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.logic.attributes.AttributesBuilder;
@@ -7,15 +7,15 @@ import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 
-public abstract class AbstractThings extends AbstractFlyingObject {
+public abstract class AbstractThing<T extends BasicThingAttributes> extends AbstractFlyingObject {
     final private String labelName;
     final private BasicThingAttributes basicAttributes;
     private String imageDisplaying;
 
-    public AbstractThings(String labelName, Vec2 posInit, AnimateContainer animateContainer, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
+    public AbstractThing(String labelName, Class<T> attributesClass, Vec2 posInit, AnimateContainer animateContainer, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super(posInit, animateContainer, sizeInit, rotationInit, alpha);
         this.labelName = labelName;
-        basicAttributes = AttributesBuilder.buildFromResource(labelName, BasicThingAttributes.class);
+        basicAttributes = AttributesBuilder.buildFromResource(labelName, attributesClass);
         imageDisplaying = getSelfImageFilename();
     }
 
