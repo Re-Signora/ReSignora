@@ -12,14 +12,10 @@ import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
 
 public abstract class XGraphicsAndroid extends XGraphics {
-    private double alpha = 1.0;
-    private double rotation = 0.0;
-    private int color = 0x0;
-
     @Override
     public XImage<?> drawImage(XImage<?> image, double x, double y) {
         Paint paint = new Paint();
-        paint.setAlpha((int) (alpha * 255));
+        setAlpha(alpha);
         if (alpha == 0) {
             getCanvas().drawBitmap((Bitmap) image.getImage(), (float) x, (float) y, paint);
         } else {
@@ -48,6 +44,7 @@ public abstract class XGraphicsAndroid extends XGraphics {
     @Override
     public XGraphics setAlpha(double alpha) {
         this.alpha = alpha;
+        getPaint().setAlpha((int) (alpha * 255));
         return this;
     }
 

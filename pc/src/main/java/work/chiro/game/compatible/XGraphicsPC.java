@@ -21,10 +21,6 @@ import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
 
 public abstract class XGraphicsPC extends XGraphics {
-    double alpha = 1.0;
-    double rotation = 0.0;
-    int color = 0x0;
-
     @Override
     public XImage<?> drawImage(XImage<?> image, double x, double y) {
         double scale = image.isScaled() ? 1.0 : GamePanel.getScale();
@@ -33,7 +29,7 @@ public abstract class XGraphicsPC extends XGraphics {
         af.scale(scale, scale);
         af.rotate(rotation, image.getWidth() * scale / 2, image.getHeight() * scale / 2);
         Graphics2D graphics2D = getGraphics();
-        graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) alpha));
+        setAlpha(alpha);
         graphics2D.drawImage((Image) image.getImage(), af, null);
         return image;
     }
@@ -102,6 +98,7 @@ public abstract class XGraphicsPC extends XGraphics {
     @Override
     public XGraphics setAlpha(double alpha) {
         this.alpha = alpha;
+        getGraphics().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) alpha));
         return this;
     }
 

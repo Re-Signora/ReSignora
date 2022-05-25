@@ -12,6 +12,9 @@ import work.chiro.game.objects.aircraft.HeroAircraftFactory;
 import work.chiro.game.utils.Utils;
 
 public abstract class XGraphics {
+    protected double alpha = 1.0;
+    protected double rotation = 0.0;
+    protected int color = 0x0;
     /**
      * 在 (x, y) 绘制图片
      *
@@ -153,6 +156,7 @@ public abstract class XGraphics {
         int y = d;
         setFont(ResourceProvider.getInstance().getFont("genshin"));
         setColor(0xcfcfcfcf);
+        setAlpha(0.8);
         drawString("SCORE:" + (int) (RunningConfig.score), x, y);
         y = y + d;
         drawString("LIFE:" + (int) (HeroAircraftFactory.getInstance().getHp()), x, y);
