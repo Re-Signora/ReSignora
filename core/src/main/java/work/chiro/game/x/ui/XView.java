@@ -13,7 +13,7 @@ import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
 
-public class XView extends AbstractObject {
+public class XView extends AbstractObject<AnimateContainer> {
     protected String text = "";
     protected String id = "View" + Utils.idGenerator();
     private final Map<XEventType, XViewCallback> listeners = new HashMap<>();

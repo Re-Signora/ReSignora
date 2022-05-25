@@ -2,8 +2,8 @@ package work.chiro.game.objects;
 
 import java.io.IOException;
 
-import work.chiro.game.objects.aircraft.AbstractAircraft;
 import work.chiro.game.animate.AnimateContainer;
+import work.chiro.game.objects.aircraft.AbstractAircraft;
 import work.chiro.game.utils.callback.BasicCallback;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
@@ -19,7 +19,7 @@ import work.chiro.game.vector.Vec2;
  *
  * @author hitsz
  */
-public abstract class AbstractObject {
+public abstract class AbstractObject<A extends AnimateContainer> {
 
     public Vec2 getPosition() {
         return position;
@@ -33,7 +33,7 @@ public abstract class AbstractObject {
     /**
      * 动画容器
      */
-    private final AnimateContainer animateContainer;
+    private final A animateContainer;
     /**
      * 大小
      */
@@ -82,7 +82,7 @@ public abstract class AbstractObject {
 
     public AbstractObject(
             Vec2 posInit,
-            AnimateContainer animateContainer,
+            A animateContainer,
             Vec2 sizeInit,
             Scale rotationInit,
             Scale alpha) {
@@ -95,7 +95,7 @@ public abstract class AbstractObject {
 
     public AbstractObject(
             Vec2 posInit,
-            AnimateContainer animateContainer,
+            A animateContainer,
             Vec2 sizeInit,
             Scale rotationInit) {
         this(posInit, animateContainer, sizeInit, rotationInit, null);
@@ -103,27 +103,22 @@ public abstract class AbstractObject {
 
     public AbstractObject(
             Vec2 posInit,
-            AnimateContainer animateContainer,
+            A animateContainer,
             Vec2 sizeInit) {
         this(posInit, animateContainer, sizeInit, null, null);
     }
 
     public AbstractObject(
             Vec2 posInit,
-            AnimateContainer animateContainer) {
+            A animateContainer) {
         this(posInit, animateContainer, null, null, null);
     }
 
     public AbstractObject(
             Vec2 posInit,
-            AnimateContainer animateContainer,
+            A animateContainer,
             Scale alpha) {
         this(posInit, animateContainer, null, null, alpha);
-    }
-
-    public AbstractObject(
-            Vec2 posInit) {
-        this(posInit, new AnimateContainer(), null, null, null);
     }
 
     protected Boolean checkInBoundary() {
@@ -158,7 +153,7 @@ public abstract class AbstractObject {
      * @param abstractObject 撞击对方
      * @return true: 我方被击中; false 我方未被击中
      */
-    public boolean crash(AbstractObject abstractObject, double locationX, double locationY, double width, double height) {
+    public boolean crash(AbstractObject<?> abstractObject, double locationX, double locationY, double width, double height) {
         if (isInvincible() || abstractObject.isInvincible()) {
             return false;
         }
@@ -177,7 +172,7 @@ public abstract class AbstractObject {
                 && y + h > locationY && y - h < locationY;
     }
 
-    public boolean crash(AbstractObject abstractObject) {
+    public boolean crash(AbstractObject<?> abstractObject) {
         return crash(abstractObject, getLocationX(), getLocationY(), getWidth(), getHeight());
     }
 
@@ -354,7 +349,7 @@ public abstract class AbstractObject {
         return true;
     }
 
-    public AnimateContainer getAnimateContainer() {
+    public A getAnimateContainer() {
         return animateContainer;
     }
 

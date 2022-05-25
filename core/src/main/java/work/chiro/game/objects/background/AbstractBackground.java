@@ -13,7 +13,7 @@ import work.chiro.game.vector.Vec2;
  *
  * @author Chiro
  */
-public abstract class AbstractBackground extends AbstractObject {
+public abstract class AbstractBackground extends AbstractObject<AnimateContainer> {
     protected void init() {
         initImageFilename = getInitImageFilename();
         Utils.getLogger().debug("initImageFilename: {}", initImageFilename);
@@ -33,11 +33,6 @@ public abstract class AbstractBackground extends AbstractObject {
 
     public AbstractBackground(Vec2 posInit, AnimateContainer animateContainer) {
         super(posInit, animateContainer, new Vec2(RunningConfig.windowWidth, RunningConfig.windowHeight));
-        init();
-    }
-
-    public AbstractBackground() {
-        super(new Vec2());
         init();
     }
 
@@ -99,8 +94,4 @@ public abstract class AbstractBackground extends AbstractObject {
     public String getImageFilename() {
         return initImageFilename;
     }
-
-    // public XImage<?> getRawImage() throws IOException {
-    //     return Utils.getCachedImage(getImageFilename());
-    // }
 }

@@ -4,7 +4,7 @@ import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 
-public class AbstractFlyingObject extends AbstractObject {
+public class AbstractFlyingObject extends AbstractObject<AnimateContainer> {
     public AbstractFlyingObject(Vec2 posInit, AnimateContainer animateContainer, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super(posInit, animateContainer, sizeInit, rotationInit, alpha);
     }

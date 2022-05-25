@@ -6,6 +6,7 @@ import work.chiro.game.vector.Vec2;
 public class BasicBackground extends AbstractBackground {
     final private String backgroundName;
     public BasicBackground(String backgroundName) {
+        super(new Vec2(), new AnimateContainer());
         this.backgroundName = backgroundName;
         // 重新初始化数据
         init();
