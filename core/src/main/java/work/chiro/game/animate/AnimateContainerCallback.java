@@ -3,7 +3,7 @@ package work.chiro.game.animate;
 /**
  * @author Chiro
  */
-public interface AnimateCallback {
+public interface AnimateContainerCallback {
     /**
      * 当所有动画执行完成后执行的钩子，用于更新动画等
      *

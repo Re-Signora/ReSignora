@@ -107,10 +107,10 @@ public class AnimateContainerFactory {
         return this;
     }
 
-    private AnimateCallback animateCallback = null;
+    private AnimateContainerCallback animateContainerCallback = null;
 
-    public AnimateContainerFactory setupAnimateCallback(AnimateCallback animateCallback) {
-        this.animateCallback = animateCallback;
+    public AnimateContainerFactory setupAnimateCallback(AnimateContainerCallback animateContainerCallback) {
+        this.animateContainerCallback = animateContainerCallback;
         return this;
     }
 
@@ -152,7 +152,7 @@ public class AnimateContainerFactory {
         } else {
             List<AbstractAnimate<Vec>> animateList = new LinkedList<>();
             animateList.add(animate);
-            return new AnimateContainer(animateList, animateCallback);
+            return new AnimateContainer(animateList, animateContainerCallback);
         }
     }
 }

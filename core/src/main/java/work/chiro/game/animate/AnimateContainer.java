@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  */
 public class AnimateContainer {
     private final List<AbstractAnimate<Vec>> animateList;
-    private AnimateCallback animateCallback;
+    private AnimateContainerCallback animateContainerCallback;
 
     public AnimateContainer() {
         this(new LinkedList<>());
@@ -25,9 +25,9 @@ public class AnimateContainer {
         this(animateList, null);
     }
 
-    public AnimateContainer(List<AbstractAnimate<Vec>> animateList, AnimateCallback animateCallback) {
+    public AnimateContainer(List<AbstractAnimate<Vec>> animateList, AnimateContainerCallback animateContainerCallback) {
         this.animateList = animateList;
-        this.animateCallback = animateCallback;
+        this.animateContainerCallback = animateContainerCallback;
     }
 
     public List<AbstractAnimate<Vec>> getAnimateList() {
@@ -47,8 +47,8 @@ public class AnimateContainer {
     public Boolean updateAll(double timeNow) {
         List<Boolean> innerRes = updateAllInner(timeNow);
         boolean finished = innerRes.isEmpty() || (innerRes.stream().mapToInt(res -> res ? 0 : 1).sum() == 0);
-        if (finished && animateCallback != null) {
-            boolean allFinished = animateCallback.onFinish(this);
+        if (finished && animateContainerCallback != null) {
+            boolean allFinished = animateContainerCallback.onFinish(this);
             if (allFinished) {
                 clearAnimateCallback();
             }
@@ -106,11 +106,11 @@ public class AnimateContainer {
         getAnimateList().add(animate);
     }
 
-    public void setAnimateCallback(AnimateCallback animateCallback) {
-        this.animateCallback = animateCallback;
+    public void setAnimateCallback(AnimateContainerCallback animateContainerCallback) {
+        this.animateContainerCallback = animateContainerCallback;
     }
 
     public void clearAnimateCallback() {
-        this.animateCallback = null;
+        this.animateContainerCallback = null;
     }
 }

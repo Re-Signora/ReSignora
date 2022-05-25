@@ -15,6 +15,7 @@ public abstract class AbstractAnimate<T extends VectorType & VectorFactory<T>> {
     private final T source;
     protected double timeStart;
     protected final double timeSpan;
+    // protected
 
     AbstractAnimate(T vecSource, AnimateType animateType, AnimateVectorType animateVectorType, double timeStart, double timeSpan) {
         this.animateType = animateType;
