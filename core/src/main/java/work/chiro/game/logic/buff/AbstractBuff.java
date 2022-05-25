@@ -1,6 +1,6 @@
 package work.chiro.game.logic.buff;
 
-import work.chiro.game.logic.attributes.BasicCharacterAttributes;
+import work.chiro.game.logic.attributes.BasicThingAttributes;
 
 public abstract class AbstractBuff {
     public void onStart() {
@@ -10,7 +10,7 @@ public abstract class AbstractBuff {
         return 0;
     }
 
-    public BasicCharacterAttributes calc(BasicCharacterAttributes a) {
+    public BasicThingAttributes calc(BasicThingAttributes a) {
         return a;
     }
 

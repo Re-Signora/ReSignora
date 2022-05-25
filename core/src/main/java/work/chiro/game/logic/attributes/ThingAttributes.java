@@ -1,6 +1,6 @@
 package work.chiro.game.logic.attributes;
 
-public class CharacterAttributes extends BasicCharacterAttributes {
+public class ThingAttributes extends BasicThingAttributes {
     /**
      * 统帅
      */

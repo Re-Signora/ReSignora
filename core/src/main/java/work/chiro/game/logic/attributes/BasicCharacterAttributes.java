@@ -1,9 +1,18 @@
 package work.chiro.game.logic.attributes;
 
-public class BasicCharacterAttributes {
+public class BasicCharacterAttributes extends BasicThingAttributes {
     public int maxHp = 400;
+    /**
+     * 普攻攻速
+     */
     public int speed = 10;
+    /**
+     * 攻击力
+     */
     public int ATK = 20;
+    /**
+     * 防御力
+     */
     public int DEF = 5;
     /**
      * 暴击率

@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import work.chiro.game.logic.attributes.BasicCharacterAttributes;
+import work.chiro.game.logic.attributes.BasicThingAttributes;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.x.logger.AbstractLogger;
@@ -83,12 +83,12 @@ public abstract class ResourceProvider {
 
     public abstract XFont<?> getFont(String name);
 
-    public <T extends BasicCharacterAttributes> T getAttributesFromResource(String name, Class<T> clazz, String prefix) throws IOException {
+    public <T extends BasicThingAttributes> T getAttributesFromResource(String name, Class<T> clazz, String prefix) throws IOException {
         String path = prefix + name + "/basic-attributes.json";
         return new Gson().fromJson(Utils.getStringFromResource(path), clazz);
     }
 
-    public <T extends BasicCharacterAttributes> T getAttributesFromResource(String name, Class<T> clazz) throws IOException {
+    public <T extends BasicThingAttributes> T getAttributesFromResource(String name, Class<T> clazz) throws IOException {
         return getAttributesFromResource(name, clazz, "/config/characters/");
     }
 }
