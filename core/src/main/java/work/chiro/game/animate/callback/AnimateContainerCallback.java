@@ -1,4 +1,6 @@
-package work.chiro.game.animate;
+package work.chiro.game.animate.callback;
+
+import work.chiro.game.animate.AnimateContainer;
 
 /**
  * @author Chiro

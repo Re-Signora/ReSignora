@@ -1,12 +1,13 @@
 package work.chiro.game.animate;
 
-import work.chiro.game.vector.Scale;
-import work.chiro.game.vector.Vec;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import work.chiro.game.animate.callback.AnimateContainerCallback;
+import work.chiro.game.vector.Scale;
+import work.chiro.game.vector.Vec;
 
 /**
  * 动画容器，用于储存动画信息

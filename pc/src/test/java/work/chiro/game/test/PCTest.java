@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 
 import work.chiro.game.compatible.ResourceProviderPC;
-import work.chiro.game.logic.attributes.CharacterBasicAttributes;
+import work.chiro.game.logic.attributes.CharacterAttributes;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.x.ui.XLayout;
@@ -28,7 +28,7 @@ public class PCTest {
     @Test
     void testLoadAttributes() {
         try {
-            CharacterBasicAttributes characterBasicAttributes = ResourceProvider.getInstance().getAttributesFromResource("la-signora", CharacterBasicAttributes.class);
+            CharacterAttributes characterBasicAttributes = ResourceProvider.getInstance().getAttributesFromResource("la-signora", CharacterAttributes.class);
             Utils.getLogger().info("characterBasicAttributes: {}", characterBasicAttributes);
         } catch (IOException e) {
             e.printStackTrace();

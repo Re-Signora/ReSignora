@@ -1,6 +1,6 @@
 package work.chiro.game.logic.attributes;
 
-public class BasicAttributes {
+public class BasicCharacterAttributes {
     public int maxHp = 400;
     public int speed = 10;
     public int ATK = 20;
