@@ -37,9 +37,8 @@ public class BasicImageCarouselAction extends AbstractAction {
         }));
     }
 
-    @SuppressWarnings("ConstantConditions")
-    public BasicImageCarouselAction(AbstractThing<?, AbstractAction> thing, String prefix, double duration) {
-        this(thing, prefix, thing.getLabelName(), duration);
+    public BasicImageCarouselAction(String prefix, String labelName, double duration) {
+        this(null, prefix, labelName, duration);
     }
 
     public String getLabelName() {
@@ -75,6 +74,10 @@ public class BasicImageCarouselAction extends AbstractAction {
     }
 
     public XImage<?> getImageNow() {
-        return getAvailableImages().get(imageIndexNow);
+        try {
+            return getAvailableImages().get(imageIndexNow);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
     }
 }

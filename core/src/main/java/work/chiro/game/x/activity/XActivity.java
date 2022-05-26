@@ -36,7 +36,7 @@ public abstract class XActivity {
         return layout;
     }
 
-    final Game getGame() {
+    final public Game getGame() {
         return game;
     }
 

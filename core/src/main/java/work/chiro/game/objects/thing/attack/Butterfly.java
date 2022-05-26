@@ -6,13 +6,23 @@ import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.XImage;
 
 public class Butterfly extends AbstractAttack {
+    private final static String labelName = "la-signora-butterfly";
     public Butterfly(Vec2 posInit, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
-        super("la-signora-butterfly", posInit, new BasicImageCarouselAction(null, "la-signora/", 100), sizeInit, rotationInit, alpha);
+        super(labelName, posInit, new BasicImageCarouselAction("attacks/" + labelName, labelName, 100), sizeInit, rotationInit, alpha);
         getAnimateContainer().setThing(this);
+    }
+
+    public Butterfly(Vec2 posInit) {
+        this(posInit, null, null, null);
     }
 
     @Override
     public XImage<?> getImage() {
         return ((BasicImageCarouselAction) getAnimateContainer()).getImageNow();
+    }
+
+    @Override
+    public void forward() {
+        // no move
     }
 }

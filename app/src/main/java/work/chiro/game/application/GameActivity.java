@@ -47,7 +47,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void draw() {
-        List<List<? extends AbstractFlyingObject<?>>> allFlyingObjects = game.getAllFlyingObjects();
         // Canvas canvas = surfaceHolder.lockCanvas();
         // 使用硬件加速
         Canvas canvas = surfaceHolder.lockHardwareCanvas();

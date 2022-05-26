@@ -1,16 +1,16 @@
 package work.chiro.game.logic.attributes;
 
 import java.io.IOException;
+import java.util.Map;
 
 import work.chiro.game.x.compatible.ResourceProvider;
 
 public class AttributesBuilder {
-    public static <T extends BasicThingAttributes> T buildFromResource(String name, Class<T> clazz) {
-        try {
-            return ResourceProvider.getInstance().getAttributesFromResource(name, clazz);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    private static final Map<Class<?>, String> resourceTypeDirectoryMap = Map.of(
+            BasicCharacterAttributes.class, "characters",
+            BasicAttackAttributes.class, "attacks"
+    );
+    public static <T extends BasicThingAttributes> T buildFromResource(String name, Class<T> clazz) throws IOException {
+        return ResourceProvider.getInstance().getAttributesFromResource(name, clazz, resourceTypeDirectoryMap.getOrDefault(clazz, "others"));
     }
 }

@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 
 import javax.imageio.ImageIO;
@@ -21,7 +22,12 @@ public class ResourceProviderPC extends ResourceProvider {
     @Override
     public XImage<?> getImageFromResource(String path) throws IOException {
         Utils.getLogger().info("getImageFromResource({})", path);
-        BufferedImage bufferedImage = ImageIO.read(Objects.requireNonNull(Utils.class.getResourceAsStream("/images/" + path)));
+        InputStream stream = Utils.class.getResourceAsStream("/images/" + path);
+        if (stream == null) {
+            Utils.getLogger().warn("get image failed: {}", path);
+            throw new IOException("get image failed: " + path);
+        }
+        BufferedImage bufferedImage = ImageIO.read(stream);
         if (bufferedImage == null) {
             Utils.getLogger().warn("get image failed: {}", path);
         }

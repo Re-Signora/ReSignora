@@ -27,6 +27,7 @@ import work.chiro.game.objects.background.AbstractBackground;
 import work.chiro.game.objects.background.BasicBackgroundFactory;
 import work.chiro.game.objects.bullet.BaseBullet;
 import work.chiro.game.objects.prop.AbstractProp;
+import work.chiro.game.objects.thing.character.AbstractThing;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.callback.BasicCallback;
@@ -54,10 +55,11 @@ public class Game {
     private final List<AbstractAircraft> enemyAircrafts = new LinkedList<>();
     private final List<BaseBullet> heroBullets = new LinkedList<>();
     private final List<BaseBullet> enemyBullets = new LinkedList<>();
+    private final List<AbstractThing<?, ?>> things = new LinkedList<>();
     private final List<AbstractProp> props = new LinkedList<>();
     private final XLayout layout = new XLayout();
     private final List<List<? extends AbstractFlyingObject<?>>> allFlyingObjects = Arrays.asList(
-            heroBullets, heroAircrafts, enemyBullets, enemyAircrafts, bossAircrafts, props
+            heroBullets, heroAircrafts, enemyBullets, enemyAircrafts, bossAircrafts, props, things
     );
     private boolean gameOverFlag = false;
     private double nextBossScore;
@@ -232,7 +234,6 @@ public class Game {
                 if (onPaint != null) {
                     onPaint.run();
                 }
-                // repaint();
                 // 游戏结束检查和处理
                 if (heroAircraft.getHp() <= 0 && !Constants.DEBUG_NO_DEATH && !gameOverFlag) {
                     onGameOver();
@@ -360,5 +361,9 @@ public class Game {
 
     public XLayout getLayout() {
         return layout;
+    }
+
+    public List<AbstractThing<?, ?>> getThings() {
+        return things;
     }
 }
