@@ -15,6 +15,7 @@ public abstract class XGraphics {
     protected double alpha = 1.0;
     protected double rotation = 0.0;
     protected int color = 0x0;
+
     /**
      * 在 (x, y) 绘制图片
      *
@@ -93,10 +94,9 @@ public abstract class XGraphics {
         });
         Utils.getLogger().debug("before sort: {}", sortedFlyingObjects);
         sortedFlyingObjects.sort((a, b) -> {
-            // (a.getAnchor().getY() >= b.getAnchor().getY()) ? (a.getAnchor().getY() == b.getAnchor().getY() ? 0 : 1) : -1
             double i = a.getAnchor().getY();
             double j = b.getAnchor().getY();
-            return (int) (i - j);
+            return Double.compare(i, j);
         });
         Utils.getLogger().debug("after sort: {}", sortedFlyingObjects);
         return sortedFlyingObjects;
