@@ -30,10 +30,8 @@ public class BasicImageCarouselAction extends AbstractAction {
         if (availableImages.size() > 0)
             Utils.getLogger().fatal("no image loaded to ImageAction!");
         addAnimate(new Animate.Delay<>(new Vec2(), this.duration).setAnimateCallback(animate -> {
-            removeAnimate(animate);
             animate.setTimeStart(Utils.getTimeMills());
             imageIndexNow = getNextImageIndex();
-            addAnimate(animate);
         }));
     }
 
@@ -79,5 +77,10 @@ public class BasicImageCarouselAction extends AbstractAction {
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
+    }
+
+    @Override
+    public Boolean updateAll(double timeNow) {
+        return super.updateAll(timeNow);
     }
 }

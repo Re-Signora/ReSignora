@@ -1,6 +1,7 @@
 package work.chiro.game.objects.thing.attack;
 
 import work.chiro.game.animate.action.BasicImageCarouselAction;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.XImage;
@@ -23,6 +24,6 @@ public class Butterfly extends AbstractAttack {
 
     @Override
     public void forward() {
-        // no move
+        getAnimateContainer().updateAll(Utils.getTimeMills());
     }
 }
