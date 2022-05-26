@@ -15,7 +15,7 @@ public abstract class XGraphicsAndroid extends XGraphics {
     @Override
     public XImage<?> drawImage(XImage<?> image, double x, double y) {
         Paint paint = new Paint();
-        setAlpha(alpha);
+        paint.setAlpha((int) (alpha * 255));
         if (alpha == 0) {
             getCanvas().drawBitmap((Bitmap) image.getImage(), (float) x, (float) y, paint);
         } else {
