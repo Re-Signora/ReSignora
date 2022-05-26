@@ -20,4 +20,5 @@ public class Constants {
     public static final int BLOOD_PROP_INCREASE = 1000;
     public static final int ANDROID_SOUND_STREAM_MAX = 30;
     public static final int UI_CLICK_ALPHA_THRESHOLD = 0x90;
+    public static final int ACTION_MAX_IMAGE_INDEX = 1000;
 }
