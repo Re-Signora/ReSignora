@@ -43,20 +43,20 @@ public abstract class AbstractBackground extends AbstractObject<AnimateContainer
     @Override
     public void draw(XGraphics g) {
         XImage<?> newImage = g.drawImage(getImage(), getLocationX(), getLocationY(), getWidth(), getHeight() + 2);
-        if (cachedImage != newImage) {
-            cachedImage = newImage;
+        if (!cachedImage.containsValue(newImage)) {
+            cachedImage.put(getImage(true), newImage);
         }
-        g.drawImage(cachedImage, getLocationX(), getLocationY() - 2 * getHeight(), getWidth(), getHeight() + 2);
-        g.drawImage(cachedImage, getLocationX(), getLocationY() - getHeight(), getWidth(), getHeight() + 2);
+        g.drawImage(newImage, getLocationX(), getLocationY() - 2 * getHeight(), getWidth(), getHeight() + 2);
+        g.drawImage(newImage, getLocationX(), getLocationY() - getHeight(), getWidth(), getHeight() + 2);
         for (int i = 0; i <= RunningConfig.windowHeight / getHeight(); i++) {
-            g.drawImage(cachedImage, getLocationX(), getLocationY() + getHeight() * (i + 1), getWidth(), getHeight() + 2);
+            g.drawImage(newImage, getLocationX(), getLocationY() + getHeight() * (i + 1), getWidth(), getHeight() + 2);
         }
     }
 
     @Override
     public XImage<?> getImage() {
-        if (cachedImage != null) {
-            return cachedImage;
+        if (cachedImage.containsKey(getImage(true))) {
+            return cachedImage.get(getImage(true));
         } else {
             return super.getImage();
         }

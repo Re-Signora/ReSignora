@@ -18,8 +18,10 @@ public class Butterfly extends AbstractAttack {
     }
 
     @Override
-    public XImage<?> getImage() {
-        return ((BasicImageCarouselAction) getAnimateContainer()).getImageNow();
+    public XImage<?> getImage(boolean getRawImage) {
+        XImage<?> im = ((BasicImageCarouselAction) getAnimateContainer()).getImageNow();
+        if (getRawImage) return im;
+        return cachedImage.getOrDefault(im, im);
     }
 
     @Override

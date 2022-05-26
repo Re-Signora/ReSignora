@@ -1,18 +1,20 @@
 package work.chiro.game.objects;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.objects.aircraft.AbstractAircraft;
-import work.chiro.game.utils.callback.BasicCallback;
-import work.chiro.game.x.compatible.XGraphics;
-import work.chiro.game.x.compatible.XImage;
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.objects.aircraft.AbstractAircraft;
 import work.chiro.game.resource.ImageManager;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.callback.BasicCallback;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.compatible.XGraphics;
+import work.chiro.game.x.compatible.XImage;
 
 /**
  * 可飞行对象的父类
@@ -78,7 +80,7 @@ public abstract class AbstractObject<A extends AnimateContainer> {
     /**
      * 缓存的图片
      */
-    protected XImage<?> cachedImage = null;
+    protected Map<XImage<?>, XImage<?>> cachedImage = new HashMap<>();
 
     public AbstractObject(
             Vec2 posInit,
@@ -219,8 +221,8 @@ public abstract class AbstractObject<A extends AnimateContainer> {
             }
         }
         if (keepImage()) {
-            if (cachedImage != null && !getRawImage) {
-                return cachedImage;
+            if (cachedImage.containsKey(image) && !getRawImage) {
+                return cachedImage.get(image);
             }
             return image;
         } else {
@@ -316,8 +318,8 @@ public abstract class AbstractObject<A extends AnimateContainer> {
                         (getLocationX() - (center ? getWidth() / 2 : 0)),
                         getLocationY() - (center ? getHeight() / 2 : 0),
                         getWidth(), getHeight());
-        if (cachedImage != newImage) {
-            cachedImage = newImage;
+        if (!cachedImage.containsValue(newImage)) {
+            cachedImage.put(getImage(true), newImage);
         }
     }
 
