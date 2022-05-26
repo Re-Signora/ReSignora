@@ -24,7 +24,7 @@ import work.chiro.game.x.compatible.XGraphics;
  * @author hitsz
  */
 public abstract class AbstractAircraft
-        extends AbstractFlyingObject
+        extends AbstractFlyingObject<AnimateContainer>
         implements PropHandler {
     /**
      * 生命值

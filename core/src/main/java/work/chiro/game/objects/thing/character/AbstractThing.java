@@ -7,12 +7,13 @@ import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 
-public abstract class AbstractThing<T extends BasicThingAttributes> extends AbstractFlyingObject {
+public abstract class AbstractThing<T extends BasicThingAttributes, A extends AnimateContainer>
+        extends AbstractFlyingObject<A> {
     final private String labelName;
     final private BasicThingAttributes basicAttributes;
     private String imageDisplaying;
 
-    public AbstractThing(String labelName, Class<T> attributesClass, Vec2 posInit, AnimateContainer animateContainer, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
+    public AbstractThing(String labelName, Class<T> attributesClass, Vec2 posInit, A animateContainer, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super(posInit, animateContainer, sizeInit, rotationInit, alpha);
         this.labelName = labelName;
         basicAttributes = AttributesBuilder.buildFromResource(labelName, attributesClass);

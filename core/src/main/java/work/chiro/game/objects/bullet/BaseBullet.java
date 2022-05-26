@@ -11,7 +11,7 @@ import work.chiro.game.vector.Vec2;
  *
  * @author hitsz
  */
-public class BaseBullet extends AbstractFlyingObject implements PropHandler {
+public class BaseBullet extends AbstractFlyingObject<AnimateContainer> implements PropHandler {
 
     private final int power;
 

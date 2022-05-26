@@ -17,7 +17,7 @@ import work.chiro.game.x.compatible.ResourceProvider;
  *
  * @author hitsz
  */
-abstract public class AbstractProp extends AbstractFlyingObject {
+abstract public class AbstractProp extends AbstractFlyingObject<AnimateContainer> {
     protected List<AbstractAircraft> enemyAircrafts = new LinkedList<>();
     protected List<BaseBullet> enemyBullets = new LinkedList<>();
 
