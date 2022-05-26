@@ -11,7 +11,7 @@ import work.chiro.game.objects.thing.character.AbstractThing;
  * @author Chiro
  */
 public class AbstractAction extends AnimateContainer {
-    private final AbstractThing<?, AbstractAction> thing;
+    protected AbstractThing<?, AbstractAction> thing;
 
     public AbstractAction(AbstractThing<?, AbstractAction> thing) {
         this.thing = thing;
@@ -19,5 +19,9 @@ public class AbstractAction extends AnimateContainer {
 
     public AbstractThing<?, AbstractAction> getThing() {
         return thing;
+    }
+
+    public void setThing(AbstractThing<?, AbstractAction> thing) {
+        this.thing = thing;
     }
 }

@@ -12,11 +12,6 @@ public abstract class XActivity {
         this.game = game;
     }
 
-    // public XActivity() {
-    //     this(null);
-    //     Utils.getLogger().fatal("should not reach here...");
-    // }
-
     final protected <T extends XActivity> void startActivity(Class<T> clazz, XBundle bundle) {
         game.getActivityManager().startActivityWithBundle(clazz, bundle);
     }

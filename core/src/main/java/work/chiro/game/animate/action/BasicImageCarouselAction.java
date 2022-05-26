@@ -31,10 +31,13 @@ public class BasicImageCarouselAction extends AbstractAction {
             Utils.getLogger().fatal("no image loaded to ImageAction!");
         addAnimate(new Animate.Delay<>(new Vec2(), this.duration).setAnimateCallback(animate -> {
             removeAnimate(animate);
-            // addAnimate();
+            animate.setTimeStart(Utils.getTimeMills());
+            imageIndexNow = getNextImageIndex();
+            addAnimate(animate);
         }));
     }
 
+    @SuppressWarnings("ConstantConditions")
     public BasicImageCarouselAction(AbstractThing<?, AbstractAction> thing, String prefix, double duration) {
         this(thing, prefix, thing.getLabelName(), duration);
     }
@@ -69,5 +72,9 @@ public class BasicImageCarouselAction extends AbstractAction {
      */
     protected int getNextImageIndex() {
         return (imageIndexNow + 1) % getAvailableImages().size();
+    }
+
+    public XImage<?> getImageNow() {
+        return getAvailableImages().get(imageIndexNow);
     }
 }

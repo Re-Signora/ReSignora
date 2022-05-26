@@ -27,6 +27,10 @@ public abstract class AbstractAnimate<T extends VectorType & VectorFactory<T>> {
         this.timeSpan = timeSpan;
     }
 
+    public void setTimeStart(double timeStart) {
+        this.timeStart = timeStart;
+    }
+
     public AnimateType getAnimateType() {
         return animateType;
     }

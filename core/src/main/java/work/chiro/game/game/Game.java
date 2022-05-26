@@ -56,7 +56,7 @@ public class Game {
     private final List<BaseBullet> enemyBullets = new LinkedList<>();
     private final List<AbstractProp> props = new LinkedList<>();
     private final XLayout layout = new XLayout();
-    private final List<List<? extends AbstractFlyingObject>> allFlyingObjects = Arrays.asList(
+    private final List<List<? extends AbstractFlyingObject<?>>> allFlyingObjects = Arrays.asList(
             heroBullets, heroAircrafts, enemyBullets, enemyAircrafts, bossAircrafts, props
     );
     private boolean gameOverFlag = false;
@@ -346,7 +346,7 @@ public class Game {
         }
     }
 
-    public List<List<? extends AbstractFlyingObject>> getAllFlyingObjects() {
+    public List<List<? extends AbstractFlyingObject<?>>> getAllFlyingObjects() {
         return allFlyingObjects;
     }
 

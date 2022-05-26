@@ -84,9 +84,9 @@ public abstract class XGraphics {
     public abstract XGraphics drawString(String text, double x, double y);
 
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
-    public List<AbstractFlyingObject> getSortedFlyingObjects(Game game) {
-        List<List<? extends AbstractFlyingObject>> allFlyingObjects = game.getAllFlyingObjects();
-        List<AbstractFlyingObject> sortedFlyingObjects = new CopyOnWriteArrayList<>();
+    public List<AbstractFlyingObject<?>> getSortedFlyingObjects(Game game) {
+        List<List<? extends AbstractFlyingObject<?>>> allFlyingObjects = game.getAllFlyingObjects();
+        List<AbstractFlyingObject<?>> sortedFlyingObjects = new CopyOnWriteArrayList<>();
         allFlyingObjects.forEach(abstractFlyingObjects -> {
             synchronized (abstractFlyingObjects) {
                 sortedFlyingObjects.addAll(abstractFlyingObjects);
@@ -104,7 +104,7 @@ public abstract class XGraphics {
 
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public void paintInOrdered(Game game) {
-        List<AbstractFlyingObject> sortedFlyingObjects = getSortedFlyingObjects(game);
+        List<AbstractFlyingObject<?>> sortedFlyingObjects = getSortedFlyingObjects(game);
 
         // 绘制背景
         game.getBackgrounds().forEach(background -> {

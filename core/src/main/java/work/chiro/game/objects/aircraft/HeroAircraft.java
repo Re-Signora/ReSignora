@@ -118,7 +118,7 @@ public class HeroAircraft extends AbstractAircraft {
     }
 
     @Override
-    public boolean crash(AbstractObject abstractObject) {
+    public boolean crash(AbstractObject<?> abstractObject) {
         return box.crash(abstractObject);
     }
 
