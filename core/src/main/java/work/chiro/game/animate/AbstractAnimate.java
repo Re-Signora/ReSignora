@@ -16,7 +16,7 @@ public abstract class AbstractAnimate<T extends VectorType & VectorFactory<T>> {
     private final T source;
     protected double timeStart;
     protected final double timeSpan;
-    protected AnimateCallback animateCallback = null;
+    protected AnimateCallback<T> animateCallback = null;
 
     AbstractAnimate(T vecSource, AnimateType animateType, AnimateVectorType animateVectorType, double timeStart, double timeSpan) {
         this.animateType = animateType;
@@ -78,11 +78,12 @@ public abstract class AbstractAnimate<T extends VectorType & VectorFactory<T>> {
         return getSource().getNewInstance();
     }
 
-    public void setAnimateCallback(AnimateCallback animateCallback) {
+    public AbstractAnimate<T> setAnimateCallback(AnimateCallback<T> animateCallback) {
         this.animateCallback = animateCallback;
+        return this;
     }
 
-    public AnimateCallback getAnimateCallback() {
+    public AnimateCallback<T> getAnimateCallback() {
         return animateCallback;
     }
 }

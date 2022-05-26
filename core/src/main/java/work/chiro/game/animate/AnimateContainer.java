@@ -107,6 +107,10 @@ public class AnimateContainer {
         getAnimateList().add(animate);
     }
 
+    public boolean removeAnimate(AbstractAnimate<Vec> animate) {
+        return getAnimateList().remove(animate);
+    }
+
     public void setAnimateCallback(AnimateContainerCallback animateContainerCallback) {
         this.animateContainerCallback = animateContainerCallback;
     }
