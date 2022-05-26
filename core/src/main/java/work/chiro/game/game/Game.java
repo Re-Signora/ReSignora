@@ -83,7 +83,7 @@ public class Game {
         enemyBullets.clear();
         enemyAircrafts.clear();
         props.clear();
-        heroAircraft = new HeroAircraftFactory().clearInstance().create();
+        // heroAircraft = new HeroAircraftFactory().clearInstance().create();
         heroAircrafts.clear();
         heroAircrafts.add(heroAircraft);
         bossAircrafts.clear();
@@ -104,6 +104,7 @@ public class Game {
         RunningConfig.config = new ConfigFactory(RunningConfig.difficulty).create();
         nextBossScore = RunningConfig.score + RunningConfig.config.getBossScoreThreshold().getScaleNow().getX();
         heroAircraft = new HeroAircraftFactory().create();
+        Utils.getLogger().info("hero init pos: {}", System.identityHashCode(heroAircraft.getPosition()));
         heroAircrafts.add(heroAircraft);
         activityManager.setOnSwitchActivity(newActivity -> {
             if (newActivity == null) return;
