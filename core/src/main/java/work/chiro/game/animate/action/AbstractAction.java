@@ -1,7 +1,7 @@
 package work.chiro.game.animate.action;
 
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.objects.thing.character.AbstractThing;
+import work.chiro.game.objects.thing.AbstractThing;
 
 /**
  * 相比 Animate 增加更多功能：<br/>

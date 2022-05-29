@@ -6,7 +6,7 @@ import java.util.List;
 
 import work.chiro.game.animate.Animate;
 import work.chiro.game.config.Constants;
-import work.chiro.game.objects.thing.character.AbstractThing;
+import work.chiro.game.objects.thing.AbstractThing;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.XImage;

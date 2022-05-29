@@ -1,4 +1,4 @@
-package work.chiro.game.objects.thing.character;
+package work.chiro.game.objects.thing;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

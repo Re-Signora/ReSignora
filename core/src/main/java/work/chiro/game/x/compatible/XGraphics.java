@@ -6,9 +6,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.objects.AbstractFlyingObject;
-import work.chiro.game.objects.aircraft.BossEnemy;
-import work.chiro.game.objects.aircraft.BossEnemyFactory;
-import work.chiro.game.objects.aircraft.HeroAircraftFactory;
 import work.chiro.game.utils.Utils;
 
 public abstract class XGraphics {
@@ -85,7 +82,7 @@ public abstract class XGraphics {
 
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public List<AbstractFlyingObject<?>> getSortedFlyingObjects(Game game) {
-        List<List<? extends AbstractFlyingObject<?>>> allFlyingObjects = game.getAllFlyingObjects();
+        List<List<? extends AbstractFlyingObject<?>>> allFlyingObjects = game.getAllThings();
         List<AbstractFlyingObject<?>> sortedFlyingObjects = new CopyOnWriteArrayList<>();
         allFlyingObjects.forEach(abstractFlyingObjects -> {
             synchronized (abstractFlyingObjects) {
@@ -163,15 +160,6 @@ public abstract class XGraphics {
         setColor(0xcfcfcfcf);
         setAlpha(0.8);
         drawString("SCORE:" + (int) (RunningConfig.score), x, y);
-        y = y + d;
-        drawString("LIFE:" + (int) (HeroAircraftFactory.getInstance().getHp()), x, y);
-        y = y + d;
-        BossEnemy boss = BossEnemyFactory.getInstance();
-        if (boss == null) {
-            drawString("Before Boss:" + (int) (game.getNextBossScore() - RunningConfig.score), x, y);
-        } else {
-            drawString("BOSS LIFE:" + (int) (boss.getHp()), x, y);
-        }
         y = y + d;
         drawString("FPS:" + game.getTimerController().getFps(), x, y);
     }
