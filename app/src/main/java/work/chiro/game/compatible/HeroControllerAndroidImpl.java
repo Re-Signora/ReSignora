@@ -42,11 +42,11 @@ public class HeroControllerAndroidImpl implements HeroController {
         Game game = GameActivity.getGame();
         if (game != null) {
             if (e.getAction() == MotionEvent.ACTION_DOWN) {
-                game.getLayout().actionPointerPressed(getScaledPosition(e));
+                game.getTopLayout().actionPointerPressed(getScaledPosition(e));
             } else if (e.getAction() == MotionEvent.ACTION_MOVE) {
-                game.getLayout().actionPointerDragged(getScaledPosition(e));
+                game.getTopLayout().actionPointerDragged(getScaledPosition(e));
             } else if (e.getAction() == MotionEvent.ACTION_UP) {
-                game.getLayout().actionPointerRelease(getScaledPosition(e));
+                game.getTopLayout().actionPointerRelease(getScaledPosition(e));
             }
         }
     }
