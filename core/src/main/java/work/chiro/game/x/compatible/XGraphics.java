@@ -6,7 +6,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.objects.AbstractFlyingObject;
+import work.chiro.game.objects.background.AbstractBackground;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.x.ui.XLayout;
 
 public abstract class XGraphics {
     protected double alpha = 1.0;
@@ -103,13 +105,6 @@ public abstract class XGraphics {
     public void paintInOrdered(Game game) {
         List<AbstractFlyingObject<?>> sortedFlyingObjects = getSortedFlyingObjects(game);
 
-        // 绘制背景
-        game.getBackgrounds().forEach(background -> {
-            synchronized (background) {
-                background.draw(this);
-            }
-        });
-
         // 绘制飞行的物体
         sortedFlyingObjects.forEach(flyingObject -> {
             synchronized (flyingObject) {
@@ -117,8 +112,23 @@ public abstract class XGraphics {
             }
         });
 
-        // 绘制 UI
-        game.getLayout().forEach(view -> {
+        // 绘制上层背景
+        AbstractBackground lastBackground = game.getBackgrounds().get(0);
+        if (lastBackground != null) lastBackground.draw(this);
+        // 绘制上一层的 UI
+        XLayout secondaryLayout = game.getActivityManager().getSecondaryLayout();
+        if (secondaryLayout != null) {
+            secondaryLayout.forEach(view -> {
+                synchronized (view) {
+                    view.draw(this);
+                }
+            });
+        }
+        // 绘制本层背景
+        AbstractBackground background = game.getBackgrounds().get(1);
+        if (background != null) background.draw(this);
+        // 绘制本层的 UI
+        game.getActivityManager().getTopLayout().forEach(view -> {
             synchronized (view) {
                 view.draw(this);
             }

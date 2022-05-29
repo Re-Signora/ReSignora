@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 
 import work.chiro.game.game.Game;
+import work.chiro.game.x.ui.XLayout;
 import work.chiro.game.x.ui.XLayoutManager;
 
 public class XActivityManager {
@@ -57,5 +58,15 @@ public class XActivityManager {
             onSwitchActivity.run(activities.getLast());
         }
         return res;
+    }
+
+    public XLayout getTopLayout() {
+        if (activities.size() == 0) return new XLayout();
+        return activities.getLast().getLayout();
+    }
+
+    public XLayout getSecondaryLayout() {
+        if (activities.size() < 2) return null;
+        return activities.get(activities.size() - 2).getLayout();
     }
 }

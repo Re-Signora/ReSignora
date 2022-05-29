@@ -42,7 +42,6 @@ public class Game {
     private final List<AbstractBackground> backgrounds = new LinkedList<>();
     private final List<AbstractCharacter> characters = new LinkedList<>();
     private final List<AbstractAttack> attacks = new LinkedList<>();
-    private final XLayout layout = new XLayout();
     private final List<List<? extends AbstractFlyingObject<?>>> allThings = Arrays.asList(
             characters, attacks
     );
@@ -63,6 +62,10 @@ public class Game {
         return activityManager.getLayoutManager();
     }
 
+    public XLayout getTopLayout() {
+        return activityManager.getTopLayout();
+    }
+
     public void clearThings() {
         characters.clear();
         attacks.clear();
@@ -79,13 +82,16 @@ public class Game {
     public Game(HeroController heroController) {
         this.heroController = heroController;
         RunningConfig.config = new ConfigFactory(RunningConfig.difficulty).create();
+        backgrounds.add(null);
+        backgrounds.add(null);
         activityManager.setOnSwitchActivity(newActivity -> {
             if (newActivity == null) return;
             if (newActivity.getLayout() == null) return;
             Utils.getLogger().info("setOnSwitchActivity({})", newActivity);
-            layout.replaceLayout(newActivity.getLayout());
-            backgrounds.clear();
-            backgrounds.add(new BasicBackgroundFactory(layout.getBackground()).create());
+            if (backgrounds.get(1) != null) {
+                backgrounds.set(0, backgrounds.get(1));
+            }
+            backgrounds.set(1, new BasicBackgroundFactory(getTopLayout().getBackground()).create());
         });
         activityManager.startActivityWithBundle(HomeActivity.class);
         Utils.getLogger().info("Game instance created!");
@@ -211,10 +217,6 @@ public class Game {
 
     public TimerController getTimerController() {
         return timerController;
-    }
-
-    public XLayout getLayout() {
-        return layout;
     }
 
     public List<AbstractCharacter> getCharacters() {

@@ -16,8 +16,5 @@ public class HomeActivity extends XActivity {
         setContentView("main");
         XButton historyButton = (XButton) findViewById("buttonStoryMode");
         historyButton.setOnClick((xView, xEvent) -> startActivity(StageSelectActivity.class));
-        // Vec2 pos = HeroAircraftFactory.getInstance().getPosition();
-        // Butterfly butterfly = new Butterfly(pos);
-        // getGame().getThings().add(butterfly);
     }
 }

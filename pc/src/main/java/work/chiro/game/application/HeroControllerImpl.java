@@ -64,22 +64,22 @@ public class HeroControllerImpl implements HeroController {
                             Utils.setInRange(e.getY(), 0, RunningConfig.windowHeight)
                     ).divide(GamePanel.getScale())));
                 }
-                GameWindow.getInstance().getGamePanel().getGame().getLayout().actionPointerDragged(getScaledPosition(e));
+                GameWindow.getInstance().getGamePanel().getGame().getTopLayout().actionPointerDragged(getScaledPosition(e));
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
-                Utils.getLogger().info("mousePressed! {}", e);
+                Utils.getLogger().debug("mousePressed! {}", e);
                 game.requestFocus();
-                GameWindow.getInstance().getGamePanel().getGame().getLayout().actionPointerPressed(getScaledPosition(e));
+                GameWindow.getInstance().getGamePanel().getGame().getTopLayout().actionPointerPressed(getScaledPosition(e));
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-                Utils.getLogger().info("mouseReleased! {}", e);
-                GameWindow.getInstance().getGamePanel().getGame().getLayout().actionPointerRelease(getScaledPosition(e));
+                Utils.getLogger().debug("mouseReleased! {}", e);
+                GameWindow.getInstance().getGamePanel().getGame().getTopLayout().actionPointerRelease(getScaledPosition(e));
             }
         };
 
