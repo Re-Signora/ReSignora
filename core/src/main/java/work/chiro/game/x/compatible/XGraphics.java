@@ -1,13 +1,11 @@
 package work.chiro.game.x.compatible;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.objects.background.AbstractBackground;
-import work.chiro.game.utils.Utils;
 import work.chiro.game.x.ui.XLayout;
 
 public abstract class XGraphics {
@@ -83,34 +81,8 @@ public abstract class XGraphics {
     public abstract XGraphics drawString(String text, double x, double y);
 
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
-    public List<AbstractFlyingObject<?>> getSortedFlyingObjects(Game game) {
-        List<List<? extends AbstractFlyingObject<?>>> allFlyingObjects = game.getAllThings();
-        List<AbstractFlyingObject<?>> sortedFlyingObjects = new CopyOnWriteArrayList<>();
-        allFlyingObjects.forEach(abstractFlyingObjects -> {
-            synchronized (abstractFlyingObjects) {
-                sortedFlyingObjects.addAll(abstractFlyingObjects);
-            }
-        });
-        Utils.getLogger().debug("before sort: {}", sortedFlyingObjects);
-        sortedFlyingObjects.sort((a, b) -> {
-            double i = a.getAnchor().getY();
-            double j = b.getAnchor().getY();
-            return Double.compare(i, j);
-        });
-        Utils.getLogger().debug("after sort: {}", sortedFlyingObjects);
-        return sortedFlyingObjects;
-    }
-
-    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public void paintInOrdered(Game game) {
-        List<AbstractFlyingObject<?>> sortedFlyingObjects = getSortedFlyingObjects(game);
-
-        // 绘制飞行的物体
-        sortedFlyingObjects.forEach(flyingObject -> {
-            synchronized (flyingObject) {
-                flyingObject.draw(this);
-            }
-        });
+        List<AbstractFlyingObject<?>> sortedThings = game.getSortedThings();
 
         // 绘制上层背景
         AbstractBackground lastBackground = game.getBackgrounds().get(0);
@@ -124,6 +96,14 @@ public abstract class XGraphics {
                 }
             });
         }
+
+        // 绘制物体
+        sortedThings.forEach(thing -> {
+            synchronized (thing) {
+                thing.draw(this);
+            }
+        });
+
         // 绘制本层背景
         AbstractBackground background = game.getBackgrounds().get(1);
         if (background != null) background.draw(this);

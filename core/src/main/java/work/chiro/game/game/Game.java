@@ -5,6 +5,7 @@ import static work.chiro.game.config.Difficulty.Easy;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
@@ -215,6 +216,25 @@ public class Game {
 
     public List<List<? extends AbstractFlyingObject<?>>> getAllThings() {
         return allThings;
+    }
+
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
+    public List<AbstractFlyingObject<?>> getSortedThings() {
+        List<List<? extends AbstractFlyingObject<?>>> allThings = getAllThings();
+        List<AbstractFlyingObject<?>> sortedThings = new CopyOnWriteArrayList<>();
+        allThings.forEach(things -> {
+            synchronized (things) {
+                sortedThings.addAll(things);
+            }
+        });
+        Utils.getLogger().debug("before sort: {}", sortedThings);
+        sortedThings.sort((a, b) -> {
+            double i = a.getAnchor().getY();
+            double j = b.getAnchor().getY();
+            return Double.compare(i, j);
+        });
+        Utils.getLogger().debug("after sort: {}", sortedThings);
+        return sortedThings;
     }
 
     public TimerController getTimerController() {

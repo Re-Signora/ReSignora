@@ -10,4 +10,8 @@ public class AbstractCharacter extends AbstractThing<BasicCharacterAttributes, A
     public AbstractCharacter(String labelName, Class<BasicCharacterAttributes> attributesClass, Vec2 posInit, AbstractAction animateContainer, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super(labelName, attributesClass, posInit, animateContainer, sizeInit, rotationInit, alpha);
     }
+
+    public AbstractCharacter(String labelName, Class<BasicCharacterAttributes> attributesClass, Vec2 posInit, AbstractAction animateContainer) {
+        this(labelName, attributesClass, posInit, animateContainer, null, null, null);
+    }
 }

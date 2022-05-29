@@ -11,6 +11,10 @@ public class LaSignora extends AbstractCharacter {
         super("la-signora", BasicCharacterAttributes.class, posInit, abstractAction, sizeInit, rotationInit, alpha);
     }
 
+    public LaSignora(Vec2 posInit, AbstractAction abstractAction) {
+        this(posInit, abstractAction, null, null, null);
+    }
+
     @Override
     public String getDisplayName() {
         return "女士";
