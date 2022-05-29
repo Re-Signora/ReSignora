@@ -28,7 +28,7 @@ public class PCTest {
     @Test
     void testLoadAttributes() {
         try {
-            BasicCharacterAttributes characterBasicAttributes = ResourceProvider.getInstance().getAttributesFromResource("la-signora", BasicCharacterAttributes.class);
+            BasicCharacterAttributes characterBasicAttributes = ResourceProvider.getInstance().getAttributesFromResource("la-signora", BasicCharacterAttributes.class, "characters");
             Utils.getLogger().info("characterBasicAttributes: {}", characterBasicAttributes);
         } catch (IOException e) {
             e.printStackTrace();
