@@ -1,15 +1,11 @@
 package work.chiro.game.application;
 
-import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.VolatileImage;
-import java.io.IOException;
-import java.util.Objects;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -33,7 +29,6 @@ import work.chiro.game.x.compatible.XGraphics;
  * @author hitsz
  */
 public class GamePanel extends JPanel {
-    private Font myFontBase = null;
     private final HeroControllerImpl heroControllerImpl = HeroControllerImpl.getInstance(this);
     private final Game game;
     private String lastProvidedName = null;
@@ -70,7 +65,6 @@ public class GamePanel extends JPanel {
 
     public GamePanel() {
         game = new Game(heroControllerImpl);
-        loadFont();
         Utils.getLogger().info("GamePanel instance created!");
         game.setOnFinish(() -> {
             Utils.getLogger().info("finish!");
@@ -170,14 +164,6 @@ public class GamePanel extends JPanel {
         Utils.getLogger().debug("paint -- object: {}, info: {}, resize: {}", timePaint - timeStart, timePaintInfo - timePaint, timeResize - timePaintInfo);
 
         justResized = false;
-    }
-
-    private void loadFont() {
-        try {
-            myFontBase = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getResourceAsStream("/fonts/genshin.ttf"))).deriveFont(22f);
-        } catch (FontFormatException | IOException e) {
-            myFontBase = new Font("SansSerif", Font.PLAIN, 22);
-        }
     }
 
     public Object getWaitObject() {
