@@ -5,7 +5,6 @@ import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -73,7 +72,7 @@ public class MainWindow extends AbstractSceneClient {
         autoShootCheckBox.setText("自动射击");
         autoShootCheckBox.setSelected(RunningConfig.autoShoot);
         JPanel innerPanel = new JPanel();
-        innerPanel.setLayout(new GridLayout(5, 1, 10, 8));
+        innerPanel.setLayout(new GridLayout(3, 1, 0, 0));
         innerPanel.add(startButton);
         JPanel checkBoxPanel = new JPanel();
         checkBoxPanel.add(musicOnCheckBox);
@@ -81,10 +80,10 @@ public class MainWindow extends AbstractSceneClient {
         innerPanel.add(checkBoxPanel);
         innerPanel.add(historyButton);
         mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(Box.createHorizontalStrut(100), BorderLayout.WEST);
-        mainPanel.add(Box.createHorizontalStrut(100), BorderLayout.EAST);
-        mainPanel.add(Box.createVerticalStrut(100), BorderLayout.NORTH);
-        mainPanel.add(Box.createVerticalStrut(100), BorderLayout.SOUTH);
+        // mainPanel.add(Box.createHorizontalStrut(100), BorderLayout.WEST);
+        // mainPanel.add(Box.createHorizontalStrut(100), BorderLayout.EAST);
+        // mainPanel.add(Box.createVerticalStrut(30), BorderLayout.NORTH);
+        // mainPanel.add(Box.createVerticalStrut(30), BorderLayout.SOUTH);
         mainPanel.add(innerPanel, BorderLayout.CENTER);
     }
 
