@@ -56,4 +56,9 @@ public abstract class AbstractThing<T extends BasicThingAttributes, A extends An
     public String getSelfImageFilename() {
         return "characters/" + getLabelName() + "/self.png";
     }
+
+    @Override
+    protected Boolean checkInBoundary() {
+        return true;
+    }
 }

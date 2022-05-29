@@ -24,4 +24,10 @@ public class AbstractAction extends AnimateContainer {
     public void setThing(AbstractThing<?, AbstractAction> thing) {
         this.thing = thing;
     }
+
+    @Override
+    public Boolean updateAll(double timeNow) {
+        super.updateAll(timeNow);
+        return false;
+    }
 }

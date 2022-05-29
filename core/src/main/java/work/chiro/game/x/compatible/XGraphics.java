@@ -97,6 +97,10 @@ public abstract class XGraphics {
             });
         }
 
+        // 绘制本层背景
+        AbstractBackground background = game.getBackgrounds().get(1);
+        if (background != null) background.draw(this);
+
         // 绘制物体
         sortedThings.forEach(thing -> {
             synchronized (thing) {
@@ -104,9 +108,6 @@ public abstract class XGraphics {
             }
         });
 
-        // 绘制本层背景
-        AbstractBackground background = game.getBackgrounds().get(1);
-        if (background != null) background.draw(this);
         // 绘制本层的 UI
         game.getActivityManager().getTopLayout().forEach(view -> {
             synchronized (view) {
