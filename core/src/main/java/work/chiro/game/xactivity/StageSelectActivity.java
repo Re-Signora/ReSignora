@@ -15,6 +15,6 @@ public class StageSelectActivity extends XActivity {
         super.onCreate(savedInstanceState);
         setContentView("stageSelect");
         XButton buttonStage02 = (XButton) findViewById("buttonStage02");
-        buttonStage02.setOnClick((xView, xEvent) -> finish());
+        buttonStage02.setOnClick((xView, xEvent) -> startActivity(FightingActivity.class));
     }
 }

@@ -88,10 +88,12 @@ public class Game {
             if (newActivity == null) return;
             if (newActivity.getLayout() == null) return;
             Utils.getLogger().info("setOnSwitchActivity({})", newActivity);
-            if (backgrounds.get(1) != null) {
-                backgrounds.set(0, backgrounds.get(1));
+            if (getTopLayout().getBackground() != null) {
+                if (backgrounds.get(1) != null) {
+                    backgrounds.set(0, backgrounds.get(1));
+                }
+                backgrounds.set(1, new BasicBackgroundFactory(getTopLayout().getBackground()).create());
             }
-            backgrounds.set(1, new BasicBackgroundFactory(getTopLayout().getBackground()).create());
         });
         activityManager.startActivityWithBundle(HomeActivity.class);
         Utils.getLogger().info("Game instance created!");
