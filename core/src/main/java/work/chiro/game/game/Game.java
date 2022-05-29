@@ -18,6 +18,7 @@ import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.objects.AbstractObject;
 import work.chiro.game.objects.background.AbstractBackground;
 import work.chiro.game.objects.background.BasicBackgroundFactory;
+import work.chiro.game.objects.thing.AbstractThing;
 import work.chiro.game.objects.thing.attack.AbstractAttack;
 import work.chiro.game.objects.thing.character.AbstractCharacter;
 import work.chiro.game.resource.MusicType;
@@ -43,7 +44,7 @@ public class Game {
     private final List<AbstractBackground> backgrounds = new LinkedList<>();
     private final List<AbstractCharacter> characters = new LinkedList<>();
     private final List<AbstractAttack> attacks = new LinkedList<>();
-    private final List<List<? extends AbstractFlyingObject<?>>> allThings = Arrays.asList(
+    private final List<List<? extends AbstractThing<?, ?>>> allThings = Arrays.asList(
             characters, attacks
     );
     private boolean gameOverFlag = false;
@@ -214,13 +215,13 @@ public class Game {
     private void crashCheckAction() {
     }
 
-    public List<List<? extends AbstractFlyingObject<?>>> getAllThings() {
+    public List<List<? extends AbstractThing<?,?>>> getAllThings() {
         return allThings;
     }
 
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public List<AbstractFlyingObject<?>> getSortedThings() {
-        List<List<? extends AbstractFlyingObject<?>>> allThings = getAllThings();
+        List<List<? extends AbstractThing<?, ?>>> allThings = getAllThings();
         List<AbstractFlyingObject<?>> sortedThings = new CopyOnWriteArrayList<>();
         allThings.forEach(things -> {
             synchronized (things) {
