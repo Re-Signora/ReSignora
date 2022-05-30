@@ -245,4 +245,8 @@ public class Game {
     public List<AbstractCharacter> getCharacters() {
         return characters;
     }
+
+    public List<AbstractAttack> getAttacks() {
+        return attacks;
+    }
 }
