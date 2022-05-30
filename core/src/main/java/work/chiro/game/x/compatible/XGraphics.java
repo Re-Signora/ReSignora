@@ -154,4 +154,23 @@ public abstract class XGraphics {
         y = y + d;
         drawString("FPS:" + game.getTimerController().getFps(), x, y);
     }
+
+    /**
+     * 绘制一个以 (x, y) 为中心、(r1, r2) 为半径的椭圆
+     * @param x x 坐标
+     * @param y y 坐标
+     * @param r1 r1 半径
+     * @param r2 r2 半径
+     * @return this
+     */
+    abstract public XGraphics ellipse(double x, double y, double r1, double r2);
+
+    /**
+     * 绘制一个以 (x, y) 为圆心、r 为半径的圆
+     * @param x x 坐标
+     * @param y y 坐标
+     * @param r r 半径
+     * @return this
+     */
+    abstract public XGraphics circle(double x, double y, double r);
 }
