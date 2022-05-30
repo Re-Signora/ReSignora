@@ -7,13 +7,11 @@ import java.awt.event.MouseEvent;
 import java.util.HashSet;
 import java.util.Set;
 
-import work.chiro.game.objects.aircraft.HeroAircraft;
-import work.chiro.game.objects.aircraft.HeroAircraftFactory;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.windows.GameWindow;
-import work.chiro.game.x.compatible.HeroController;
+import work.chiro.game.x.compatible.ObjectController;
 
 /**
  * 英雄机控制类
@@ -21,7 +19,7 @@ import work.chiro.game.x.compatible.HeroController;
  *
  * @author hitsz
  */
-public class HeroControllerImpl implements HeroController {
+public class ObjectControllerImpl extends ObjectController {
     final static double MOVE_SPEED = 1;
 
     static public class KeyCode {
@@ -33,14 +31,14 @@ public class HeroControllerImpl implements HeroController {
     }
 
     final private Set<Integer> pressedKeys = new HashSet<>();
-    private static HeroControllerImpl instance = null;
+    private static ObjectControllerImpl instance = null;
     private Double lastFrameTime = null;
 
     private Vec2 getScaledPosition(MouseEvent e) {
         return new Vec2().fromVector(new Vec2(e.getX(), e.getY()).divide(GamePanel.getScale()));
     }
 
-    public HeroControllerImpl(GamePanel game) {
+    public ObjectControllerImpl(GamePanel game) {
         KeyAdapter keyAdapter = new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -57,9 +55,8 @@ public class HeroControllerImpl implements HeroController {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
-                HeroAircraft heroAircraft = HeroAircraftFactory.getInstance();
-                if (heroAircraft != null) {
-                    heroAircraft.setPosition(new Vec2().fromVector(new Vec2(
+                if (getTarget() != null) {
+                    getTarget().setPosition(new Vec2().fromVector(new Vec2(
                             Utils.setInRange(e.getX(), 0, RunningConfig.windowWidth),
                             Utils.setInRange(e.getY(), 0, RunningConfig.windowHeight)
                     ).divide(GamePanel.getScale())));
@@ -96,7 +93,7 @@ public class HeroControllerImpl implements HeroController {
         if (lastFrameTime == null) {
             lastFrameTime = Utils.getTimeMills();
         }
-        if (HeroAircraftFactory.getInstance() == null) {
+        if (getTarget() == null) {
             return;
         }
         double now = Utils.getTimeMills();
@@ -125,21 +122,21 @@ public class HeroControllerImpl implements HeroController {
             }
         }
         Vec2 nextScaled = next.fromVector(next.times(frameTime * MOVE_SPEED));
-        Vec2 newPos = HeroAircraftFactory.getInstance().getPosition().plus(nextScaled);
-        HeroAircraftFactory.getInstance().setPosition(
+        Vec2 newPos = getTarget().getPosition().plus(nextScaled);
+        getTarget().setPosition(
                 Utils.setInRange(newPos.getX(), 0, RunningConfig.windowWidth),
                 Utils.setInRange(newPos.getY(), 0,
-                        // RunningConfig.windowHeight - HeroAircraftFactory.getInstance().getHeight() / 2
+                        // RunningConfig.windowHeight - getTarget().getHeight() / 2
                         RunningConfig.windowHeight
                 )
         );
         lastFrameTime = now;
     }
 
-    static public HeroControllerImpl getInstance(GamePanel game) {
+    static public ObjectControllerImpl getInstance(GamePanel game) {
         if (instance == null) {
-            synchronized (HeroControllerImpl.class) {
-                instance = new HeroControllerImpl(game);
+            synchronized (ObjectControllerImpl.class) {
+                instance = new ObjectControllerImpl(game);
             }
         }
         return instance;

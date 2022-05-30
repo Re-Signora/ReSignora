@@ -2,16 +2,14 @@ package work.chiro.game.compatible;
 
 import android.view.MotionEvent;
 
-import work.chiro.game.objects.aircraft.HeroAircraft;
-import work.chiro.game.objects.aircraft.HeroAircraftFactory;
-import work.chiro.game.game.Game;
 import work.chiro.game.application.GameActivity;
-import work.chiro.game.x.compatible.HeroController;
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.game.Game;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.compatible.ObjectController;
 
-public class HeroControllerAndroidImpl implements HeroController {
+public class ObjectControllerAndroidImpl extends ObjectController {
     private Vec2 offset = new Vec2();
     private double scale = 1.0;
 
@@ -29,14 +27,13 @@ public class HeroControllerAndroidImpl implements HeroController {
     }
 
     public void onTouchEvent(MotionEvent e) {
-        HeroAircraft heroAircraft = HeroAircraftFactory.getInstance();
-        if (heroAircraft != null) {
+        if (getTarget() != null) {
             Vec2 now = offset.fromVector(new Vec2(e.getX(), e.getY()).divide(scale));
             if (e.getAction() == MotionEvent.ACTION_DOWN) {
-                offset = heroAircraft.getPosition().minus(now);
+                offset = getTarget().getPosition().minus(now);
             }
             now.set(now.plus(offset));
-            heroAircraft.setPosition(Utils.setInRange(now.getX(), 0, RunningConfig.windowWidth), Utils.setInRange(now.getY(), 0, RunningConfig.windowHeight));
+            getTarget().setPosition(Utils.setInRange(now.getX(), 0, RunningConfig.windowWidth), Utils.setInRange(now.getY(), 0, RunningConfig.windowHeight));
         }
 
         Game game = GameActivity.getGame();

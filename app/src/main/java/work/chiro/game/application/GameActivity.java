@@ -19,15 +19,12 @@ import android.widget.EditText;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.List;
-
-import work.chiro.game.compatible.HeroControllerAndroidImpl;
+import work.chiro.game.compatible.ObjectControllerAndroidImpl;
 import work.chiro.game.compatible.HistoryImplAndroid;
 import work.chiro.game.compatible.ResourceProviderAndroid;
 import work.chiro.game.compatible.XGraphicsAndroid;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
-import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.objects.aircraft.HeroAircraftFactory;
 import work.chiro.game.resource.ImageManager;
 import work.chiro.game.storage.history.HistoryObjectFactory;
@@ -40,7 +37,7 @@ public class GameActivity extends AppCompatActivity {
     private SurfaceHolder surfaceHolder;
     private static Game game = null;
     SurfaceView surfaceView = null;
-    private final HeroControllerAndroidImpl heroControllerAndroid = new HeroControllerAndroidImpl();
+    private final ObjectControllerAndroidImpl heroControllerAndroid = new ObjectControllerAndroidImpl();
 
     public static Game getGame() {
         return game;

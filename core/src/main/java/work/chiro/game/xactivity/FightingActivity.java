@@ -20,8 +20,6 @@ public class FightingActivity extends XActivity {
         LaSignora signora = new LaSignora(new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight * 1. / 2), new AbstractAction(null));
         signora.getAnimateContainer().setThing(signora);
         getGame().getCharacters().add(signora);
-        // Vec2 pos = signora.getPosition();
-        // Butterfly butterfly = new Butterfly(pos);
-        // getGame().getAttacks().add(butterfly);
+        getGame().getObjectController().setTarget(signora);
     }
 }

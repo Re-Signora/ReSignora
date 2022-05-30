@@ -28,7 +28,7 @@ import work.chiro.game.utils.thread.MyThreadFactory;
 import work.chiro.game.utils.timer.Timer;
 import work.chiro.game.utils.timer.TimerController;
 import work.chiro.game.x.activity.XActivityManager;
-import work.chiro.game.x.compatible.HeroController;
+import work.chiro.game.x.compatible.ObjectController;
 import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.x.ui.XLayout;
 import work.chiro.game.x.ui.XLayoutManager;
@@ -53,7 +53,7 @@ public class Game {
     private BasicCallback onFinish = null;
     private BasicCallback onPaint = null;
     private BasicCallback onFrame = null;
-    private final HeroController heroController;
+    private final ObjectController objectController;
     private final XActivityManager activityManager = new XActivityManager(this);
 
     public XActivityManager getActivityManager() {
@@ -81,8 +81,8 @@ public class Game {
         timerController.clear();
     }
 
-    public Game(HeroController heroController) {
-        this.heroController = heroController;
+    public Game(ObjectController objectController) {
+        this.objectController = objectController;
         RunningConfig.config = new ConfigFactory(RunningConfig.difficulty).create();
         backgrounds.add(null);
         backgrounds.add(null);
@@ -130,7 +130,7 @@ public class Game {
             if (RunningConfig.autoShoot) {
                 characterAttack();
             } else {
-                if (heroController.isShootPressed()) {
+                if (objectController.isShootPressed()) {
                     characterAttack();
                 }
             }
@@ -248,5 +248,9 @@ public class Game {
 
     public List<AbstractAttack> getAttacks() {
         return attacks;
+    }
+
+    public ObjectController getObjectController() {
+        return objectController;
     }
 }

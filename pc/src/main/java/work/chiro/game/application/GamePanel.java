@@ -29,7 +29,7 @@ import work.chiro.game.x.compatible.XGraphics;
  * @author hitsz
  */
 public class GamePanel extends JPanel {
-    private final HeroControllerImpl heroControllerImpl = HeroControllerImpl.getInstance(this);
+    private final ObjectControllerImpl heroControllerImpl = ObjectControllerImpl.getInstance(this);
     private final Game game;
     private String lastProvidedName = null;
     private String lastProvidedMessage = null;
