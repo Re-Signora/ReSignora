@@ -10,7 +10,7 @@ import work.chiro.game.x.compatible.XImage;
 public class Butterfly extends AbstractAttack {
     private final static String labelName = "la-signora-butterfly";
     public Butterfly(Vec2 posInit, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
-        super(labelName, posInit, new ReversedImageCarouselAction("attacks/" + labelName, labelName, 60), sizeInit, rotationInit, alpha);
+        super(labelName, posInit, new ReversedImageCarouselAction("attacks/" + labelName, labelName, 10), sizeInit, rotationInit, alpha);
         getAnimateContainer().setThing(this);
     }
 
