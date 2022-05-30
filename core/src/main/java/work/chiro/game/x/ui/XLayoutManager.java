@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import work.chiro.game.x.ui.view.XView;
+
 public class XLayoutManager {
     static private XLayoutManager instance = null;
     private final Map<String, XLayout> layouts = new HashMap<>();

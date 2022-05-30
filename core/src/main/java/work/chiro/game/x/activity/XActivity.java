@@ -2,7 +2,7 @@ package work.chiro.game.x.activity;
 
 import work.chiro.game.game.Game;
 import work.chiro.game.x.ui.XLayout;
-import work.chiro.game.x.ui.XView;
+import work.chiro.game.x.ui.view.XView;
 
 @SuppressWarnings("SameParameterValue")
 public abstract class XActivity {

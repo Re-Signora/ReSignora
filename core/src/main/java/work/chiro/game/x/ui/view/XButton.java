@@ -1,4 +1,4 @@
-package work.chiro.game.x.ui;
+package work.chiro.game.x.ui.view;
 
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;

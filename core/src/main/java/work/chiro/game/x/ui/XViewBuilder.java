@@ -1,6 +1,8 @@
 package work.chiro.game.x.ui;
 
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.ui.view.XButton;
+import work.chiro.game.x.ui.view.XView;
 
 public class XViewBuilder {
     private final Vec2 posInit;

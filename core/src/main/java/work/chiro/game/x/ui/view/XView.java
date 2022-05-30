@@ -1,4 +1,4 @@
-package work.chiro.game.x.ui;
+package work.chiro.game.x.ui.view;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -12,6 +12,10 @@ import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
+import work.chiro.game.x.ui.XEvent;
+import work.chiro.game.x.ui.XEventType;
+import work.chiro.game.x.ui.XViewCallback;
+import work.chiro.game.x.ui.XViewType;
 
 public class XView extends AbstractObject<AnimateContainer> {
     protected String text = "";
