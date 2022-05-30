@@ -27,7 +27,7 @@ public class BasicImageCarouselAction extends AbstractAction {
         this.prefix = prefix;
         this.duration = duration;
         loadAllAvailableImageFiles();
-        if (availableImages.size() > 0)
+        if (availableImages.size() == 0)
             Utils.getLogger().fatal("no image loaded to ImageAction!");
         addAnimate(new Animate.Delay<>(new Vec2(), this.duration).setAnimateCallback(animate -> {
             animate.setTimeStart(Utils.getTimeMills());
