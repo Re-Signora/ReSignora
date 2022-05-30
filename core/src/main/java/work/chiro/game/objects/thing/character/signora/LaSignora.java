@@ -10,6 +10,8 @@ import work.chiro.game.x.compatible.XGraphics;
 
 public class LaSignora extends AbstractCharacter {
     static class HandButterfly extends Butterfly {
+        Vec2 butterflyOffset = new Vec2(220, -320);
+
         public HandButterfly(Vec2 posInit, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
             super(posInit, sizeInit, rotationInit, alpha);
         }
@@ -17,14 +19,18 @@ public class LaSignora extends AbstractCharacter {
         public HandButterfly(Vec2 posInit, Vec2 sizeInit) {
             this(posInit, sizeInit, null, null);
         }
+
+        @Override
+        public Vec2 getPosition() {
+            return super.getPosition().plus(butterflyOffset);
+        }
     }
 
     HandButterfly butterfly;
-    Vec2 butterflyOffset = new Vec2(220, -320);
 
     public LaSignora(Vec2 posInit, AbstractAction abstractAction, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super("la-signora", BasicCharacterAttributes.class, posInit, abstractAction, sizeInit, rotationInit, alpha);
-        butterfly = new HandButterfly(getPosition().copy(), new Vec2(120, 120));
+        butterfly = new HandButterfly(getPosition(), new Vec2(120, 120));
     }
 
     public LaSignora(Vec2 posInit, AbstractAction abstractAction) {
@@ -45,7 +51,6 @@ public class LaSignora extends AbstractCharacter {
     @Override
     public void forward() {
         super.forward();
-        butterfly.setPosition(getPosition().plus(butterflyOffset));
         butterfly.forward();
     }
 }
