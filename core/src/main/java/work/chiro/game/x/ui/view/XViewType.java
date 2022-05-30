@@ -1,4 +1,4 @@
-package work.chiro.game.x.ui;
+package work.chiro.game.x.ui.view;
 
 public enum XViewType {
     View,

@@ -1,4 +1,4 @@
-package work.chiro.game.x.ui;
+package work.chiro.game.x.ui.layout;
 
 import java.util.HashMap;
 import java.util.Map;

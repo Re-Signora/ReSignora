@@ -1,9 +1,11 @@
-package work.chiro.game.x.ui;
+package work.chiro.game.x.ui.layout;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.XGraphics;
+import work.chiro.game.x.ui.event.XEvent;
+import work.chiro.game.x.ui.event.XEventType;
 import work.chiro.game.x.ui.view.XView;
 
 public class XLayout extends CopyOnWriteArrayList<XView> {

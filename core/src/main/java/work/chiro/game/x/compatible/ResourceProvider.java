@@ -13,7 +13,7 @@ import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.x.logger.AbstractLogger;
 import work.chiro.game.x.logger.BasicLogger;
-import work.chiro.game.x.ui.XLayoutBean;
+import work.chiro.game.x.ui.layout.XLayoutBean;
 
 public abstract class ResourceProvider {
     static private ResourceProvider instance = null;

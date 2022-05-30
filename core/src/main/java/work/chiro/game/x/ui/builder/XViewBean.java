@@ -1,4 +1,4 @@
-package work.chiro.game.x.ui;
+package work.chiro.game.x.ui.builder;
 
 import java.util.List;
 

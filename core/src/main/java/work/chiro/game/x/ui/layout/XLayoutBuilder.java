@@ -1,9 +1,10 @@
-package work.chiro.game.x.ui;
+package work.chiro.game.x.ui.layout;
 
 import java.io.IOException;
 
 import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.ui.builder.XViewBuilder;
 import work.chiro.game.x.ui.view.XView;
 
 public class XLayoutBuilder {

@@ -6,7 +6,7 @@ import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.objects.background.AbstractBackground;
-import work.chiro.game.x.ui.XLayout;
+import work.chiro.game.x.ui.layout.XLayout;
 
 public abstract class XGraphics {
     protected double alpha = 1.0;

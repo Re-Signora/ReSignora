@@ -12,10 +12,9 @@ import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
-import work.chiro.game.x.ui.XEvent;
-import work.chiro.game.x.ui.XEventType;
-import work.chiro.game.x.ui.XViewCallback;
-import work.chiro.game.x.ui.XViewType;
+import work.chiro.game.x.ui.builder.XViewCallback;
+import work.chiro.game.x.ui.event.XEvent;
+import work.chiro.game.x.ui.event.XEventType;
 
 public class XView extends AbstractObject<AnimateContainer> {
     protected String text = "";

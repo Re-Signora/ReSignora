@@ -4,8 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 
 import work.chiro.game.game.Game;
-import work.chiro.game.x.ui.XLayout;
-import work.chiro.game.x.ui.XLayoutManager;
+import work.chiro.game.x.ui.layout.XLayout;
+import work.chiro.game.x.ui.layout.XLayoutManager;
 
 public class XActivityManager {
     private final LinkedList<XActivity> activities = new LinkedList<>();

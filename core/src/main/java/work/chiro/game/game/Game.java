@@ -30,8 +30,8 @@ import work.chiro.game.utils.timer.TimerController;
 import work.chiro.game.x.activity.XActivityManager;
 import work.chiro.game.x.compatible.ObjectController;
 import work.chiro.game.x.compatible.ResourceProvider;
-import work.chiro.game.x.ui.XLayout;
-import work.chiro.game.x.ui.XLayoutManager;
+import work.chiro.game.x.ui.layout.XLayout;
+import work.chiro.game.x.ui.layout.XLayoutManager;
 import work.chiro.game.xactivity.HomeActivity;
 
 public class Game {

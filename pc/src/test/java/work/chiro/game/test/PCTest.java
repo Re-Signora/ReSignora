@@ -8,9 +8,9 @@ import work.chiro.game.compatible.ResourceProviderPC;
 import work.chiro.game.logic.attributes.BasicCharacterAttributes;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.x.compatible.ResourceProvider;
-import work.chiro.game.x.ui.XLayout;
-import work.chiro.game.x.ui.XLayoutBuilder;
-import work.chiro.game.x.ui.XLayoutManager;
+import work.chiro.game.x.ui.layout.XLayout;
+import work.chiro.game.x.ui.layout.XLayoutBuilder;
+import work.chiro.game.x.ui.layout.XLayoutManager;
 
 public class PCTest {
     PCTest() {
