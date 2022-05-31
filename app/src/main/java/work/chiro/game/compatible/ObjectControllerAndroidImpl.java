@@ -56,8 +56,16 @@ public class ObjectControllerAndroidImpl extends ObjectController {
         double frameTime = now - lastFrameTime;
         if (getTarget() == null) return;
         if (joySticks != null) {
-            Vec2 next = joySticks.getPointedSpeed();
-            double scale = 0.26;
+            Vec2 speed = joySticks.getPointedSpeed();
+            double r = Math.sqrt(speed.getScale().getX());
+            Vec2 next;
+            if (r < 0.25) {
+                next = new Vec2();
+            } else if (r < 0.9) {
+                next = speed.fromVector(speed.divide(r).times(0.5));
+            } else {
+                next = speed;
+            }
             Vec2 newPos = getTarget().getPosition().plus(next.fromVector(next.times(frameTime * MOVE_SPEED)));
             setTargetPosition(newPos);
         }
