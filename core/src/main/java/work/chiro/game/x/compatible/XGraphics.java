@@ -6,6 +6,7 @@ import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.objects.background.AbstractBackground;
+import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.ui.layout.XLayout;
 
 public abstract class XGraphics {
@@ -157,20 +158,30 @@ public abstract class XGraphics {
 
     /**
      * 绘制一个以 (x, y) 为中心、(r1, r2) 为半径的椭圆
-     * @param x x 坐标
-     * @param y y 坐标
+     *
+     * @param x  x 坐标
+     * @param y  y 坐标
      * @param r1 r1 半径
      * @param r2 r2 半径
      * @return this
      */
     abstract public XGraphics ellipse(double x, double y, double r1, double r2);
 
+    public XGraphics ellipse(Vec2 pos, Vec2 r) {
+        return ellipse(pos.getX(), pos.getY(), r.getX(), r.getY());
+    }
+
     /**
      * 绘制一个以 (x, y) 为圆心、r 为半径的圆
+     *
      * @param x x 坐标
      * @param y y 坐标
      * @param r r 半径
      * @return this
      */
     abstract public XGraphics circle(double x, double y, double r);
+
+    public XGraphics circle(Vec2 pos, double r) {
+        return circle(pos.getX(), pos.getY(), r);
+    }
 }

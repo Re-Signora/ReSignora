@@ -17,11 +17,20 @@ public class XJoySticks extends XView {
     @Override
     public void draw(XGraphics g) {
         super.draw(g);
+        double r = Math.min(getWidth(), getHeight()) / 2;
+        Vec2 size = getSize();
         g.setColor(DrawColor.green);
-        g.circle(getLocationX() + getWidth() / 2, getLocationY() + getHeight() / 2, Math.min(getWidth(), getHeight()) / 2);
+        g.circle(getPosition().fromVector(getPosition().plus(size.divide(2))), r);
         if (pointer != null) {
+            Vec2 d = new Vec2().fromVector(pointer.minus(size.divide(2)));
+            double len2 = d.getScale().getX();
             g.setColor(DrawColor.gray);
-            g.circle(getLocationX() + pointer.getX(), getLocationY() + pointer.getY(), 50);
+            if (len2 > r * r) {
+                Vec2 u = d.fromVector(d.divide(Math.sqrt(len2)).times(r).plus(size.divide(2)));
+                g.circle(getPosition().plus(u), 50);
+            } else {
+                g.circle(getPosition().plus(pointer), 50);
+            }
         }
     }
 }
