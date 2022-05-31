@@ -12,7 +12,7 @@ import work.chiro.game.x.compatible.XGraphics;
 
 public class LaSignora extends AbstractCharacter {
     static class HandButterfly extends Butterfly {
-        Vec2 butterflyOffset = new Vec2(220, -320);
+        Vec2 butterflyOffset = new Vec2(300, -280);
 
         public HandButterfly(Vec2 posInit, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
             super(posInit, sizeInit, rotationInit, alpha);
