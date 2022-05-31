@@ -266,6 +266,18 @@ public class Game {
         return attacks;
     }
 
+    public void addOneAttack(AbstractAttack attack) {
+        synchronized (attacks) {
+            attacks.add(attack);
+        }
+    }
+
+    public void addOneCharacter(AbstractCharacter character) {
+        synchronized (characters) {
+            characters.add(character);
+        }
+    }
+
     public ObjectController getObjectController() {
         return objectController;
     }
