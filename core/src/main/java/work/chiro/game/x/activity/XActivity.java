@@ -1,6 +1,9 @@
 package work.chiro.game.x.activity;
 
 import work.chiro.game.game.Game;
+import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.ui.event.XEvent;
+import work.chiro.game.x.ui.event.XEventType;
 import work.chiro.game.x.ui.layout.XLayout;
 import work.chiro.game.x.ui.view.XView;
 
@@ -70,6 +73,35 @@ public abstract class XActivity {
      */
     final public Game getGame() {
         return game;
+    }
+
+    public void actionPointerPressed(Vec2 pos) {
+        actionPointerDragged(pos);
+    }
+
+    public void actionPointerDragged(Vec2 pos) {
+        layout.forEach(view -> {
+            if (view.isIn(pos.minus(view.getPosition()))) {
+                if (!view.isEntered()) {
+                    view.setEntered(true);
+                }
+            } else {
+                if (view.isEntered()) {
+                    view.setEntered(false);
+                }
+            }
+        });
+    }
+
+    public void actionPointerRelease(Vec2 pos) {
+        layout.forEach(view -> {
+            if (view.isIn(pos.minus(view.getPosition()))) {
+                view.trigger(new XEvent(XEventType.Click));
+                if (view.isEntered()) {
+                    view.setEntered(false);
+                }
+            }
+        });
     }
 
     // ================ For inherit ================

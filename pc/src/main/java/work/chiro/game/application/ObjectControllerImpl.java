@@ -61,7 +61,7 @@ public class ObjectControllerImpl extends ObjectController {
                             Utils.setInRange(e.getY(), 0, RunningConfig.windowHeight)
                     ).divide(GamePanel.getScale())));
                 }
-                GameWindow.getInstance().getGamePanel().getGame().getTopLayout().actionPointerDragged(getScaledPosition(e));
+                GameWindow.getInstance().getGamePanel().getGame().getTopActivity().actionPointerDragged(getScaledPosition(e));
             }
 
             @Override
@@ -69,14 +69,14 @@ public class ObjectControllerImpl extends ObjectController {
                 super.mousePressed(e);
                 Utils.getLogger().debug("mousePressed! {}", e);
                 game.requestFocus();
-                GameWindow.getInstance().getGamePanel().getGame().getTopLayout().actionPointerPressed(getScaledPosition(e));
+                GameWindow.getInstance().getGamePanel().getGame().getTopActivity().actionPointerPressed(getScaledPosition(e));
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
                 Utils.getLogger().debug("mouseReleased! {}", e);
-                GameWindow.getInstance().getGamePanel().getGame().getTopLayout().actionPointerRelease(getScaledPosition(e));
+                GameWindow.getInstance().getGamePanel().getGame().getTopActivity().actionPointerRelease(getScaledPosition(e));
             }
         };
 

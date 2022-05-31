@@ -25,6 +25,7 @@ import work.chiro.game.utils.callback.BasicCallback;
 import work.chiro.game.utils.thread.MyThreadFactory;
 import work.chiro.game.utils.timer.Timer;
 import work.chiro.game.utils.timer.TimerController;
+import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.activity.XActivityManager;
 import work.chiro.game.x.compatible.ObjectController;
 import work.chiro.game.x.compatible.ResourceProvider;
@@ -64,6 +65,10 @@ public class Game {
 
     public XLayout getTopLayout() {
         return activityManager.getTopLayout();
+    }
+
+    public XActivity getTopActivity() {
+        return getActivityManager().getTop();
     }
 
     public void clearThings() {

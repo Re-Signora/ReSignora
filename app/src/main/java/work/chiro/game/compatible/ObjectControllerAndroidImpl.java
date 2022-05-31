@@ -39,11 +39,11 @@ public class ObjectControllerAndroidImpl extends ObjectController {
         Game game = GameActivity.getGame();
         if (game != null) {
             if (e.getAction() == MotionEvent.ACTION_DOWN) {
-                game.getTopLayout().actionPointerPressed(getScaledPosition(e));
+                game.getTopActivity().actionPointerPressed(getScaledPosition(e));
             } else if (e.getAction() == MotionEvent.ACTION_MOVE) {
-                game.getTopLayout().actionPointerDragged(getScaledPosition(e));
+                game.getTopActivity().actionPointerDragged(getScaledPosition(e));
             } else if (e.getAction() == MotionEvent.ACTION_UP) {
-                game.getTopLayout().actionPointerRelease(getScaledPosition(e));
+                game.getTopActivity().actionPointerRelease(getScaledPosition(e));
             }
         }
     }

@@ -2,10 +2,8 @@ package work.chiro.game.x.ui.layout;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.ui.event.XEvent;
-import work.chiro.game.x.ui.event.XEventType;
 import work.chiro.game.x.ui.view.XView;
 
 public class XLayout extends CopyOnWriteArrayList<XView> {
@@ -88,34 +86,5 @@ public class XLayout extends CopyOnWriteArrayList<XView> {
     public XLayout clearView() {
         clear();
         return this;
-    }
-
-    public void actionPointerPressed(Vec2 pos) {
-        actionPointerDragged(pos);
-    }
-
-    public void actionPointerDragged(Vec2 pos) {
-        forEach(view -> {
-            if (view.isIn(pos.minus(view.getPosition()))) {
-                if (!view.isEntered()) {
-                    view.setEntered(true);
-                }
-            } else {
-                if (view.isEntered()) {
-                    view.setEntered(false);
-                }
-            }
-        });
-    }
-
-    public void actionPointerRelease(Vec2 pos) {
-        forEach(view -> {
-            if (view.isIn(pos.minus(view.getPosition()))) {
-                view.trigger(new XEvent(XEventType.Click));
-                if (view.isEntered()) {
-                    view.setEntered(false);
-                }
-            }
-        });
     }
 }
