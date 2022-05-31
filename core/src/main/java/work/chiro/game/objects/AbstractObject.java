@@ -264,8 +264,8 @@ public abstract class AbstractObject<A extends AnimateContainer> {
         return height;
     }
 
-    public boolean notValid() {
-        return !this.isValid;
+    public boolean isValid() {
+        return this.isValid;
     }
 
     /**

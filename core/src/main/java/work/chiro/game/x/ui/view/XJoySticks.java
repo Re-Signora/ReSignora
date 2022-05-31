@@ -15,6 +15,10 @@ public class XJoySticks extends XView {
     public XJoySticks() {
         super(new Vec2());
         setSize(new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight));
+        if (RunningConfig.modePC) {
+            vanish();
+            return;
+        }
         setOnMove((xView, xEvent) -> pointer = xEvent.getPosition());
         setOnLeft((xView, xEvent) -> pointer = null);
         setOnUp((xView, xEvent) -> pointer = null);
@@ -49,5 +53,10 @@ public class XJoySticks extends XView {
             return new Vec2();
         }
         return new Vec2().fromVector(Objects.requireNonNull(getLimitedCenteredPointer()).divide(stickSize.getX() / 2));
+    }
+
+    @Override
+    public void vanish() {
+        isValid = false;
     }
 }

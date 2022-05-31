@@ -179,7 +179,7 @@ public class Game {
                 crashCheckAction();
                 // 后处理
                 synchronized (allThings) {
-                    allThings.forEach(objList -> objList.removeIf(AbstractObject::notValid));
+                    allThings.forEach(objList -> objList.removeIf(obj -> !obj.isValid()));
                 }
                 // 每个时刻重绘界面
                 if (onPaint != null) {
@@ -218,7 +218,7 @@ public class Game {
     private void crashCheckAction() {
     }
 
-    public List<List<? extends AbstractThing<?,?>>> getAllThings() {
+    public List<List<? extends AbstractThing<?, ?>>> getAllThings() {
         return allThings;
     }
 

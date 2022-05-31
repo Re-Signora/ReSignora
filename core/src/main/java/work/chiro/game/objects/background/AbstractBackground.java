@@ -63,7 +63,7 @@ public abstract class AbstractBackground extends AbstractObject<AnimateContainer
     }
 
     @Override
-    public boolean notValid() {
+    public boolean isValid() {
         return false;
     }
 

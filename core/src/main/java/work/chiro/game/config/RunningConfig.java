@@ -29,4 +29,6 @@ public class RunningConfig {
     public static void increaseScore(double increase) {
         score += increase;
     }
+
+    public static boolean modePC = true;
 }

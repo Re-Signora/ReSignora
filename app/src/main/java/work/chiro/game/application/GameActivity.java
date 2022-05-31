@@ -89,6 +89,9 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // 设置内部模式
+        RunningConfig.modePC = false;
+
         RunningConfig.scaleBackground = false;
 
         ResourceProvider.setInstance(new ResourceProviderAndroid() {

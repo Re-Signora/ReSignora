@@ -26,15 +26,6 @@ public class ObjectControllerAndroidImpl extends ObjectController {
     }
 
     public void onTouchEvent(MotionEvent e) {
-        // if (getTarget() != null) {
-        //     Vec2 now = offset.fromVector(new Vec2(e.getX(), e.getY()).divide(scale));
-        //     if (e.getAction() == MotionEvent.ACTION_DOWN) {
-        //         offset = getTarget().getPosition().minus(now);
-        //     }
-        //     now.set(now.plus(offset));
-        //     getTarget().setPosition(Utils.setInRange(now.getX(), 0, RunningConfig.windowWidth), Utils.setInRange(now.getY(), 0, RunningConfig.windowHeight));
-        // }
-
         Game game = GameActivity.getGame();
         if (game != null) {
             if (e.getAction() == MotionEvent.ACTION_DOWN) {

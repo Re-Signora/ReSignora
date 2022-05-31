@@ -35,6 +35,9 @@ public class Main {
             System.setProperty("sun.java2d.ddscale", "true");
         }
 
+        // 设置内部模式
+        RunningConfig.modePC = true;
+
         // 获得屏幕的分辨率，初始化 Frame
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         UtilsPC.refreshWindowSize();

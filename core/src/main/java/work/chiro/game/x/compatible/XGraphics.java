@@ -93,7 +93,7 @@ public abstract class XGraphics {
         if (secondaryLayout != null) {
             secondaryLayout.forEach(view -> {
                 synchronized (view) {
-                    view.draw(this);
+                    if (view.isValid()) view.draw(this);
                 }
             });
         }
@@ -105,14 +105,14 @@ public abstract class XGraphics {
         // 绘制物体
         sortedThings.forEach(thing -> {
             synchronized (thing) {
-                thing.draw(this);
+                if (thing.isValid()) thing.draw(this);
             }
         });
 
         // 绘制本层的 UI
         game.getActivityManager().getTopLayout().forEach(view -> {
             synchronized (view) {
-                view.draw(this);
+                if (view.isValid()) view.draw(this);
             }
         });
     }
