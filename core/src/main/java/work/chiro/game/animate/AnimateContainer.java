@@ -94,7 +94,7 @@ public class AnimateContainer {
             return new Scale();
         } else {
             assert delta.getSize() == 2;
-            return new Scale(-Math.atan(delta.get().get(0) / (delta.get().get(1) == 0.0 ? 1e-5 : delta.get().get(1))));
+            return new Scale(-Math.atan(delta.get().get(1) / (delta.get().get(0) == 0.0 ? 1e-5 : delta.get().get(0))));
         }
     }
 
