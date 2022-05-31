@@ -8,7 +8,6 @@ import java.awt.GraphicsConfiguration;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.VolatileImage;
 
@@ -129,9 +128,7 @@ public abstract class XGraphicsPC extends XGraphics {
     @Override
     public XGraphics ellipse(double x, double y, double r1, double r2) {
         getGraphics().setColor(new Color(color));
-        Ellipse2D ellipse2D = new Ellipse2D.Double();
-        ellipse2D.setFrameFromCenter(x, y, x + r1, y + r2);
-        getGraphics().draw(ellipse2D);
+        getGraphics().drawOval((int) (x * GamePanel.getScale()), (int) (y * GamePanel.getScale()), (int) (r1 * GamePanel.getScale()), (int) (r2 * GamePanel.getScale()));
         return this;
     }
 

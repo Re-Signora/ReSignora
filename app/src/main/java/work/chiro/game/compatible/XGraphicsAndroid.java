@@ -59,6 +59,7 @@ public abstract class XGraphicsAndroid extends XGraphics {
     @Override
     public XGraphics setColor(int color) {
         this.color = color;
+        getPaint().setColor(color);
         return this;
     }
 
@@ -92,12 +93,14 @@ public abstract class XGraphicsAndroid extends XGraphics {
 
     @Override
     public XGraphics ellipse(double x, double y, double r1, double r2) {
+        setColor(color);
         getCanvas().drawOval((float) (x - r1), (float) (y - r2), (float) (x + r1), (float) (y + r2), getPaint());
         return this;
     }
 
     @Override
     public XGraphics circle(double x, double y, double r) {
+        setColor(color);
         getCanvas().drawCircle((float) x, (float) y, (float) r, getPaint());
         return this;
     }

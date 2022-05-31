@@ -10,8 +10,8 @@ public class XJoySticks extends XView {
     }
 
     @Override
-    public void draw(XGraphics g, boolean center) {
-        super.draw(g, center);
+    public void draw(XGraphics g) {
+        super.draw(g);
         g.setColor(DrawColor.green);
         g.circle(getLocationX() + getWidth() / 2, getLocationY() + getHeight() / 2, Math.min(getWidth(), getHeight()) / 2);
     }
