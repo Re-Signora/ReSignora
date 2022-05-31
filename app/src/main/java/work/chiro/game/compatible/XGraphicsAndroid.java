@@ -14,6 +14,7 @@ import work.chiro.game.x.compatible.XImage;
 public abstract class XGraphicsAndroid extends XGraphics {
     @Override
     public XImage<?> drawImage(XImage<?> image, double x, double y) {
+        if (image == null) return null;
         Paint paint = new Paint();
         paint.setAlpha((int) (alpha * 255));
         if (alpha == 0) {
@@ -30,6 +31,7 @@ public abstract class XGraphicsAndroid extends XGraphics {
 
     @Override
     public XImage<?> drawImage(XImage<?> image, double x, double y, double w, double h) {
+        if (image == null) return null;
         if (image.getWidth() != (int) w || image.getHeight() != (int) h) {
             Utils.getLogger().warn("update cache image");
             Matrix matrix = new Matrix();
