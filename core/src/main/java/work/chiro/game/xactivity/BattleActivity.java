@@ -4,9 +4,11 @@ import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.objects.thing.character.signora.LaSignora;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.activity.XBundle;
+import work.chiro.game.x.ui.view.XButton;
 import work.chiro.game.x.ui.view.XJoySticks;
 
 public class BattleActivity extends XActivity {
@@ -25,6 +27,8 @@ public class BattleActivity extends XActivity {
         getGame().getObjectController().setTarget(signora);
         XJoySticks joySticks = (XJoySticks) findViewById("joySticks");
         getGame().getObjectController().setJoySticks(joySticks);
+        XButton button = (XButton) findViewById("buttonStoryMode2");
+        button.setOnClick((xView, xEvent) -> Utils.getLogger().info("CLICK!"));
     }
 
     @Override

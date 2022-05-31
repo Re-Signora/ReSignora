@@ -32,16 +32,16 @@ public class ObjectControllerAndroidImpl extends ObjectController {
         if (game != null) {
             switch (e.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
+                    game.getTopActivity().actionPointerPressed(getScaledPosition(e));
+                    break;
                 case MotionEvent.ACTION_POINTER_DOWN:
-                    if (e.getActionIndex() == 0) {
-                        game.getTopActivity().actionPointerPressed(getScaledPosition(e));
-                    }
+                    game.getTopActivity().actionPointerPressed(getScaledPosition(e, e.getPointerId(e.getActionIndex())));
                     break;
                 case MotionEvent.ACTION_UP:
+                    game.getTopActivity().actionPointerRelease(getScaledPosition(e));
+                    break;
                 case MotionEvent.ACTION_POINTER_UP:
-                    if (e.getActionIndex() == 0) {
-                        game.getTopActivity().actionPointerRelease(getScaledPosition(e));
-                    }
+                    game.getTopActivity().actionPointerRelease(getScaledPosition(e, e.getPointerId(e.getActionIndex())));
                     break;
                 case MotionEvent.ACTION_MOVE:
                     if (e.getPointerCount() > 1) {
