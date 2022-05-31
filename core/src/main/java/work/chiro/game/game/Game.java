@@ -1,7 +1,5 @@
 package work.chiro.game.game;
 
-import static work.chiro.game.config.Difficulty.Easy;
-
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -136,11 +134,11 @@ public class Game {
             }
         }));
         // 输出当前 config
-        if (RunningConfig.difficulty != Easy) {
-            timerController.add(new Timer(2000, () -> RunningConfig.config.printNow()));
-        } else {
-            Utils.getLogger().info("简单模式 Config 将不会改变: " + RunningConfig.config);
-        }
+        // if (RunningConfig.difficulty != Easy) {
+        //     timerController.add(new Timer(2000, () -> RunningConfig.config.printNow()));
+        // } else {
+        //     Utils.getLogger().info("简单模式 Config 将不会改变: " + RunningConfig.config);
+        // }
     }
 
     private void onGameOver() {
