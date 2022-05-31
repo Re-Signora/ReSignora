@@ -5,7 +5,6 @@ import android.view.MotionEvent;
 import java.util.LinkedList;
 import java.util.List;
 
-import work.chiro.game.application.GameActivity;
 import work.chiro.game.game.Game;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
@@ -28,7 +27,7 @@ public class ObjectControllerAndroidImpl extends ObjectController {
     }
 
     public void onTouchEvent(MotionEvent e) {
-        Game game = GameActivity.getGame();
+        Game game = Game.getInstance();
         if (game != null) {
             switch (e.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:

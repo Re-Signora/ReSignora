@@ -30,16 +30,11 @@ import work.chiro.game.x.compatible.XGraphics;
  */
 public class GamePanel extends JPanel {
     private final ObjectControllerImpl heroControllerImpl = ObjectControllerImpl.getInstance(this);
-    private final Game game;
     private String lastProvidedName = null;
     private String lastProvidedMessage = null;
     private final Object waitObject = new Object();
     private static double scale = 1.0;
     private static boolean justResized = false;
-
-    public Game getGame() {
-        return game;
-    }
 
     public static void setScale(double scale) {
         GamePanel.scale = scale;
@@ -55,18 +50,18 @@ public class GamePanel extends JPanel {
 
     public void resetStates() {
         heroControllerImpl.clear();
-        game.resetStates();
+        Game.getInstance().resetStates();
     }
 
     public void action() {
-        game.action();
+        Game.getInstance().action();
         addTimers();
     }
 
     public GamePanel() {
-        game = new Game(heroControllerImpl);
+        Game.createInstance(heroControllerImpl);
         Utils.getLogger().info("GamePanel instance created!");
-        game.setOnFinish(() -> {
+        Game.getInstance().setOnFinish(() -> {
             Utils.getLogger().info("finish!");
             try {
                 String name = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "Nanshi" : lastProvidedName);
@@ -105,8 +100,8 @@ public class GamePanel extends JPanel {
                 }
             }
         });
-        game.setOnPaint(this::repaint);
-        game.setOnFrame(heroControllerImpl::onFrame);
+        Game.getInstance().setOnPaint(this::repaint);
+        Game.getInstance().setOnFrame(heroControllerImpl::onFrame);
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -121,7 +116,7 @@ public class GamePanel extends JPanel {
 
     public void addTimers() {
         // 获取键盘焦点
-        game.getTimerController().add(new Timer(100, this::requestFocus));
+        Game.getInstance().getTimerController().add(new Timer(100, this::requestFocus));
     }
 
     /**
@@ -148,12 +143,12 @@ public class GamePanel extends JPanel {
             }
         };
 
-        xGraphics.paintInOrdered(game);
+        xGraphics.paintInOrdered(Game.getInstance());
 
         double timePaint = Utils.getTimeMills();
 
         //绘制得分和生命值
-        xGraphics.paintInfo(game);
+        xGraphics.paintInfo(Game.getInstance());
 
         double timePaintInfo = Utils.getTimeMills();
 

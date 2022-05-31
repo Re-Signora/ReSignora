@@ -34,6 +34,19 @@ import work.chiro.game.x.ui.layout.XLayoutManager;
 import work.chiro.game.xactivity.HomeActivity;
 
 public class Game {
+    private static Game instance = null;
+
+    public static Game getInstance() {
+        assert instance != null;
+        return instance;
+    }
+    public static Game createInstance(ObjectController objectController) {
+        Utils.getLogger().info("will create Game!");
+        // assert instance == null;
+        instance = new Game(objectController);
+        return instance;
+    }
+
     /**
      * 线程池，自动管理
      */
@@ -84,7 +97,7 @@ public class Game {
         timerController.clear();
     }
 
-    public Game(ObjectController objectController) {
+    private Game(ObjectController objectController) {
         this.objectController = objectController;
         RunningConfig.config = new ConfigFactory(RunningConfig.difficulty).create();
         backgrounds.add(null);

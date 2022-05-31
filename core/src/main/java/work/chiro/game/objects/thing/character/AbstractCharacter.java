@@ -1,11 +1,8 @@
 package work.chiro.game.objects.thing.character;
 
-import java.util.List;
-
 import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.logic.attributes.BasicCharacterAttributes;
 import work.chiro.game.objects.thing.AbstractThing;
-import work.chiro.game.objects.thing.attack.AbstractAttack;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 
@@ -18,15 +15,12 @@ public class AbstractCharacter extends AbstractThing<BasicCharacterAttributes, A
         this(labelName, attributesClass, posInit, animateContainer, null, null, null);
     }
 
-    public List<AbstractAttack> normalAttack() {
-        return List.of();
+    public void normalAttack() {
     }
 
-    public List<AbstractAttack> skillAttack() {
-        return List.of();
+    public void skillAttack() {
     }
 
-    public List<AbstractAttack> chargedAttack() {
-        return List.of();
+    public void chargedAttack() {
     }
 }

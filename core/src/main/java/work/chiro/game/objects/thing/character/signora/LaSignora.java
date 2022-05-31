@@ -53,4 +53,9 @@ public class LaSignora extends AbstractCharacter {
         super.forward();
         butterfly.forward();
     }
+
+    @Override
+    public void normalAttack() {
+        super.normalAttack();
+    }
 }

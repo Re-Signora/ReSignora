@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Set;
 
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.game.Game;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
-import work.chiro.game.windows.GameWindow;
 import work.chiro.game.x.compatible.ObjectController;
 
 /**
@@ -59,7 +59,7 @@ public class ObjectControllerImpl extends ObjectController {
                             Utils.setInRange(e.getY(), 0, RunningConfig.windowHeight)
                     ).divide(GamePanel.getScale())));
                 }
-                GameWindow.getInstance().getGamePanel().getGame().getTopActivity().actionPointerDragged(List.of(getScaledPosition(e)));
+                Game.getInstance().getTopActivity().actionPointerDragged(List.of(getScaledPosition(e)));
             }
 
             @Override
@@ -67,14 +67,14 @@ public class ObjectControllerImpl extends ObjectController {
                 super.mousePressed(e);
                 Utils.getLogger().debug("mousePressed! {}", e);
                 game.requestFocus();
-                GameWindow.getInstance().getGamePanel().getGame().getTopActivity().actionPointerPressed(getScaledPosition(e));
+                Game.getInstance().getTopActivity().actionPointerPressed(getScaledPosition(e));
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
                 Utils.getLogger().debug("mouseReleased! {}", e);
-                GameWindow.getInstance().getGamePanel().getGame().getTopActivity().actionPointerRelease(getScaledPosition(e));
+                Game.getInstance().getTopActivity().actionPointerRelease(getScaledPosition(e));
             }
         };
 

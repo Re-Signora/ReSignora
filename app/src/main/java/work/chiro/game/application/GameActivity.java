@@ -36,13 +36,9 @@ import work.chiro.game.x.compatible.ResourceProvider;
 
 public class GameActivity extends AppCompatActivity {
     private SurfaceHolder surfaceHolder;
-    private static Game game = null;
+    private Game game = null;
     SurfaceView surfaceView = null;
     private final ObjectControllerAndroidImpl heroControllerAndroid = new ObjectControllerAndroidImpl();
-
-    public static Game getGame() {
-        return game;
-    }
 
     private void draw() {
         // Canvas canvas = surfaceHolder.lockCanvas();
@@ -108,7 +104,7 @@ public class GameActivity extends AppCompatActivity {
 
         surfaceView.post(this::resetGame);
 
-        game = new Game(heroControllerAndroid);
+        game = Game.createInstance(heroControllerAndroid);
 
         game.setOnPaint(() -> {
             if (surfaceHolder == null) {
@@ -236,12 +232,12 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (getGame().getActivityManager().canExit()) {
+        if (Game.getInstance().getActivityManager().canExit()) {
             super.onBackPressed();
         } else {
-            XActivity top = getGame().getActivityManager().getTop();
+            XActivity top = Game.getInstance().getActivityManager().getTop();
             if (top != null) {
-               getGame().getActivityManager().finishActivity(top);
+                Game.getInstance().getActivityManager().finishActivity(top);
             }
         }
     }
