@@ -126,7 +126,7 @@ public class XView extends AbstractObject<AnimateContainer> {
         }
         if (useSize) {
             Utils.getLogger().debug("isIn(): use size!");
-            return pos.getX() <= getWidth() && pos.getY() <= getHeight();
+            return pos.getX() >= 0 && pos.getX() <= getWidth() && pos.getY() >= 0 && pos.getY() <= getHeight();
         } else {
             try {
                 int pixel = im.getPixel(pos);

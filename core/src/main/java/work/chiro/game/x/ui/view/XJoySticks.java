@@ -20,7 +20,7 @@ public class XJoySticks extends XView {
         g.setColor(DrawColor.green);
         g.circle(getLocationX() + getWidth() / 2, getLocationY() + getHeight() / 2, Math.min(getWidth(), getHeight()) / 2);
         if (pointer != null) {
-            g.setColor(DrawColor.green);
+            g.setColor(DrawColor.gray);
             g.circle(getLocationX() + pointer.getX(), getLocationY() + pointer.getY(), 50);
         }
     }

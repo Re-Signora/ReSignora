@@ -128,7 +128,7 @@ public abstract class XGraphicsPC extends XGraphics {
     @Override
     public XGraphics ellipse(double x, double y, double r1, double r2) {
         getGraphics().setColor(new Color(color));
-        getGraphics().drawOval((int) (x * GamePanel.getScale()), (int) (y * GamePanel.getScale()), (int) (r1 * GamePanel.getScale()), (int) (r2 * GamePanel.getScale()));
+        getGraphics().drawOval((int) ((x - r1) * GamePanel.getScale()), (int) ((y - r2) * GamePanel.getScale()), (int) (r1 * 2 * GamePanel.getScale()), (int) (r2 * 2 * GamePanel.getScale()));
         return this;
     }
 
