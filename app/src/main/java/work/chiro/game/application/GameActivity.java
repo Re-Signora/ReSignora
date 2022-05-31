@@ -156,6 +156,7 @@ public class GameActivity extends AppCompatActivity {
                 }
             });
         });
+        game.setOnFrame(heroControllerAndroid::onFrame);
         surfaceView.setOnTouchListener((v, event) -> {
             heroControllerAndroid.onTouchEvent(event);
             v.performClick();

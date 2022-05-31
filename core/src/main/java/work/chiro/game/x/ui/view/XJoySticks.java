@@ -44,7 +44,7 @@ public class XJoySticks extends XView {
         return d.fromVector(d.divide(Math.sqrt(len2)).times(Math.sqrt(Math.min(r * r, len2))));
     }
 
-    public Vec2 getSpeed() {
+    public Vec2 getPointedSpeed() {
         if (pointer == null) {
             return new Vec2();
         }

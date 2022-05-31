@@ -2,5 +2,9 @@
   "name": "battle",
   "background": "ui/battleBackground.png",
   "views": [
+    {
+      "type": "JoySticks",
+      "id": "joySticks"
+    }
   ]
 }

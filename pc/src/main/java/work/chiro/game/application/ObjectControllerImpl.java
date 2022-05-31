@@ -20,8 +20,6 @@ import work.chiro.game.x.compatible.ObjectController;
  * @author hitsz
  */
 public class ObjectControllerImpl extends ObjectController {
-    final static double MOVE_SPEED = 1;
-
     static public class KeyCode {
         public final static int UP = KeyEvent.VK_W;
         public final static int DOWN = KeyEvent.VK_S;
@@ -32,7 +30,6 @@ public class ObjectControllerImpl extends ObjectController {
 
     final private Set<Integer> pressedKeys = new HashSet<>();
     private static ObjectControllerImpl instance = null;
-    private Double lastFrameTime = null;
 
     private Vec2 getScaledPosition(MouseEvent e) {
         return new Vec2().fromVector(new Vec2(e.getX(), e.getY()).divide(GamePanel.getScale()));
@@ -89,6 +86,7 @@ public class ObjectControllerImpl extends ObjectController {
         return pressedKeys.contains(keyCode);
     }
 
+    @Override
     public void onFrame() {
         if (lastFrameTime == null) {
             lastFrameTime = Utils.getTimeMills();
@@ -99,20 +97,19 @@ public class ObjectControllerImpl extends ObjectController {
         double now = Utils.getTimeMills();
         double frameTime = now - lastFrameTime;
         Vec2 next = new Vec2();
-        double scale = 0.26;
         for (int pressedKey : pressedKeys) {
             switch (pressedKey) {
                 case KeyCode.UP:
-                    next.setY(-scale);
+                    next.setY(-movingScale);
                     break;
                 case KeyCode.DOWN:
-                    next.setY(scale);
+                    next.setY(movingScale);
                     break;
                 case KeyCode.LEFT:
-                    next.setX(-scale);
+                    next.setX(-movingScale);
                     break;
                 case KeyCode.RIGHT:
-                    next.setX(scale);
+                    next.setX(movingScale);
                     break;
                 case KeyCode.QUIT:
                     System.exit(0);
@@ -121,15 +118,8 @@ public class ObjectControllerImpl extends ObjectController {
                     break;
             }
         }
-        Vec2 nextScaled = next.fromVector(next.times(frameTime * MOVE_SPEED));
-        Vec2 newPos = getTarget().getPosition().plus(nextScaled);
-        getTarget().setPosition(
-                Utils.setInRange(newPos.getX(), 0, RunningConfig.windowWidth),
-                Utils.setInRange(newPos.getY(), 0,
-                        // RunningConfig.windowHeight - getTarget().getHeight() / 2
-                        RunningConfig.windowHeight
-                )
-        );
+        Vec2 newPos = getTarget().getPosition().plus(next.fromVector(next.times(frameTime * MOVE_SPEED)));
+        setTargetPosition(newPos);
         lastFrameTime = now;
     }
 

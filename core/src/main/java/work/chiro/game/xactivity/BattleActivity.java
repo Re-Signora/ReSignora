@@ -7,8 +7,10 @@ import work.chiro.game.objects.thing.character.signora.LaSignora;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.activity.XBundle;
+import work.chiro.game.x.ui.view.XJoySticks;
 
 public class BattleActivity extends XActivity {
+
     public BattleActivity(Game game) {
         super(game);
     }
@@ -21,6 +23,8 @@ public class BattleActivity extends XActivity {
         signora.getAnimateContainer().setThing(signora);
         getGame().getCharacters().add(signora);
         getGame().getObjectController().setTarget(signora);
+        XJoySticks joySticks = (XJoySticks) findViewById("joySticks");
+        getGame().getObjectController().setJoySticks(joySticks);
     }
 
     @Override
