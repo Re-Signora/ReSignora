@@ -92,7 +92,8 @@ public class XView extends AbstractObject<AnimateContainer> {
 
     private final static Map<String, XViewType> viewTypeStringMap = Map.of(
             "View", XViewType.View,
-            "Button", XViewType.Button
+            "Button", XViewType.Button,
+            "JoySticks", XViewType.JoySticks
     );
 
     public static XViewType stringToType(String type) {
@@ -104,7 +105,7 @@ public class XView extends AbstractObject<AnimateContainer> {
         Utils.getLogger().debug("isIn({})", pos);
         boolean useSize = false;
         if (im == null) {
-            Utils.getLogger().warn("empty image when isIn({})", pos);
+            Utils.getLogger().debug("empty image when isIn({})", pos);
             useSize = true;
         } else {
             if (im.getWidth() != (int) getWidth() || im.getHeight() != (int) getHeight()) {

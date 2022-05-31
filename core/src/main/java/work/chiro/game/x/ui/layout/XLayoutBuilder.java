@@ -25,7 +25,7 @@ public class XLayoutBuilder {
                     new Vec2(viewBean.position.get(0), viewBean.position.get(1))
             ).build()
                     .setId(viewBean.id)
-                    .setText(viewBean.text)
+                    .setText(viewBean.text == null ? "" : viewBean.text)
                     .setImageResource(viewBean.image);
             if (viewBean.size != null) {
                 view.setSize(new Vec2(viewBean.size.get(0), viewBean.size.get(1)));

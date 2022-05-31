@@ -10,10 +10,18 @@
       "position": [
         948,
         186
+      ]
+    },
+    {
+      "type": "JoySticks",
+      "id": "joySticks",
+      "position": [
+        200,
+        500
       ],
       "size": [
         500,
-        600
+        500
       ]
     }
   ]

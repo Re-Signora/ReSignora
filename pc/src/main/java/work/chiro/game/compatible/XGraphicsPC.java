@@ -40,6 +40,9 @@ public abstract class XGraphicsPC extends XGraphics {
         if (x + w < 0 || y + h < 0 || x > RunningConfig.windowWidth || y > RunningConfig.windowHeight) {
             return image;
         }
+        if (image == null) {
+            return null;
+        }
         if (((image.getWidth() != (int) w) || (image.getHeight() != (int) h)) && (!image.isScaled() || (image.isScaled() && GamePanel.getJustResized()))) {
             Utils.getLogger().warn("flush image cache!");
             Image raw = (Image) image.getImage();
