@@ -18,9 +18,10 @@ public abstract class XActivity {
 
     /**
      * 用一个 clazz 启动一个 xActivity，并提供一个 xBundle 参数
-     * @param clazz 目标 clazz
+     *
+     * @param clazz  目标 clazz
      * @param bundle 参数
-     * @param <T> Class[T]
+     * @param <T>    Class[T]
      */
     final protected <T extends XActivity> void startActivity(Class<T> clazz, XBundle bundle) {
         game.getActivityManager().startActivityWithBundle(clazz, bundle);
@@ -28,8 +29,9 @@ public abstract class XActivity {
 
     /**
      * 用一个 clazz 启动一个 xActivity，伴随空参数
+     *
      * @param clazz 目标 clazz
-     * @param <T> Class[T]
+     * @param <T>   Class[T]
      */
     final protected <T extends XActivity> void startActivity(Class<T> clazz) {
         startActivity(clazz, null);
@@ -37,6 +39,7 @@ public abstract class XActivity {
 
     /**
      * 设置当前 xLayout，在 onCreate 中调用
+     *
      * @param layoutName xLayout 名称
      */
     final protected void setContentView(String layoutName) {
@@ -45,6 +48,7 @@ public abstract class XActivity {
 
     /**
      * 在 **所有** id 中查找一个 xView
+     *
      * @param id id
      * @return xView
      */
@@ -61,6 +65,7 @@ public abstract class XActivity {
 
     /**
      * 得到 xLayout
+     *
      * @return xLayout
      */
     final public XLayout getLayout() {
@@ -69,6 +74,7 @@ public abstract class XActivity {
 
     /**
      * 全局的 Game 对象
+     *
      * @return game
      */
     final public Game getGame() {
@@ -81,12 +87,19 @@ public abstract class XActivity {
 
     public void actionPointerDragged(Vec2 pos) {
         layout.forEach(view -> {
-            if (view.isIn(pos.minus(view.getPosition()))) {
+            Vec2 relativePosition = pos.minus(view.getPosition());
+            if (view.isIn(relativePosition)) {
                 if (!view.isEntered()) {
+                    view.trigger(new XEvent(XEventType.Down)
+                            .setPosition(relativePosition));
                     view.setEntered(true);
                 }
+                view.trigger(new XEvent(XEventType.Move)
+                        .setPosition(relativePosition));
             } else {
                 if (view.isEntered()) {
+                    view.trigger(new XEvent(XEventType.Up)
+                            .setPosition(relativePosition));
                     view.setEntered(false);
                 }
             }
@@ -95,8 +108,12 @@ public abstract class XActivity {
 
     public void actionPointerRelease(Vec2 pos) {
         layout.forEach(view -> {
-            if (view.isIn(pos.minus(view.getPosition()))) {
-                view.trigger(new XEvent(XEventType.Click));
+            Vec2 relativePosition = pos.minus(view.getPosition());
+            if (view.isIn(relativePosition)) {
+                view.trigger(new XEvent(XEventType.Move)
+                        .setPosition(relativePosition));
+                view.trigger(new XEvent(XEventType.Click)
+                        .setPosition(relativePosition));
                 if (view.isEntered()) {
                     view.setEntered(false);
                 }

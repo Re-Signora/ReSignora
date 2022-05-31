@@ -73,6 +73,18 @@ public class XView extends AbstractObject<AnimateContainer> {
         return addListener(XEventType.Left, callback);
     }
 
+    public XView setOnDown(XViewCallback callback) {
+        return addListener(XEventType.Down, callback);
+    }
+
+    public XView setOnUp(XViewCallback callback) {
+        return addListener(XEventType.Up, callback);
+    }
+
+    public XView setOnMove(XViewCallback callback) {
+        return addListener(XEventType.Move, callback);
+    }
+
     @Override
     protected String getImageFilename() {
         if (imageResource == null)
