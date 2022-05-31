@@ -1,5 +1,9 @@
 package work.chiro.game.x.activity;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import work.chiro.game.game.Game;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.ui.event.XEvent;
@@ -82,28 +86,35 @@ public abstract class XActivity {
     }
 
     public void actionPointerPressed(Vec2 pos) {
-        actionPointerDragged(pos);
+        actionPointerDragged(List.of(pos));
     }
 
-    public void actionPointerDragged(Vec2 pos) {
-        layout.forEach(view -> {
-            Vec2 relativePosition = pos.minus(view.getPosition());
-            if (view.isIn(relativePosition)) {
-                if (!view.isEntered()) {
-                    view.trigger(new XEvent(XEventType.Down)
+    public void actionPointerDragged(List<Vec2> posList) {
+        Map<XView, Integer> enteredMark = new HashMap<>();
+        for (int i = 0; i < posList.size(); i++) {
+            Vec2 pos = posList.get(i);
+            int finalI = i;
+            layout.forEach(view -> {
+                if (enteredMark.containsKey(view)) return;
+                Vec2 relativePosition = pos.minus(view.getPosition());
+                if (view.isIn(relativePosition)) {
+                    enteredMark.put(view, finalI);
+                    if (!view.isEntered()) {
+                        view.trigger(new XEvent(XEventType.Down)
+                                .setPosition(relativePosition));
+                        view.setEntered(true);
+                    }
+                    view.trigger(new XEvent(XEventType.Move)
                             .setPosition(relativePosition));
-                    view.setEntered(true);
+                } else {
+                    if (view.isEntered()) {
+                        view.trigger(new XEvent(XEventType.Up)
+                                .setPosition(relativePosition));
+                        view.setEntered(false);
+                    }
                 }
-                view.trigger(new XEvent(XEventType.Move)
-                        .setPosition(relativePosition));
-            } else {
-                if (view.isEntered()) {
-                    view.trigger(new XEvent(XEventType.Up)
-                            .setPosition(relativePosition));
-                    view.setEntered(false);
-                }
-            }
-        });
+            });
+        }
     }
 
     public void actionPointerRelease(Vec2 pos) {

@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import work.chiro.game.config.RunningConfig;
@@ -58,7 +59,7 @@ public class ObjectControllerImpl extends ObjectController {
                             Utils.setInRange(e.getY(), 0, RunningConfig.windowHeight)
                     ).divide(GamePanel.getScale())));
                 }
-                GameWindow.getInstance().getGamePanel().getGame().getTopActivity().actionPointerDragged(getScaledPosition(e));
+                GameWindow.getInstance().getGamePanel().getGame().getTopActivity().actionPointerDragged(List.of(getScaledPosition(e)));
             }
 
             @Override

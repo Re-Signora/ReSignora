@@ -2,6 +2,9 @@ package work.chiro.game.compatible;
 
 import android.view.MotionEvent;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import work.chiro.game.application.GameActivity;
 import work.chiro.game.game.Game;
 import work.chiro.game.utils.Utils;
@@ -42,10 +45,13 @@ public class ObjectControllerAndroidImpl extends ObjectController {
                     break;
                 case MotionEvent.ACTION_MOVE:
                     if (e.getPointerCount() > 1) {
-                        int actionIndex = e.getActionIndex();
-                        game.getTopActivity().actionPointerDragged(getScaledPosition(e, e.getPointerId(actionIndex)));
+                        List<Vec2> posList = new LinkedList<>();
+                        for (int i = 0; i < e.getPointerCount(); i++) {
+                            posList.add(getScaledPosition(e, e.getPointerId(i)));
+                        }
+                        game.getTopActivity().actionPointerDragged(posList);
                     } else {
-                        game.getTopActivity().actionPointerDragged(getScaledPosition(e));
+                        game.getTopActivity().actionPointerDragged(List.of(getScaledPosition(e)));
                     }
                     break;
                 default:
