@@ -9,7 +9,6 @@ import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.ObjectController;
 
 public class ObjectControllerAndroidImpl extends ObjectController {
-    private Vec2 offset = new Vec2();
     private double scale = 1.0;
 
     @Override
@@ -17,8 +16,8 @@ public class ObjectControllerAndroidImpl extends ObjectController {
         return true;
     }
 
-    public void reset() {
-        offset = new Vec2();
+    private Vec2 getScaledPosition(MotionEvent e, int index) {
+        return new Vec2().fromVector(new Vec2(e.getX(index), e.getY(index)).divide(scale));
     }
 
     private Vec2 getScaledPosition(MotionEvent e) {
@@ -28,12 +27,29 @@ public class ObjectControllerAndroidImpl extends ObjectController {
     public void onTouchEvent(MotionEvent e) {
         Game game = GameActivity.getGame();
         if (game != null) {
-            if (e.getAction() == MotionEvent.ACTION_DOWN) {
-                game.getTopActivity().actionPointerPressed(getScaledPosition(e));
-            } else if (e.getAction() == MotionEvent.ACTION_MOVE) {
-                game.getTopActivity().actionPointerDragged(getScaledPosition(e));
-            } else if (e.getAction() == MotionEvent.ACTION_UP) {
-                game.getTopActivity().actionPointerRelease(getScaledPosition(e));
+            switch (e.getActionMasked()) {
+                case MotionEvent.ACTION_DOWN:
+                case MotionEvent.ACTION_POINTER_DOWN:
+                    if (e.getActionIndex() == 0) {
+                        game.getTopActivity().actionPointerPressed(getScaledPosition(e));
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_POINTER_UP:
+                    if (e.getActionIndex() == 0) {
+                        game.getTopActivity().actionPointerRelease(getScaledPosition(e));
+                    }
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    if (e.getPointerCount() > 1) {
+                        int actionIndex = e.getActionIndex();
+                        game.getTopActivity().actionPointerDragged(getScaledPosition(e, e.getPointerId(actionIndex)));
+                    } else {
+                        game.getTopActivity().actionPointerDragged(getScaledPosition(e));
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     }

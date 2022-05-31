@@ -5,6 +5,16 @@
     {
       "type": "JoySticks",
       "id": "joySticks"
+    },
+    {
+      "type": "Button",
+      "id": "buttonStoryMode2",
+      "text": "",
+      "image": "ui/storyMode.png",
+      "position": [
+        1500,
+        186
+      ]
     }
   ]
 }

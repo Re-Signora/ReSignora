@@ -176,8 +176,6 @@ public class GameActivity extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         }
 
-        heroControllerAndroid.reset();
-
         int windowWidth = surfaceView.getMeasuredWidth();
         int windowHeight = surfaceView.getMeasuredHeight();
 
