@@ -285,7 +285,10 @@ public abstract class AbstractObject<A extends AnimateContainer> {
     }
 
     public void setSize(Vec2 size) {
-        this.size = size;
+        if (this.size != null)
+            this.size.set(size);
+        else
+            this.size = size;
     }
 
     public Scale updateRotation() {

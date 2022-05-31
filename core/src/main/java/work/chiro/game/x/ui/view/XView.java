@@ -102,17 +102,27 @@ public class XView extends AbstractObject<AnimateContainer> {
     public boolean isIn(Vec2 pos) {
         XImage<?> im = getImage();
         Utils.getLogger().debug("isIn({})", pos);
+        boolean useSize = false;
         if (im == null) {
             Utils.getLogger().warn("empty image when isIn({})", pos);
-            return false;
+            useSize = true;
+        } else {
+            if (im.getWidth() != (int) getWidth() || im.getHeight() != (int) getHeight()) {
+                useSize = true;
+            }
         }
-        try {
-            int pixel = im.getPixel(pos);
-            int alpha = pixel >> 24 & 0xff;
-            Utils.getLogger().debug("isIn({}) got alpha: {} pixel: {}", pos, String.format(Locale.CHINA, "0x%02x", alpha), String.format(Locale.CHINA, "0x%08x", pixel));
-            return alpha > Constants.UI_CLICK_ALPHA_THRESHOLD;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return false;
+        if (useSize) {
+            Utils.getLogger().debug("isIn(): use size!");
+            return pos.getX() <= getWidth() && pos.getY() <= getHeight();
+        } else {
+            try {
+                int pixel = im.getPixel(pos);
+                int alpha = pixel >> 24 & 0xff;
+                Utils.getLogger().debug("isIn({}) got alpha: {} pixel: {}", pos, String.format(Locale.CHINA, "0x%02x", alpha), String.format(Locale.CHINA, "0x%08x", pixel));
+                return alpha > Constants.UI_CLICK_ALPHA_THRESHOLD;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                return false;
+            }
         }
     }
 

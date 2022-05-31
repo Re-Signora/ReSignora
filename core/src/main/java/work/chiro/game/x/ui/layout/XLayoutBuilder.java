@@ -27,6 +27,9 @@ public class XLayoutBuilder {
                     .setId(viewBean.id)
                     .setText(viewBean.text)
                     .setImageResource(viewBean.image);
+            if (viewBean.size != null) {
+                view.setSize(new Vec2(viewBean.size.get(0), viewBean.size.get(1)));
+            }
             layoutManager.putViewByID(viewBean.id, view);
             layout.addView(view);
         });
