@@ -22,7 +22,7 @@ public class XLayoutBuilder {
         layoutBean.views.forEach(viewBean -> {
             XView view = new XViewBuilder(
                     XView.stringToType(viewBean.type),
-                    new Vec2(viewBean.position.get(0), viewBean.position.get(1))
+                    viewBean.position != null ? new Vec2(viewBean.position.get(0), viewBean.position.get(1)) : null
             ).build()
                     .setId(viewBean.id)
                     .setText(viewBean.text == null ? "" : viewBean.text)

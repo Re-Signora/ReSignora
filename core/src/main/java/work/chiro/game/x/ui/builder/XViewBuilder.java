@@ -26,7 +26,7 @@ public class XViewBuilder {
                 view = new XButton(posInit);
                 break;
             case JoySticks:
-                view = new XJoySticks(posInit);
+                view = new XJoySticks();
                 break;
             case View:
             default:

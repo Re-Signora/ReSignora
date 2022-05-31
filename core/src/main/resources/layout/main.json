@@ -14,15 +14,7 @@
     },
     {
       "type": "JoySticks",
-      "id": "joySticks",
-      "position": [
-        200,
-        500
-      ],
-      "size": [
-        500,
-        500
-      ]
+      "id": "joySticks"
     }
   ]
 }
