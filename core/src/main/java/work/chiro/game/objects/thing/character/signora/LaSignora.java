@@ -16,6 +16,7 @@ public class LaSignora extends AbstractCharacter {
 
         public HandButterfly(Vec2 posInit, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
             super(posInit, sizeInit, rotationInit, alpha);
+            getAnimateContainer().removeAnimate(moveAnimate);
         }
 
         public HandButterfly(Vec2 posInit, Vec2 sizeInit) {
@@ -61,7 +62,7 @@ public class LaSignora extends AbstractCharacter {
     @Override
     public void normalAttack() {
         super.normalAttack();
-        Game.getInstance().addOneAttack(new Butterfly(handButterfly.getPosition()));
+        Game.getInstance().addOneAttack(new Butterfly(handButterfly.getPosition().copy(), new Vec2(120, 120)));
     }
 
     @Override

@@ -315,7 +315,7 @@ public class Animate {
             implements AnimateWithTarget<T> {
         final private T vecTarget;
 
-        SmoothTo(T vecSource, T vecTarget, AnimateVectorType animateVectorType, double timeStart, double timeSpan) {
+        public SmoothTo(T vecSource, T vecTarget, AnimateVectorType animateVectorType, double timeStart, double timeSpan) {
             super(vecSource, AnimateType.SmoothTo, animateVectorType, timeStart, timeSpan);
             this.vecTarget = vecTarget;
         }
