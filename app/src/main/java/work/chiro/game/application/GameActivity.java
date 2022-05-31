@@ -31,6 +31,7 @@ import work.chiro.game.storage.history.HistoryObjectFactory;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.callback.BasicCallback;
 import work.chiro.game.utils.thread.MyThreadFactory;
+import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.compatible.ResourceProvider;
 
 public class GameActivity extends AppCompatActivity {
@@ -229,5 +230,17 @@ public class GameActivity extends AppCompatActivity {
         WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
         layoutParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         getWindow().setAttributes(layoutParams);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getGame().getActivityManager().canExit()) {
+            super.onBackPressed();
+        } else {
+            XActivity top = getGame().getActivityManager().getTop();
+            if (top != null) {
+               getGame().getActivityManager().finishActivity(top);
+            }
+        }
     }
 }

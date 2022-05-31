@@ -22,4 +22,11 @@ public class BattleActivity extends XActivity {
         getGame().getCharacters().add(signora);
         getGame().getObjectController().setTarget(signora);
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        getGame().getCharacters().clear();
+        getGame().getAttacks().clear();
+    }
 }

@@ -69,4 +69,12 @@ public class XActivityManager {
         if (activities.size() < 2) return null;
         return activities.get(activities.size() - 2).getLayout();
     }
+
+    public XActivity getTop() {
+        return activities.getLast();
+    }
+
+    public boolean canExit() {
+        return activities.size() <= 1;
+    }
 }
