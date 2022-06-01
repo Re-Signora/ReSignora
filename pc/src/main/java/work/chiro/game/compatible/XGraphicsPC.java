@@ -176,11 +176,11 @@ public abstract class XGraphicsPC extends XGraphics {
         );
         getGraphics().translate(translate.getX(), translate.getY());
         getGraphics().setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        getGraphics().setColor(Color.white);
+        getGraphics().setStroke(new BasicStroke((float) 3.4));
+        getGraphics().draw(shape);
         getGraphics().setColor(Color.black);
         getGraphics().fill(shape);
-        getGraphics().setColor(Color.white);
-        getGraphics().setStroke(new BasicStroke(1.4f));
-        getGraphics().draw(shape);
         getGraphics().translate(-translate.getX(), -translate.getY());
 
         return this;
