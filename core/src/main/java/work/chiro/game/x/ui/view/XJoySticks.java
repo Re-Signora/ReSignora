@@ -9,8 +9,8 @@ import work.chiro.game.x.compatible.XGraphics;
 
 public class XJoySticks extends XView {
     private Vec2 pointer = null;
-    private final Vec2 stickSize = new Vec2(500, 500);
-    private final Vec2 stickOffset = new Vec2(200, 500);
+    private final Vec2 stickSize = new Vec2(450, 450);
+    private final Vec2 stickOffset = new Vec2(220, 420);
 
     public XJoySticks() {
         super(new Vec2());
