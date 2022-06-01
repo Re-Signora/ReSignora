@@ -12,15 +12,16 @@ import work.chiro.game.x.compatible.XGraphics;
 
 public class LaSignora extends AbstractCharacter {
     static class HandButterfly extends Butterfly {
-        Vec2 butterflyOffset = new Vec2(300, -280);
+        private final Vec2 butterflyOffset = new Vec2(300, -280);
+        private static final Vec2 butterflySize = new Vec2(120, 120);
 
         public HandButterfly(Vec2 posInit, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
             super(posInit, sizeInit, rotationInit, alpha);
             getAnimateContainer().removeAnimate(moveAnimate);
         }
 
-        public HandButterfly(Vec2 posInit, Vec2 sizeInit) {
-            this(posInit, sizeInit, null, null);
+        public HandButterfly(Vec2 posInit) {
+            this(posInit, butterflySize, null, null);
         }
 
         @Override
@@ -34,7 +35,7 @@ public class LaSignora extends AbstractCharacter {
 
     public LaSignora(Vec2 posInit, AbstractAction abstractAction, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super("la-signora", BasicCharacterAttributes.class, posInit, abstractAction, sizeInit, rotationInit, alpha);
-        handButterfly = new HandButterfly(getPosition(), new Vec2(120, 120));
+        handButterfly = new HandButterfly(getPosition());
         Game.getInstance().getTimerController().add(normalAttackTask);
     }
 
@@ -69,5 +70,11 @@ public class LaSignora extends AbstractCharacter {
     public void vanish() {
         super.vanish();
         Game.getInstance().getTimerController().remove(normalAttackTask);
+    }
+
+    @Override
+    public void preLoadResources() {
+        super.preLoadResources();
+        new HandButterfly(getPosition()).preLoadResources();
     }
 }

@@ -4,6 +4,7 @@ import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.objects.thing.character.signora.LaSignora;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.activity.XBundle;
@@ -20,6 +21,9 @@ public class BattleActivity extends XActivity {
         super.onCreate(savedInstanceState);
         setContentView("battle");
         LaSignora signora = new LaSignora(new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight * 1. / 2), new AbstractAction(null));
+        Utils.getLogger().info("loading resource...");
+        signora.preLoadResources();
+        Utils.getLogger().info("loading resource done");
         signora.getAnimateContainer().setThing(signora);
         getGame().getCharacters().add(signora);
         getGame().getObjectController().setTarget(signora);

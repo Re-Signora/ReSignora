@@ -83,4 +83,10 @@ public class BasicImageCarouselAction extends AbstractAction {
     public Boolean updateAll(double timeNow) {
         return super.updateAll(timeNow);
     }
+
+    @Override
+    public void preLoadResources() {
+        super.preLoadResources();
+        loadAllAvailableImageFiles();
+    }
 }

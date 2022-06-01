@@ -7,11 +7,13 @@ import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.logic.attributes.AttributesBuilder;
 import work.chiro.game.logic.attributes.BasicThingAttributes;
 import work.chiro.game.objects.AbstractFlyingObject;
+import work.chiro.game.resource.CanPreLoadResources;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 
 public abstract class AbstractThing<T extends BasicThingAttributes, A extends AnimateContainer>
-        extends AbstractFlyingObject<A> {
+        extends AbstractFlyingObject<A>
+        implements CanPreLoadResources {
     final private String labelName;
     private BasicThingAttributes basicAttributes;
     private String imageDisplaying;
@@ -60,5 +62,10 @@ public abstract class AbstractThing<T extends BasicThingAttributes, A extends An
     @Override
     protected Boolean checkInBoundary() {
         return true;
+    }
+
+    @Override
+    public void preLoadResources() {
+        getImage();
     }
 }

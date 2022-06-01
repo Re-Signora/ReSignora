@@ -2,6 +2,7 @@ package work.chiro.game.animate.action;
 
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.objects.thing.AbstractThing;
+import work.chiro.game.resource.CanPreLoadResources;
 
 /**
  * 相比 Animate 增加更多功能：<br/>
@@ -10,7 +11,7 @@ import work.chiro.game.objects.thing.AbstractThing;
  *
  * @author Chiro
  */
-public class AbstractAction extends AnimateContainer {
+public class AbstractAction extends AnimateContainer implements CanPreLoadResources {
     protected AbstractThing<?, AbstractAction> thing;
 
     public AbstractAction(AbstractThing<?, AbstractAction> thing) {
@@ -29,5 +30,9 @@ public class AbstractAction extends AnimateContainer {
     public Boolean updateAll(double timeNow) {
         super.updateAll(timeNow);
         return false;
+    }
+
+    @Override
+    public void preLoadResources() {
     }
 }

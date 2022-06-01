@@ -3,6 +3,7 @@ package work.chiro.game.objects.thing.attack;
 import work.chiro.game.animate.AbstractAnimate;
 import work.chiro.game.animate.Animate;
 import work.chiro.game.animate.AnimateVectorType;
+import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.animate.action.BasicImageCarouselAction;
 import work.chiro.game.animate.action.ReversedImageCarouselAction;
 import work.chiro.game.config.RunningConfig;
@@ -16,8 +17,12 @@ public class Butterfly extends AbstractAttack {
     private final static String labelName = "la-signora-butterfly";
     protected AbstractAnimate<Vec> moveAnimate;
 
+    public static AbstractAction getAction() {
+        return new ReversedImageCarouselAction("attacks/" + labelName, labelName, 200);
+    }
+
     public Butterfly(Vec2 posInit, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
-        super(labelName, posInit, new ReversedImageCarouselAction("attacks/" + labelName, labelName, 200), sizeInit, rotationInit, alpha);
+        super(labelName, posInit, getAction(), sizeInit, rotationInit, alpha);
         getAnimateContainer().setThing(this);
         moveAnimate = new Animate.SmoothTo<>(
                 posInit,
@@ -47,5 +52,11 @@ public class Butterfly extends AbstractAttack {
     @Override
     public void forward() {
         getAnimateContainer().updateAll(Utils.getTimeMills());
+    }
+
+    @Override
+    public void preLoadResources() {
+        super.preLoadResources();
+        getAction().preLoadResources();
     }
 }
