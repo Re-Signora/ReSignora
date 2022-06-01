@@ -10,11 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Map;
 
-import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.compatible.ResourceProviderAndroid;
 import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
-import work.chiro.game.x.compatible.XFont;
+import work.chiro.game.x.compatible.ResourceProvider;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -23,11 +22,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ResourceProvider.setInstance(new ResourceProviderAndroid() {
-            @Override
-            public XFont<?> getFont(String name) {
-                return null;
-            }
-
             @Override
             protected Context getContext() {
                 return MainActivity.this;

@@ -32,5 +32,6 @@ public class BattleActivity extends XActivity {
         super.onStop();
         getGame().getCharacters().clear();
         getGame().getAttacks().clear();
+        getGame().getTimerController().clear();
     }
 }
