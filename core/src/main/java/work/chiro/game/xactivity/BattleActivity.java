@@ -21,10 +21,10 @@ public class BattleActivity extends XActivity {
         super.onCreate(savedInstanceState);
         setContentView("battle");
         LaSignora signora = new LaSignora(new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight * 1. / 2), new AbstractAction(null));
+        signora.getAnimateContainer().setThing(signora);
         Utils.getLogger().info("loading resource...");
         signora.preLoadResources();
         Utils.getLogger().info("loading resource done");
-        signora.getAnimateContainer().setThing(signora);
         getGame().getCharacters().add(signora);
         getGame().getObjectController().setTarget(signora);
         XJoySticks joySticks = (XJoySticks) findViewById("joySticks");
