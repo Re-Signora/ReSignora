@@ -43,6 +43,7 @@
 请从 [Re-Signora/resources (github.com)](https://github.com/Re-Signora/resources) 下载资源。
 
 1. `genshin.ttf` => `app/src/main/res/font`, `core/src/main/resources/fonts`
+2. `main.ttf` => `app/src/main/res/font`, `core/src/main/resources/fonts`
 
 ## ToDo List
 
