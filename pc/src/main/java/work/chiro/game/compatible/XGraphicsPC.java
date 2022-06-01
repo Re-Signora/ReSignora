@@ -198,6 +198,7 @@ public abstract class XGraphicsPC extends XGraphics {
     @Override
     public XGraphics drawUIString(XView view, String text) {
         if (view == null || text == null || text.length() == 0) return this;
+        setFont(view.getFont());
         Font f = (Font) getFont().getFont();
         GlyphVector v = f.createGlyphVector(getGraphics().getFontMetrics(f).getFontRenderContext(), text);
         Shape shape = v.getOutline();

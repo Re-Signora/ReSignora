@@ -8,7 +8,8 @@
     {
       "type": "Button",
       "id": "button按钮2",
-      "text": "",
+      "text": "02",
+      "font": "genshin",
       "image": "icons/按钮圆大.png",
       "position": [
         1362,
@@ -18,7 +19,8 @@
     {
       "type": "Button",
       "id": "button按钮4",
-      "text": "",
+      "text": "04",
+      "font": "genshin",
       "image": "icons/按钮圆小.png",
       "position": [
         1576,
@@ -28,7 +30,8 @@
     {
       "type": "Button",
       "id": "button按钮1",
-      "text": "",
+      "text": "01",
+      "font": "genshin",
       "image": "icons/按钮圆小.png",
       "position": [
         1167,
@@ -38,7 +41,8 @@
     {
       "type": "Button",
       "id": "button按钮3",
-      "text": "",
+      "text": "03",
+      "font": "genshin",
       "image": "icons/按钮圆小.png",
       "position": [
         1169,

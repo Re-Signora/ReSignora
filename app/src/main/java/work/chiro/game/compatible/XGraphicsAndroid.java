@@ -126,7 +126,7 @@ public abstract class XGraphicsAndroid extends XGraphics {
         if (text.length() == 0) return this;
         getNewPaint();
         setAlpha(alpha);
-        setFont("main");
+        setFont(view.getFont());
         getPaint().setStyle(Paint.Style.FILL_AND_STROKE);
         getPaint().setFakeBoldText(true);
         getPaint().setStrokeWidth((float) (4.5 * getCanvasScale()));
