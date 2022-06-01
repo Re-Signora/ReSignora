@@ -131,12 +131,13 @@ public abstract class ResourceProviderAndroid extends ResourceProvider {
     }
 
     private final Map<String, Integer> resourceMap = Map.of(
-            "genshin", R.font.genshin
+            "genshin", R.font.genshin,
+            "main", R.font.main
     );
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public XFont<?> getFont(String name) {
+    public XFont<?> getFont(String name, double fontSize) {
         if (cachedFont.containsKey(name)) return cachedFont.get(name);
         Typeface font = ResourcesCompat.getFont(getContext(), resourceMap.getOrDefault(name, R.font.genshin));
         XFont<?> f = new XFont<>(font);

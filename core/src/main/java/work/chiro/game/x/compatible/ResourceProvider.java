@@ -81,7 +81,7 @@ public abstract class ResourceProvider {
 
     protected Map<String, XFont<?>> cachedFont = new HashMap<>();
 
-    public abstract XFont<?> getFont(String name);
+    public abstract XFont<?> getFont(String name, double fontSize);
 
     public <T extends BasicThingAttributes> T getAttributesFromResource(String name, Class<T> clazz, String directory) throws IOException {
         String path = "config/" + directory + "/" + name + "/basic-attributes.json";

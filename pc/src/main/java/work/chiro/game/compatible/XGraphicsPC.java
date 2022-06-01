@@ -1,12 +1,16 @@
 package work.chiro.game.compatible;
 
 import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.VolatileImage;
@@ -19,6 +23,7 @@ import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.XFont;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
+import work.chiro.game.x.ui.view.XView;
 
 public abstract class XGraphicsPC extends XGraphics {
     @Override
@@ -140,7 +145,7 @@ public abstract class XGraphicsPC extends XGraphics {
     @Override
     public XGraphics drawString(String text, double x, double y) {
         getGraphics().setColor(new Color(color));
-        getGraphics().drawString(text, (int) (x * GamePanel.getScale()), (int) (y * GamePanel.getScale()));
+        getGraphics().drawString(text, (int) (x * GamePanel.getScale()), (int) ((y + getFontSize()) * GamePanel.getScale()));
         return this;
     }
 
@@ -153,5 +158,36 @@ public abstract class XGraphicsPC extends XGraphics {
         super.setFont(font);
         getGraphics().setFont((Font) font.getFont());
         return this;
+    }
+
+    @Override
+    public XGraphics drawUIString(XView view, String text) {
+        if (view == null || text == null || text.length() == 0) return this;
+        Font f = (Font) getFont().getFont();
+        GlyphVector v = f.createGlyphVector(getGraphics().getFontMetrics(f).getFontRenderContext(), text);
+        Shape shape = v.getOutline();
+
+        Rectangle bounds = shape.getBounds();
+
+        Vec2 translate = view.getPosition().fromVector(view.getPosition().times(GamePanel.getScale())
+                .plus(new Vec2(view.getWidth(), view.getHeight()).times(GamePanel.getScale() / 2))
+                .minus(new Vec2(bounds.getWidth(), bounds.getHeight()).divide(2))
+                .minus(new Vec2(bounds.getX(), bounds.getY()))
+        );
+        getGraphics().translate(translate.getX(), translate.getY());
+        getGraphics().setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        getGraphics().setColor(Color.black);
+        getGraphics().fill(shape);
+        getGraphics().setColor(Color.white);
+        getGraphics().setStroke(new BasicStroke(1.4f));
+        getGraphics().draw(shape);
+        getGraphics().translate(-translate.getX(), -translate.getY());
+
+        return this;
+    }
+
+    @Override
+    public double getFontSize() {
+        return super.getFontSize() * GamePanel.getScale();
     }
 }

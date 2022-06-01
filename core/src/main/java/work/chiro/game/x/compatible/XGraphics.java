@@ -8,6 +8,7 @@ import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.objects.background.AbstractBackground;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.ui.layout.XLayout;
+import work.chiro.game.x.ui.view.XView;
 
 public abstract class XGraphics {
     protected double alpha = 1.0;
@@ -81,6 +82,12 @@ public abstract class XGraphics {
      */
     public abstract XGraphics drawString(String text, double x, double y);
 
+    public XGraphics drawString(String text, Vec2 pos) {
+        return drawString(text, pos.getX(), pos.getY());
+    }
+
+    abstract public XGraphics drawUIString(XView view, String text);
+
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public void paintInOrdered(Game game) {
         List<AbstractFlyingObject<?>> sortedThings = game.getSortedThings();
@@ -125,12 +132,19 @@ public abstract class XGraphics {
         return this;
     }
 
+    public XGraphics setFont(String name) {
+        return setFont(ResourceProvider.getInstance().getFont(name, getFontSize()));
+    }
+
     public XFont<?> getFont() {
+        if (font == null) {
+            font = ResourceProvider.getInstance().getFont("main", getFontSize());
+        }
         return font;
     }
 
     static private float canvasScale = 1.0f;
-    static private final int fontSize = 20;
+    static private final double fontSize = 56;
 
     public static float getCanvasScale() {
         return canvasScale;
@@ -140,7 +154,7 @@ public abstract class XGraphics {
         XGraphics.canvasScale = canvasScale;
     }
 
-    public static int getFontSize() {
+    public double getFontSize() {
         return fontSize;
     }
 
@@ -148,7 +162,7 @@ public abstract class XGraphics {
         int d = (int) (getFontSize() * 3.0f / getCanvasScale());
         int x = 10;
         int y = d;
-        setFont(ResourceProvider.getInstance().getFont("genshin"));
+        setFont("genshin");
         setColor(0xcfcfcfcf);
         setAlpha(0.8);
         drawString("SCORE:" + (int) (RunningConfig.score), x, y);

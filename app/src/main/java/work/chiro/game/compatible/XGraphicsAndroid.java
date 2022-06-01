@@ -10,6 +10,7 @@ import work.chiro.game.utils.Utils;
 import work.chiro.game.x.compatible.XFont;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
+import work.chiro.game.x.ui.view.XView;
 
 public abstract class XGraphicsAndroid extends XGraphics {
     @Override
@@ -75,7 +76,7 @@ public abstract class XGraphicsAndroid extends XGraphics {
     public XGraphics drawString(String text, double x, double y) {
         Paint paint = getPaint();
         paint.setColor(color);
-        paint.setTextSize(getFontSize() * 3.0f / getCanvasScale());
+        paint.setTextSize((float) (getFontSize() * 3 / getCanvasScale()));
         getCanvas().drawText(text, (int) x, (int) y, paint);
         return this;
     }
@@ -104,6 +105,11 @@ public abstract class XGraphicsAndroid extends XGraphics {
         setColor(color);
         getPaint().setStyle(Paint.Style.STROKE);
         getCanvas().drawCircle((float) x, (float) y, (float) r, getPaint());
+        return this;
+    }
+
+    @Override
+    public XGraphics drawUIString(XView view, String text) {
         return this;
     }
 }

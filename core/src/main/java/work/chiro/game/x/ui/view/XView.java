@@ -18,6 +18,7 @@ import work.chiro.game.x.ui.event.XEventType;
 
 public class XView extends AbstractObject<AnimateContainer> {
     protected String text = "";
+    protected String font = "main";
     protected String id = "View" + Utils.idGenerator();
     private final Map<XEventType, XViewCallback> listeners = new HashMap<>();
     protected String imageResource = null;
@@ -35,7 +36,7 @@ public class XView extends AbstractObject<AnimateContainer> {
     }
 
     public XView setText(String text) {
-        this.text = text;
+        this.text = text == null ? this.text : text;
         return this;
     }
 
@@ -46,6 +47,11 @@ public class XView extends AbstractObject<AnimateContainer> {
 
     public XView setType(XViewType viewType) {
         this.type = viewType;
+        return this;
+    }
+
+    public XView setFont(String font) {
+        this.font = font == null ? this.font : font;
         return this;
     }
 
@@ -95,6 +101,7 @@ public class XView extends AbstractObject<AnimateContainer> {
     @Override
     public void draw(XGraphics g) {
         super.draw(g, false);
+        g.drawUIString(this, getText());
     }
 
     @Override
@@ -159,5 +166,13 @@ public class XView extends AbstractObject<AnimateContainer> {
 
     public XActivity getBindingActivity() {
         return bindingActivity;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public String getFont() {
+        return font;
     }
 }
