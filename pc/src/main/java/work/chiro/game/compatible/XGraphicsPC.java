@@ -1,5 +1,6 @@
 package work.chiro.game.compatible;
 
+import java.awt.AWTException;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -7,9 +8,11 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.Image;
+import java.awt.ImageCapabilities;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
+import java.awt.Transparency;
 import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -66,14 +69,19 @@ public abstract class XGraphicsPC extends XGraphics {
             Utils.getLogger().warn("flush image cache! im: {}", image);
             Image raw = (Image) image.getImage();
             Image resizedImage = raw.getScaledInstance((int) w, (int) h, Image.SCALE_DEFAULT);
-            // 硬件加速
             Graphics2D g;
             Image bufferedImage;
             if (RunningConfigPC.enableHardwareSpeedup) {
-                bufferedImage = getXGraphicsConfiguration().createCompatibleVolatileImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()));
+                // 硬件加速
+                try {
+                    bufferedImage = getXGraphicsConfiguration().createCompatibleVolatileImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()), new ImageCapabilities(true), Transparency.BITMASK);
+                } catch (AWTException e) {
+                    e.printStackTrace();
+                    return image;
+                }
                 g = ((VolatileImage) bufferedImage).createGraphics();
             } else {
-                bufferedImage = getXGraphicsConfiguration().createCompatibleImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()));
+                bufferedImage = getXGraphicsConfiguration().createCompatibleImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()), Transparency.BITMASK);
                 g = ((BufferedImage) bufferedImage).createGraphics();
             }
             g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
@@ -118,7 +126,9 @@ public abstract class XGraphicsPC extends XGraphics {
                 return drawImage(xImage, x, y);
             } else {
                 assert bufferedImage instanceof BufferedImage;
-                return drawImage(new XImageFactoryPC(image.getName()).createScaled((BufferedImage) bufferedImage), x, y);
+                XImage<BufferedImage> xImage = new XImageFactoryPC(image.getName()).createScaled((BufferedImage) bufferedImage);
+                Utils.putCachedImageToCache(cacheInfo, xImage);
+                return drawImage(xImage, x, y);
             }
         } else {
             return drawImage(Objects.requireNonNullElse(imageFromCache, image), x, y);
