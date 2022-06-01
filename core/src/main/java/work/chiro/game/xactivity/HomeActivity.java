@@ -3,6 +3,7 @@ package work.chiro.game.xactivity;
 import work.chiro.game.game.Game;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.activity.XBundle;
+import work.chiro.game.x.ui.view.XButton;
 
 public class HomeActivity extends XActivity {
     public HomeActivity(Game game) {
@@ -13,7 +14,7 @@ public class HomeActivity extends XActivity {
     protected void onCreate(XBundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView("main");
-        // XButton historyButton = (XButton) findViewById("buttonStoryMode");
-        // historyButton.setOnClick((xView, xEvent) -> startActivity(StageSelectActivity.class));
+        XButton historyButton = (XButton) findViewById("button剧情模式");
+        historyButton.setOnClick((xView, xEvent) -> startActivity(StageSelectActivity.class));
     }
 }

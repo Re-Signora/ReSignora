@@ -14,7 +14,7 @@ public class StageSelectActivity extends XActivity {
     protected void onCreate(XBundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView("stageSelect");
-        XButton buttonStage02 = (XButton) findViewById("buttonStage02");
+        XButton buttonStage02 = (XButton) findViewById("button按钮2");
         buttonStage02.setOnClick((xView, xEvent) -> startActivity(BattleActivity.class));
     }
 }

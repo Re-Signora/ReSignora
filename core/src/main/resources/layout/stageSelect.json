@@ -1,15 +1,48 @@
 {
   "name": "stageSelect",
-  "background": "ui/stageSelectBackground.png",
+  "background": "ui/关卡选择.png",
   "views": [
     {
+      "id": "button设置"
+    },
+    {
       "type": "Button",
-      "id": "buttonStage02",
+      "id": "button按钮2",
       "text": "",
-      "image": "ui/stage02Button.png",
+      "image": "icons/按钮圆大.png",
       "position": [
         1362,
         469
+      ]
+    },
+    {
+      "type": "Button",
+      "id": "button按钮4",
+      "text": "",
+      "image": "icons/按钮圆小.png",
+      "position": [
+        1576,
+        65
+      ]
+    },
+    {
+      "type": "Button",
+      "id": "button按钮1",
+      "text": "",
+      "image": "icons/按钮圆小.png",
+      "position": [
+        1167,
+        878
+      ]
+    },
+    {
+      "type": "Button",
+      "id": "button按钮3",
+      "text": "",
+      "image": "icons/按钮圆小.png",
+      "position": [
+        1169,
+        240
       ]
     }
   ]
