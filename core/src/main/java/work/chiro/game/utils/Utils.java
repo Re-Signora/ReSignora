@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 import work.chiro.game.objects.bullet.BaseBullet;
@@ -48,22 +49,61 @@ public class Utils {
         return Math.max(down, Math.min(value, up));
     }
 
-    private static final Map<String, XImage<?>> CACHED_IMAGE = new HashMap<>();
+    private static final Map<String, XImage<?>> CACHED_RESOURCE_IMAGE = new HashMap<>();
 
-    public static XImage<?> getCachedImage(String filePath) throws IOException {
-        synchronized (CACHED_IMAGE) {
-            if (CACHED_IMAGE.containsKey(filePath)) {
-                return CACHED_IMAGE.get(filePath);
+    public static XImage<?> getCachedImageFromResource(String filePath) throws IOException {
+        synchronized (CACHED_RESOURCE_IMAGE) {
+            if (CACHED_RESOURCE_IMAGE.containsKey(filePath)) {
+                return CACHED_RESOURCE_IMAGE.get(filePath);
             }
             try {
                 XImage<?> image = ResourceProvider.getInstance().getImageFromResource(filePath);
-                CACHED_IMAGE.put(filePath, image);
+                CACHED_RESOURCE_IMAGE.put(filePath, image);
                 return image;
             } catch (NullPointerException e) {
                 e.printStackTrace();
                 System.exit(-1);
                 return null;
             }
+        }
+    }
+
+    public static final Map<CacheImageInfo, XImage<?>> CACHED_IMAGE = new HashMap<>();
+
+    public static XImage<?> getCachedImageFromCache(CacheImageInfo info) {
+        synchronized (CACHED_IMAGE) {
+            return CACHED_IMAGE.getOrDefault(info, null);
+        }
+    }
+
+    public static void putCachedImageToCache(CacheImageInfo info, XImage<?> image) {
+        synchronized (CACHED_IMAGE) {
+            CACHED_IMAGE.putIfAbsent(info, image);
+        }
+    }
+
+    static public class CacheImageInfo {
+        private final int width;
+        private final int height;
+        private final String name;
+
+        public CacheImageInfo(int width, int height, String name) {
+            this.width = width;
+            this.height = height;
+            this.name = name;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            CacheImageInfo that = (CacheImageInfo) o;
+            return width == that.width && height == that.height && Objects.equals(name, that.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(width, height);
         }
     }
 

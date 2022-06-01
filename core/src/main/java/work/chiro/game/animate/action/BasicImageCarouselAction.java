@@ -50,7 +50,7 @@ public class BasicImageCarouselAction extends AbstractAction {
     public void loadAllAvailableImageFiles() {
         for (int i = 0; i < Constants.ACTION_MAX_IMAGE_INDEX; i++) {
             try {
-                XImage<?> im = Utils.getCachedImage(getImageFullPath(i));
+                XImage<?> im = Utils.getCachedImageFromResource(getImageFullPath(i));
                 getAvailableImages().add(im);
             } catch (IOException e) {
                 break;

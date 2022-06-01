@@ -7,9 +7,20 @@ import work.chiro.game.x.compatible.XImage;
 import work.chiro.game.x.compatible.XImageFactoryInterface;
 
 public class XImageFactoryPC implements XImageFactoryInterface<BufferedImage> {
+    private final String name;
+
+    public XImageFactoryPC(String name) {
+        this.name = name;
+    }
+
     @Override
     public XImage<BufferedImage> create(BufferedImage image) {
         return new XImage<>() {
+            @Override
+            public String getName() {
+                return name;
+            }
+
             @Override
             public int getWidth() {
                 return image.getWidth();
@@ -34,6 +45,11 @@ public class XImageFactoryPC implements XImageFactoryInterface<BufferedImage> {
 
     public XImage<BufferedImage> createScaled(BufferedImage image) {
         return new XImage<>() {
+            @Override
+            public String getName() {
+                return name;
+            }
+
             @Override
             public int getWidth() {
                 return image.getWidth();

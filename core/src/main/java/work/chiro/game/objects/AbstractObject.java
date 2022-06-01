@@ -213,7 +213,7 @@ public abstract class AbstractObject<A extends AnimateContainer> {
                 if (filename == null) {
                     image = ImageManager.getInstance().get(this.getClass());
                 } else {
-                    image = Utils.getCachedImage(filename);
+                    image = Utils.getCachedImageFromResource(filename);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

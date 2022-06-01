@@ -31,7 +31,7 @@ public class ResourceProviderPC extends ResourceProvider {
         if (bufferedImage == null) {
             Utils.getLogger().warn("get image failed: {}", path);
         }
-        return new XImageFactoryPC().create(bufferedImage);
+        return new XImageFactoryPC(path).create(bufferedImage);
     }
 
     @Override

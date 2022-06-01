@@ -56,16 +56,16 @@ public class ImageManager {
 
     ImageManager() {
         try {
-            HERO_IMAGE = Utils.getCachedImage("hero.png");
-            MOB_ENEMY_IMAGE = Utils.getCachedImage("mob.png");
-            ELITE_ENEMY_IMAGE = Utils.getCachedImage("elite.png");
-            BOSS_ENEMY_IMAGE = Utils.getCachedImage("boss.png");
-            HERO_BULLET_IMAGE = Utils.getCachedImage("bullet_hero.png");
-            ENEMY_BULLET_IMAGE = Utils.getCachedImage("bullet_enemy.png");
-            BLOOD_PROP_IMAGE = Utils.getCachedImage("prop_blood.png");
-            BOMB_PROP_IMAGE = Utils.getCachedImage("prop_bomb.png");
-            BULLET_PROP_IMAGE = Utils.getCachedImage("prop_bullet.png");
-            BOX_HERO = Utils.getCachedImage("box_hero.png");
+            HERO_IMAGE = Utils.getCachedImageFromResource("hero.png");
+            MOB_ENEMY_IMAGE = Utils.getCachedImageFromResource("mob.png");
+            ELITE_ENEMY_IMAGE = Utils.getCachedImageFromResource("elite.png");
+            BOSS_ENEMY_IMAGE = Utils.getCachedImageFromResource("boss.png");
+            HERO_BULLET_IMAGE = Utils.getCachedImageFromResource("bullet_hero.png");
+            ENEMY_BULLET_IMAGE = Utils.getCachedImageFromResource("bullet_enemy.png");
+            BLOOD_PROP_IMAGE = Utils.getCachedImageFromResource("prop_blood.png");
+            BOMB_PROP_IMAGE = Utils.getCachedImageFromResource("prop_bomb.png");
+            BULLET_PROP_IMAGE = Utils.getCachedImageFromResource("prop_bullet.png");
+            BOX_HERO = Utils.getCachedImageFromResource("box_hero.png");
 
             CLASSNAME_IMAGE_MAP.put(HeroAircraft.class.getName(), HERO_IMAGE);
             CLASSNAME_IMAGE_MAP.put(MobEnemy.class.getName(), MOB_ENEMY_IMAGE);

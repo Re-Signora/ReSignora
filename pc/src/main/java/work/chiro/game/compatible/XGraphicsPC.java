@@ -14,6 +14,7 @@ import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.VolatileImage;
+import java.util.Objects;
 
 import work.chiro.game.application.GamePanel;
 import work.chiro.game.config.RunningConfig;
@@ -28,10 +29,12 @@ import work.chiro.game.x.ui.view.XView;
 public abstract class XGraphicsPC extends XGraphics {
     private void setRenderArgs() {
         getGraphics().setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        getGraphics().setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
         getGraphics().setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         getGraphics().setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
         getGraphics().setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
     }
+
     @Override
     public XImage<?> drawImage(XImage<?> image, double x, double y) {
         setRenderArgs();
@@ -55,8 +58,12 @@ public abstract class XGraphicsPC extends XGraphics {
         if (image == null) {
             return null;
         }
-        if (((image.getWidth() != (int) w) || (image.getHeight() != (int) h)) && (!image.isScaled() || (image.isScaled() && GamePanel.getJustResized()))) {
-            Utils.getLogger().warn("flush image cache!");
+        Utils.CacheImageInfo cacheInfo = new Utils.CacheImageInfo((int) w, (int) h, image.getName());
+        XImage<?> imageFromCache = Utils.getCachedImageFromCache(cacheInfo);
+        if (((image.getWidth() != (int) w) || (image.getHeight() != (int) h)) &&
+                (!image.isScaled() || (image.isScaled() && GamePanel.getJustResized())) &&
+                imageFromCache == null) {
+            Utils.getLogger().warn("flush image cache! im: {}", image);
             Image raw = (Image) image.getImage();
             Image resizedImage = raw.getScaledInstance((int) w, (int) h, Image.SCALE_DEFAULT);
             // 硬件加速
@@ -76,7 +83,12 @@ public abstract class XGraphicsPC extends XGraphics {
             if (RunningConfigPC.enableHardwareSpeedup) {
                 assert bufferedImage instanceof VolatileImage;
                 VolatileImage im = (VolatileImage) bufferedImage;
-                return drawImage(new XImage<>() {
+                XImage<?> xImage = new XImage<>() {
+                    @Override
+                    public String getName() {
+                        return image.getName();
+                    }
+
                     @Override
                     public int getWidth() {
                         return im.getWidth();
@@ -101,13 +113,15 @@ public abstract class XGraphicsPC extends XGraphics {
                     public int getPixel(Vec2 pos) throws ArrayIndexOutOfBoundsException {
                         return im.getSnapshot().getRGB((int) pos.getX(), (int) pos.getY());
                     }
-                }, x, y);
+                };
+                Utils.putCachedImageToCache(cacheInfo, xImage);
+                return drawImage(xImage, x, y);
             } else {
                 assert bufferedImage instanceof BufferedImage;
-                return drawImage(new XImageFactoryPC().createScaled((BufferedImage) bufferedImage), x, y);
+                return drawImage(new XImageFactoryPC(image.getName()).createScaled((BufferedImage) bufferedImage), x, y);
             }
         } else {
-            return drawImage(image, x, y);
+            return drawImage(Objects.requireNonNullElse(imageFromCache, image), x, y);
         }
     }
 
