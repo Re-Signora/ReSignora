@@ -1,12 +1,11 @@
 {
   "name": "main",
-  "background": "ui/mainBackground.png",
+  "background": "ui/主界面.png",
   "views": [
     {
       "type": "Button",
       "id": "buttonStoryMode",
-      "text": "",
-      "image": "ui/storyMode.png",
+      "image": "icons/剧情模式.png",
       "position": [
         948,
         186
