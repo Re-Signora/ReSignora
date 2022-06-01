@@ -20,7 +20,7 @@ import work.chiro.game.x.compatible.ObjectController;
  *
  * @author hitsz
  */
-public class ObjectControllerImpl extends ObjectController {
+public class ObjectControllerPCImpl extends ObjectController {
     static public class KeyCode {
         public final static int UP = KeyEvent.VK_W;
         public final static int DOWN = KeyEvent.VK_S;
@@ -30,13 +30,13 @@ public class ObjectControllerImpl extends ObjectController {
     }
 
     final private Set<Integer> pressedKeys = new HashSet<>();
-    private static ObjectControllerImpl instance = null;
+    private static ObjectControllerPCImpl instance = null;
 
     private Vec2 getScaledPosition(MouseEvent e) {
         return new Vec2().fromVector(new Vec2(e.getX(), e.getY()).divide(GamePanel.getScale()));
     }
 
-    public ObjectControllerImpl(GamePanel game) {
+    public ObjectControllerPCImpl(GamePanel game) {
         KeyAdapter keyAdapter = new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -101,16 +101,16 @@ public class ObjectControllerImpl extends ObjectController {
         for (int pressedKey : pressedKeys) {
             switch (pressedKey) {
                 case KeyCode.UP:
-                    next.setY(-movingScale);
+                    next.setY(next.getY() - movingScale);
                     break;
                 case KeyCode.DOWN:
-                    next.setY(movingScale);
+                    next.setY(next.getY() + movingScale);
                     break;
                 case KeyCode.LEFT:
-                    next.setX(-movingScale);
+                    next.setX(next.getX() - movingScale);
                     break;
                 case KeyCode.RIGHT:
-                    next.setX(movingScale);
+                    next.setX(next.getX() + movingScale);
                     break;
                 case KeyCode.QUIT:
                     System.exit(0);
@@ -124,10 +124,10 @@ public class ObjectControllerImpl extends ObjectController {
         lastFrameTime = now;
     }
 
-    static public ObjectControllerImpl getInstance(GamePanel game) {
+    static public ObjectControllerPCImpl getInstance(GamePanel game) {
         if (instance == null) {
-            synchronized (ObjectControllerImpl.class) {
-                instance = new ObjectControllerImpl(game);
+            synchronized (ObjectControllerPCImpl.class) {
+                instance = new ObjectControllerPCImpl(game);
             }
         }
         return instance;
