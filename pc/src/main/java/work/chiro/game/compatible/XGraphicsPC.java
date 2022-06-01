@@ -26,8 +26,15 @@ import work.chiro.game.x.compatible.XImage;
 import work.chiro.game.x.ui.view.XView;
 
 public abstract class XGraphicsPC extends XGraphics {
+    private void setRenderArgs() {
+        getGraphics().setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        getGraphics().setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        getGraphics().setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+        getGraphics().setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+    }
     @Override
     public XImage<?> drawImage(XImage<?> image, double x, double y) {
+        setRenderArgs();
         double scale = image.isScaled() ? 1.0 : GamePanel.getScale();
         AffineTransform af = AffineTransform
                 .getTranslateInstance(x * GamePanel.getScale(), y * GamePanel.getScale());
@@ -35,6 +42,7 @@ public abstract class XGraphicsPC extends XGraphics {
         af.rotate(rotation, image.getWidth() * scale / 2, image.getHeight() * scale / 2);
         Graphics2D graphics2D = getGraphics();
         setAlpha(alpha);
+
         graphics2D.drawImage((Image) image.getImage(), af, null);
         return image;
     }
@@ -126,6 +134,7 @@ public abstract class XGraphicsPC extends XGraphics {
     @Override
     public XGraphics fillRect(double x, double y, double width, double height) {
         getGraphics().setColor(new Color(color));
+        setRenderArgs();
         getGraphics().fillRect((int) (x * GamePanel.getScale()), (int) (y * GamePanel.getScale()), (int) (width * GamePanel.getScale()), (int) (height * GamePanel.getScale()));
         return this;
     }
@@ -133,6 +142,7 @@ public abstract class XGraphicsPC extends XGraphics {
     @Override
     public XGraphics ellipse(double x, double y, double r1, double r2) {
         getGraphics().setColor(new Color(color));
+        setRenderArgs();
         getGraphics().drawOval((int) ((x - r1) * GamePanel.getScale()), (int) ((y - r2) * GamePanel.getScale()), (int) (r1 * 2 * GamePanel.getScale()), (int) (r2 * 2 * GamePanel.getScale()));
         return this;
     }
@@ -145,6 +155,7 @@ public abstract class XGraphicsPC extends XGraphics {
     @Override
     public XGraphics drawString(String text, double x, double y) {
         getGraphics().setColor(new Color(color));
+        setRenderArgs();
         getGraphics().drawString(text, (int) (x * GamePanel.getScale()), (int) ((y + getFontSize()) * GamePanel.getScale()));
         return this;
     }
@@ -175,9 +186,9 @@ public abstract class XGraphicsPC extends XGraphics {
                 .minus(new Vec2(bounds.getX(), bounds.getY()))
         );
         getGraphics().translate(translate.getX(), translate.getY());
-        getGraphics().setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        setRenderArgs();
         getGraphics().setColor(Color.white);
-        getGraphics().setStroke(new BasicStroke((float) 3.4));
+        getGraphics().setStroke(new BasicStroke((float) (3.4 * GamePanel.getScale())));
         getGraphics().draw(shape);
         getGraphics().setColor(Color.black);
         getGraphics().fill(shape);
