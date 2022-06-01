@@ -33,7 +33,7 @@ public abstract class ResourceProviderAndroid extends ResourceProvider {
         if (bitmap == null) {
             throw new IOException("file: " + path + " not found!");
         }
-        return new XImageFactoryAndroid().create(bitmap);
+        return new XImageFactoryAndroid(path).create(bitmap);
     }
 
     private final Map<MusicType, Integer> musicIDMap = new HashMap<>();

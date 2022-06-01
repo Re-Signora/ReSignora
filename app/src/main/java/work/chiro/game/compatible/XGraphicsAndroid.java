@@ -4,9 +4,15 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 
+import java.util.Objects;
+
+import work.chiro.game.game.Game;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.compatible.DrawColor;
 import work.chiro.game.x.compatible.XFont;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
@@ -33,14 +39,18 @@ public abstract class XGraphicsAndroid extends XGraphics {
     @Override
     public XImage<?> drawImage(XImage<?> image, double x, double y, double w, double h) {
         if (image == null) return null;
-        if (image.getWidth() != (int) w || image.getHeight() != (int) h) {
-            Utils.getLogger().warn("update cache image");
+        Utils.CacheImageInfo info = new Utils.CacheImageInfo((int) w, (int) h, image.getName());
+        XImage<?> cachedImage = Utils.getCachedImageFromCache(info);
+        if ((image.getWidth() != (int) w || image.getHeight() != (int) h) && cachedImage == null) {
+            Utils.getLogger().warn("update cache image: {}", image);
             Matrix matrix = new Matrix();
             matrix.postScale((float) (w / image.getWidth()), (float) (h / image.getHeight()));
             Bitmap scaledBitmap = Bitmap.createBitmap((Bitmap) image.getImage(), 0, 0, image.getWidth(), image.getHeight(), matrix, true);
-            return drawImage(new XImageFactoryAndroid().create(scaledBitmap), x, y);
+            XImage<Bitmap> xImage = new XImageFactoryAndroid(image.getName()).create(scaledBitmap);
+            Utils.putCachedImageToCache(info, xImage);
+            return drawImage(xImage, x, y);
         } else {
-            return drawImage(image, x, y);
+            return drawImage(Objects.requireNonNullElse(cachedImage, image), x, y);
         }
     }
 
@@ -74,16 +84,18 @@ public abstract class XGraphicsAndroid extends XGraphics {
 
     @Override
     public XGraphics drawString(String text, double x, double y) {
-        Paint paint = getPaint();
-        paint.setColor(color);
-        paint.setTextSize((float) (getFontSize() * 3 / getCanvasScale()));
-        getCanvas().drawText(text, (int) x, (int) y, paint);
+        if (text == null || text.length() == 0) return this;
+        setColor(color);
+        getPaint().setTextSize((float) (getFontSize() / getCanvasScale()));
+        getCanvas().drawText(text, (int) x, (int) y, getPaint());
         return this;
     }
 
     abstract protected Canvas getCanvas();
 
     public abstract Paint getPaint();
+
+    public abstract Paint getNewPaint();
 
     @Override
     public XGraphics setFont(XFont<?> font) {
@@ -110,6 +122,45 @@ public abstract class XGraphicsAndroid extends XGraphics {
 
     @Override
     public XGraphics drawUIString(XView view, String text) {
+        if (view == null || text == null) return this;
+        if (text.length() == 0) return this;
+        getNewPaint();
+        setAlpha(alpha);
+        setFont("main");
+        getPaint().setStyle(Paint.Style.FILL_AND_STROKE);
+        getPaint().setFakeBoldText(true);
+        getPaint().setStrokeWidth((float) (4.5 * getCanvasScale()));
+        getPaint().setTextSize((float) (getFontSize() / getCanvasScale()));
+
+        // 测量绘制大小
+        Rect bounds = new Rect();
+        getPaint().getTextBounds(text, 0, text.length(), bounds);
+        Vec2 translate = view.getPosition().fromVector(view.getPosition()
+                .plus(new Vec2(view.getWidth(), view.getHeight()).divide(2))
+                .minus(new Vec2(bounds.right - bounds.left, bounds.bottom - bounds.top).divide(2))
+                .minus(new Vec2(bounds.left, bounds.top))
+        );
+        getCanvas().translate((float) translate.getX(), (float) translate.getY());
+        // 描边
+        setColor(DrawColor.white);
+        getCanvas().drawText(text, 0, 0, getPaint());
+        // 文字
+        getPaint().setFakeBoldText(false);
+        setColor(DrawColor.black);
+        getPaint().setStrokeWidth(0);
+        getCanvas().drawText(text, 0, 0, getPaint());
+        getCanvas().translate((float) -translate.getX(), (float) -translate.getY());
         return this;
+    }
+
+    @Override
+    public double getFontSize() {
+        return super.getFontSize();
+    }
+
+    @Override
+    public void paintInfo(Game game) {
+        getNewPaint();
+        super.paintInfo(game);
     }
 }

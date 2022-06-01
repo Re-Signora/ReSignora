@@ -7,9 +7,20 @@ import work.chiro.game.x.compatible.XImage;
 import work.chiro.game.x.compatible.XImageFactoryInterface;
 
 public class XImageFactoryAndroid implements XImageFactoryInterface<Bitmap> {
+    private final String name;
+
+    public XImageFactoryAndroid(String name) {
+        this.name = name;
+    }
+
     @Override
     public XImage<Bitmap> create(Bitmap image) {
         return new XImage<>() {
+            @Override
+            public String getName() {
+                return name;
+            }
+
             @Override
             public int getWidth() {
                 return image.getWidth();

@@ -159,7 +159,7 @@ public abstract class XGraphics {
     }
 
     public void paintInfo(Game game) {
-        int d = (int) (getFontSize() * 3.0f / getCanvasScale());
+        int d = (int) (getFontSize() / getCanvasScale());
         int x = 10;
         int y = d;
         setFont("genshin");

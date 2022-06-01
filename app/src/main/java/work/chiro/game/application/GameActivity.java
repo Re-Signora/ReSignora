@@ -58,6 +58,7 @@ public class GameActivity extends AppCompatActivity {
         }
         Paint paint = new Paint();
         XGraphicsAndroid xGraphics = new XGraphicsAndroid() {
+            private Paint p = paint;
             @Override
             protected Canvas getCanvas() {
                 return canvas;
@@ -65,7 +66,13 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public Paint getPaint() {
-                return paint;
+                return p;
+            }
+
+            @Override
+            public Paint getNewPaint() {
+                p = new Paint();
+                return p;
             }
         };
         canvas.drawColor(Color.BLACK);
