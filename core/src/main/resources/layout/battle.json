@@ -1,7 +1,10 @@
 {
   "name": "battle",
-  "background": "ui/battleBackground.png",
+  "background": "ui/战斗界面.png",
   "views": [
+    {
+      "id": "button设置"
+    },
     {
       "type": "JoySticks",
       "id": "joySticks"
