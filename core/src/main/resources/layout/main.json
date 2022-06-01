@@ -4,11 +4,119 @@
   "views": [
     {
       "type": "Button",
-      "id": "buttonStoryMode",
+      "id": "button设置",
+      "image": "icons/设置.png",
+      "position": [
+        0,
+        8
+      ]
+    },
+    {
+      "type": "Button",
+      "id": "button活动",
+      "image": "icons/活动.png",
+      "position": [
+        1440,
+        127
+      ]
+    },
+    {
+      "type": "Button",
+      "id": "button剧情模式",
       "image": "icons/剧情模式.png",
       "position": [
-        948,
-        186
+        965,
+        181
+      ]
+    },
+    {
+      "type": "Button",
+      "id": "button对战模式",
+      "image": "icons/对战模式.png",
+      "position": [
+        677,
+        0
+      ]
+    },
+    {
+      "type": "Button",
+      "id": "button魔偶编队",
+      "image": "icons/魔偶编队.png",
+      "position": [
+        564,
+        574
+      ]
+    },
+    {
+      "type": "Button",
+      "id": "button图鉴",
+      "image": "icons/底部按钮.png",
+      "position": [
+        1170,
+        999
+      ]
+    },
+    {
+      "type": "Button",
+      "id": "button好友",
+      "image": "icons/底部按钮.png",
+      "position": [
+        1479,
+        999
+      ]
+    },
+    {
+      "type": "Button",
+      "id": "button任务",
+      "image": "icons/底部按钮.png",
+      "position": [
+        1781,
+        1002
+      ]
+    },
+    {
+      "type": "Button",
+      "id": "button背包",
+      "image": "icons/底部按钮.png",
+      "position": [
+        2083,
+        999
+      ]
+    },
+    {
+      "type": "Button",
+      "id": "button魔偶训练室",
+      "image": "icons/中部按钮.png",
+      "position": [
+        1422,
+        790
+      ]
+    },
+    {
+      "type": "Button",
+      "id": "button魔偶休息室",
+      "image": "icons/中部按钮.png",
+      "position": [
+        1845,
+        790
+      ]
+    },
+    {
+      "type": "Button",
+      "id": "button烹饪",
+      "image": "icons/中部按钮.png",
+      "position": [
+        1422,
+        666
+      ]
+    },
+    {
+      "type": "Button",
+      "id": "button商店",
+      "image": "icons/中部按钮.png",
+      "position": [
+        1845,
+        666
       ]
     }
   ]
