@@ -58,6 +58,6 @@ public class Butterfly extends AbstractAttack {
     @Override
     public void preLoadResources(XGraphics g) {
         super.preLoadResources(g);
-        getAction().preLoadResources(g);
+        getAnimateContainer().preLoadResources(g);
     }
 }

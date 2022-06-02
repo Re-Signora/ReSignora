@@ -32,7 +32,6 @@ public class LaSignora extends AbstractCharacter {
 
         @Override
         public void preLoadResources(XGraphics g) {
-            super.preLoadResources(g);
             ((ReversedImageCarouselAction) getAnimateContainer()).preLoadResources(g, butterflySize);
         }
     }

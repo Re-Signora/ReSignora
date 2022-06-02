@@ -93,7 +93,6 @@ public class BasicImageCarouselAction extends AbstractAction {
     }
 
     public void preLoadResources(XGraphics g, Vec2 size) {
-        preLoadResources(g);
         getAvailableImages().forEach(image -> g.resizeImage(image, size.getX(), size.getY()));
     }
 }
