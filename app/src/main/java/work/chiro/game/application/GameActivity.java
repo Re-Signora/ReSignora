@@ -82,43 +82,44 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void draw() {
-        // XGraphicsAndroid xGraphics = getXGraphics();
-        // Canvas canvas = surfaceHolder.lockCanvas();
-        // 使用硬件加速
-        Canvas canvas = surfaceHolder.lockHardwareCanvas();
-        // 储存当前 canvas 设置
-        canvas.save();
-        // 设置缩放和偏移
-        if (RunningConfig.allowResize) {
-            canvas.scale(1.0f, 1.0f);
-        } else {
-            int windowWidth = surfaceView.getMeasuredWidth();
-            int windowHeight = surfaceView.getMeasuredHeight();
-            canvas.translate((windowWidth * 1.0f - RunningConfig.windowWidth * XGraphicsAndroid.getCanvasScale()) / 2,
-                    (windowHeight * 1.0f - RunningConfig.windowHeight * XGraphicsAndroid.getCanvasScale()) / 2);
-            canvas.scale(XGraphicsAndroid.getCanvasScale(), XGraphicsAndroid.getCanvasScale());
-        }
-        Paint paint = new Paint();
-        XGraphicsAndroid xGraphics = new XGraphicsAndroid() {
-            private Paint p = paint;
-
-            @Override
-            public Canvas getCanvas() {
-                return canvas;
-            }
-
-            @Override
-            public Paint getPaint() {
-                return p;
-            }
-
-            @Override
-            public Paint getNewPaint() {
-                p = new Paint();
-                return p;
-            }
-        };
-        canvas.drawColor(Color.BLACK);
+        XGraphicsAndroid xGraphics = getXGraphics();
+        // // Canvas canvas = surfaceHolder.lockCanvas();
+        // // 使用硬件加速
+        // Canvas canvas = surfaceHolder.lockHardwareCanvas();
+        // // 储存当前 canvas 设置
+        // canvas.save();
+        // // 设置缩放和偏移
+        // if (RunningConfig.allowResize) {
+        //     canvas.scale(1.0f, 1.0f);
+        // } else {
+        //     int windowWidth = surfaceView.getMeasuredWidth();
+        //     int windowHeight = surfaceView.getMeasuredHeight();
+        //     canvas.translate((windowWidth * 1.0f - RunningConfig.windowWidth * XGraphicsAndroid.getCanvasScale()) / 2,
+        //             (windowHeight * 1.0f - RunningConfig.windowHeight * XGraphicsAndroid.getCanvasScale()) / 2);
+        //     canvas.scale(XGraphicsAndroid.getCanvasScale(), XGraphicsAndroid.getCanvasScale());
+        // }
+        // Paint paint = new Paint();
+        // XGraphicsAndroid xGraphics = new XGraphicsAndroid() {
+        //     private Paint p = paint;
+        //
+        //     @Override
+        //     public Canvas getCanvas() {
+        //         return canvas;
+        //     }
+        //
+        //     @Override
+        //     public Paint getPaint() {
+        //         return p;
+        //     }
+        //
+        //     @Override
+        //     public Paint getNewPaint() {
+        //         p = new Paint();
+        //         return p;
+        //     }
+        // };
+        // canvas.drawColor(Color.BLACK);
+        xGraphics.getCanvas().drawColor(Color.BLACK);
         xGraphics.paintInOrdered(game);
         xGraphics.paintInfo(game);
         // 恢复 canvas 设置之后绘制遮罩
@@ -173,10 +174,7 @@ public class GameActivity extends AppCompatActivity {
                 return;
             }
             synchronized (XGraphics.class) {
-                // noinspection SynchronizeOnNonFinalField
-                synchronized (surfaceHolder) {
-                    draw();
-                }
+                draw();
             }
         });
         game.setOnFinish(() -> {
