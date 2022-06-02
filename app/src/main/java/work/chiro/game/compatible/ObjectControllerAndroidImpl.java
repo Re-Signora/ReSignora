@@ -50,21 +50,21 @@ public class ObjectControllerAndroidImpl extends ObjectController {
                 switch (e.getActionMasked()) {
                     case MotionEvent.ACTION_DOWN:
                         game.getTopActivity().actionPointerPressed(getScaledPosition(e));
-                        Utils.getLogger().warn("ACTION_DOWN");
+                        Utils.getLogger().debug("ACTION_DOWN");
                         break;
                     case MotionEvent.ACTION_POINTER_DOWN:
                         game.getTopActivity().actionPointerPressed(getScaledPosition(e, e.getPointerId(e.getActionIndex())));
                         handleMultiMove(e);
-                        Utils.getLogger().warn("ACTION_POINTER_DOWN: index={}, id={}", e.getActionIndex(), e.getPointerId(e.getActionIndex()));
+                        Utils.getLogger().debug("ACTION_POINTER_DOWN: index={}, id={}", e.getActionIndex(), e.getPointerId(e.getActionIndex()));
                         break;
                     case MotionEvent.ACTION_UP:
                         game.getTopActivity().actionPointerRelease(getScaledPosition(e));
-                        Utils.getLogger().warn("ACTION_UP");
+                        Utils.getLogger().debug("ACTION_UP");
                         break;
                     case MotionEvent.ACTION_POINTER_UP:
                         game.getTopActivity().actionPointerRelease(getScaledPosition(e, e.getPointerId(e.getActionIndex())));
                         handleMultiMove(e);
-                        Utils.getLogger().warn("ACTION_POINTER_UP: index={}, id={}", e.getActionIndex(), e.getPointerId(e.getActionIndex()));
+                        Utils.getLogger().debug("ACTION_POINTER_UP: index={}, id={}", e.getActionIndex(), e.getPointerId(e.getActionIndex()));
                         break;
                     case MotionEvent.ACTION_MOVE:
                         handleMultiMove(e);

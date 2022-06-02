@@ -23,11 +23,11 @@ public class XJoySticks extends XView {
         setOnMove((xView, xEvent) -> pointer = xEvent.getPosition());
         setOnLeft((xView, xEvent) -> {
             pointer = null;
-            Utils.getLogger().warn("joysticks: left");
+            Utils.getLogger().debug("joysticks: left");
         });
         setOnUp((xView, xEvent) -> {
             pointer = null;
-            Utils.getLogger().warn("joysticks: up");
+            Utils.getLogger().debug("joysticks: up");
         });
     }
 
