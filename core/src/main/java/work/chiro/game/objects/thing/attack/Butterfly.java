@@ -7,7 +7,7 @@ import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.animate.action.BasicImageCarouselAction;
 import work.chiro.game.animate.action.ReversedImageCarouselAction;
 import work.chiro.game.config.RunningConfig;
-import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec;
 import work.chiro.game.vector.Vec2;
@@ -29,7 +29,7 @@ public class Butterfly extends AbstractAttack {
                 posInit,
                 new Vec2(RunningConfig.windowWidth, posInit.getY()),
                 AnimateVectorType.PositionLike,
-                Utils.getTimeMills(),
+                TimeManager.getTimeMills(),
                 6000)
                 .setAnimateCallback(animate -> vanish());
         getAnimateContainer().addAnimate(moveAnimate);
@@ -52,7 +52,7 @@ public class Butterfly extends AbstractAttack {
 
     @Override
     public void forward() {
-        getAnimateContainer().updateAll(Utils.getTimeMills());
+        getAnimateContainer().updateAll(TimeManager.getTimeMills());
     }
 
     @Override

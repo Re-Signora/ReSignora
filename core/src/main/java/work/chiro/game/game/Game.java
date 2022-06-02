@@ -23,6 +23,7 @@ import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.callback.BasicCallback;
 import work.chiro.game.utils.thread.MyThreadFactory;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.utils.timer.Timer;
 import work.chiro.game.utils.timer.TimerController;
 import work.chiro.game.x.activity.XActivity;
@@ -140,7 +141,7 @@ public class Game {
     }
 
     public void addTimers() {
-        timerController.init(Utils.getTimeMills());
+        timerController.init(TimeManager.getTimeMills());
         // 英雄射击事件
         timerController.add(new Timer(RunningConfig.config.getHeroShoot(), () -> {
             if (RunningConfig.autoShoot) {

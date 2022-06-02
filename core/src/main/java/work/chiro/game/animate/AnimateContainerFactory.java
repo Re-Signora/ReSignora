@@ -1,12 +1,12 @@
 package work.chiro.game.animate;
 
-import work.chiro.game.animate.callback.AnimateContainerCallback;
-import work.chiro.game.utils.Utils;
-import work.chiro.game.vector.Vec;
-import work.chiro.game.vector.Vec2;
-
 import java.util.LinkedList;
 import java.util.List;
+
+import work.chiro.game.animate.callback.AnimateContainerCallback;
+import work.chiro.game.utils.timer.TimeManager;
+import work.chiro.game.vector.Vec;
+import work.chiro.game.vector.Vec2;
 
 /**
  * @author Chiro
@@ -121,25 +121,25 @@ public class AnimateContainerFactory {
                 return null;
             case ConstSpeed:
                 assert speed2d != null;
-                return new Animate.Linear<>(position, speed2d, AnimateVectorType.PositionLike, Utils.getTimeMills());
+                return new Animate.Linear<>(position, speed2d, AnimateVectorType.PositionLike, TimeManager.getTimeMills());
             case ConstSpeedLoop:
                 assert range != null && speed2d != null;
-                return new Animate.LinearLoop<>(position, speed2d, AnimateVectorType.PositionLike, Utils.getTimeMills(), range);
+                return new Animate.LinearLoop<>(position, speed2d, AnimateVectorType.PositionLike, TimeManager.getTimeMills(), range);
             case ConstSpeedRebound:
                 assert range != null && range2 != null && speed2d != null;
-                return new Animate.LinearRebound<>(position, speed2d, Utils.getTimeMills(), range, range2, timeSpan);
+                return new Animate.LinearRebound<>(position, speed2d, TimeManager.getTimeMills(), range, range2, timeSpan);
             case ConstSpeedToTarget:
                 assert target != null && speed1d != null;
-                return new Animate.LinearToTarget<>(position, target, speed1d, Utils.getTimeMills(), willStop);
+                return new Animate.LinearToTarget<>(position, target, speed1d, TimeManager.getTimeMills(), willStop);
             case ConstSpeedTracking:
                 assert speed2d != null && target != null && speed1d != null;
-                return new Animate.LinearTracking<>(position, target, speed1d, Utils.getTimeMills());
+                return new Animate.LinearTracking<>(position, target, speed1d, TimeManager.getTimeMills());
             case NonLinearTo:
                 assert target != null;
-                return new Animate.NonLinear<>(position, target, AnimateVectorType.PositionLike, Utils.getTimeMills(), timeSpan, false);
+                return new Animate.NonLinear<>(position, target, AnimateVectorType.PositionLike, TimeManager.getTimeMills(), timeSpan, false);
             case SmoothTo:
                 assert target != null && timeSpan != 0;
-                return new Animate.SmoothTo<>(position, target, AnimateVectorType.PositionLike, Utils.getTimeMills(), timeSpan);
+                return new Animate.SmoothTo<>(position, target, AnimateVectorType.PositionLike, TimeManager.getTimeMills(), timeSpan);
             default:
                 break;
         }

@@ -11,6 +11,7 @@ import java.util.Set;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.ObjectController;
 
@@ -90,12 +91,12 @@ public class ObjectControllerPCImpl extends ObjectController {
     @Override
     public void onFrame() {
         if (lastFrameTime == null) {
-            lastFrameTime = Utils.getTimeMills();
+            lastFrameTime = TimeManager.getTimeMills();
         }
         if (getTarget() == null) {
             return;
         }
-        double now = Utils.getTimeMills();
+        double now = TimeManager.getTimeMills();
         double frameTime = now - lastFrameTime;
         Vec2 next = new Vec2();
         for (int pressedKey : pressedKeys) {

@@ -1,12 +1,12 @@
 package work.chiro.game.objects.aircraft;
 
 import work.chiro.game.animate.AnimateContainerFactory;
-import work.chiro.game.utils.callback.BasicCallback;
-import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.resource.MusicType;
-import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.callback.BasicCallback;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.compatible.ResourceProvider;
 
 /**
  * @author Chiro
@@ -30,9 +30,9 @@ public class BossEnemyFactory implements AbstractAircraftFactory {
     @Override
     public BossEnemy create() {
         if (instance == null) {
-            RunningConfig.config.getEnemyMagnification().update(Utils.getTimeMills());
-            RunningConfig.config.getEnemyMagnification().update(Utils.getTimeMills());
-            RunningConfig.config.getBossInitialHp().update(Utils.getTimeMills());
+            RunningConfig.config.getEnemyMagnification().update(TimeManager.getTimeMills());
+            RunningConfig.config.getEnemyMagnification().update(TimeManager.getTimeMills());
+            RunningConfig.config.getBossInitialHp().update(TimeManager.getTimeMills());
             ResourceProvider.getInstance().stopMusic(MusicType.BGM);
             ResourceProvider.getInstance().startMusic(MusicType.BGM_BOSS);
             synchronized (BossEnemyFactory.class) {

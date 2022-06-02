@@ -7,6 +7,7 @@ import java.util.List;
 
 import work.chiro.game.game.Game;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.ObjectController;
 
@@ -79,9 +80,9 @@ public class ObjectControllerAndroidImpl extends ObjectController {
     @Override
     public void onFrame() {
         if (lastFrameTime == null) {
-            lastFrameTime = Utils.getTimeMills();
+            lastFrameTime = TimeManager.getTimeMills();
         }
-        double now = Utils.getTimeMills();
+        double now = TimeManager.getTimeMills();
         double frameTime = now - lastFrameTime;
         if (getTarget() == null) return;
         if (joySticks != null) {

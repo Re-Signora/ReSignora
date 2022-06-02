@@ -6,6 +6,7 @@ import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.resource.ImageManager;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Vec2;
 
 /**
@@ -17,7 +18,7 @@ public class EliteEnemyFactory implements AbstractAircraftFactory {
 
     @Override
     public EliteEnemy create() {
-        RunningConfig.config.getEnemyMagnification().update(Utils.getTimeMills());
+        RunningConfig.config.getEnemyMagnification().update(TimeManager.getTimeMills());
         Vec2 newPos = new Vec2((Math.random() * (RunningConfig.windowWidth - ImageManager.getInstance().ELITE_ENEMY_IMAGE.getWidth())),
                 (Math.random() * RunningConfig.windowHeight * Constants.ELITE_CREATE_VERTICAL_RANGE));
         if (RunningConfig.difficulty == Difficulty.Easy) {

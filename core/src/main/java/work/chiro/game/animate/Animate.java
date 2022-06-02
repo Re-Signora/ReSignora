@@ -1,6 +1,6 @@
 package work.chiro.game.animate;
 
-import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.vector.VectorFactory;
@@ -40,7 +40,7 @@ public class Animate {
 
     public static class Delay<T extends VectorType & VectorFactory<T>> extends AbstractAnimate<T> {
         public Delay(T vecSource, double delayMs) {
-            super(vecSource, AnimateType.Delay, AnimateVectorType.Others, Utils.getTimeMills(), delayMs);
+            super(vecSource, AnimateType.Delay, AnimateVectorType.Others, TimeManager.getTimeMills(), delayMs);
         }
 
         @Override

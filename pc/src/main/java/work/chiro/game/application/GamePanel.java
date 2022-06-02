@@ -19,6 +19,7 @@ import work.chiro.game.storage.history.HistoryImpl;
 import work.chiro.game.storage.history.HistoryObjectFactory;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.UtilsPC;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.utils.timer.Timer;
 import work.chiro.game.windows.HistoryWindow;
 import work.chiro.game.x.compatible.ResourceProvider;
@@ -143,7 +144,7 @@ public class GamePanel extends JPanel {
      */
     @Override
     public void paint(Graphics g) {
-        double timeStart = Utils.getTimeMills();
+        double timeStart = TimeManager.getTimeMills();
         VolatileImage thisFrame = getGraphicsConfiguration().createCompatibleVolatileImage(RunningConfigPC.displayWindowWidth, RunningConfigPC.displayWindowHeight);
         Graphics2D graphicsNew = thisFrame.createGraphics();
 
@@ -161,16 +162,16 @@ public class GamePanel extends JPanel {
 
         xGraphics.paintInOrdered(Game.getInstance());
 
-        double timePaint = Utils.getTimeMills();
+        double timePaint = TimeManager.getTimeMills();
 
         //绘制得分和生命值
         xGraphics.paintInfo(Game.getInstance());
 
-        double timePaintInfo = Utils.getTimeMills();
+        double timePaintInfo = TimeManager.getTimeMills();
 
         // resize 到显示帧
         g.drawImage(thisFrame, 0, 0, null);
-        double timeResize = Utils.getTimeMills();
+        double timeResize = TimeManager.getTimeMills();
         graphicsNew.dispose();
         Utils.getLogger().debug("paint -- object: {}, info: {}, resize: {}", timePaint - timeStart, timePaintInfo - timePaint, timeResize - timePaintInfo);
 

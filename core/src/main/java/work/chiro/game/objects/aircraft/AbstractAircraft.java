@@ -10,7 +10,7 @@ import work.chiro.game.objects.bullet.BaseBullet;
 import work.chiro.game.objects.prop.AbstractProp;
 import work.chiro.game.objects.prop.PropHandler;
 import work.chiro.game.resource.MusicType;
-import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.DrawColor;
@@ -72,7 +72,7 @@ public abstract class AbstractAircraft
     }
 
     protected void playBeShootMusic() {
-        double now = Utils.getTimeMills();
+        double now = TimeManager.getTimeMills();
         if (now - lastPlayMusic > Constants.MUSIC_SHOOT_MIN_CYCLE_MS) {
             ResourceProvider.getInstance().startMusic(MusicType.HERO_HIT);
             lastPlayMusic = now;

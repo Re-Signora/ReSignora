@@ -5,19 +5,19 @@ import java.util.List;
 
 import work.chiro.game.animate.Animate;
 import work.chiro.game.animate.AnimateContainer;
+import work.chiro.game.config.Constants;
 import work.chiro.game.objects.AbstractObject;
 import work.chiro.game.objects.bullet.BaseBullet;
 import work.chiro.game.objects.bullet.HeroBulletFactory;
-import work.chiro.game.x.compatible.DrawColor;
-import work.chiro.game.x.compatible.ResourceProvider;
-import work.chiro.game.x.compatible.XGraphics;
-import work.chiro.game.config.Constants;
 import work.chiro.game.objects.prop.AbstractProp;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.thread.MyThreadFactory;
-import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.compatible.DrawColor;
+import work.chiro.game.x.compatible.ResourceProvider;
+import work.chiro.game.x.compatible.XGraphics;
 
 /**
  * 英雄飞机，游戏玩家操控
@@ -77,7 +77,7 @@ public class HeroAircraft extends AbstractAircraft {
     @Override
     public void forward() {
         // 英雄机由鼠标控制，forward 不能控制位置
-        getAnimateContainer().updateAll(Utils.getTimeMills());
+        getAnimateContainer().updateAll(TimeManager.getTimeMills());
     }
 
     /**
@@ -140,7 +140,7 @@ public class HeroAircraft extends AbstractAircraft {
 
     @Override
     protected void playBeShootMusic() {
-        double now = Utils.getTimeMills();
+        double now = TimeManager.getTimeMills();
         if (now - heroLastPlayMusic > Constants.MUSIC_HERO_HURT_MIN_CYCLE_MS) {
             ResourceProvider.getInstance().startMusic(MusicType.HERO_SHOOT);
             heroLastPlayMusic = now;

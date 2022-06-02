@@ -10,6 +10,7 @@ import work.chiro.game.objects.aircraft.AbstractAircraft;
 import work.chiro.game.resource.ImageManager;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.callback.BasicCallback;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec;
 import work.chiro.game.vector.Vec2;
@@ -135,7 +136,7 @@ public abstract class AbstractObject<A extends AnimateContainer> {
      * 若飞行对象触碰到横向边界，横向速度反向
      */
     public void forward() {
-        if (animateContainer.updateAll(Utils.getTimeMills()) || !checkInBoundary()) {
+        if (animateContainer.updateAll(TimeManager.getTimeMills()) || !checkInBoundary()) {
             vanish();
         }
     }
@@ -195,7 +196,7 @@ public abstract class AbstractObject<A extends AnimateContainer> {
     }
 
     public Vec getSpeed() {
-        return animateContainer.getSpeed(Utils.getTimeMills());
+        return animateContainer.getSpeed(TimeManager.getTimeMills());
     }
 
     public double getSpeedY() {

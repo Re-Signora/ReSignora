@@ -3,8 +3,6 @@ package work.chiro.game.utils.timer;
 import java.util.LinkedList;
 import java.util.List;
 
-import work.chiro.game.utils.Utils;
-
 /**
  * 基于事件的定时器控制类
  *
@@ -37,8 +35,8 @@ public class TimerController {
     }
 
     synchronized public void update() {
-        if (Utils.isPaused()) return;
-        frameTime = Utils.getTimeMills();
+        if (TimeManager.isPaused()) return;
+        frameTime = TimeManager.getTimeMills();
         frameCounter.add(frameTime);
         frameCounter.removeIf(t -> t < ((frameTime >= 1000) ? (frameTime - 1000) : 0));
         timers.forEach(timer -> timer.update(frameTime));

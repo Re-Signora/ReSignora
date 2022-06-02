@@ -8,6 +8,7 @@ import work.chiro.game.animate.Animate;
 import work.chiro.game.config.Constants;
 import work.chiro.game.objects.thing.AbstractThing;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
@@ -31,7 +32,7 @@ public class BasicImageCarouselAction extends AbstractAction {
         if (availableImages.size() == 0)
             Utils.getLogger().fatal("no image loaded to ImageAction!");
         addAnimate(new Animate.Delay<>(new Vec2(), this.duration).setAnimateCallback(animate -> {
-            animate.setTimeStart(Utils.getTimeMills());
+            animate.setTimeStart(TimeManager.getTimeMills());
             imageIndexNow = getNextImageIndex();
         }));
     }

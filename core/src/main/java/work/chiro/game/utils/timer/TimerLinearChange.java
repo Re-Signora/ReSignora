@@ -17,9 +17,9 @@ public class TimerLinearChange {
     public TimerLinearChange(Scale initial, Scale change, Scale end) {
         this.initial = initial;
         if (end == null) {
-            animate = new Animate.Linear<>(this.initial, change, AnimateVectorType.Others, Utils.getTimeMills());
+            animate = new Animate.Linear<>(this.initial, change, AnimateVectorType.Others, TimeManager.getTimeMills());
         } else {
-            animate = new Animate.LinearToTarget<>(this.initial, end, change.getX(), Utils.getTimeMills());
+            animate = new Animate.LinearToTarget<>(this.initial, end, change.getX(), TimeManager.getTimeMills());
         }
     }
 

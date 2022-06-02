@@ -3,13 +3,14 @@ package work.chiro.game.objects.aircraft;
 import java.util.LinkedList;
 
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.objects.bullet.BaseBullet;
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.objects.bullet.BaseBullet;
 import work.chiro.game.objects.prop.AbstractProp;
 import work.chiro.game.objects.prop.BloodPropFactory;
 import work.chiro.game.objects.prop.BombPropFactory;
 import work.chiro.game.objects.prop.BulletPropFactory;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Vec2;
 
 /**
@@ -32,7 +33,7 @@ public class EliteEnemy extends AbstractAircraft {
     @Override
     public LinkedList<AbstractProp> dropProps() {
         double select = Utils.getRandom().nextDouble();
-        RunningConfig.config.getDropPropsRate().update(Utils.getTimeMills());
+        RunningConfig.config.getDropPropsRate().update(TimeManager.getTimeMills());
         double probability = RunningConfig.config.getDropPropsRate().getScaleNow().getX();
         LinkedList <AbstractProp> props = new LinkedList<>();
         if (Utils.isInRange(select, 0, probability)) {
