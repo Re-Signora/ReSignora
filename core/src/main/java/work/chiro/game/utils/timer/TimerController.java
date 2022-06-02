@@ -13,7 +13,7 @@ import work.chiro.game.utils.Utils;
 public class TimerController {
     private double frameTime = 0;
     private double lastFrameTime = 0;
-    private final List<Double> frameCounter = new LinkedList<>();
+    private final LinkedList<Double> frameCounter = new LinkedList<>();
     private final List<Timer> timers = new LinkedList<>();
 
     public void init(double startTime) {
@@ -36,7 +36,8 @@ public class TimerController {
         return timers;
     }
 
-    public void update() {
+    synchronized public void update() {
+        if (Utils.isPaused()) return;
         frameTime = Utils.getTimeMills();
         frameCounter.add(frameTime);
         frameCounter.removeIf(t -> t < ((frameTime >= 1000) ? (frameTime - 1000) : 0));
@@ -47,15 +48,15 @@ public class TimerController {
         lastFrameTime = frameTime;
     }
 
-    public int getFps() {
-        return frameCounter.size();
+    synchronized public int getFps() {
+        return (int) (frameCounter.size() * 1000 / (frameCounter.getLast() - frameCounter.getFirst()));
     }
 
     public double getTimeDelta() {
         return frameTime - lastFrameTime;
     }
 
-    public void clear() {
+    synchronized public void clear() {
         frameTime = 0;
         lastFrameTime = 0;
         frameCounter.clear();
