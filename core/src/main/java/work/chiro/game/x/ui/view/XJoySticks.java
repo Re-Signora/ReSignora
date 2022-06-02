@@ -11,16 +11,17 @@ import work.chiro.game.x.compatible.XGraphics;
 public class XJoySticks extends XView {
     private Vec2 pointer = null;
     private final Vec2 stickSize = new Vec2(450, 450);
+    private final static Vec2 stickViewOffset = new Vec2(0, 100);
     private final Vec2 stickOffset = new Vec2(220, 420);
 
     public XJoySticks() {
-        super(new Vec2());
-        setSize(new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight));
+        super(stickViewOffset);
+        setSize(new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight).minus(stickViewOffset));
         if (RunningConfig.modePC) {
             vanish();
             return;
         }
-        setOnMove((xView, xEvent) -> pointer = xEvent.getPosition());
+        setOnMove((xView, xEvent) -> pointer = xEvent.getPosition().plus(stickViewOffset));
         setOnLeft((xView, xEvent) -> {
             pointer = null;
             Utils.getLogger().debug("joysticks: left");
