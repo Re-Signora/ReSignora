@@ -15,6 +15,10 @@ public class AbstractCharacter extends AbstractThing<BasicCharacterAttributes, A
         this(labelName, attributesClass, posInit, animateContainer, null, null, null);
     }
 
+    public AbstractCharacter() {
+        super();
+    }
+
     public void normalAttack() {
     }
 

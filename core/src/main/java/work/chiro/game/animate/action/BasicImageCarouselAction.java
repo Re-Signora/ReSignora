@@ -9,6 +9,7 @@ import work.chiro.game.config.Constants;
 import work.chiro.game.objects.thing.AbstractThing;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
 
 public class BasicImageCarouselAction extends AbstractAction {
@@ -48,6 +49,7 @@ public class BasicImageCarouselAction extends AbstractAction {
     }
 
     public void loadAllAvailableImageFiles() {
+        getAvailableImages().clear();
         for (int i = 0; i < Constants.ACTION_MAX_IMAGE_INDEX; i++) {
             try {
                 XImage<?> im = Utils.getCachedImageFromResource(getImageFullPath(i));
@@ -85,8 +87,13 @@ public class BasicImageCarouselAction extends AbstractAction {
     }
 
     @Override
-    public void preLoadResources() {
-        super.preLoadResources();
-        loadAllAvailableImageFiles();
+    public void preLoadResources(XGraphics g) {
+        super.preLoadResources(g);
+        getAvailableImages().forEach(g::resizeImage);
+    }
+
+    public void preLoadResources(XGraphics g, Vec2 size) {
+        preLoadResources(g);
+        getAvailableImages().forEach(image -> g.resizeImage(image, size.getX(), size.getY()));
     }
 }

@@ -198,4 +198,10 @@ public abstract class XGraphics {
     public XGraphics circle(Vec2 pos, double r) {
         return circle(pos.getX(), pos.getY(), r);
     }
+
+    abstract public XImage<?> resizeImage(XImage<?> image, double w, double h);
+
+    public XImage<?> resizeImage(XImage<?> image) {
+        return resizeImage(image, 0, 0);
+    }
 }

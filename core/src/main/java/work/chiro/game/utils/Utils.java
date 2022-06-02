@@ -6,11 +6,13 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
+import java.util.Set;
 
 import work.chiro.game.objects.bullet.BaseBullet;
 import work.chiro.game.objects.bullet.EnemyBulletFactory;
@@ -50,11 +52,15 @@ public class Utils {
     }
 
     private static final Map<String, XImage<?>> CACHED_RESOURCE_IMAGE = new HashMap<>();
+    private static final Set<String> CACHED_RESOURCE_IMAGE_FAILED = new HashSet<>();
 
     public static XImage<?> getCachedImageFromResource(String filePath) throws IOException {
         synchronized (CACHED_RESOURCE_IMAGE) {
             if (CACHED_RESOURCE_IMAGE.containsKey(filePath)) {
                 return CACHED_RESOURCE_IMAGE.get(filePath);
+            }
+            if (CACHED_RESOURCE_IMAGE_FAILED.contains(filePath)) {
+                throw new IOException("not found: " + filePath);
             }
             try {
                 XImage<?> image = ResourceProvider.getInstance().getImageFromResource(filePath);
@@ -64,6 +70,9 @@ public class Utils {
                 e.printStackTrace();
                 System.exit(-1);
                 return null;
+            } catch (IOException e) {
+                CACHED_RESOURCE_IMAGE_FAILED.add(filePath);
+                throw e;
             }
         }
     }
@@ -78,6 +87,7 @@ public class Utils {
 
     public static void putCachedImageToCache(CacheImageInfo info, XImage<?> image) {
         synchronized (CACHED_IMAGE) {
+            Utils.getLogger().info("update cache: info = {}", info);
             CACHED_IMAGE.putIfAbsent(info, image);
         }
     }
@@ -103,7 +113,16 @@ public class Utils {
 
         @Override
         public int hashCode() {
-            return Objects.hash(width, height);
+            return Objects.hash(width, height, name);
+        }
+
+        @Override
+        public String toString() {
+            return "CacheImageInfo{" +
+                    "width=" + width +
+                    ", height=" + height +
+                    ", name='" + name + '\'' +
+                    '}';
         }
     }
 

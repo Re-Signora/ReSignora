@@ -292,7 +292,9 @@ public abstract class AbstractObject<A extends AnimateContainer> {
     }
 
     public Scale updateRotation() {
-        return animateContainer.getRotation();
+        if (animateContainer != null)
+            return animateContainer.getRotation();
+        return new Scale();
     }
 
     public Scale updateRotation(Scale rotationNew) {

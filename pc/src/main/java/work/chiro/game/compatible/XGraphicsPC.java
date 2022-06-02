@@ -66,70 +66,7 @@ public abstract class XGraphicsPC extends XGraphics {
         if (((image.getWidth() != (int) w) || (image.getHeight() != (int) h)) &&
                 (!image.isScaled() || (image.isScaled() && GamePanel.getJustResized())) &&
                 imageFromCache == null) {
-            Utils.getLogger().warn("flush image cache! im: {}", image);
-            Image raw = (Image) image.getImage();
-            Image resizedImage = raw.getScaledInstance((int) w, (int) h, Image.SCALE_DEFAULT);
-            Graphics2D g;
-            Image bufferedImage;
-            if (RunningConfigPC.enableHardwareSpeedup) {
-                // 硬件加速
-                try {
-                    bufferedImage = getXGraphicsConfiguration().createCompatibleVolatileImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()), new ImageCapabilities(true), Transparency.BITMASK);
-                } catch (AWTException e) {
-                    e.printStackTrace();
-                    return image;
-                }
-                g = ((VolatileImage) bufferedImage).createGraphics();
-            } else {
-                bufferedImage = getXGraphicsConfiguration().createCompatibleImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()), Transparency.BITMASK);
-                g = ((BufferedImage) bufferedImage).createGraphics();
-            }
-            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                    RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-            g.drawImage(resizedImage, 0, 0, (int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()), null);
-            g.dispose();
-            if (RunningConfigPC.enableHardwareSpeedup) {
-                assert bufferedImage instanceof VolatileImage;
-                VolatileImage im = (VolatileImage) bufferedImage;
-                XImage<?> xImage = new XImage<>() {
-                    @Override
-                    public String getName() {
-                        return image.getName();
-                    }
-
-                    @Override
-                    public int getWidth() {
-                        return im.getWidth();
-                    }
-
-                    @Override
-                    public int getHeight() {
-                        return im.getHeight();
-                    }
-
-                    @Override
-                    public VolatileImage getImage() {
-                        return im;
-                    }
-
-                    @Override
-                    public boolean isScaled() {
-                        return true;
-                    }
-
-                    @Override
-                    public int getPixel(Vec2 pos) throws ArrayIndexOutOfBoundsException {
-                        return im.getSnapshot().getRGB((int) pos.getX(), (int) pos.getY());
-                    }
-                };
-                Utils.putCachedImageToCache(cacheInfo, xImage);
-                return drawImage(xImage, x, y);
-            } else {
-                assert bufferedImage instanceof BufferedImage;
-                XImage<BufferedImage> xImage = new XImageFactoryPC(image.getName()).createScaled((BufferedImage) bufferedImage);
-                Utils.putCachedImageToCache(cacheInfo, xImage);
-                return drawImage(xImage, x, y);
-            }
+            return drawImage(resizeImage(image, w, h), x, y);
         } else {
             return drawImage(Objects.requireNonNullElse(imageFromCache, image), x, y);
         }
@@ -220,6 +157,78 @@ public abstract class XGraphicsPC extends XGraphics {
         getGraphics().translate(-translate.getX(), -translate.getY());
 
         return this;
+    }
+
+    @Override
+    public XImage<?> resizeImage(XImage<?> image, double w, double h) {
+        if (w == 0 || h == 0) {
+            w = image.getWidth() * getCanvasScale();
+            h = image.getHeight() * getCanvasScale();
+        }
+        Utils.CacheImageInfo info = new Utils.CacheImageInfo((int) w, (int) h, image.getName());
+        Utils.getLogger().warn("flush image cache! im: {}", image);
+        Image raw = (Image) image.getImage();
+        Image resizedImage = raw.getScaledInstance((int) w, (int) h, Image.SCALE_DEFAULT);
+        Graphics2D g;
+        Image bufferedImage;
+        if (RunningConfigPC.enableHardwareSpeedup) {
+            // 硬件加速
+            try {
+                bufferedImage = getXGraphicsConfiguration().createCompatibleVolatileImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()), new ImageCapabilities(true), Transparency.BITMASK);
+            } catch (AWTException e) {
+                e.printStackTrace();
+                return image;
+            }
+            g = ((VolatileImage) bufferedImage).createGraphics();
+        } else {
+            bufferedImage = getXGraphicsConfiguration().createCompatibleImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()), Transparency.BITMASK);
+            g = ((BufferedImage) bufferedImage).createGraphics();
+        }
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g.drawImage(resizedImage, 0, 0, (int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()), null);
+        g.dispose();
+        XImage<?> xImage;
+        if (RunningConfigPC.enableHardwareSpeedup) {
+            assert bufferedImage instanceof VolatileImage;
+            VolatileImage im = (VolatileImage) bufferedImage;
+            xImage = new XImage<>() {
+                @Override
+                public String getName() {
+                    return image.getName();
+                }
+
+                @Override
+                public int getWidth() {
+                    return im.getWidth();
+                }
+
+                @Override
+                public int getHeight() {
+                    return im.getHeight();
+                }
+
+                @Override
+                public VolatileImage getImage() {
+                    return im;
+                }
+
+                @Override
+                public boolean isScaled() {
+                    return true;
+                }
+
+                @Override
+                public int getPixel(Vec2 pos) throws ArrayIndexOutOfBoundsException {
+                    return im.getSnapshot().getRGB((int) pos.getX(), (int) pos.getY());
+                }
+            };
+        } else {
+            assert bufferedImage instanceof BufferedImage;
+            xImage = new XImageFactoryPC(image.getName()).createScaled((BufferedImage) bufferedImage);
+        }
+        Utils.putCachedImageToCache(info, xImage);
+        return xImage;
     }
 
     @Override

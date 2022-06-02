@@ -8,9 +8,13 @@ import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.activity.XBundle;
+import work.chiro.game.x.compatible.ResourceProvider;
+import work.chiro.game.x.ui.event.XEventType;
+import work.chiro.game.x.ui.view.XButton;
 import work.chiro.game.x.ui.view.XJoySticks;
 
 public class BattleActivity extends XActivity {
+    private XButton buttonBack;
 
     public BattleActivity(Game game) {
         super(game);
@@ -20,11 +24,13 @@ public class BattleActivity extends XActivity {
     protected void onCreate(XBundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView("battle");
+        buttonBack = (XButton) findViewById("button返回");
+        buttonBack.setOnClick((xView, xEvent) -> finish());
+        Utils.getLogger().info("loading resource...");
+        new LaSignora().preLoadResources(ResourceProvider.getInstance().getXGraphics());
+        Utils.getLogger().info("loading resource done");
         LaSignora signora = new LaSignora(new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight * 1. / 2), new AbstractAction(null));
         signora.getAnimateContainer().setThing(signora);
-        Utils.getLogger().info("loading resource...");
-        signora.preLoadResources();
-        Utils.getLogger().info("loading resource done");
         getGame().getCharacters().add(signora);
         getGame().getObjectController().setTarget(signora);
         XJoySticks joySticks = (XJoySticks) findViewById("joySticks");
@@ -34,6 +40,7 @@ public class BattleActivity extends XActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        buttonBack.popEvent(XEventType.Click);
         getGame().getCharacters().clear();
         getGame().getAttacks().clear();
         getGame().getTimerController().clear();

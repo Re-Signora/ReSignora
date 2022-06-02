@@ -11,6 +11,7 @@ import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
 
 public class Butterfly extends AbstractAttack {
@@ -55,8 +56,8 @@ public class Butterfly extends AbstractAttack {
     }
 
     @Override
-    public void preLoadResources() {
-        super.preLoadResources();
-        getAction().preLoadResources();
+    public void preLoadResources(XGraphics g) {
+        super.preLoadResources(g);
+        getAction().preLoadResources(g);
     }
 }

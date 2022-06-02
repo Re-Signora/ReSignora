@@ -6,6 +6,9 @@
       "id": "button设置"
     },
     {
+      "id": "button返回"
+    },
+    {
       "type": "JoySticks",
       "id": "joySticks"
     }

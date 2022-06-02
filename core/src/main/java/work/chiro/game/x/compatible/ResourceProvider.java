@@ -11,6 +11,7 @@ import java.util.Map;
 import work.chiro.game.logic.attributes.BasicThingAttributes;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.callback.XGraphicsGetter;
 import work.chiro.game.x.logger.AbstractLogger;
 import work.chiro.game.x.logger.BasicLogger;
 import work.chiro.game.x.ui.layout.XLayoutBean;
@@ -86,5 +87,16 @@ public abstract class ResourceProvider {
     public <T extends BasicThingAttributes> T getAttributesFromResource(String name, Class<T> clazz, String directory) throws IOException {
         String path = "config/" + directory + "/" + name + "/basic-attributes.json";
         return new Gson().fromJson(Utils.getStringFromResource(path), clazz);
+    }
+
+    protected XGraphicsGetter xGraphicsGetter = null;
+
+    public XGraphics getXGraphics() {
+        if (xGraphicsGetter == null) return  null;
+        return xGraphicsGetter.get();
+    }
+
+    public void setXGraphicsGetter(XGraphicsGetter xGraphicsGetter) {
+        this.xGraphicsGetter = xGraphicsGetter;
     }
 }

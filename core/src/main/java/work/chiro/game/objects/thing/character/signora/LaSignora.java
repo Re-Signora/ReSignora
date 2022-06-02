@@ -1,6 +1,7 @@
 package work.chiro.game.objects.thing.character.signora;
 
 import work.chiro.game.animate.action.AbstractAction;
+import work.chiro.game.animate.action.ReversedImageCarouselAction;
 import work.chiro.game.game.Game;
 import work.chiro.game.logic.attributes.BasicCharacterAttributes;
 import work.chiro.game.objects.thing.attack.Butterfly;
@@ -28,6 +29,12 @@ public class LaSignora extends AbstractCharacter {
         public Vec2 getPosition() {
             return super.getPosition().plus(butterflyOffset);
         }
+
+        @Override
+        public void preLoadResources(XGraphics g) {
+            super.preLoadResources(g);
+            ((ReversedImageCarouselAction) getAnimateContainer()).preLoadResources(g, butterflySize);
+        }
     }
 
     private final HandButterfly handButterfly;
@@ -41,6 +48,11 @@ public class LaSignora extends AbstractCharacter {
 
     public LaSignora(Vec2 posInit, AbstractAction abstractAction) {
         this(posInit, abstractAction, null, null, null);
+    }
+
+    public LaSignora() {
+        super();
+        handButterfly = null;
     }
 
     @Override
@@ -73,8 +85,8 @@ public class LaSignora extends AbstractCharacter {
     }
 
     @Override
-    public void preLoadResources() {
-        super.preLoadResources();
-        new HandButterfly(getPosition()).preLoadResources();
+    public void preLoadResources(XGraphics g) {
+        super.preLoadResources(g);
+        new HandButterfly(getPosition()).preLoadResources(g);
     }
 }

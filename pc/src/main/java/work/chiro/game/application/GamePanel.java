@@ -21,6 +21,7 @@ import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.UtilsPC;
 import work.chiro.game.utils.timer.Timer;
 import work.chiro.game.windows.HistoryWindow;
+import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.x.compatible.XGraphics;
 
 /**
@@ -58,7 +59,22 @@ public class GamePanel extends JPanel {
         addTimers();
     }
 
+    private Graphics2D getGraphics2D() {
+        return (Graphics2D) getGraphics();
+    }
+
     public GamePanel() {
+        ResourceProvider.getInstance().setXGraphicsGetter(() -> new XGraphicsPC() {
+            @Override
+            protected Graphics2D getGraphics() {
+                return getGraphics2D();
+            }
+
+            @Override
+            protected GraphicsConfiguration getXGraphicsConfiguration() {
+                return getGraphicsConfiguration();
+            }
+        });
         Game.createInstance(heroControllerImpl);
         Utils.getLogger().info("GamePanel instance created!");
         Game.getInstance().setOnFinish(() -> {

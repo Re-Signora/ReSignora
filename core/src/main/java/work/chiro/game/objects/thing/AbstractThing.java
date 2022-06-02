@@ -10,6 +10,7 @@ import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.resource.CanPreLoadResources;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.compatible.XGraphics;
 
 public abstract class AbstractThing<T extends BasicThingAttributes, A extends AnimateContainer>
         extends AbstractFlyingObject<A>
@@ -32,6 +33,11 @@ public abstract class AbstractThing<T extends BasicThingAttributes, A extends An
             }
         }
         imageDisplaying = getSelfImageFilename();
+    }
+
+    public AbstractThing() {
+        super(new Vec2(), null);
+        labelName = null;
     }
 
     public String getLabelName() {
@@ -65,7 +71,7 @@ public abstract class AbstractThing<T extends BasicThingAttributes, A extends An
     }
 
     @Override
-    public void preLoadResources() {
+    public void preLoadResources(XGraphics g) {
         getImage();
     }
 }

@@ -1,6 +1,7 @@
 package work.chiro.game.x.ui.view;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public class XView extends AbstractObject<AnimateContainer> {
     protected String text = "";
     protected String font = "main";
     protected String id = "View" + Utils.idGenerator();
-    private final Map<XEventType, XViewCallback> listeners = new HashMap<>();
+    private final Map<XEventType, LinkedList<XViewCallback>> listeners = new HashMap<>();
     protected String imageResource = null;
     protected XViewType type;
     private boolean isEntered = false;
@@ -56,19 +57,33 @@ public class XView extends AbstractObject<AnimateContainer> {
     }
 
     public XView trigger(XEvent event) {
-        listeners.forEach((eventType, callback) -> {
-            if (eventType == event.getEventType()) callback.onEvent(this, event);
+        listeners.forEach((eventType, callbackList) -> {
+            if (eventType == event.getEventType() && !callbackList.isEmpty()) callbackList.getLast().onEvent(this, event);
         });
         return this;
     }
 
     public XView addListener(XEventType eventType, XViewCallback callback) {
-        listeners.put(eventType, callback);
+        if (listeners.containsKey(eventType)) {
+            listeners.get(eventType).add(callback);
+        } else {
+            LinkedList<XViewCallback> list = new LinkedList<>();
+            list.add(callback);
+            listeners.put(eventType, list);
+        }
         return this;
     }
 
     public XView setOnClick(XViewCallback callback) {
         return addListener(XEventType.Click, callback);
+    }
+
+    public XView popEvent(XEventType type) {
+        if (listeners.containsKey(type)) {
+            LinkedList<XViewCallback> list = listeners.get(type);
+            if (!list.isEmpty()) list.removeLast();
+        }
+        return this;
     }
 
     public XView setOnEnter(XViewCallback callback) {

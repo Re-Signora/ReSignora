@@ -7,6 +7,15 @@
     },
     {
       "type": "Button",
+      "id": "button返回",
+      "image": "icons/设置.png",
+      "position": [
+        2316,
+        8
+      ]
+    },
+    {
+      "type": "Button",
       "id": "button按钮2",
       "text": "02",
       "font": "genshin",

@@ -3,6 +3,7 @@ package work.chiro.game.animate.action;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.objects.thing.AbstractThing;
 import work.chiro.game.resource.CanPreLoadResources;
+import work.chiro.game.x.compatible.XGraphics;
 
 /**
  * 相比 Animate 增加更多功能：<br/>
@@ -33,6 +34,6 @@ public class AbstractAction extends AnimateContainer implements CanPreLoadResour
     }
 
     @Override
-    public void preLoadResources() {
+    public void preLoadResources(XGraphics g) {
     }
 }
