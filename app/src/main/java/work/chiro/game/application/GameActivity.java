@@ -154,14 +154,8 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void stopXGraphics() {
                 super.stopXGraphics();
-                synchronized (XGraphics.class) {
-                    //noinspection SynchronizeOnNonFinalField
-                    synchronized (surfaceHolder) {
-                        // surfaceHolder.unlockCanvasAndPost(((XGraphicsAndroid) getXGraphics()).getCanvas());
-                        surfaceHolder.unlockCanvasAndPost(lastCanvas);
-                        lastCanvas = null;
-                    }
-                }
+                surfaceHolder.unlockCanvasAndPost(lastCanvas);
+                lastCanvas = null;
             }
         });
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -182,7 +176,8 @@ public class GameActivity extends AppCompatActivity {
                 // noinspection SynchronizeOnNonFinalField
                 synchronized (surfaceHolder) {
                     draw();
-                }}
+                }
+            }
         });
         game.setOnFinish(() -> {
             Utils.getLogger().info("FINISH!!!");
