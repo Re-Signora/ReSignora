@@ -9,6 +9,7 @@ import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.activity.XBundle;
 import work.chiro.game.x.compatible.ResourceProvider;
+import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.ui.event.XEventType;
 import work.chiro.game.x.ui.view.XButton;
 import work.chiro.game.x.ui.view.XJoySticks;
@@ -27,7 +28,10 @@ public class BattleActivity extends XActivity {
         buttonBack = (XButton) findViewById("button返回");
         buttonBack.setOnClick((xView, xEvent) -> finish());
         Utils.getLogger().info("loading resource...");
-        new LaSignora().preLoadResources(ResourceProvider.getInstance().getXGraphics());
+        synchronized (XGraphics.class) {
+            new LaSignora().preLoadResources(ResourceProvider.getInstance().getXGraphics());
+            ResourceProvider.getInstance().stopXGraphics();
+        }
         Utils.getLogger().info("loading resource done");
         LaSignora signora = new LaSignora(new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight * 1. / 2), new AbstractAction(null));
         signora.getAnimateContainer().setThing(signora);

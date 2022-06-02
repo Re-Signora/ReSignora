@@ -42,16 +42,22 @@ public abstract class XGraphicsAndroid extends XGraphics {
         Utils.CacheImageInfo info = new Utils.CacheImageInfo((int) w, (int) h, image.getName());
         XImage<?> cachedImage = Utils.getCachedImageFromCache(info);
         if ((image.getWidth() != (int) w || image.getHeight() != (int) h) && cachedImage == null) {
-            Utils.getLogger().warn("update cache image: {}", image);
-            Matrix matrix = new Matrix();
-            matrix.postScale((float) (w / image.getWidth()), (float) (h / image.getHeight()));
-            Bitmap scaledBitmap = Bitmap.createBitmap((Bitmap) image.getImage(), 0, 0, image.getWidth(), image.getHeight(), matrix, true);
-            XImage<Bitmap> xImage = new XImageFactoryAndroid(image.getName()).create(scaledBitmap);
-            Utils.putCachedImageToCache(info, xImage);
-            return drawImage(xImage, x, y);
+            return drawImage(resizeImage(image, w, h), x, y);
         } else {
             return drawImage(Objects.requireNonNullElse(cachedImage, image), x, y);
         }
+    }
+
+    @Override
+    public XImage<?> resizeImage(XImage<?> image, double w, double h) {
+        Utils.CacheImageInfo info = new Utils.CacheImageInfo((int) w, (int) h, image.getName());
+        Utils.getLogger().warn("update cache image: {}", image);
+        Matrix matrix = new Matrix();
+        matrix.postScale((float) (w / image.getWidth()), (float) (h / image.getHeight()));
+        Bitmap scaledBitmap = Bitmap.createBitmap((Bitmap) image.getImage(), 0, 0, image.getWidth(), image.getHeight(), matrix, true);
+        XImage<Bitmap> xImage = new XImageFactoryAndroid(image.getName()).create(scaledBitmap);
+        Utils.putCachedImageToCache(info, xImage);
+        return xImage;
     }
 
     @Override
@@ -91,7 +97,7 @@ public abstract class XGraphicsAndroid extends XGraphics {
         return this;
     }
 
-    abstract protected Canvas getCanvas();
+    abstract public Canvas getCanvas();
 
     public abstract Paint getPaint();
 

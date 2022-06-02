@@ -92,11 +92,14 @@ public abstract class ResourceProvider {
     protected XGraphicsGetter xGraphicsGetter = null;
 
     public XGraphics getXGraphics() {
-        if (xGraphicsGetter == null) return  null;
+        if (xGraphicsGetter == null) return null;
         return xGraphicsGetter.get();
     }
 
     public void setXGraphicsGetter(XGraphicsGetter xGraphicsGetter) {
         this.xGraphicsGetter = xGraphicsGetter;
+    }
+
+    public void stopXGraphics() {
     }
 }

@@ -33,6 +33,7 @@ import work.chiro.game.utils.callback.BasicCallback;
 import work.chiro.game.utils.thread.MyThreadFactory;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.compatible.ResourceProvider;
+import work.chiro.game.x.compatible.XGraphics;
 
 public class GameActivity extends AppCompatActivity {
     private SurfaceHolder surfaceHolder;
@@ -40,7 +41,7 @@ public class GameActivity extends AppCompatActivity {
     SurfaceView surfaceView = null;
     private final ObjectControllerAndroidImpl heroControllerAndroid = new ObjectControllerAndroidImpl();
 
-    private void draw() {
+    private XGraphicsAndroid getXGraphics() {
         // Canvas canvas = surfaceHolder.lockCanvas();
         // 使用硬件加速
         Canvas canvas = surfaceHolder.lockHardwareCanvas();
@@ -59,8 +60,9 @@ public class GameActivity extends AppCompatActivity {
         Paint paint = new Paint();
         XGraphicsAndroid xGraphics = new XGraphicsAndroid() {
             private Paint p = paint;
+
             @Override
-            protected Canvas getCanvas() {
+            public Canvas getCanvas() {
                 return canvas;
             }
 
@@ -76,15 +78,52 @@ public class GameActivity extends AppCompatActivity {
             }
         };
         canvas.drawColor(Color.BLACK);
+        return xGraphics;
+    }
 
+    private void draw() {
+        // XGraphicsAndroid xGraphics = getXGraphics();
+        // Canvas canvas = surfaceHolder.lockCanvas();
+        // 使用硬件加速
+        Canvas canvas = surfaceHolder.lockHardwareCanvas();
+        // 储存当前 canvas 设置
+        canvas.save();
+        // 设置缩放和偏移
+        if (RunningConfig.allowResize) {
+            canvas.scale(1.0f, 1.0f);
+        } else {
+            int windowWidth = surfaceView.getMeasuredWidth();
+            int windowHeight = surfaceView.getMeasuredHeight();
+            canvas.translate((windowWidth * 1.0f - RunningConfig.windowWidth * XGraphicsAndroid.getCanvasScale()) / 2,
+                    (windowHeight * 1.0f - RunningConfig.windowHeight * XGraphicsAndroid.getCanvasScale()) / 2);
+            canvas.scale(XGraphicsAndroid.getCanvasScale(), XGraphicsAndroid.getCanvasScale());
+        }
+        Paint paint = new Paint();
+        XGraphicsAndroid xGraphics = new XGraphicsAndroid() {
+            private Paint p = paint;
+
+            @Override
+            public Canvas getCanvas() {
+                return canvas;
+            }
+
+            @Override
+            public Paint getPaint() {
+                return p;
+            }
+
+            @Override
+            public Paint getNewPaint() {
+                p = new Paint();
+                return p;
+            }
+        };
+        canvas.drawColor(Color.BLACK);
         xGraphics.paintInOrdered(game);
-
-        // paintInfo(xGraphics);
         xGraphics.paintInfo(game);
         // 恢复 canvas 设置之后绘制遮罩
         // canvas.restore();
-
-        surfaceHolder.unlockCanvasAndPost(canvas);
+        surfaceHolder.unlockCanvasAndPost(xGraphics.getCanvas());
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -102,6 +141,28 @@ public class GameActivity extends AppCompatActivity {
             protected Context getContext() {
                 return GameActivity.this;
             }
+
+            private Canvas lastCanvas = null;
+
+            @Override
+            public XGraphics getXGraphics() {
+                XGraphicsAndroid g = GameActivity.this.getXGraphics();
+                lastCanvas = g.getCanvas();
+                return g;
+            }
+
+            @Override
+            public void stopXGraphics() {
+                super.stopXGraphics();
+                synchronized (XGraphics.class) {
+                    //noinspection SynchronizeOnNonFinalField
+                    synchronized (surfaceHolder) {
+                        // surfaceHolder.unlockCanvasAndPost(((XGraphicsAndroid) getXGraphics()).getCanvas());
+                        surfaceHolder.unlockCanvasAndPost(lastCanvas);
+                        lastCanvas = null;
+                    }
+                }
+            }
         });
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_game);
@@ -117,10 +178,11 @@ public class GameActivity extends AppCompatActivity {
             if (surfaceHolder == null) {
                 return;
             }
-            // noinspection SynchronizeOnNonFinalField
-            synchronized (surfaceHolder) {
-                draw();
-            }
+            synchronized (XGraphics.class) {
+                // noinspection SynchronizeOnNonFinalField
+                synchronized (surfaceHolder) {
+                    draw();
+                }}
         });
         game.setOnFinish(() -> {
             Utils.getLogger().info("FINISH!!!");
