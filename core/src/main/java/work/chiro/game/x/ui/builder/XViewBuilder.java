@@ -32,7 +32,6 @@ public class XViewBuilder {
             default:
                 view = new XView(posInit);
                 break;
-
         }
         setup(view);
         return view;

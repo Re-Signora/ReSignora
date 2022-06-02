@@ -20,8 +20,10 @@ public class XLayoutBuilder {
         XLayout layout = new XLayout(layoutName)
                 .setBackground(layoutBean.background);
         layoutBean.views.forEach(viewBean -> {
-            if (layoutManager.getViewByID(viewBean.id) != null) {
+            XView cachedView = layoutManager.getViewByID(viewBean.id);
+            if (cachedView != null) {
                 // 不重新产生重复 ID 的 View
+                layout.addView(cachedView);
                 return;
             }
             XView view = new XViewBuilder(
