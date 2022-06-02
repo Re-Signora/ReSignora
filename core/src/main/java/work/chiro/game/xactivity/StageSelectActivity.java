@@ -1,6 +1,7 @@
 package work.chiro.game.xactivity;
 
 import work.chiro.game.game.Game;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.activity.XBundle;
 import work.chiro.game.x.ui.event.XEventType;
@@ -27,5 +28,6 @@ public class StageSelectActivity extends XActivity {
     protected void onStop() {
         super.onStop();
         buttonBack.popEvent(XEventType.Click);
+        TimeManager.timeResume();
     }
 }

@@ -20,4 +20,10 @@ public class HomeActivity extends XActivity {
         XButton buttonSettings = (XButton) findViewById("button设置");
         buttonSettings.setOnClick((xView, xEvent) -> TimeManager.timePauseToggle());
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        TimeManager.timeResume();
+    }
 }

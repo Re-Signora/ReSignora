@@ -19,11 +19,13 @@ public class TimeManager {
     }
 
     public static void timePause() {
+        if (paused) return;
         paused = true;
         timePauseStart = System.currentTimeMillis();
     }
 
     public static void timeResume() {
+        if (!paused) return;
         paused = false;
         timePaused += System.currentTimeMillis() - timePauseStart;
     }

@@ -5,6 +5,7 @@ import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.objects.thing.character.signora.LaSignora;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.activity.XBundle;
@@ -45,6 +46,7 @@ public class BattleActivity extends XActivity {
     protected void onStop() {
         super.onStop();
         buttonBack.popEvent(XEventType.Click);
+        TimeManager.timeResume();
         getGame().getCharacters().clear();
         getGame().getAttacks().clear();
         getGame().getTimerController().clear();
