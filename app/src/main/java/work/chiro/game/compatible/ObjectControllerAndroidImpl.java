@@ -19,42 +19,59 @@ public class ObjectControllerAndroidImpl extends ObjectController {
     }
 
     private Vec2 getScaledPosition(MotionEvent e, int index) {
-        return new Vec2().fromVector(new Vec2(e.getX(index), e.getY(index)).divide(scale));
+        try {
+            return new Vec2().fromVector(new Vec2(e.getX(index), e.getY(index)).divide(scale));
+        } catch (IllegalArgumentException ignored) {
+            return new Vec2();
+        }
     }
 
     private Vec2 getScaledPosition(MotionEvent e) {
         return new Vec2().fromVector(new Vec2(e.getX(), e.getY()).divide(scale));
     }
 
-    public void onTouchEvent(MotionEvent e) {
+    private void handleMultiMove(MotionEvent e) {
         Game game = Game.getInstance();
-        if (game != null) {
-            switch (e.getActionMasked()) {
-                case MotionEvent.ACTION_DOWN:
-                    game.getTopActivity().actionPointerPressed(getScaledPosition(e));
-                    break;
-                case MotionEvent.ACTION_POINTER_DOWN:
-                    game.getTopActivity().actionPointerPressed(getScaledPosition(e, e.getPointerId(e.getActionIndex())));
-                    break;
-                case MotionEvent.ACTION_UP:
-                    game.getTopActivity().actionPointerRelease(getScaledPosition(e));
-                    break;
-                case MotionEvent.ACTION_POINTER_UP:
-                    game.getTopActivity().actionPointerRelease(getScaledPosition(e, e.getPointerId(e.getActionIndex())));
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    if (e.getPointerCount() > 1) {
-                        List<Vec2> posList = new LinkedList<>();
-                        for (int i = 0; i < e.getPointerCount(); i++) {
-                            posList.add(getScaledPosition(e, e.getPointerId(i)));
-                        }
-                        game.getTopActivity().actionPointerDragged(posList);
-                    } else {
-                        game.getTopActivity().actionPointerDragged(List.of(getScaledPosition(e)));
-                    }
-                    break;
-                default:
-                    break;
+        if (e.getPointerCount() > 1) {
+            List<Vec2> posList = new LinkedList<>();
+            for (int i = 0; i < e.getPointerCount(); i++) {
+                posList.add(getScaledPosition(e, e.getPointerId(i)));
+            }
+            game.getTopActivity().actionPointerDragged(posList);
+        } else {
+            game.getTopActivity().actionPointerDragged(List.of(getScaledPosition(e)));
+        }
+    }
+
+    public void onTouchEvent(MotionEvent e) {
+        synchronized (MotionEvent.class) {
+            Game game = Game.getInstance();
+            if (game != null) {
+                switch (e.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        game.getTopActivity().actionPointerPressed(getScaledPosition(e));
+                        Utils.getLogger().warn("ACTION_DOWN");
+                        break;
+                    case MotionEvent.ACTION_POINTER_DOWN:
+                        game.getTopActivity().actionPointerPressed(getScaledPosition(e, e.getPointerId(e.getActionIndex())));
+                        handleMultiMove(e);
+                        Utils.getLogger().warn("ACTION_POINTER_DOWN: index={}, id={}", e.getActionIndex(), e.getPointerId(e.getActionIndex()));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        game.getTopActivity().actionPointerRelease(getScaledPosition(e));
+                        Utils.getLogger().warn("ACTION_UP");
+                        break;
+                    case MotionEvent.ACTION_POINTER_UP:
+                        game.getTopActivity().actionPointerRelease(getScaledPosition(e, e.getPointerId(e.getActionIndex())));
+                        handleMultiMove(e);
+                        Utils.getLogger().warn("ACTION_POINTER_UP: index={}, id={}", e.getActionIndex(), e.getPointerId(e.getActionIndex()));
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        handleMultiMove(e);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }

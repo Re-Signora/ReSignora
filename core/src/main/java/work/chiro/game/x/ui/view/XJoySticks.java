@@ -3,6 +3,7 @@ package work.chiro.game.x.ui.view;
 import java.util.Objects;
 
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.DrawColor;
 import work.chiro.game.x.compatible.XGraphics;
@@ -20,8 +21,14 @@ public class XJoySticks extends XView {
             return;
         }
         setOnMove((xView, xEvent) -> pointer = xEvent.getPosition());
-        setOnLeft((xView, xEvent) -> pointer = null);
-        setOnUp((xView, xEvent) -> pointer = null);
+        setOnLeft((xView, xEvent) -> {
+            pointer = null;
+            Utils.getLogger().warn("joysticks: left");
+        });
+        setOnUp((xView, xEvent) -> {
+            pointer = null;
+            Utils.getLogger().warn("joysticks: up");
+        });
     }
 
     @Override
