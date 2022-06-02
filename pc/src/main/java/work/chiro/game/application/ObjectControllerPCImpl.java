@@ -54,7 +54,7 @@ public class ObjectControllerPCImpl extends ObjectController {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
-                if (getTarget() != null) {
+                if (getTarget() != null && !TimeManager.isPaused()) {
                     getTarget().setPosition(new Vec2().fromVector(new Vec2(
                             Utils.setInRange(e.getX(), 0, RunningConfig.windowWidth),
                             Utils.setInRange(e.getY(), 0, RunningConfig.windowHeight)
@@ -93,9 +93,8 @@ public class ObjectControllerPCImpl extends ObjectController {
         if (lastFrameTime == null) {
             lastFrameTime = TimeManager.getTimeMills();
         }
-        if (getTarget() == null) {
-            return;
-        }
+        if (getTarget() == null) return;
+        if (TimeManager.isPaused()) return;
         double now = TimeManager.getTimeMills();
         double frameTime = now - lastFrameTime;
         Vec2 next = new Vec2();

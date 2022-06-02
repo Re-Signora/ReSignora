@@ -85,7 +85,7 @@ public class ObjectControllerAndroidImpl extends ObjectController {
         double now = TimeManager.getTimeMills();
         double frameTime = now - lastFrameTime;
         if (getTarget() == null) return;
-        if (joySticks != null) {
+        if (joySticks != null && !TimeManager.isPaused()) {
             Vec2 speed = joySticks.getPointedSpeed();
             double r = Math.sqrt(speed.getScale().getX());
             Vec2 next;
