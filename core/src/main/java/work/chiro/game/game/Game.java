@@ -41,6 +41,7 @@ public class Game {
         assert instance != null;
         return instance;
     }
+
     public static Game createInstance(ObjectController objectController) {
         Utils.getLogger().info("will create Game!");
         // assert instance == null;
@@ -281,5 +282,27 @@ public class Game {
 
     public ObjectController getObjectController() {
         return objectController;
+    }
+
+    /**
+     * 根据类型自动添加对象到某 list 中
+     *
+     * @param thing thing
+     * @return this
+     */
+    public Game addThings(AbstractThing<?, ?> thing) {
+        // 模板匹配不支持
+        // switch (thing) {
+        //     case AbstractCharacter character -> getCharacters().add(character);
+        //     default -> Utils.getLogger().warn("unsupported thing! {}", thing);
+        // }
+        if (thing instanceof AbstractCharacter) {
+            getCharacters().add((AbstractCharacter) thing);
+        } else if (thing instanceof AbstractAttack) {
+            getAttacks().add((AbstractAttack) thing);
+        } else {
+            Utils.getLogger().warn("unsupported thing! {}", thing);
+        }
+        return this;
     }
 }
