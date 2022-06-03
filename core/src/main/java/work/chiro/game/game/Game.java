@@ -18,6 +18,7 @@ import work.chiro.game.objects.background.AbstractBackground;
 import work.chiro.game.objects.background.BasicBackgroundFactory;
 import work.chiro.game.objects.thing.AbstractThing;
 import work.chiro.game.objects.thing.attack.AbstractAttack;
+import work.chiro.game.objects.thing.attack.UnderAttack;
 import work.chiro.game.objects.thing.character.AbstractCharacter;
 import work.chiro.game.resource.MusicType;
 import work.chiro.game.utils.Utils;
@@ -58,6 +59,7 @@ public class Game {
     private final List<AbstractBackground> backgrounds = new LinkedList<>();
     private final List<AbstractCharacter> characters = new LinkedList<>();
     private final List<AbstractAttack> attacks = new LinkedList<>();
+    private final List<UnderAttack> underAttacks = new LinkedList<>();
     private final List<List<? extends AbstractThing<?, ?>>> allThings = Arrays.asList(
             characters, attacks
     );
@@ -280,6 +282,12 @@ public class Game {
         }
     }
 
+    public void addOneUnderAttack(UnderAttack underAttack) {
+        synchronized (underAttacks) {
+            underAttacks.add(underAttack);
+        }
+    }
+
     public ObjectController getObjectController() {
         return objectController;
     }
@@ -290,14 +298,16 @@ public class Game {
      * @param thing thing
      * @return this
      */
-    public Game addThings(AbstractThing<?, ?> thing) {
+    public Game addThing(AbstractThing<?, ?> thing) {
         // 模板匹配不支持
         if (thing instanceof AbstractCharacter) {
-            getCharacters().add((AbstractCharacter) thing);
-        } else if (thing instanceof AbstractAttack) {
-            getAttacks().add((AbstractAttack) thing);
-        } else {
-            Utils.getLogger().warn("unsupported thing! {}", thing);
+            addOneCharacter((AbstractCharacter) thing);
+        }
+        if (thing instanceof AbstractAttack) {
+            addOneAttack((AbstractAttack) thing);
+        }
+        if (thing instanceof UnderAttack) {
+            addOneUnderAttack((UnderAttack) thing);
         }
         return this;
     }
