@@ -20,4 +20,23 @@ public class FunctionTest {
         RunningConfig.debug = false;
         logger.debug("disable debug");
     }
+
+    interface TestInterface {
+        void fun();
+    }
+
+    static class HasTestInterface implements TestInterface {
+        @Override
+        public void fun() {
+            System.out.println("fun()");
+        }
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @Test
+    void testInterfaceInstance() {
+        Object o = new HasTestInterface();
+        System.out.println("o instanceof HasTestInterface = " + (o instanceof HasTestInterface));
+        System.out.println("o instanceof TestInterface = " + (o instanceof TestInterface));
+    }
 }
