@@ -292,10 +292,6 @@ public class Game {
      */
     public Game addThings(AbstractThing<?, ?> thing) {
         // 模板匹配不支持
-        // switch (thing) {
-        //     case AbstractCharacter character -> getCharacters().add(character);
-        //     default -> Utils.getLogger().warn("unsupported thing! {}", thing);
-        // }
         if (thing instanceof AbstractCharacter) {
             getCharacters().add((AbstractCharacter) thing);
         } else if (thing instanceof AbstractAttack) {
