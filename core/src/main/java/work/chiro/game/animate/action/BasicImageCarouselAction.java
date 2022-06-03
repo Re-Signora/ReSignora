@@ -96,4 +96,13 @@ public class BasicImageCarouselAction extends AbstractAction {
     public void preLoadResources(XGraphics g, Vec2 size) {
         getAvailableImages().forEach(image -> g.resizeImage(image, size.getX(), size.getY()));
     }
+
+    public BasicImageCarouselAction setImageIndexNow(int imageIndexNow) {
+        this.imageIndexNow = imageIndexNow;
+        return this;
+    }
+
+    public int getImageIndexNow() {
+        return imageIndexNow;
+    }
 }

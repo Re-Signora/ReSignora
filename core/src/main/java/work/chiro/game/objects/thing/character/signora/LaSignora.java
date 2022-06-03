@@ -74,7 +74,10 @@ public class LaSignora extends AbstractCharacter {
     @Override
     public void normalAttack() {
         super.normalAttack();
-        Game.getInstance().addOneAttack(new Butterfly(handButterfly.getPosition().copy(), new Vec2(120, 120)));
+        Game.getInstance().addOneAttack(
+                new Butterfly(handButterfly.getPosition().copy(), new Vec2(120, 120))
+                        .setImageIndexNow(handButterfly.getImageIndexNow())
+        );
     }
 
     @Override

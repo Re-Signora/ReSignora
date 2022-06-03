@@ -60,4 +60,13 @@ public class Butterfly extends AbstractAttack {
         super.preLoadResources(g);
         getAnimateContainer().preLoadResources(g);
     }
+
+    public Butterfly setImageIndexNow(int imageIndexNow) {
+        ((BasicImageCarouselAction) getAnimateContainer()).setImageIndexNow(imageIndexNow);
+        return this;
+    }
+
+    public int getImageIndexNow() {
+        return ((BasicImageCarouselAction) getAnimateContainer()).getImageIndexNow();
+    }
 }
