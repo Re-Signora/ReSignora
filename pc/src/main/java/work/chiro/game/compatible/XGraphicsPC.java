@@ -166,6 +166,8 @@ public abstract class XGraphicsPC extends XGraphics {
             h = image.getHeight() * getCanvasScale();
         }
         Utils.CacheImageInfo info = new Utils.CacheImageInfo((int) w, (int) h, image.getName());
+        XImage<?> imageFromCache = Utils.getCachedImageFromCache(info);
+        if (imageFromCache != null) return imageFromCache;
         Utils.getLogger().warn("flush image cache! im: {}", image);
         Image raw = (Image) image.getImage();
         Image resizedImage = raw.getScaledInstance((int) w, (int) h, Image.SCALE_DEFAULT);
