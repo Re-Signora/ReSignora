@@ -15,6 +15,7 @@ public class DrawColor {
     public static int lightGray = 0xFF666666;
     public static int yellow = 0xFFffc300;
     public static int darkYellow = 0xFF66490e;
+    public static int shadow = 0x99000000;
 
     public static Map<Enum<?>, CoupleColor> enumColors = Map.of(
             // UI

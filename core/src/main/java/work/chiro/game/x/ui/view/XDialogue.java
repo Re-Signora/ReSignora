@@ -54,6 +54,8 @@ public class XDialogue extends XView {
         if (dialogueManager == null) return;
         g.setFont(ResourceProvider.getInstance().getFont("genshin", g.getFontSize()));
         double titleScale = 0.2;
+        g.setColor(DrawColor.shadow);
+        g.fillRect(0, RunningConfig.windowHeight * (1 - dialogueBoxHeightScale), RunningConfig.windowWidth + 1, RunningConfig.windowHeight * dialogueBoxHeightScale + 1);
         g.applyCoupleColor(DrawColor.getEnumColors(UIColors.Title));
         g.drawBoarderString(
                 new Vec2(0, RunningConfig.windowHeight * (1 - dialogueBoxHeightScale)),

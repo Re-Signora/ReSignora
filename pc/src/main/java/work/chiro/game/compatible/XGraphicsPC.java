@@ -88,13 +88,13 @@ public abstract class XGraphicsPC extends XGraphics {
     @Override
     public XGraphics setColor(int color) {
         this.color = color;
-        getGraphics().setColor(new Color(color));
+        getGraphics().setColor(new Color(color, true));
         return this;
     }
 
     @Override
     public XGraphics fillRect(double x, double y, double width, double height) {
-        getGraphics().setColor(new Color(color));
+        getGraphics().setColor(new Color(color, true));
         setRenderArgs();
         getGraphics().fillRect((int) (x * GamePanel.getScale()), (int) (y * GamePanel.getScale()), (int) (width * GamePanel.getScale()), (int) (height * GamePanel.getScale()));
         return this;
