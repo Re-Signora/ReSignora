@@ -13,7 +13,8 @@ import work.chiro.game.x.ui.view.XView;
 public abstract class XGraphics {
     protected double alpha = 1.0;
     protected double rotation = 0.0;
-    protected int color = 0x0;
+    protected int color = DrawColor.black;
+    protected int colorBoarder = DrawColor.white;
 
     /**
      * 在 (x, y) 绘制图片
@@ -60,6 +61,11 @@ public abstract class XGraphics {
      * @return this
      */
     public abstract XGraphics setColor(int color);
+
+    public XGraphics setBoarderColor(int colorBoarder) {
+        this.colorBoarder = colorBoarder;
+        return this;
+    }
 
     /**
      * 绘制一个填充矩形

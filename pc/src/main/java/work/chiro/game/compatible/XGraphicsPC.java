@@ -149,10 +149,10 @@ public abstract class XGraphicsPC extends XGraphics {
         );
         getGraphics().translate(translate.getX(), translate.getY());
         setRenderArgs();
-        getGraphics().setColor(Color.white);
+        getGraphics().setColor(new Color(colorBoarder));
         getGraphics().setStroke(new BasicStroke((float) (3.4 * GamePanel.getScale())));
         getGraphics().draw(shape);
-        getGraphics().setColor(Color.black);
+        getGraphics().setColor(new Color(color));
         getGraphics().fill(shape);
         getGraphics().translate(-translate.getX(), -translate.getY());
 
