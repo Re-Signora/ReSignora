@@ -58,6 +58,20 @@ public class XView extends AbstractObject<AnimateContainer> {
         return this;
     }
 
+    private boolean willStopTrigger = false;
+
+    public void stopTrigger() {
+        this.willStopTrigger = true;
+    }
+
+    public boolean getWillStopTrigger() {
+        return willStopTrigger;
+    }
+
+    public void setWillStopTrigger(boolean willStopTrigger) {
+        this.willStopTrigger = willStopTrigger;
+    }
+
     public XView trigger(XEvent event) {
         listeners.forEach((eventType, callbackList) -> {
             if (eventType == event.getEventType() && !callbackList.isEmpty()) callbackList.getLast().onEvent(this, event);

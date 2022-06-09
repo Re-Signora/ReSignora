@@ -27,6 +27,7 @@ public class XDialogue extends XView {
             if (onNextText != null) {
                 onNextText.onEvent(xView, xEvent);
             }
+            stopTrigger();
         });
     }
 

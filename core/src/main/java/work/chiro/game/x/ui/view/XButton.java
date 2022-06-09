@@ -8,11 +8,19 @@ public class XButton extends XView {
     public XButton(Vec2 posInit) {
         super(posInit);
         setOnEnter((xView, xEvent) -> {
-            Utils.getLogger().debug("onEnter! {}, {}", xView, xEvent);
+            Utils.getLogger().info("button enter");
+            setAlpha(new Scale(0.6));
+        });
+        setOnDown((xView, xEvent) -> {
+            Utils.getLogger().info("button down");
             setAlpha(new Scale(0.6));
         });
         setOnLeft((xView, xEvent) -> {
-            Utils.getLogger().debug("onLeft! {}, {}", xView, xEvent);
+            Utils.getLogger().info("button left");
+            setAlpha(new Scale(1));
+        });
+        setOnUp((xView, xEvent) -> {
+            Utils.getLogger().info("button up");
             setAlpha(new Scale(1));
         });
     }

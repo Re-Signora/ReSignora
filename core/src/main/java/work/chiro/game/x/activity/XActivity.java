@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import work.chiro.game.game.Game;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.ui.event.XEvent;
 import work.chiro.game.x.ui.event.XEventType;
@@ -93,12 +94,13 @@ public abstract class XActivity {
         Map<XView, Integer> enteredMark = new HashMap<>();
         for (int i = 0; i < posList.size(); i++) {
             Vec2 pos = posList.get(i);
-            int finalI = i;
-            layout.forEach(view -> {
+            for (int j = layout.size() - 1; j >= 0; j--) {
+                XView view = layout.get(j);
+                view.setWillStopTrigger(false);
                 if (enteredMark.containsKey(view)) return;
                 Vec2 relativePosition = pos.minus(view.getPosition());
                 if (view.isIn(relativePosition)) {
-                    enteredMark.put(view, finalI);
+                    enteredMark.put(view, i);
                     if (!view.isEntered()) {
                         view.trigger(new XEvent(XEventType.Down)
                                 .setPosition(relativePosition));
@@ -113,23 +115,33 @@ public abstract class XActivity {
                         view.setEntered(false);
                     }
                 }
-            });
+                if (view.getWillStopTrigger()) break;
+            }
         }
     }
 
     public void actionPointerRelease(Vec2 pos) {
-        layout.forEach(view -> {
+        boolean stopping = false;
+        for (int j = layout.size() - 1; j >= 0; j--) {
+            XView view = layout.get(j);
+            view.setWillStopTrigger(false);
             Vec2 relativePosition = pos.minus(view.getPosition());
             if (view.isIn(relativePosition)) {
                 view.trigger(new XEvent(XEventType.Move)
                         .setPosition(relativePosition));
-                view.trigger(new XEvent(XEventType.Click)
-                        .setPosition(relativePosition));
+                if (!stopping)
+                    view.trigger(new XEvent(XEventType.Click)
+                            .setPosition(relativePosition));
                 if (view.isEntered()) {
+                    view.trigger(new XEvent(XEventType.Up)
+                            .setPosition(relativePosition));
                     view.setEntered(false);
+                } else {
+                    Utils.getLogger().info("not in: {}", view);
                 }
             }
-        });
+            if (view.getWillStopTrigger()) stopping = true;
+        }
     }
 
     // ================ For inherit ================
