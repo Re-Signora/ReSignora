@@ -77,6 +77,7 @@ public class GamePanel extends JPanel {
             }
         });
         Game.createInstance(heroControllerImpl);
+        Game.getInstance().setOnExit(() -> System.exit(0));
         Utils.getLogger().info("GamePanel instance created!");
         Game.getInstance().setOnFinish(() -> {
             Utils.getLogger().info("finish!");

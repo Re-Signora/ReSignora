@@ -50,6 +50,12 @@ public class Game {
         return instance;
     }
 
+    public static Game clearInstance() {
+        Game lastGame = instance;
+        instance = null;
+        return lastGame;
+    }
+
     /**
      * 线程池，自动管理
      */
@@ -88,6 +94,12 @@ public class Game {
         return getActivityManager().getTop();
     }
 
+    private BasicCallback onExit = null;
+
+    public void setOnExit(BasicCallback onExit) {
+        this.onExit = onExit;
+    }
+
     public void clearThings() {
         characters.clear();
         attacks.clear();
@@ -116,6 +128,9 @@ public class Game {
                 }
                 backgrounds.set(1, new BasicBackgroundFactory(getTopLayout().getBackground()).create());
             }
+        });
+        activityManager.setOnFinishAllActivities(() -> {
+            if (onExit != null) onExit.run();
         });
         activityManager.startActivityWithBundle(HomeActivity.class);
         Utils.getLogger().info("Game instance created!");

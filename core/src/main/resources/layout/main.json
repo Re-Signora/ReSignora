@@ -4,15 +4,6 @@
   "views": [
     {
       "type": "Button",
-      "id": "button设置",
-      "image": "icons/设置.png",
-      "position": [
-        0,
-        8
-      ]
-    },
-    {
-      "type": "Button",
       "id": "button活动",
       "image": "icons/活动.png",
       "position": [
@@ -130,6 +121,24 @@
     {
       "type": "Dialogue",
       "id": "dialogueTest"
+    },
+    {
+      "type": "Button",
+      "id": "button设置",
+      "image": "icons/设置.png",
+      "position": [
+        0,
+        8
+      ]
+    },
+    {
+      "type": "Button",
+      "id": "button返回",
+      "image": "icons/设置.png",
+      "position": [
+        2316,
+        8
+      ]
     }
   ]
 }

@@ -9,10 +9,12 @@ import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.activity.XBundle;
+import work.chiro.game.x.ui.event.XEventType;
 import work.chiro.game.x.ui.view.XButton;
 import work.chiro.game.x.ui.view.XDialogue;
 
 public class HomeActivity extends XActivity {
+    private XButton buttonBack;
     public HomeActivity(Game game) {
         super(game);
     }
@@ -25,6 +27,8 @@ public class HomeActivity extends XActivity {
         historyButton.setOnClick((xView, xEvent) -> startActivity(StageSelectActivity.class));
         XButton buttonSettings = (XButton) findViewById("button设置");
         buttonSettings.setOnClick((xView, xEvent) -> TimeManager.timePauseToggle());
+        buttonBack = (XButton) findViewById("button返回");
+        buttonBack.setOnClick((xView, xEvent) -> finish());
 
         AtomicReference<String> ha = new AtomicReference<>("哈");
 
@@ -45,5 +49,6 @@ public class HomeActivity extends XActivity {
     protected void onStop() {
         super.onStop();
         TimeManager.timeResume();
+        buttonBack.popEvent(XEventType.Click);
     }
 }

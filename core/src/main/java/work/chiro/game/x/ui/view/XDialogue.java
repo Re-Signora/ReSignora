@@ -30,6 +30,12 @@ public class XDialogue extends XView {
             }
             stopTrigger();
         });
+        XViewCallback stopTriggerCallback = (xView, xEvent) -> stopTrigger();
+        setOnDown(stopTriggerCallback);
+        setOnUp(stopTriggerCallback);
+        setOnMove(stopTriggerCallback);
+        setOnEnter(stopTriggerCallback);
+        setOnLeft(stopTriggerCallback);
     }
 
     public XDialogue() {

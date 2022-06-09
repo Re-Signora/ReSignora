@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 
 import work.chiro.game.game.Game;
+import work.chiro.game.utils.callback.BasicCallback;
 import work.chiro.game.x.ui.layout.XLayout;
 import work.chiro.game.x.ui.layout.XLayoutManager;
 
@@ -26,9 +27,14 @@ public class XActivityManager {
     }
 
     private SwitchActivityCallback onSwitchActivity = null;
+    private BasicCallback onFinishAllActivities = null;
 
     public void setOnSwitchActivity(SwitchActivityCallback onSwitchActivity) {
         this.onSwitchActivity = onSwitchActivity;
+    }
+
+    public void setOnFinishAllActivities(BasicCallback onFinishAllActivities) {
+        this.onFinishAllActivities = onFinishAllActivities;
     }
 
     public <T extends XActivity> boolean startActivityWithBundle(Class<T> activityClazz, XBundle bundle) {
@@ -54,6 +60,10 @@ public class XActivityManager {
     public boolean finishActivity(XActivity activity) {
         activity.onStop();
         boolean res = activities.remove(activity);
+        if (activities.size() == 0) {
+            if (onFinishAllActivities != null) onFinishAllActivities.run();
+            return res;
+        }
         if (res && onSwitchActivity != null) {
             onSwitchActivity.run(activities.getLast());
         }

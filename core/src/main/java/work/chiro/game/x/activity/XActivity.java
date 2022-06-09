@@ -121,7 +121,6 @@ public abstract class XActivity {
     }
 
     public void actionPointerRelease(Vec2 pos) {
-        boolean stopping = false;
         for (int j = layout.size() - 1; j >= 0; j--) {
             XView view = layout.get(j);
             view.setWillStopTrigger(false);
@@ -129,7 +128,6 @@ public abstract class XActivity {
             if (view.isIn(relativePosition)) {
                 view.trigger(new XEvent(XEventType.Move)
                         .setPosition(relativePosition));
-                if (!stopping)
                     view.trigger(new XEvent(XEventType.Click)
                             .setPosition(relativePosition));
                 if (view.isEntered()) {
@@ -140,7 +138,7 @@ public abstract class XActivity {
                     Utils.getLogger().info("not in: {}", view);
                 }
             }
-            if (view.getWillStopTrigger()) stopping = true;
+            if (view.getWillStopTrigger()) break;
         }
     }
 

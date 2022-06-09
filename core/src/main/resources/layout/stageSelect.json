@@ -3,18 +3,6 @@
   "background": "ui/关卡选择.png",
   "views": [
     {
-      "id": "button设置"
-    },
-    {
-      "type": "Button",
-      "id": "button返回",
-      "image": "icons/设置.png",
-      "position": [
-        2316,
-        8
-      ]
-    },
-    {
       "type": "Button",
       "id": "button按钮2",
       "text": "02",
@@ -57,6 +45,12 @@
         1169,
         240
       ]
+    },
+    {
+      "id": "button设置"
+    },
+    {
+      "id": "button返回"
     }
   ]
 }
