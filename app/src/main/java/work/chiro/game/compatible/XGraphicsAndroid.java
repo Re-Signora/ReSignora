@@ -129,12 +129,10 @@ public abstract class XGraphicsAndroid extends XGraphics {
     }
 
     @Override
-    public XGraphics drawUIString(XView view, String text) {
-        if (view == null || text == null) return this;
+    public XGraphics drawBoarderString(Vec2 position, Vec2 size, String text) {
+        if (text == null) return this;
         if (text.length() == 0) return this;
-        getNewPaint();
         setAlpha(alpha);
-        setFont(view.getFont());
         getPaint().setStyle(Paint.Style.FILL_AND_STROKE);
         getPaint().setFakeBoldText(true);
         getPaint().setStrokeWidth((float) (4.5 * getCanvasScale()));
@@ -142,9 +140,10 @@ public abstract class XGraphicsAndroid extends XGraphics {
 
         // 测量绘制大小
         Rect bounds = new Rect();
+        Vec2 boundsSize = new Vec2(bounds.right - bounds.left, bounds.bottom - bounds.top);
         getPaint().getTextBounds(text, 0, text.length(), bounds);
-        Vec2 translate = view.getPosition().fromVector(view.getPosition()
-                .plus(new Vec2(view.getWidth(), view.getHeight()).divide(2))
+        Vec2 translate = position.fromVector(position
+                .plus((size == null ? boundsSize : size).divide(2))
                 .minus(new Vec2(bounds.right - bounds.left, bounds.bottom - bounds.top).divide(2))
                 .minus(new Vec2(bounds.left, bounds.top))
         );
@@ -159,6 +158,15 @@ public abstract class XGraphicsAndroid extends XGraphics {
         getCanvas().drawText(text, 0, 0, getPaint());
         getCanvas().translate((float) -translate.getX(), (float) -translate.getY());
         return this;
+    }
+
+    @Override
+    public XGraphics drawUIString(XView view, String text) {
+        if (view == null || text == null) return this;
+        if (text.length() == 0) return this;
+        getNewPaint();
+        setFont(view.getFont());
+        return drawBoarderString(view.getPosition(), new Vec2(view.getWidth(), view.getHeight()), text);
     }
 
     @Override

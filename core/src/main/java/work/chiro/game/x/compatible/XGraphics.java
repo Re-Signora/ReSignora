@@ -102,7 +102,9 @@ public abstract class XGraphics {
 
     abstract public XGraphics drawUIString(XView view, String text);
 
-    abstract public XGraphics drawBoarderString(Vec2 position, String text);
+    public XGraphics drawBoarderString(Vec2 position, String text) {
+        return drawBoarderString(position, null, text);
+    }
 
     abstract public XGraphics drawBoarderString(Vec2 position, Vec2 size, String text);
 

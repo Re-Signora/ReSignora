@@ -133,11 +133,6 @@ public abstract class XGraphicsPC extends XGraphics {
     }
 
     @Override
-    public XGraphics drawBoarderString(Vec2 position, String text) {
-        return drawBoarderString(position, null, text);
-    }
-
-    @Override
     public XGraphics drawBoarderString(Vec2 position, Vec2 size, String text) {
         if (text == null || text.length() == 0) return this;
         Font f = (Font) getFont().getFont();
