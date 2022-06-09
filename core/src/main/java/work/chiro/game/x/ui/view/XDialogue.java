@@ -7,7 +7,10 @@ import work.chiro.game.config.RunningConfig;
 import work.chiro.game.dialogue.DialogueManager;
 import work.chiro.game.objects.thing.AbstractThing;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.x.compatible.XGraphics;
+import work.chiro.game.x.compatible.colors.DrawColor;
+import work.chiro.game.x.compatible.colors.UIColors;
 import work.chiro.game.x.ui.builder.XViewCallback;
 
 public class XDialogue extends XView {
@@ -49,9 +52,18 @@ public class XDialogue extends XView {
 
     protected void drawDialogue(XGraphics g) {
         if (dialogueManager == null) return;
+        g.setFont(ResourceProvider.getInstance().getFont("genshin", g.getFontSize()));
+        double titleScale = 0.2;
+        g.applyCoupleColor(DrawColor.getEnumColors(UIColors.Title));
         g.drawBoarderString(
-                new Vec2(0, (1 - RunningConfig.windowHeight * dialogueBoxHeightScale)),
-                new Vec2(RunningConfig.windowWidth, RunningConfig.windowHeight * dialogueBoxHeightScale),
+                new Vec2(0, RunningConfig.windowHeight * (1 - dialogueBoxHeightScale)),
+                new Vec2(RunningConfig.windowWidth, RunningConfig.windowHeight * (dialogueBoxHeightScale * titleScale)),
+                dialogueManager.getDialogue().getSpeaker()
+        );
+        g.applyCoupleColor(DrawColor.getEnumColors(UIColors.Default));
+        g.drawBoarderString(
+                new Vec2(0, RunningConfig.windowHeight * (1 - (dialogueBoxHeightScale * (1 - titleScale)))),
+                new Vec2(RunningConfig.windowWidth, RunningConfig.windowHeight * (dialogueBoxHeightScale * titleScale)),
                 dialogueManager.getDialogue().getText()
         );
     }

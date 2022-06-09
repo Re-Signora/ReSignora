@@ -13,10 +13,13 @@ public class DrawColor {
     public static int white = 0xFFffffff;
     public static int black = 0xFF000000;
     public static int lightGray = 0xFF666666;
+    public static int yellow = 0xFFffc300;
+    public static int darkYellow = 0xFF66490e;
 
     public static Map<Enum<?>, CoupleColor> enumColors = Map.of(
             // UI
-            UIColors.Normal, new CoupleColor(white, darkGray),
+            UIColors.Default, new CoupleColor(white, darkGray),
+            UIColors.Title, new CoupleColor(yellow, darkYellow),
 
             // 元素
             Element.None, new CoupleColor(white, lightGray),
@@ -30,6 +33,7 @@ public class DrawColor {
     );
 
     public static CoupleColor getEnumColors(Enum<?> e) {
-        return enumColors.getOrDefault(e, enumColors.get(UIColors.Normal));
+        if (e == null) return null;
+        return enumColors.getOrDefault(e, enumColors.get(UIColors.Default));
     }
 }

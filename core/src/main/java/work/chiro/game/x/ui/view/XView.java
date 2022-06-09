@@ -119,7 +119,7 @@ public class XView extends AbstractObject<AnimateContainer> {
     public void draw(XGraphics g) {
         draw(g, false);
         if (getText() != null && getText().length() > 0) {
-            g.applyCoupleColor(DrawColor.getEnumColors(UIColors.Normal));
+            g.applyCoupleColor(DrawColor.getEnumColors(UIColors.Default));
             g.drawUIString(this, getText());
         }
     }
