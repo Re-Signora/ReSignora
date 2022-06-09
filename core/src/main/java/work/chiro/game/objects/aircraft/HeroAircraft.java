@@ -15,7 +15,7 @@ import work.chiro.game.utils.thread.MyThreadFactory;
 import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
-import work.chiro.game.x.compatible.DrawColor;
+import work.chiro.game.x.compatible.colors.DrawColor;
 import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.x.compatible.XGraphics;
 

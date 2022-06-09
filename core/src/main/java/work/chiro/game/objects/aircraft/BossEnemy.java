@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.objects.bullet.BaseBullet;
 import work.chiro.game.objects.bullet.EnemyBulletFactory;
-import work.chiro.game.x.compatible.DrawColor;
+import work.chiro.game.x.compatible.colors.DrawColor;
 import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.config.Constants;

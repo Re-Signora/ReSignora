@@ -12,7 +12,7 @@ import java.util.Objects;
 import work.chiro.game.game.Game;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
-import work.chiro.game.x.compatible.DrawColor;
+import work.chiro.game.x.compatible.colors.DrawColor;
 import work.chiro.game.x.compatible.XFont;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;

@@ -1,4 +1,4 @@
-package work.chiro.game.x.compatible;
+package work.chiro.game.x.compatible.colors;
 
 public class CoupleColor {
     public int primary = DrawColor.white;

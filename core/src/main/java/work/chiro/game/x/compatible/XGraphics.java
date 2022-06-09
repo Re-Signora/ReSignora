@@ -7,6 +7,8 @@ import work.chiro.game.game.Game;
 import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.objects.background.AbstractBackground;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.compatible.colors.CoupleColor;
+import work.chiro.game.x.compatible.colors.DrawColor;
 import work.chiro.game.x.ui.layout.XLayout;
 import work.chiro.game.x.ui.view.XView;
 
@@ -64,6 +66,12 @@ public abstract class XGraphics {
 
     public XGraphics setBoarderColor(int colorBoarder) {
         this.colorBoarder = colorBoarder;
+        return this;
+    }
+
+    public XGraphics applyCoupleColor(CoupleColor coupleColor) {
+        setColor(coupleColor.primary);
+        setBoarderColor(coupleColor.secondary);
         return this;
     }
 

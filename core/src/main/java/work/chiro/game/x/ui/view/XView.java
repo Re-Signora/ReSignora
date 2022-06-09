@@ -11,9 +11,10 @@ import work.chiro.game.objects.AbstractObject;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.activity.XActivity;
-import work.chiro.game.x.compatible.DrawColor;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
+import work.chiro.game.x.compatible.colors.DrawColor;
+import work.chiro.game.x.compatible.colors.UIColors;
 import work.chiro.game.x.ui.builder.XViewCallback;
 import work.chiro.game.x.ui.event.XEvent;
 import work.chiro.game.x.ui.event.XEventType;
@@ -117,8 +118,7 @@ public class XView extends AbstractObject<AnimateContainer> {
     @Override
     public void draw(XGraphics g) {
         super.draw(g, false);
-        g.setColor(DrawColor.black);
-        g.setBoarderColor(DrawColor.white);
+        g.applyCoupleColor(DrawColor.getEnumColors(UIColors.Normal));
         g.drawUIString(this, getText());
     }
 
