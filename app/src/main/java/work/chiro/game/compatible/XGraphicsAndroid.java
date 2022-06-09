@@ -12,7 +12,6 @@ import java.util.Objects;
 import work.chiro.game.game.Game;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
-import work.chiro.game.x.compatible.colors.DrawColor;
 import work.chiro.game.x.compatible.XFont;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
@@ -149,11 +148,11 @@ public abstract class XGraphicsAndroid extends XGraphics {
         );
         getCanvas().translate((float) translate.getX(), (float) translate.getY());
         // 描边
-        setColor(DrawColor.white);
+        getPaint().setColor(colorBoarder);
         getCanvas().drawText(text, 0, 0, getPaint());
         // 文字
         getPaint().setFakeBoldText(false);
-        setColor(DrawColor.black);
+        getPaint().setColor(color);
         getPaint().setStrokeWidth(0);
         getCanvas().drawText(text, 0, 0, getPaint());
         getCanvas().translate((float) -translate.getX(), (float) -translate.getY());

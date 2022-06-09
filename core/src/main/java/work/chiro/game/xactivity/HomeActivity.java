@@ -3,6 +3,7 @@ package work.chiro.game.xactivity;
 import work.chiro.game.dialogue.DialogueBean;
 import work.chiro.game.dialogue.DialogueManager;
 import work.chiro.game.game.Game;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.activity.XBundle;
@@ -30,6 +31,7 @@ public class HomeActivity extends XActivity {
                 return new DialogueBean("旅行者", "哈哈哈哈哈哈哈哈哈哈哈哈哈");
             }
         });
+        dialogue.setOnNextText((xView, xEvent) -> Utils.getLogger().info("next text! {}, {}", xView, xEvent));
     }
 
     @Override
