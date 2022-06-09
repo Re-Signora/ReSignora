@@ -17,7 +17,8 @@ public class XDialogue extends XView {
     private XViewCallback onNextText = null;
     private final List<AbstractThing<?, ?>> displayingThings = new LinkedList<>();
     private DialogueManager dialogueManager;
-    private final double dialogueBoxHeightScale = 0.3;
+    private final static double dialogueBoxHeightScale = 0.3;
+    private final static int maxLineLength = 20;
 
     public XDialogue(DialogueManager dialogueManager) {
         super(new Vec2());
