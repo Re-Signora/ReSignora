@@ -133,18 +133,24 @@ public abstract class XGraphicsPC extends XGraphics {
     }
 
     @Override
-    public XGraphics drawUIString(XView view, String text) {
-        if (view == null || text == null || text.length() == 0) return this;
-        setFont(view.getFont());
+    public XGraphics drawBoarderString(Vec2 position, String text) {
+        return drawBoarderString(position, null, text);
+    }
+
+    @Override
+    public XGraphics drawBoarderString(Vec2 position, Vec2 size, String text) {
+        if (text == null || text.length() == 0) return this;
         Font f = (Font) getFont().getFont();
         GlyphVector v = f.createGlyphVector(getGraphics().getFontMetrics(f).getFontRenderContext(), text);
         Shape shape = v.getOutline();
 
         Rectangle bounds = shape.getBounds();
+        Vec2 boundsSize = new Vec2(bounds.getWidth(), bounds.getHeight());
 
-        Vec2 translate = view.getPosition().fromVector(view.getPosition().times(GamePanel.getScale())
-                .plus(new Vec2(view.getWidth(), view.getHeight()).times(GamePanel.getScale() / 2))
-                .minus(new Vec2(bounds.getWidth(), bounds.getHeight()).divide(2))
+        Vec2 translate = position.fromVector(position.times(GamePanel.getScale())
+                // .plus((size == null ? boundsSize : size).times(GamePanel.getScale() / 2))
+                .plus((size == null ? boundsSize : size.times(GamePanel.getScale() / 2)))
+                .minus(boundsSize.divide(2))
                 .minus(new Vec2(bounds.getX(), bounds.getY()))
         );
         getGraphics().translate(translate.getX(), translate.getY());
@@ -157,6 +163,13 @@ public abstract class XGraphicsPC extends XGraphics {
         getGraphics().translate(-translate.getX(), -translate.getY());
 
         return this;
+    }
+
+    @Override
+    public XGraphics drawUIString(XView view, String text) {
+        if (view == null || text == null || text.length() == 0) return this;
+        setFont(view.getFont());
+        return drawBoarderString(view.getPosition(), new Vec2(view.getWidth(), view.getHeight()), text);
     }
 
     @Override

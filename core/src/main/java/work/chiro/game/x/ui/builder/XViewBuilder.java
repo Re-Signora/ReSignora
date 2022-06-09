@@ -2,6 +2,7 @@ package work.chiro.game.x.ui.builder;
 
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.ui.view.XButton;
+import work.chiro.game.x.ui.view.XDialogue;
 import work.chiro.game.x.ui.view.XJoySticks;
 import work.chiro.game.x.ui.view.XView;
 import work.chiro.game.x.ui.view.XViewType;
@@ -27,6 +28,9 @@ public class XViewBuilder {
                 break;
             case JoySticks:
                 view = new XJoySticks();
+                break;
+            case Dialogue:
+                view = new XDialogue();
                 break;
             case View:
             default:

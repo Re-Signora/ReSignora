@@ -117,9 +117,21 @@ public class XView extends AbstractObject<AnimateContainer> {
 
     @Override
     public void draw(XGraphics g) {
+        draw(g, false);
+        if (getText() != null && getText().length() > 0) {
+            g.applyCoupleColor(DrawColor.getEnumColors(UIColors.Normal));
+            g.drawUIString(this, getText());
+        }
+    }
+
+    /**
+     * 默认为从左上角开始绘制。
+     * @param g xGraphics
+     * @param center set default to false
+     */
+    @Override
+    final public void draw(XGraphics g, boolean center) {
         super.draw(g, false);
-        g.applyCoupleColor(DrawColor.getEnumColors(UIColors.Normal));
-        g.drawUIString(this, getText());
     }
 
     @Override
@@ -130,7 +142,8 @@ public class XView extends AbstractObject<AnimateContainer> {
     private final static Map<String, XViewType> viewTypeStringMap = Map.of(
             "View", XViewType.View,
             "Button", XViewType.Button,
-            "JoySticks", XViewType.JoySticks
+            "JoySticks", XViewType.JoySticks,
+            "Dialogue", XViewType.Dialogue
     );
 
     public static XViewType stringToType(String type) {

@@ -126,6 +126,10 @@
         1845,
         666
       ]
+    },
+    {
+      "type": "Dialogue",
+      "id": "dialogueTest"
     }
   ]
 }

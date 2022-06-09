@@ -102,6 +102,10 @@ public abstract class XGraphics {
 
     abstract public XGraphics drawUIString(XView view, String text);
 
+    abstract public XGraphics drawBoarderString(Vec2 position, String text);
+
+    abstract public XGraphics drawBoarderString(Vec2 position, Vec2 size, String text);
+
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public void paintInOrdered(Game game) {
         List<AbstractFlyingObject<?>> sortedThings = game.getSortedThings();
