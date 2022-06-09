@@ -133,6 +133,7 @@ public class GameActivity extends AppCompatActivity {
         surfaceView.post(this::resetGame);
 
         game = Game.createInstance(heroControllerAndroid);
+        game.setOnExit(this::finish);
 
         game.setOnPaint(() -> {
             if (surfaceHolder == null) {
