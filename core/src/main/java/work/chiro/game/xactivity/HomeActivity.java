@@ -1,5 +1,7 @@
 package work.chiro.game.xactivity;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import work.chiro.game.dialogue.DialogueBean;
 import work.chiro.game.dialogue.DialogueManager;
 import work.chiro.game.game.Game;
@@ -24,14 +26,19 @@ public class HomeActivity extends XActivity {
         XButton buttonSettings = (XButton) findViewById("button设置");
         buttonSettings.setOnClick((xView, xEvent) -> TimeManager.timePauseToggle());
 
+        AtomicReference<String> ha = new AtomicReference<>("哈");
+
         XDialogue dialogue = (XDialogue) findViewById("dialogueTest");
         dialogue.setDialogueManager(new DialogueManager() {
             @Override
             public DialogueBean getDialogue() {
-                return new DialogueBean("旅行者", "哈哈哈哈哈哈哈哈哈哈哈哈哈");
+                return new DialogueBean("旅行者", ha.get());
             }
         });
-        dialogue.setOnNextText((xView, xEvent) -> Utils.getLogger().info("next text! {}, {}", xView, xEvent));
+        dialogue.setOnNextText((xView, xEvent) -> {
+            Utils.getLogger().info("next text! {}, {}", xView, xEvent);
+            ha.set(ha + "哈");
+        });
     }
 
     @Override
