@@ -19,7 +19,8 @@ public class PCTest {
 
     @Test
     void testLayoutBuilder() {
-        XLayoutManager layoutManager = XLayoutManager.getInstance();
+        // XLayoutManager layoutManager = XLayoutManager.getInstance();
+        XLayoutManager layoutManager = new XLayoutManager();
         XLayoutBuilder builder = new XLayoutBuilder(layoutManager, "main");
         XLayout layout = builder.build();
         Utils.getLogger().info("layout: {}", layout);

@@ -15,7 +15,8 @@ public class XActivityManager {
 
     public XActivityManager(Game game) {
         this.game = game;
-        layoutManager = XLayoutManager.getInstance();
+        // layoutManager = XLayoutManager.getInstance();
+        layoutManager = new XLayoutManager();
     }
 
     public XLayoutManager getLayoutManager() {

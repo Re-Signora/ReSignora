@@ -45,7 +45,7 @@ public class Game {
 
     public static Game createInstance(ObjectController objectController) {
         Utils.getLogger().info("will create Game!");
-        // assert instance == null;
+        assert instance == null;
         instance = new Game(objectController);
         return instance;
     }
@@ -130,7 +130,10 @@ public class Game {
             }
         });
         activityManager.setOnFinishAllActivities(() -> {
-            if (onExit != null) onExit.run();
+            if (onExit != null) {
+                clearInstance();
+                onExit.run();
+            }
         });
         activityManager.startActivityWithBundle(HomeActivity.class);
         Utils.getLogger().info("Game instance created!");
@@ -283,6 +286,10 @@ public class Game {
 
     public List<AbstractAttack> getAttacks() {
         return attacks;
+    }
+
+    public List<UnderAttack> getUnderAttacks() {
+        return underAttacks;
     }
 
     public void addOneAttack(AbstractAttack attack) {

@@ -20,7 +20,7 @@ public class GameWindow extends AbstractSceneClient {
         return gameWindow;
     }
 
-    static private GamePanel game = null;
+    static private GamePanel gamePanel = null;
 
     @Override
     public JPanel getPanel() {
@@ -28,12 +28,12 @@ public class GameWindow extends AbstractSceneClient {
     }
 
     public GamePanel getGamePanel() {
-        if (game == null) {
+        if (gamePanel == null) {
             synchronized (GamePanel.class) {
-                game = new GamePanel();
+                gamePanel = new GamePanel();
             }
         }
-        return game;
+        return gamePanel;
     }
 
     @Override
@@ -46,13 +46,13 @@ public class GameWindow extends AbstractSceneClient {
         // Game 中自己调用
     }
 
-    public void clearGameInstance() {
-        game = null;
+    public void clearGamePanelInstance() {
+        gamePanel = null;
     }
 
     @Override
     public void startAction() {
-        game.resetStates();
-        game.action();
+        gamePanel.resetStates();
+        gamePanel.action();
     }
 }

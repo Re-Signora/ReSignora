@@ -22,6 +22,7 @@ import work.chiro.game.utils.UtilsPC;
 import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.utils.timer.Timer;
 import work.chiro.game.windows.HistoryWindow;
+import work.chiro.game.windows.MainWindow;
 import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.x.compatible.XGraphics;
 
@@ -52,10 +53,16 @@ public class GamePanel extends JPanel {
 
     public void resetStates() {
         heroControllerImpl.clear();
+        if (Game.getInstance() == null) {
+            Game.createInstance(heroControllerImpl);
+        }
         Game.getInstance().resetStates();
     }
 
     public void action() {
+        if (Game.getInstance() == null) {
+            Game.createInstance(heroControllerImpl);
+        }
         Game.getInstance().action();
         addTimers();
     }
@@ -77,7 +84,13 @@ public class GamePanel extends JPanel {
             }
         });
         Game.createInstance(heroControllerImpl);
-        Game.getInstance().setOnExit(() -> System.exit(0));
+        // Game.getInstance().setOnExit(() -> window.nextScene(MainWindow.class));
+        Game.getInstance().setOnExit(() -> {
+            SceneRun.getInstance().setNextScene(MainWindow.class);
+            synchronized (waitObject) {
+                waitObject.notify();
+            }
+        });
         Utils.getLogger().info("GamePanel instance created!");
         Game.getInstance().setOnFinish(() -> {
             Utils.getLogger().info("finish!");
@@ -145,6 +158,7 @@ public class GamePanel extends JPanel {
      */
     @Override
     public void paint(Graphics g) {
+        if (Game.getInstance() == null) return;
         double timeStart = TimeManager.getTimeMills();
         VolatileImage thisFrame = getGraphicsConfiguration().createCompatibleVolatileImage(RunningConfigPC.displayWindowWidth, RunningConfigPC.displayWindowHeight);
         Graphics2D graphicsNew = thisFrame.createGraphics();
