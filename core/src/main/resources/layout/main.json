@@ -119,10 +119,6 @@
       ]
     },
     {
-      "type": "Dialogue",
-      "id": "dialogueTest"
-    },
-    {
       "type": "Button",
       "id": "button设置",
       "image": "icons/设置.png",
