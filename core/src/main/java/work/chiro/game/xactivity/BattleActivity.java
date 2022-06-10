@@ -7,7 +7,9 @@ import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.objects.thing.character.signora.LaSignora;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.timer.DelayTimer;
 import work.chiro.game.utils.timer.TimeManager;
+import work.chiro.game.utils.timer.Timer;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.activity.XActivity;
@@ -17,7 +19,9 @@ import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.ui.event.XEventType;
 import work.chiro.game.x.ui.view.XButton;
 import work.chiro.game.x.ui.view.XJoySticks;
+import work.chiro.game.x.ui.view.XView;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class BattleActivity extends XActivity {
     private XButton buttonBack;
     private LaSignora signora;
@@ -59,6 +63,8 @@ public class BattleActivity extends XActivity {
             signora.chargedAttack();
         });
         buttonChargedAttack.setFont("genshin");
+
+        getGame().getTimerController().add(new Timer(5000, (controller, timer) -> Utils.getLogger().info("generate enemies")));
     }
 
     @Override
@@ -71,19 +77,23 @@ public class BattleActivity extends XActivity {
         getGame().getTimerController().clear();
     }
 
+    protected void applyActionToButton(XView button, DelayTimer delayTimer, double maxTimeMs) {
+        if (!delayTimer.isValid() && delayTimer.getTimeMark() != 0) {
+            double since = (maxTimeMs - (TimeManager.getTimeMills() - delayTimer.getTimeMark())) / 1000;
+            String sinceString = String.format(Locale.CHINA, "%.1f", since);
+            button.setAlpha(new Scale(0.6));
+            button.setText(sinceString);
+        } else {
+            button.setAlpha(new Scale(1));
+            button.setText("");
+        }
+    }
+
     @Override
     protected void onFrame() {
         super.onFrame();
         if (signora == null) return;
-        if (!signora.getSkillAttackDelayTask().isValid() && signora.getSkillAttackDelayTask().getTimeMark() != 0) {
-            double since = signora.getBasicAttributes().getSkillAttackCoolDown() -
-                    ((TimeManager.getTimeMills() - signora.getSkillAttackDelayTask().getTimeMark())) / 1000;
-            String sinceString = String.format(Locale.CHINA, "%.1f", since);
-            buttonSkillAttack.setAlpha(new Scale(0.6));
-            buttonSkillAttack.setText(sinceString);
-        } else {
-            buttonSkillAttack.setAlpha(new Scale(1));
-            buttonSkillAttack.setText("");
-        }
+        applyActionToButton(buttonSkillAttack, signora.getSkillAttackDelayTask(), signora.getBasicAttributes().getSkillAttackCoolDown() * 1000);
+        applyActionToButton(buttonChargedAttack, signora.getChargedAttackDelayTask(), signora.getBasicAttributes().getChargedAttackCoolDown() * 1000);
     }
 }

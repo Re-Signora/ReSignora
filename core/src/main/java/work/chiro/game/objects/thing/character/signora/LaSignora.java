@@ -6,6 +6,8 @@ import work.chiro.game.game.Game;
 import work.chiro.game.logic.attributes.BasicCharacterAttributes;
 import work.chiro.game.objects.thing.attack.Butterfly;
 import work.chiro.game.objects.thing.character.AbstractCharacter;
+import work.chiro.game.utils.callback.BasicCallback;
+import work.chiro.game.utils.timer.DelayTimer;
 import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.utils.timer.Timer;
 import work.chiro.game.vector.Scale;
@@ -82,32 +84,35 @@ public class LaSignora extends AbstractCharacter {
         );
     }
 
+    protected void applyAction(DelayTimer delayTimer, double delayMs, BasicCallback ifValid) {
+        if (delayTimer.isValid()) {
+            ifValid.run();
+            delayTimer.setNotValid();
+            delayTimer.setTimeMark(TimeManager.getTimeMills());
+            Game.getInstance().getTimerController().add(new Timer(delayMs, delayTimer));
+        }
+    }
+
     @Override
     public void skillAttack() {
         super.skillAttack();
-        if (skillAttackDelayTask.isValid()) {
-            Game.getInstance().addThing(
-                    new Butterfly(handButterfly.getPosition().copy(), new Vec2(120, 120))
-                            .setImageIndexNow(handButterfly.getImageIndexNow())
-            );
-            skillAttackDelayTask.setNotValid();
-            skillAttackDelayTask.setTimeMark(TimeManager.getTimeMills());
-            Game.getInstance().getTimerController().add(new Timer(getBasicAttributes().getSkillAttackCoolDown() * 1000, skillAttackDelayTask));
-        }
+        applyAction(skillAttackDelayTask,
+                getBasicAttributes().getSkillAttackCoolDown() * 1000,
+                () -> Game.getInstance().addThing(
+                        new Butterfly(handButterfly.getPosition().copy(), new Vec2(120, 120))
+                                .setImageIndexNow(handButterfly.getImageIndexNow())
+                ));
     }
 
     @Override
     public void chargedAttack() {
         super.chargedAttack();
-        if (chargedAttackDelayTask.isValid()) {
-            Game.getInstance().addThing(
-                    new Butterfly(handButterfly.getPosition().copy(), new Vec2(120, 120))
-                            .setImageIndexNow(handButterfly.getImageIndexNow())
-            );
-            chargedAttackDelayTask.setNotValid();
-            chargedAttackDelayTask.setTimeMark(TimeManager.getTimeMills());
-            Game.getInstance().getTimerController().add(new Timer(getBasicAttributes().getChargedAttackCoolDown() * 1000, chargedAttackDelayTask));
-        }
+        applyAction(chargedAttackDelayTask,
+                getBasicAttributes().getChargedAttackCoolDown() * 1000,
+                () -> Game.getInstance().addThing(
+                        new Butterfly(handButterfly.getPosition().copy(), new Vec2(120, 120))
+                                .setImageIndexNow(handButterfly.getImageIndexNow())
+                ));
     }
 
     @Override
