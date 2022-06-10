@@ -29,6 +29,7 @@ public abstract class XGraphicsAndroid extends XGraphics {
             Matrix matrix = new Matrix();
             matrix.postTranslate(-(float) image.getWidth() / 2, -(float) image.getHeight() / 2);
             matrix.postRotate((float) (rotation * 180 / Math.PI));
+            if (flipped) matrix.postScale(-1, 1);
             matrix.postTranslate((float) (image.getWidth() / 2 + x), (float) (image.getHeight() / 2 + y));
             getCanvas().drawBitmap((Bitmap) image.getImage(), matrix, paint);
         }
