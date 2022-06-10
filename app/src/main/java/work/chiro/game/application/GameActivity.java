@@ -81,7 +81,7 @@ public class GameActivity extends AppCompatActivity {
         return xGraphics;
     }
 
-    private void draw() {
+    private synchronized void draw() {
         XGraphicsAndroid xGraphics = getXGraphics();
         // canvas.drawColor(Color.BLACK);
         xGraphics.getCanvas().drawColor(Color.BLACK);
@@ -140,9 +140,9 @@ public class GameActivity extends AppCompatActivity {
             if (surfaceHolder == null) {
                 return;
             }
-            synchronized (XGraphics.class) {
-                draw();
-            }
+            // synchronized (XGraphics.class) {
+            draw();
+            // }
         });
         game.setOnFinish(() -> {
             Utils.getLogger().info("FINISH!!!");
@@ -192,7 +192,7 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
-    private void resetGame() {
+    private void resetScale() {
         if (RunningConfig.windowWidth > RunningConfig.windowHeight) {
             if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -201,8 +201,10 @@ public class GameActivity extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         }
 
-        int windowWidth = surfaceView.getMeasuredWidth();
-        int windowHeight = surfaceView.getMeasuredHeight();
+        // int windowWidth = surfaceView.getMeasuredWidth();
+        // int windowHeight = surfaceView.getMeasuredHeight();
+        int windowWidth = 2400;
+        int windowHeight = 1080;
 
         if (RunningConfig.allowResize) {
             RunningConfig.windowWidth = windowWidth;
@@ -217,21 +219,34 @@ public class GameActivity extends AppCompatActivity {
             heroControllerAndroid.setScale(XGraphicsAndroid.getCanvasScale());
         }
 
-        game.resetStates();
+    }
+
+    private void resetGame() {
+        resetScale();
+        // game.resetStates();
     }
 
     @Override
     protected void onStart() {
-        MyThreadFactory.getInstance().newThread(() -> {
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            resetGame();
-            game.action();
-            HistoryImplAndroid.getInstance(this);
-        }).start();
+        // MyThreadFactory.getInstance().newThread(() -> {
+        //     try {
+        //         Thread.sleep(300);
+        //     } catch (InterruptedException e) {
+        //         e.printStackTrace();
+        //     }
+        //     resetGame();
+        //     game.action();
+        //     HistoryImplAndroid.getInstance(this);
+        // }).start();
+        // try {
+        //     Thread.sleep(300);
+        // } catch (InterruptedException e) {
+        //     e.printStackTrace();
+        // }
+        resetGame();
+        MyThreadFactory.getInstance().newThread(() -> game.action(), "StartGame").start();
+        // game.action();
+        HistoryImplAndroid.getInstance(this);
         super.onStart();
     }
 

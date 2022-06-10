@@ -44,7 +44,11 @@ public class MyThreadFactory implements ThreadFactory {
     @SuppressWarnings("NullableProblems")
     @Override
     public Thread newThread(Runnable run) {
-        Thread t = new Thread(run, name + "-Thread-" + counter);
+        return new Thread(run, name + "-Thread-" + counter);
+    }
+
+    public Thread newThread(Runnable run, String setName) {
+        Thread t = new Thread(run, setName);
         counter++;
         String logString = String.format(Locale.CHINA, "Created thread %d with name %s on%s\n", t.getId(), t.getName(), new Date());
         stats.add(logString);

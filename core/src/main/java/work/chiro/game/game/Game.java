@@ -105,7 +105,8 @@ public class Game {
         attacks.clear();
     }
 
-    public void resetStates() {
+    // public void resetStates() {
+    private void resetStates() {
         gameOverFlag = false;
         RunningConfig.score = 0;
         RunningConfig.config = new ConfigFactory(RunningConfig.difficulty).create();
