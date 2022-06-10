@@ -15,6 +15,7 @@ import work.chiro.game.x.activity.XBundle;
 import work.chiro.game.x.ui.builder.XViewCallback;
 import work.chiro.game.x.ui.event.XEventType;
 import work.chiro.game.x.ui.view.XButton;
+import work.chiro.game.x.ui.view.XJoySticks;
 import work.chiro.game.x.ui.view.XView;
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -61,8 +62,8 @@ public class BattleActivity extends XActivity {
         // signora.getAnimateContainer().setThing(signora);
         // getGame().addThing(signora);
         // getGame().getObjectController().setTarget(signora);
-        // XJoySticks joySticks = (XJoySticks) findViewById("joySticks");
-        // getGame().getObjectController().setJoySticks(joySticks);
+        XJoySticks joySticks = (XJoySticks) findViewById("joySticks");
+        getGame().getObjectController().setJoySticks(joySticks);
         //
         // buttonGroup.addAll(List.of(
         //         new ButtonGroupItem(

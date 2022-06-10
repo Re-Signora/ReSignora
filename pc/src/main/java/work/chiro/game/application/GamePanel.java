@@ -94,25 +94,25 @@ public class GamePanel extends JPanel {
         Utils.getLogger().info("GamePanel instance created!");
         Game.getInstance().setOnFinish(() -> {
             Utils.getLogger().info("finish!");
-            try {
-                String name = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "Nanshi" : lastProvidedName);
-                if (name == null) {
-                    String name2 = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "Nanshi" : lastProvidedName);
-                    if (name2 == null) {
-                        int res = JOptionPane.showConfirmDialog(null, "不保存记录?", "Save Game", JOptionPane.OK_CANCEL_OPTION);
-                        if (res == JOptionPane.YES_OPTION) {
-                            throw new Exception();
+            if (RunningConfig.score > 0) {
+                try {
+                    String name = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "Nanshi" : lastProvidedName);
+                    if (name == null) {
+                        String name2 = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "Nanshi" : lastProvidedName);
+                        if (name2 == null) {
+                            int res = JOptionPane.showConfirmDialog(null, "不保存记录?", "Save Game", JOptionPane.OK_CANCEL_OPTION);
+                            if (res == JOptionPane.YES_OPTION) {
+                                throw new Exception();
+                            }
+                        } else {
+                            lastProvidedName = name2;
                         }
                     } else {
-                        lastProvidedName = name2;
+                        lastProvidedName = name;
                     }
-                } else {
-                    lastProvidedName = name;
-                }
-                String message = JOptionPane.showInputDialog("输入额外的信息", lastProvidedMessage == null ? "NO MESSAGE" : lastProvidedMessage);
-                lastProvidedMessage = message;
-                // 保存游戏结果
-                if (RunningConfig.score > 0) {
+                    String message = JOptionPane.showInputDialog("输入额外的信息", lastProvidedMessage == null ? "NO MESSAGE" : lastProvidedMessage);
+                    lastProvidedMessage = message;
+                    // 保存游戏结果
                     HistoryImpl.getInstance().addOne(
                             new HistoryObjectFactory(
                                     name == null ? "Nanshi" : name.isEmpty() ? "Nanshi" : name,
@@ -120,14 +120,14 @@ public class GamePanel extends JPanel {
                                     message == null ? "NO MESSAGE" : message.isEmpty() ? "NO MESSAGE" : message,
                                     RunningConfig.difficulty)
                                     .create());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Utils.getLogger().warn("Input exception: " + e);
-            } finally {
-                SceneRun.getInstance().setNextScene(HistoryWindow.class);
-                synchronized (waitObject) {
-                    waitObject.notify();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Utils.getLogger().warn("Input exception: " + e);
+                } finally {
+                    SceneRun.getInstance().setNextScene(HistoryWindow.class);
+                    synchronized (waitObject) {
+                        waitObject.notify();
+                    }
                 }
             }
         });
@@ -147,7 +147,7 @@ public class GamePanel extends JPanel {
 
     public void addTimers() {
         // 获取键盘焦点
-        Game.getInstance().getTimerController().add(new Timer(100, (controller, timer) -> this.requestFocus()));
+        Game.getInstance().getTimerController().add(getClass(), new Timer(100, (controller, timer) -> this.requestFocus()));
     }
 
     /**

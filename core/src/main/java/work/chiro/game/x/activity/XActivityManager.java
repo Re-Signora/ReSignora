@@ -85,6 +85,10 @@ public class XActivityManager {
         return activities.getLast();
     }
 
+    public boolean hasTop() {
+        return activities.size() >= 1;
+    }
+
     public boolean canExit() {
         return activities.size() <= 1;
     }

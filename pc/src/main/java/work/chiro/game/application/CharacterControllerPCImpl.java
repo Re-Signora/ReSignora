@@ -33,6 +33,7 @@ public class CharacterControllerPCImpl extends CharacterController {
         public final static int CHARACTER_3 = KeyEvent.VK_3;
         public final static int CHARACTER_4 = KeyEvent.VK_4;
         public final static int QUIT = KeyEvent.VK_ENTER;
+        public final static int BACK = KeyEvent.VK_ESCAPE;
     }
 
     final private Set<Integer> pressedKeys = new HashSet<>();
@@ -98,6 +99,20 @@ public class CharacterControllerPCImpl extends CharacterController {
     }
 
     protected void onKeyDown(int code) {
+        // 不需要控制 Object 的部分
+        switch (code) {
+            case KeyCode.QUIT:
+                System.exit(0);
+                break;
+            case KeyCode.BACK:
+                if (Game.getInstance() != null && Game.getInstance().getActivityManager().hasTop()) {
+                    Game.getInstance().getActivityManager().finishActivity(Game.getInstance().getTopActivity());
+                }
+                break;
+            default:
+                break;
+        }
+        // 需要控制 Object 的部分
         if (getTarget() == null) return;
         switch (code) {
             case KeyCode.SKILL:
@@ -133,9 +148,6 @@ public class CharacterControllerPCImpl extends CharacterController {
                     break;
                 case KeyCode.RIGHT:
                     next.setX(next.getX() + movingScale);
-                    break;
-                case KeyCode.QUIT:
-                    System.exit(0);
                     break;
                 default:
                     break;
