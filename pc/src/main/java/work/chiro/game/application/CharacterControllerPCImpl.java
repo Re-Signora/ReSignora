@@ -46,6 +46,10 @@ public class CharacterControllerPCImpl extends CharacterController {
         KeyAdapter keyAdapter = new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
+                if (!pressedKeys.contains(e.getKeyCode())) {
+                    Utils.getLogger().debug("key down: {}", e.getKeyChar());
+                    onKeyDown(e.getKeyCode());
+                }
                 pressedKeys.add(e.getKeyCode());
             }
 
@@ -91,6 +95,19 @@ public class CharacterControllerPCImpl extends CharacterController {
 
     public Boolean pressed(int keyCode) {
         return pressedKeys.contains(keyCode);
+    }
+
+    protected void onKeyDown(int code) {
+        if (getTarget() == null) return;
+        switch (code) {
+            case KeyCode.SKILL:
+                getTarget().skillAttack();
+                break;
+            case KeyCode.CHARGED:
+                getTarget().chargedAttack();
+            default:
+                break;
+        }
     }
 
     @Override
