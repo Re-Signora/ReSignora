@@ -131,6 +131,7 @@ public class Game {
         });
         activityManager.setOnFinishAllActivities(() -> {
             if (onExit != null) {
+                getTimerController().disable();
                 clearInstance();
                 onExit.run();
             }

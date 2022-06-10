@@ -40,6 +40,11 @@ public class BattleActivity extends XActivity {
         getGame().getObjectController().setTarget(signora);
         XJoySticks joySticks = (XJoySticks) findViewById("joySticks");
         getGame().getObjectController().setJoySticks(joySticks);
+
+        XButton buttonSkillAttack = (XButton) findViewById("buttonSkillAttack");
+        XButton buttonChargedAttack = (XButton) findViewById("buttonChargedAttack");
+        buttonSkillAttack.setOnClick((xView, xEvent) -> Utils.getLogger().info("skill attack"));
+        buttonChargedAttack.setOnClick((xView, xEvent) -> Utils.getLogger().info("charged attack"));
     }
 
     @Override

@@ -13,9 +13,14 @@ public class TimerController {
     private double lastFrameTime = 0;
     private final LinkedList<Double> frameCounter = new LinkedList<>();
     private final List<Timer> timers = new LinkedList<>();
+    private boolean available = true;
 
     public void init(double startTime) {
         frameTime = startTime;
+    }
+
+    public void disable() {
+        available = false;
     }
 
     synchronized public void add(Timer c) {
@@ -27,7 +32,7 @@ public class TimerController {
     }
 
     public void execute() {
-        timers.forEach(timer -> timer.execute(this));
+        if (available) timers.forEach(timer -> timer.execute(this));
     }
 
     public List<Timer> getTimers() {
