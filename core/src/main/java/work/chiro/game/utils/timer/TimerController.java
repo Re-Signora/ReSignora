@@ -71,6 +71,7 @@ public class TimerController {
     }
 
     synchronized public int getFps() {
+        if (frameCounter.size() < 2) return 0;
         return (int) (frameCounter.size() * 1000 / (frameCounter.getLast() - frameCounter.getFirst()));
     }
 

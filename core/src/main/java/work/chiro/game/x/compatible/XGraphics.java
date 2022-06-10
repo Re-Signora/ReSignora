@@ -194,8 +194,8 @@ public abstract class XGraphics {
         setColor(0xcfcfcfcf);
         setAlpha(0.8);
         drawString("SCORE:" + (int) (RunningConfig.score), x, y);
-        // y = y + d;
-        // drawString("FPS:" + game.getTimerController().getFps(), x, y);
+        y = y + d;
+        drawString("FPS:" + game.getTimerController().getFps(), x, y);
     }
 
     /**
