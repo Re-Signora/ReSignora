@@ -43,8 +43,14 @@ public class BattleActivity extends XActivity {
 
         XButton buttonSkillAttack = (XButton) findViewById("buttonSkillAttack");
         XButton buttonChargedAttack = (XButton) findViewById("buttonChargedAttack");
-        buttonSkillAttack.setOnClick((xView, xEvent) -> Utils.getLogger().info("skill attack"));
-        buttonChargedAttack.setOnClick((xView, xEvent) -> Utils.getLogger().info("charged attack"));
+        buttonSkillAttack.setOnClick((xView, xEvent) -> {
+            Utils.getLogger().info("skill attack");
+            signora.skillAttack();
+        });
+        buttonChargedAttack.setOnClick((xView, xEvent) -> {
+            Utils.getLogger().info("charged attack");
+            signora.chargedAttack();
+        });
     }
 
     @Override

@@ -30,6 +30,14 @@ public class BasicCharacterAttributes extends BasicThingAttributes {
      * 普攻攻速
      */
     public double normalAttackSpeed = 5;
+    /**
+     * 元素战技 CD
+     */
+    public double skillAttackCoolDown = 8;
+    /**
+     * 元素爆发 CD
+     */
+    public double chargedAttackCoolDown = 20;
 
     public int getMaxHp() {
         return maxHp;
@@ -91,7 +99,15 @@ public class BasicCharacterAttributes extends BasicThingAttributes {
         return normalAttackSpeed;
     }
 
-    public double getNormalAttackDelay() {
+    public double getNormalAttackCoolDown() {
         return 5.0 / getNormalAttackSpeed();
+    }
+
+    public double getChargedAttackCoolDown() {
+        return chargedAttackCoolDown;
+    }
+
+    public double getSkillAttackCoolDown() {
+        return skillAttackCoolDown;
     }
 }

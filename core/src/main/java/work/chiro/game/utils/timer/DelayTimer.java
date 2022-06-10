@@ -7,6 +7,10 @@ public class DelayTimer implements TimerCallback {
         return valid;
     }
 
+    public void setNotValid() {
+        valid = false;
+    }
+
     @Override
     public void run(TimerController controller, Timer timer) {
         valid = true;

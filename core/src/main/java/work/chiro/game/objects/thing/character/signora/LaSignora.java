@@ -37,11 +37,13 @@ public class LaSignora extends AbstractCharacter {
     }
 
     private final HandButterfly handButterfly;
-    private final Timer normalAttackTask = new Timer(3000, (controller, timer) -> this.normalAttack());
+    private Timer normalAttackTask = null;
 
     public LaSignora(Vec2 posInit, AbstractAction abstractAction, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super("la-signora", BasicCharacterAttributes.class, posInit, abstractAction, sizeInit, rotationInit, alpha);
         handButterfly = new HandButterfly(getPosition());
+        // normalAttackTask = new Timer(getBasicAttributes().getNormalAttackDelay(), normalAttackDelayTask);
+        normalAttackTask = new Timer(getBasicAttributes().getNormalAttackCoolDown() * 1000, (controller, timer) -> this.normalAttack());
         Game.getInstance().getTimerController().add(normalAttackTask);
     }
 
@@ -78,6 +80,32 @@ public class LaSignora extends AbstractCharacter {
                 new Butterfly(handButterfly.getPosition().copy(), new Vec2(120, 120))
                         .setImageIndexNow(handButterfly.getImageIndexNow())
         );
+    }
+
+    @Override
+    public void skillAttack() {
+        super.skillAttack();
+        if (skillAttackDelayTask.isValid()) {
+            Game.getInstance().addThing(
+                    new Butterfly(handButterfly.getPosition().copy(), new Vec2(120, 120))
+                            .setImageIndexNow(handButterfly.getImageIndexNow())
+            );
+            skillAttackDelayTask.setNotValid();
+            Game.getInstance().getTimerController().add(new Timer(getBasicAttributes().getSkillAttackCoolDown() * 1000, skillAttackDelayTask));
+        }
+    }
+
+    @Override
+    public void chargedAttack() {
+        super.chargedAttack();
+        if (chargedAttackDelayTask.isValid()) {
+            Game.getInstance().addThing(
+                    new Butterfly(handButterfly.getPosition().copy(), new Vec2(120, 120))
+                            .setImageIndexNow(handButterfly.getImageIndexNow())
+            );
+            chargedAttackDelayTask.setNotValid();
+            Game.getInstance().getTimerController().add(new Timer(getBasicAttributes().getChargedAttackCoolDown() * 1000, chargedAttackDelayTask));
+        }
     }
 
     @Override
