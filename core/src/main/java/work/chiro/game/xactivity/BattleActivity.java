@@ -1,5 +1,7 @@
 package work.chiro.game.xactivity;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
 import work.chiro.game.animate.action.AbstractAction;
@@ -17,6 +19,7 @@ import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.activity.XBundle;
 import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.x.compatible.XGraphics;
+import work.chiro.game.x.ui.builder.XViewCallback;
 import work.chiro.game.x.ui.event.XEventType;
 import work.chiro.game.x.ui.view.XButton;
 import work.chiro.game.x.ui.view.XJoySticks;
@@ -26,8 +29,22 @@ import work.chiro.game.x.ui.view.XView;
 public class BattleActivity extends XActivity {
     private XButton buttonBack;
     private LaSignora signora;
-    private XButton buttonSkillAttack;
-    private XButton buttonChargedAttack;
+
+    private static class ButtonGroupItem {
+        public XButton button;
+        public DelayTimer delayTimer;
+        public double coolDownDelayMs;
+        public XViewCallback onClick;
+
+        public ButtonGroupItem(XButton button, DelayTimer delayTimer, double coolDownDelayMs, XViewCallback onClick) {
+            this.button = button;
+            this.delayTimer = delayTimer;
+            this.coolDownDelayMs = coolDownDelayMs;
+            this.onClick = onClick;
+        }
+    }
+
+    private List<ButtonGroupItem> buttonGroup = new LinkedList<>();
 
     public BattleActivity(Game game) {
         super(game);
@@ -52,18 +69,31 @@ public class BattleActivity extends XActivity {
         XJoySticks joySticks = (XJoySticks) findViewById("joySticks");
         getGame().getObjectController().setJoySticks(joySticks);
 
-        buttonSkillAttack = (XButton) findViewById("buttonSkillAttack");
-        buttonChargedAttack = (XButton) findViewById("buttonChargedAttack");
-        buttonSkillAttack.setOnClick((xView, xEvent) -> {
-            Utils.getLogger().info("skill attack");
-            signora.skillAttack();
+        buttonGroup.addAll(List.of(
+                new ButtonGroupItem(
+                        (XButton) findViewById("buttonSkillAttack"),
+                        signora.getSkillAttackDelayTask(),
+                        signora.getBasicAttributes().getSkillAttackCoolDown() * 1000,
+                        (xView, xEvent) -> {
+                            Utils.getLogger().info("skill attack");
+                            signora.skillAttack();
+                        }
+                ),
+                new ButtonGroupItem(
+                        (XButton) findViewById("buttonChargedAttack"),
+                        signora.getChargedAttackDelayTask(),
+                        signora.getBasicAttributes().getChargedAttackCoolDown() * 1000,
+                        (xView, xEvent) -> {
+                            Utils.getLogger().info("charged attack");
+                            signora.chargedAttack();
+                        }
+                )
+        ));
+
+        buttonGroup.forEach(buttonGroupItem -> {
+            buttonGroupItem.button.setOnClick(buttonGroupItem.onClick);
+            buttonGroupItem.button.setFont("genshin");
         });
-        buttonSkillAttack.setFont("genshin");
-        buttonChargedAttack.setOnClick((xView, xEvent) -> {
-            Utils.getLogger().info("charged attack");
-            signora.chargedAttack();
-        });
-        buttonChargedAttack.setFont("genshin");
 
         getGame().getTimerController().add(new Timer(5000, (controller, timer) -> {
             Utils.getLogger().info("generate enemies");
@@ -101,7 +131,6 @@ public class BattleActivity extends XActivity {
     protected void onFrame() {
         super.onFrame();
         if (signora == null) return;
-        applyActionToButton(buttonSkillAttack, signora.getSkillAttackDelayTask(), signora.getBasicAttributes().getSkillAttackCoolDown() * 1000);
-        applyActionToButton(buttonChargedAttack, signora.getChargedAttackDelayTask(), signora.getBasicAttributes().getChargedAttackCoolDown() * 1000);
+        buttonGroup.forEach(buttonGroupItem -> applyActionToButton(buttonGroupItem.button, buttonGroupItem.delayTimer, buttonGroupItem.coolDownDelayMs));
     }
 }
