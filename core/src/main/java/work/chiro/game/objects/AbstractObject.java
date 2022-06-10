@@ -82,6 +82,10 @@ public abstract class AbstractObject<A extends AnimateContainer> {
      * 缓存的图片
      */
     protected Map<XImage<?>, XImage<?>> cachedImage = new HashMap<>();
+    /**
+     * 图片是否左右翻转
+     */
+    protected boolean flipped = false;
 
     public AbstractObject(
             Vec2 posInit,
@@ -323,7 +327,7 @@ public abstract class AbstractObject<A extends AnimateContainer> {
                 .drawImage(getImage(),
                         (getLocationX() - (center ? getWidth() / 2 : 0)),
                         getLocationY() - (center ? getHeight() / 2 : 0),
-                        getWidth(), getHeight());
+                        getWidth(), getHeight(), flipped);
         if (!cachedImage.containsValue(newImage)) {
             cachedImage.put(getImage(true), newImage);
         }
@@ -375,6 +379,10 @@ public abstract class AbstractObject<A extends AnimateContainer> {
 
     public void setAlpha(Scale alpha) {
         this.alpha = alpha;
+    }
+
+    public void setFlipped(boolean flipped) {
+        this.flipped = flipped;
     }
 }
 

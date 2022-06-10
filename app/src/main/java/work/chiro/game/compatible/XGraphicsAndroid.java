@@ -19,7 +19,7 @@ import work.chiro.game.x.ui.view.XView;
 
 public abstract class XGraphicsAndroid extends XGraphics {
     @Override
-    public XImage<?> drawImage(XImage<?> image, double x, double y) {
+    public XImage<?> drawImage(XImage<?> image, double x, double y, boolean flipped) {
         if (image == null) return null;
         Paint paint = new Paint();
         paint.setAlpha((int) (alpha * 255));
@@ -36,14 +36,14 @@ public abstract class XGraphicsAndroid extends XGraphics {
     }
 
     @Override
-    public XImage<?> drawImage(XImage<?> image, double x, double y, double w, double h) {
+    public XImage<?> drawImage(XImage<?> image, double x, double y, double w, double h, boolean flipped) {
         if (image == null) return null;
         Utils.CacheImageInfo info = new Utils.CacheImageInfo((int) w, (int) h, image.getName());
         XImage<?> cachedImage = Utils.getCachedImageFromCache(info);
         if ((image.getWidth() != (int) w || image.getHeight() != (int) h) && cachedImage == null) {
-            return drawImage(resizeImage(image, w, h), x, y);
+            return drawImage(resizeImage(image, w, h), x, y, flipped);
         } else {
-            return drawImage(Objects.requireNonNullElse(cachedImage, image), x, y);
+            return drawImage(Objects.requireNonNullElse(cachedImage, image), x, y, flipped);
         }
     }
 

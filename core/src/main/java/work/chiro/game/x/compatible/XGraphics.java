@@ -26,7 +26,11 @@ public abstract class XGraphics {
      * @param y     Y坐标
      * @return this
      */
-    public abstract XImage<?> drawImage(XImage<?> image, double x, double y);
+    public XImage<?> drawImage(XImage<?> image, double x, double y) {
+        return drawImage(image, x, y, false);
+    }
+
+    public abstract XImage<?> drawImage(XImage<?> image, double x, double y, boolean flipped);
 
     /**
      * 在 (x, y) 绘制大小为 (w, h) 的图片
@@ -38,7 +42,11 @@ public abstract class XGraphics {
      * @param h     高度
      * @return this
      */
-    public abstract XImage<?> drawImage(XImage<?> image, double x, double y, double w, double h);
+    public XImage<?> drawImage(XImage<?> image, double x, double y, double w, double h) {
+        return drawImage(image, x, y, w, h, false);
+    }
+
+    public abstract XImage<?> drawImage(XImage<?> image, double x, double y, double w, double h, boolean flipped);
 
     /**
      * 设置绘制图片时的透明度

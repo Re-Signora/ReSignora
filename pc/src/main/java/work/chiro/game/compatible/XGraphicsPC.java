@@ -39,12 +39,17 @@ public abstract class XGraphicsPC extends XGraphics {
     }
 
     @Override
-    public XImage<?> drawImage(XImage<?> image, double x, double y) {
+    public XImage<?> drawImage(XImage<?> image, double x, double y, boolean flipped) {
         setRenderArgs();
         double scale = image.isScaled() ? 1.0 : GamePanel.getScale();
         AffineTransform af = AffineTransform
                 .getTranslateInstance(x * GamePanel.getScale(), y * GamePanel.getScale());
-        af.scale(scale, scale);
+        if (flipped) {
+            af.translate(image.getWidth() * scale, 0);
+            af.scale(-scale, scale);
+        } else {
+            af.scale(scale, scale);
+        }
         af.rotate(rotation, image.getWidth() * scale / 2, image.getHeight() * scale / 2);
         Graphics2D graphics2D = getGraphics();
         setAlpha(alpha);
@@ -54,7 +59,7 @@ public abstract class XGraphicsPC extends XGraphics {
     }
 
     @Override
-    public XImage<?> drawImage(XImage<?> image, double x, double y, double w, double h) {
+    public XImage<?> drawImage(XImage<?> image, double x, double y, double w, double h, boolean flipped) {
         if (x + w < 0 || y + h < 0 || x > RunningConfig.windowWidth || y > RunningConfig.windowHeight) {
             return image;
         }
@@ -66,9 +71,9 @@ public abstract class XGraphicsPC extends XGraphics {
         if (((image.getWidth() != (int) w) || (image.getHeight() != (int) h)) &&
                 (!image.isScaled() || (image.isScaled() && GamePanel.getJustResized())) &&
                 imageFromCache == null) {
-            return drawImage(resizeImage(image, w, h), x, y);
+            return drawImage(resizeImage(image, w, h), x, y, flipped);
         } else {
-            return drawImage(Objects.requireNonNullElse(imageFromCache, image), x, y);
+            return drawImage(Objects.requireNonNullElse(imageFromCache, image), x, y, flipped);
         }
     }
 

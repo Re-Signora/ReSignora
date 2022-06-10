@@ -44,7 +44,7 @@ public class BattleActivity extends XActivity {
         }
     }
 
-    private List<ButtonGroupItem> buttonGroup = new LinkedList<>();
+    private final List<ButtonGroupItem> buttonGroup = new LinkedList<>();
 
     public BattleActivity(Game game) {
         super(game);
@@ -101,6 +101,7 @@ public class BattleActivity extends XActivity {
                     new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight * 1. / 2),
                     new AbstractAction(null));
             shogunateSolder.getAnimateContainer().setThing(shogunateSolder);
+            shogunateSolder.setFlipped(true);
             getGame().addThing(shogunateSolder);
         }));
     }
