@@ -70,10 +70,11 @@ public class GameView extends SurfaceView
     }
 
     private XGraphicsAndroid getXGraphics() {
-        // Utils.getLogger().warn("will lock at thread: {}", Thread.currentThread());
-        // Canvas canvas = surfaceHolder.lockCanvas();
+        Utils.getLogger().warn("will lock at thread: {}", Thread.currentThread());
+        Canvas canvas = surfaceHolder.lockCanvas();
+        Utils.getLogger().warn("\tlocked at thread: {}", Thread.currentThread());
         // 使用硬件加速
-        Canvas canvas = surfaceHolder.lockHardwareCanvas();
+        // Canvas canvas = surfaceHolder.lockHardwareCanvas();
         // 储存当前 canvas 设置
         canvas.save();
         // 设置缩放和偏移
@@ -114,11 +115,16 @@ public class GameView extends SurfaceView
         if (Game.getInstance() == null) return;
         synchronized (surfaceHolder) {
             XGraphicsAndroid xGraphics = getXGraphics();
+            Utils.getLogger().warn("\t\tgot xg at thread: {}", Thread.currentThread());
             xGraphics.getCanvas().drawColor(Color.BLACK);
+            Utils.getLogger().warn("\t\t\tgot canvas at thread: {}", Thread.currentThread());
             xGraphics.paintInOrdered(Game.getInstance());
+            Utils.getLogger().warn("\t\t\t\tpaintInOrdered at thread: {}", Thread.currentThread());
             xGraphics.paintInfo(Game.getInstance());
+            Utils.getLogger().warn("\t\t\t\t\tpaintInfo at thread: {}", Thread.currentThread());
             // 恢复 canvas 设置之后绘制遮罩
             surfaceHolder.unlockCanvasAndPost(xGraphics.getCanvas());
+            Utils.getLogger().warn("\t\t\t\t\t\tunlocked at thread: {}", Thread.currentThread());
         }
     }
 
