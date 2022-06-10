@@ -5,6 +5,7 @@ import java.util.Locale;
 import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
+import work.chiro.game.objects.thing.character.shogunate.ShogunateSoldier;
 import work.chiro.game.objects.thing.character.signora.LaSignora;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.timer.DelayTimer;
@@ -64,7 +65,14 @@ public class BattleActivity extends XActivity {
         });
         buttonChargedAttack.setFont("genshin");
 
-        getGame().getTimerController().add(new Timer(5000, (controller, timer) -> Utils.getLogger().info("generate enemies")));
+        getGame().getTimerController().add(new Timer(5000, (controller, timer) -> {
+            Utils.getLogger().info("generate enemies");
+            ShogunateSoldier shogunateSolder = new ShogunateSoldier(
+                    new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight * 1. / 2),
+                    new AbstractAction(null));
+            shogunateSolder.getAnimateContainer().setThing(shogunateSolder);
+            getGame().addThing(shogunateSolder);
+        }));
     }
 
     @Override
