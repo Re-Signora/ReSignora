@@ -21,7 +21,6 @@ import java.util.Objects;
 
 import work.chiro.game.application.GamePanel;
 import work.chiro.game.config.RunningConfig;
-import work.chiro.game.config.RunningConfigPC;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.XFont;
@@ -186,15 +185,19 @@ public abstract class XGraphicsPC extends XGraphics {
         Image resizedImage = raw.getScaledInstance((int) w, (int) h, Image.SCALE_DEFAULT);
         Graphics2D g;
         Image bufferedImage;
+        boolean speedUp = true;
         if (RunningConfig.enableHardwareSpeedup) {
             // 硬件加速
             try {
                 bufferedImage = getXGraphicsConfiguration().createCompatibleVolatileImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()), new ImageCapabilities(true), Transparency.BITMASK);
+                g = ((VolatileImage) bufferedImage).createGraphics();
             } catch (AWTException e) {
-                e.printStackTrace();
-                return image;
+                // e.printStackTrace();
+                // return image;
+                bufferedImage = getXGraphicsConfiguration().createCompatibleImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()), Transparency.BITMASK);
+                g = ((BufferedImage) bufferedImage).createGraphics();
+                speedUp = false;
             }
-            g = ((VolatileImage) bufferedImage).createGraphics();
         } else {
             bufferedImage = getXGraphicsConfiguration().createCompatibleImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()), Transparency.BITMASK);
             g = ((BufferedImage) bufferedImage).createGraphics();
@@ -204,7 +207,7 @@ public abstract class XGraphicsPC extends XGraphics {
         g.drawImage(resizedImage, 0, 0, (int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()), null);
         g.dispose();
         XImage<?> xImage;
-        if (RunningConfig.enableHardwareSpeedup) {
+        if (RunningConfig.enableHardwareSpeedup && speedUp) {
             assert bufferedImage instanceof VolatileImage;
             VolatileImage im = (VolatileImage) bufferedImage;
             xImage = new XImage<>() {
