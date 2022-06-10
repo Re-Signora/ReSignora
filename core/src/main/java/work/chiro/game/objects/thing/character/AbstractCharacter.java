@@ -9,10 +9,12 @@ import work.chiro.game.utils.timer.DelayTimer;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 
-public class AbstractCharacter extends AbstractThing<BasicCharacterAttributes, AbstractAction>
+public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttributes, AbstractAction>
         implements UnderAttack {
-    protected final DelayTimer skillAttackDelayTask = new DelayTimer();
-    protected final DelayTimer chargedAttackDelayTask = new DelayTimer();
+    protected final DelayTimer skillAttackDelayTask = getDelayTimer();
+    protected final DelayTimer chargedAttackDelayTask = getDelayTimer();
+
+    protected abstract DelayTimer getDelayTimer();
 
     public AbstractCharacter(String labelName, Class<BasicCharacterAttributes> attributesClass, Vec2 posInit, AbstractAction animateContainer, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super(labelName, attributesClass, posInit, animateContainer, sizeInit, rotationInit, alpha);

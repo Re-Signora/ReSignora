@@ -13,6 +13,7 @@ import work.chiro.game.compatible.ResourceProviderAndroid;
 import work.chiro.game.compatible.XGraphicsAndroid;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.x.compatible.XGraphics;
 
@@ -69,9 +70,10 @@ public class GameView extends SurfaceView
     }
 
     private XGraphicsAndroid getXGraphics() {
-        Canvas canvas = surfaceHolder.lockCanvas();
+        // Utils.getLogger().warn("will lock at thread: {}", Thread.currentThread());
+        // Canvas canvas = surfaceHolder.lockCanvas();
         // 使用硬件加速
-        // Canvas canvas = surfaceHolder.lockHardwareCanvas();
+        Canvas canvas = surfaceHolder.lockHardwareCanvas();
         // 储存当前 canvas 设置
         canvas.save();
         // 设置缩放和偏移
@@ -118,5 +120,11 @@ public class GameView extends SurfaceView
             // 恢复 canvas 设置之后绘制遮罩
             surfaceHolder.unlockCanvasAndPost(xGraphics.getCanvas());
         }
+    }
+
+    @Override
+    protected void onWindowVisibilityChanged(int visibility) {
+        Utils.getLogger().warn("gameView: onWindowVisibilityChanged");
+        super.onWindowVisibilityChanged(visibility);
     }
 }

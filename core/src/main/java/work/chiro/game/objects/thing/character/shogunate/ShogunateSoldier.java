@@ -3,6 +3,7 @@ package work.chiro.game.objects.thing.character.shogunate;
 import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.logic.attributes.BasicCharacterAttributes;
 import work.chiro.game.objects.thing.character.AbstractCharacter;
+import work.chiro.game.utils.timer.DelayTimer;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 
@@ -13,6 +14,11 @@ public class ShogunateSoldier extends AbstractCharacter {
 
     public ShogunateSoldier(Vec2 posInit, AbstractAction abstractAction) {
         this(posInit, abstractAction, null, null, null);
+    }
+
+    @Override
+    protected DelayTimer getDelayTimer() {
+        return new DelayTimer(getClass());
     }
 
     public ShogunateSoldier() {

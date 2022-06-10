@@ -25,7 +25,6 @@ import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.callback.BasicCallback;
 import work.chiro.game.utils.thread.MyThreadFactory;
 import work.chiro.game.utils.timer.TimeManager;
-import work.chiro.game.utils.timer.Timer;
 import work.chiro.game.utils.timer.TimerController;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.activity.XActivityManager;
@@ -120,9 +119,9 @@ public class Game {
         backgrounds.add(null);
         backgrounds.add(null);
         activityManager.setOnSwitchActivity(newActivity -> {
+            Utils.getLogger().info("setOnSwitchActivity({})", newActivity);
             if (newActivity == null) return;
             if (newActivity.getLayout() == null) return;
-            Utils.getLogger().info("setOnSwitchActivity({})", newActivity);
             if (getTopLayout().getBackground() != null) {
                 if (backgrounds.get(1) != null) {
                     backgrounds.set(0, backgrounds.get(1));
@@ -157,18 +156,18 @@ public class Game {
         this.onFrame = onFrame;
     }
 
-    public void addTimers() {
+    public void setTimers() {
         timerController.init(TimeManager.getTimeMills());
-        // 英雄射击事件
-        timerController.add(new Timer(RunningConfig.config.getHeroShoot(), (controller, timer) -> {
-            if (RunningConfig.autoShoot) {
-                characterAttack();
-            } else {
-                if (characterController.isShootPressed()) {
-                    characterAttack();
-                }
-            }
-        }));
+        // // 英雄射击事件
+        // timerController.add(new Timer(RunningConfig.config.getHeroShoot(), (controller, timer) -> {
+        //     if (RunningConfig.autoShoot) {
+        //         characterAttack();
+        //     } else {
+        //         if (characterController.isShootPressed()) {
+        //             characterAttack();
+        //         }
+        //     }
+        // }));
     }
 
     private void onGameExit() {
@@ -243,7 +242,7 @@ public class Game {
     public void action() {
         ResourceProvider.getInstance().musicLoadAll();
         Utils.getLogger().info("Game action start with difficulty: " + RunningConfig.difficulty);
-        addTimers();
+        setTimers();
         ResourceProvider.getInstance().startLoopMusic(MusicType.BGM);
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable mainTask = getMainTask();
