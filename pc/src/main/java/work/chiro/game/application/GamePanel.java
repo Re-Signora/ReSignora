@@ -56,7 +56,7 @@ public class GamePanel extends JPanel {
         if (Game.getInstance() == null) {
             Game.createInstance(heroControllerImpl);
         }
-        Game.getInstance().resetStates();
+        // Game.getInstance().resetStates();
     }
 
     public void action() {

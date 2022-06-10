@@ -3,8 +3,6 @@ package work.chiro.game.application;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -29,6 +27,7 @@ import work.chiro.game.objects.aircraft.HeroAircraftFactory;
 import work.chiro.game.resource.ImageManager;
 import work.chiro.game.storage.history.HistoryObjectFactory;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.UtilsAndroid;
 import work.chiro.game.utils.callback.BasicCallback;
 import work.chiro.game.utils.thread.MyThreadFactory;
 import work.chiro.game.x.activity.XActivity;
@@ -53,6 +52,8 @@ public class GameActivity extends AppCompatActivity {
         } else {
             int windowWidth = surfaceView.getMeasuredWidth();
             int windowHeight = surfaceView.getMeasuredHeight();
+            // int windowWidth = 2400;
+            // int windowHeight = 1080;
             canvas.translate((windowWidth * 1.0f - RunningConfig.windowWidth * XGraphicsAndroid.getCanvasScale()) / 2,
                     (windowHeight * 1.0f - RunningConfig.windowHeight * XGraphicsAndroid.getCanvasScale()) / 2);
             canvas.scale(XGraphicsAndroid.getCanvasScale(), XGraphicsAndroid.getCanvasScale());
@@ -134,7 +135,7 @@ public class GameActivity extends AppCompatActivity {
 
         Game.clearInstance();
         game = Game.createInstance(heroControllerAndroid);
-        game.setOnExit(this::finish);
+        // game.setOnExit(this::finish);
 
         game.setOnPaint(() -> {
             if (surfaceHolder == null) {
@@ -190,21 +191,15 @@ public class GameActivity extends AppCompatActivity {
             v.performClick();
             return true;
         });
+        HistoryImplAndroid.getInstance(this);
     }
 
     private void resetScale() {
-        if (RunningConfig.windowWidth > RunningConfig.windowHeight) {
-            if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            }
-        } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-        }
-
-        // int windowWidth = surfaceView.getMeasuredWidth();
-        // int windowHeight = surfaceView.getMeasuredHeight();
-        int windowWidth = 2400;
-        int windowHeight = 1080;
+        UtilsAndroid.setScreen(this);
+        int windowWidth = surfaceView.getMeasuredWidth();
+        int windowHeight = surfaceView.getMeasuredHeight();
+        // int windowWidth = 2400;
+        // int windowHeight = 1080;
 
         if (RunningConfig.allowResize) {
             RunningConfig.windowWidth = windowWidth;
@@ -228,12 +223,15 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+        super.onStart();
         // MyThreadFactory.getInstance().newThread(() -> {
-        //     try {
-        //         Thread.sleep(300);
-        //     } catch (InterruptedException e) {
-        //         e.printStackTrace();
-        //     }
+        UtilsAndroid.setScreen(this);
+        // try {
+        //     Thread.sleep(1000);
+        // } catch (InterruptedException e) {
+        //     e.printStackTrace();
+        // }
+
         //     resetGame();
         //     game.action();
         //     HistoryImplAndroid.getInstance(this);
@@ -246,8 +244,6 @@ public class GameActivity extends AppCompatActivity {
         resetGame();
         MyThreadFactory.getInstance().newThread(() -> game.action(), "StartGame").start();
         // game.action();
-        HistoryImplAndroid.getInstance(this);
-        super.onStart();
     }
 
     @Override

@@ -52,7 +52,7 @@ public class GameWindow extends AbstractSceneClient {
 
     @Override
     public void startAction() {
-        gamePanel.resetStates();
+        // gamePanel.resetStates();
         gamePanel.action();
     }
 }

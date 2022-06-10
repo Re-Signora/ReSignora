@@ -13,6 +13,7 @@ import java.util.Map;
 import work.chiro.game.compatible.ResourceProviderAndroid;
 import work.chiro.game.config.Difficulty;
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.utils.UtilsAndroid;
 import work.chiro.game.x.compatible.ResourceProvider;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,5 +49,11 @@ public class MainActivity extends AppCompatActivity {
         CheckBox musicEnable = findViewById(R.id.musicEnableCheckBox);
         musicEnable.setChecked(RunningConfig.musicEnable);
         musicEnable.setOnCheckedChangeListener((buttonView, isChecked) -> RunningConfig.musicEnable = isChecked);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        UtilsAndroid.setScreen(this);
     }
 }
