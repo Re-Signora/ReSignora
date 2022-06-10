@@ -186,7 +186,7 @@ public abstract class XGraphicsPC extends XGraphics {
         Image resizedImage = raw.getScaledInstance((int) w, (int) h, Image.SCALE_DEFAULT);
         Graphics2D g;
         Image bufferedImage;
-        if (RunningConfigPC.enableHardwareSpeedup) {
+        if (RunningConfig.enableHardwareSpeedup) {
             // 硬件加速
             try {
                 bufferedImage = getXGraphicsConfiguration().createCompatibleVolatileImage((int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()), new ImageCapabilities(true), Transparency.BITMASK);
@@ -204,7 +204,7 @@ public abstract class XGraphicsPC extends XGraphics {
         g.drawImage(resizedImage, 0, 0, (int) (w * GamePanel.getScale()), (int) (h * GamePanel.getScale()), null);
         g.dispose();
         XImage<?> xImage;
-        if (RunningConfigPC.enableHardwareSpeedup) {
+        if (RunningConfig.enableHardwareSpeedup) {
             assert bufferedImage instanceof VolatileImage;
             VolatileImage im = (VolatileImage) bufferedImage;
             xImage = new XImage<>() {

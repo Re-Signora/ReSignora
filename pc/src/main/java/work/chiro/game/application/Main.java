@@ -29,7 +29,7 @@ public class Main {
         ResourceProvider.setInstance(new ResourceProviderPC());
         Utils.getLogger().info("Hello Re-Signora");
 
-        if (RunningConfigPC.enableHardwareSpeedup) {
+        if (RunningConfig.enableHardwareSpeedup) {
             System.setProperty("sun.java2d.opengl", "true");
             System.setProperty("swing.aatext", "true");
             System.setProperty("sun.java2d.ddscale", "true");

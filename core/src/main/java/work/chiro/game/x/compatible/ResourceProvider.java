@@ -102,4 +102,8 @@ public abstract class ResourceProvider {
 
     public void stopXGraphics() {
     }
+
+    public Object waitXGraphicsObject() {
+        return ResourceProvider.class;
+    }
 }
