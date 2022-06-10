@@ -207,6 +207,7 @@ public class Game {
                 if (onFrame != null) {
                     onFrame.run();
                 }
+                getActivityManager().onFrame();
                 // 所有物体移动
                 synchronized (allThings) {
                     allThings.forEach(objList -> objList.forEach(AbstractObject::forward));

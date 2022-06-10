@@ -6,6 +6,7 @@ import work.chiro.game.game.Game;
 import work.chiro.game.logic.attributes.BasicCharacterAttributes;
 import work.chiro.game.objects.thing.attack.Butterfly;
 import work.chiro.game.objects.thing.character.AbstractCharacter;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.utils.timer.Timer;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
@@ -42,7 +43,6 @@ public class LaSignora extends AbstractCharacter {
     public LaSignora(Vec2 posInit, AbstractAction abstractAction, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super("la-signora", BasicCharacterAttributes.class, posInit, abstractAction, sizeInit, rotationInit, alpha);
         handButterfly = new HandButterfly(getPosition());
-        // normalAttackTask = new Timer(getBasicAttributes().getNormalAttackDelay(), normalAttackDelayTask);
         normalAttackTask = new Timer(getBasicAttributes().getNormalAttackCoolDown() * 1000, (controller, timer) -> this.normalAttack());
         Game.getInstance().getTimerController().add(normalAttackTask);
     }
@@ -91,6 +91,7 @@ public class LaSignora extends AbstractCharacter {
                             .setImageIndexNow(handButterfly.getImageIndexNow())
             );
             skillAttackDelayTask.setNotValid();
+            skillAttackDelayTask.setTimeMark(TimeManager.getTimeMills());
             Game.getInstance().getTimerController().add(new Timer(getBasicAttributes().getSkillAttackCoolDown() * 1000, skillAttackDelayTask));
         }
     }
@@ -104,6 +105,7 @@ public class LaSignora extends AbstractCharacter {
                             .setImageIndexNow(handButterfly.getImageIndexNow())
             );
             chargedAttackDelayTask.setNotValid();
+            chargedAttackDelayTask.setTimeMark(TimeManager.getTimeMills());
             Game.getInstance().getTimerController().add(new Timer(getBasicAttributes().getChargedAttackCoolDown() * 1000, chargedAttackDelayTask));
         }
     }

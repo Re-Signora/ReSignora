@@ -88,4 +88,8 @@ public class XActivityManager {
     public boolean canExit() {
         return activities.size() <= 1;
     }
+
+    public void onFrame() {
+        activities.forEach(XActivity::onFrame);
+    }
 }

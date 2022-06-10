@@ -128,8 +128,8 @@ public abstract class XActivity {
             if (view.isIn(relativePosition)) {
                 view.trigger(new XEvent(XEventType.Move)
                         .setPosition(relativePosition));
-                    view.trigger(new XEvent(XEventType.Click)
-                            .setPosition(relativePosition));
+                view.trigger(new XEvent(XEventType.Click)
+                        .setPosition(relativePosition));
                 if (view.isEntered()) {
                     view.trigger(new XEvent(XEventType.Up)
                             .setPosition(relativePosition));
@@ -151,5 +151,8 @@ public abstract class XActivity {
     }
 
     protected void onStop() {
+    }
+
+    protected void onFrame() {
     }
 }

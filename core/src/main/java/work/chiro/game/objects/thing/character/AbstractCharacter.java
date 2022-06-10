@@ -16,6 +16,8 @@ public class AbstractCharacter extends AbstractThing<BasicCharacterAttributes, A
 
     public AbstractCharacter(String labelName, Class<BasicCharacterAttributes> attributesClass, Vec2 posInit, AbstractAction animateContainer, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super(labelName, attributesClass, posInit, animateContainer, sizeInit, rotationInit, alpha);
+        skillAttackDelayTask.setValid();
+        chargedAttackDelayTask.setValid();
     }
 
     public AbstractCharacter(String labelName, Class<BasicCharacterAttributes> attributesClass, Vec2 posInit, AbstractAction animateContainer) {
@@ -43,5 +45,13 @@ public class AbstractCharacter extends AbstractThing<BasicCharacterAttributes, A
     @Override
     public BasicCharacterAttributes getBasicAttributes() {
         return (BasicCharacterAttributes) super.getBasicAttributes();
+    }
+
+    public DelayTimer getSkillAttackDelayTask() {
+        return skillAttackDelayTask;
+    }
+
+    public DelayTimer getChargedAttackDelayTask() {
+        return chargedAttackDelayTask;
     }
 }
