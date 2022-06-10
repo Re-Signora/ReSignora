@@ -9,6 +9,78 @@
       "id": "button返回"
     },
     {
+      "id": "button助战魔偶3",
+      "type": "Button",
+      "image": "icons/助战魔偶3.png",
+      "position": [
+        1950,
+        726
+      ]
+    },
+    {
+      "id": "button助战魔偶2",
+      "type": "Button",
+      "image": "icons/助战魔偶2.png",
+      "position": [
+        2110,
+        726
+      ]
+    },
+    {
+      "id": "button助战魔偶1",
+      "type": "Button",
+      "image": "icons/助战魔偶1.png",
+      "position": [
+        2266,
+        726
+      ]
+    },
+    {
+      "id": "button食物1",
+      "type": "Button",
+      "image": "icons/食物1.png",
+      "position": [
+        1771,
+        811
+      ]
+    },
+    {
+      "id": "button食物2",
+      "type": "Button",
+      "image": "icons/食物2.png",
+      "position": [
+        1695,
+        943
+      ]
+    },
+    {
+      "id": "button食物3",
+      "type": "Button",
+      "image": "icons/食物3.png",
+      "position": [
+        1843,
+        942
+      ]
+    },
+    {
+      "id": "buttonSkillAttack",
+      "type": "Button",
+      "image": "icons/元素战技.png",
+      "position": [
+        1977,
+        879
+      ]
+    },
+    {
+      "id": "buttonChargedAttack",
+      "type": "Button",
+      "image": "icons/元素爆发.png",
+      "position": [
+        2218,
+        879
+      ]
+    },
+    {
       "type": "JoySticks",
       "id": "joySticks"
     }
