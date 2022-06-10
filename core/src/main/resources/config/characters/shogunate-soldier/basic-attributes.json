@@ -1,0 +1,13 @@
+{
+  "maxHp": 100,
+  "speed": 10,
+  "st": 0,
+  "DEF": 20,
+  "ATK": 15,
+  "pierce": 0,
+  "CRIT_Rate": 5,
+  "CRIT_DMG": 105,
+  "duration": 120,
+  "extraDMGRate": 50,
+  "normalAttackSpeed": 5.0
+}
