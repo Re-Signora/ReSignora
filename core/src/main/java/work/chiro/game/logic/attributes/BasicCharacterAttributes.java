@@ -3,7 +3,7 @@ package work.chiro.game.logic.attributes;
 public class BasicCharacterAttributes extends BasicThingAttributes {
     public int maxHp = 400;
     /**
-     * 普攻攻速
+     * 移动速度
      */
     public int speed = 10;
     /**
@@ -26,6 +26,10 @@ public class BasicCharacterAttributes extends BasicThingAttributes {
      * 穿透
      */
     public int pierce = 0;
+    /**
+     * 普攻攻速
+     */
+    public double normalAttackSpeed = 5;
 
     public int getMaxHp() {
         return maxHp;
@@ -81,5 +85,13 @@ public class BasicCharacterAttributes extends BasicThingAttributes {
 
     public void setPierce(int pierce) {
         this.pierce = pierce;
+    }
+
+    public double getNormalAttackSpeed() {
+        return normalAttackSpeed;
+    }
+
+    public double getNormalAttackDelay() {
+        return 5.0 / getNormalAttackSpeed();
     }
 }

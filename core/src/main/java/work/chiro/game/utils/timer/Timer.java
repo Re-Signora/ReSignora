@@ -23,10 +23,10 @@ public class Timer {
         this.change = null;
     }
 
-    private void judgeToRun() {
+    private void judgeToRun(TimerController timerController) {
         if (time >= duration) {
             time %= duration;
-            callback.run();
+            callback.run(timerController, this);
         }
     }
 
@@ -35,7 +35,7 @@ public class Timer {
         if (change != null) {
             duration = change.getScaleNow().getX();
         }
-        judgeToRun();
+        judgeToRun(timerController);
     }
 
     public void update(double timeNow) {

@@ -147,7 +147,7 @@ public class GamePanel extends JPanel {
 
     public void addTimers() {
         // 获取键盘焦点
-        Game.getInstance().getTimerController().add(new Timer(100, this::requestFocus));
+        Game.getInstance().getTimerController().add(new Timer(100, (controller, timer) -> this.requestFocus()));
     }
 
     /**

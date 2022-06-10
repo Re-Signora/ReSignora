@@ -37,7 +37,7 @@ public class LaSignora extends AbstractCharacter {
     }
 
     private final HandButterfly handButterfly;
-    private final Timer normalAttackTask = new Timer(3000, this::normalAttack);
+    private final Timer normalAttackTask = new Timer(3000, (controller, timer) -> this.normalAttack());
 
     public LaSignora(Vec2 posInit, AbstractAction abstractAction, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super("la-signora", BasicCharacterAttributes.class, posInit, abstractAction, sizeInit, rotationInit, alpha);

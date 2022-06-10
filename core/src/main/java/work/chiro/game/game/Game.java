@@ -165,7 +165,7 @@ public class Game {
     public void addTimers() {
         timerController.init(TimeManager.getTimeMills());
         // 英雄射击事件
-        timerController.add(new Timer(RunningConfig.config.getHeroShoot(), () -> {
+        timerController.add(new Timer(RunningConfig.config.getHeroShoot(), (controller, timer) -> {
             if (RunningConfig.autoShoot) {
                 characterAttack();
             } else {
