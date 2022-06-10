@@ -132,6 +132,7 @@ public class GameActivity extends AppCompatActivity {
 
         surfaceView.post(this::resetGame);
 
+        Game.clearInstance();
         game = Game.createInstance(heroControllerAndroid);
         game.setOnExit(this::finish);
 
