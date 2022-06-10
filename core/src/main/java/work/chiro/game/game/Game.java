@@ -130,13 +130,7 @@ public class Game {
                 backgrounds.set(1, new BasicBackgroundFactory(getTopLayout().getBackground()).create());
             }
         });
-        activityManager.setOnFinishAllActivities(() -> {
-            if (onExit != null) {
-                getTimerController().disable();
-                clearInstance();
-                onExit.run();
-            }
-        });
+        activityManager.setOnFinishAllActivities(this::onGameExit);
         activityManager.startActivityWithBundle(HomeActivity.class);
         Utils.getLogger().info("Game instance created!");
     }
@@ -175,12 +169,20 @@ public class Game {
                 }
             }
         }));
-        // 输出当前 config
-        // if (RunningConfig.difficulty != Easy) {
-        //     timerController.add(new Timer(2000, () -> RunningConfig.config.printNow()));
-        // } else {
-        //     Utils.getLogger().info("简单模式 Config 将不会改变: " + RunningConfig.config);
-        // }
+    }
+
+    private void onGameExit() {
+        if (future != null) {
+            future.cancel(true);
+        }
+        if (onExit != null) {
+            getTimerController().disable();
+            clearInstance();
+            onExit.run();
+        }
+        if (onFinish != null) {
+            onFinish.run();
+        }
     }
 
     private void onGameOver() {

@@ -1,91 +1,29 @@
 package work.chiro.game.application;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.Window;
-import android.widget.EditText;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import work.chiro.game.compatible.CharacterControllerAndroidImpl;
 import work.chiro.game.compatible.HistoryImplAndroid;
-import work.chiro.game.compatible.ResourceProviderAndroid;
 import work.chiro.game.compatible.XGraphicsAndroid;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.objects.aircraft.HeroAircraftFactory;
 import work.chiro.game.resource.ImageManager;
-import work.chiro.game.storage.history.HistoryObjectFactory;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.UtilsAndroid;
-import work.chiro.game.utils.callback.BasicCallback;
 import work.chiro.game.utils.thread.MyThreadFactory;
 import work.chiro.game.x.activity.XActivity;
-import work.chiro.game.x.compatible.ResourceProvider;
-import work.chiro.game.x.compatible.XGraphics;
 
 public class GameActivity extends AppCompatActivity {
     private SurfaceHolder surfaceHolder;
     private Game game = null;
-    SurfaceView surfaceView = null;
+    GameView gameView = null;
     private final CharacterControllerAndroidImpl heroControllerAndroid = new CharacterControllerAndroidImpl();
-
-    private XGraphicsAndroid getXGraphics() {
-        // Canvas canvas = surfaceHolder.lockCanvas();
-        // 使用硬件加速
-        Canvas canvas = surfaceHolder.lockHardwareCanvas();
-        // 储存当前 canvas 设置
-        canvas.save();
-        // 设置缩放和偏移
-        if (RunningConfig.allowResize) {
-            canvas.scale(1.0f, 1.0f);
-        } else {
-            int windowWidth = surfaceView.getMeasuredWidth();
-            int windowHeight = surfaceView.getMeasuredHeight();
-            canvas.translate((windowWidth * 1.0f - RunningConfig.windowWidth * XGraphicsAndroid.getCanvasScale()) / 2,
-                    (windowHeight * 1.0f - RunningConfig.windowHeight * XGraphicsAndroid.getCanvasScale()) / 2);
-            canvas.scale(XGraphicsAndroid.getCanvasScale(), XGraphicsAndroid.getCanvasScale());
-        }
-        Paint paint = new Paint();
-        XGraphicsAndroid xGraphics = new XGraphicsAndroid() {
-            private Paint p = paint;
-
-            @Override
-            public Canvas getCanvas() {
-                return canvas;
-            }
-
-            @Override
-            public Paint getPaint() {
-                return p;
-            }
-
-            @Override
-            public Paint getNewPaint() {
-                p = new Paint();
-                return p;
-            }
-        };
-        canvas.drawColor(Color.BLACK);
-        return xGraphics;
-    }
-
-    private synchronized void draw() {
-        XGraphicsAndroid xGraphics = getXGraphics();
-        xGraphics.getCanvas().drawColor(Color.BLACK);
-        xGraphics.paintInOrdered(game);
-        xGraphics.paintInfo(game);
-        // 恢复 canvas 设置之后绘制遮罩
-        surfaceHolder.unlockCanvasAndPost(xGraphics.getCanvas());
-    }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -94,38 +32,15 @@ public class GameActivity extends AppCompatActivity {
 
         // 设置内部模式
         RunningConfig.modePC = false;
-
         RunningConfig.scaleBackground = false;
 
-        ResourceProvider.setInstance(new ResourceProviderAndroid() {
-            @Override
-            protected Context getContext() {
-                return GameActivity.this;
-            }
-
-            private Canvas lastCanvas = null;
-
-            @Override
-            public XGraphics getXGraphics() {
-                XGraphicsAndroid g = GameActivity.this.getXGraphics();
-                lastCanvas = g.getCanvas();
-                return g;
-            }
-
-            @Override
-            public void stopXGraphics() {
-                super.stopXGraphics();
-                surfaceHolder.unlockCanvasAndPost(lastCanvas);
-                lastCanvas = null;
-            }
-        });
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_game);
 
-        surfaceView = findViewById(R.id.gameSurfaceView);
-        surfaceHolder = surfaceView.getHolder();
+        gameView = new GameView(this);
+        setContentView(gameView);
+        surfaceHolder = gameView.getHolder();
 
-        surfaceView.post(this::resetGame);
+        gameView.post(this::resetGame);
 
         Game.clearInstance();
         game = Game.createInstance(heroControllerAndroid);
@@ -135,52 +50,50 @@ public class GameActivity extends AppCompatActivity {
             if (surfaceHolder == null) {
                 return;
             }
-            // synchronized (XGraphics.class) {
-            draw();
-            // }
+            gameView.draw();
         });
-        game.setOnFinish(() -> {
-            Utils.getLogger().info("FINISH!!!");
-            surfaceView.post(() -> {
-                EditText editName = new EditText(this);
-                EditText editMessage = new EditText(this);
-                editName.setText(R.string.dialog_input_name_default);
-                editMessage.setText(R.string.dialog_input_message_default);
-                BasicCallback goHistory = () -> {
-                    startActivity(new Intent(GameActivity.this, HistoryActivity.class));
-                    finish();
-                };
-                if (RunningConfig.score > 0) {
-                    new AlertDialog.Builder(GameActivity.this, R.style.AlertDialogCustom).setTitle(R.string.dialog_input_name_title)
-                            .setView(editName)
-                            .setCancelable(false)
-                            .setNegativeButton(R.string.button_cancel, (d, w) -> goHistory.run())
-                            .setPositiveButton(R.string.button_ok, (dialogName, witch) -> surfaceView.post(() -> {
-                                String name = editName.getText().toString();
-                                new AlertDialog.Builder(GameActivity.this, R.style.AlertDialogCustom).setTitle(R.string.dialog_input_message_title)
-                                        .setView(editMessage)
-                                        .setCancelable(false)
-                                        .setNegativeButton(R.string.button_cancel, (d, w) -> goHistory.run())
-                                        .setPositiveButton(R.string.button_ok, (dialogMessage, witch2) -> {
-                                            String message = editMessage.getText().toString();
-                                            HistoryImplAndroid.getInstance(GameActivity.this).addOne(
-                                                    new HistoryObjectFactory(
-                                                            name,
-                                                            RunningConfig.score,
-                                                            message,
-                                                            RunningConfig.difficulty)
-                                                            .create()
-                                            );
-                                            HistoryImplAndroid.getInstance(GameActivity.this).display();
-                                            goHistory.run();
-                                        }).show();
-                            }))
-                            .show();
-                }
-            });
-        });
+        // game.setOnFinish(() -> {
+        //     Utils.getLogger().info("FINISH!!!");
+        //     surfaceView.post(() -> {
+        //         EditText editName = new EditText(this);
+        //         EditText editMessage = new EditText(this);
+        //         editName.setText(R.string.dialog_input_name_default);
+        //         editMessage.setText(R.string.dialog_input_message_default);
+        //         BasicCallback goHistory = () -> {
+        //             startActivity(new Intent(GameActivity.this, HistoryActivity.class));
+        //             finish();
+        //         };
+        //         if (RunningConfig.score > 0) {
+        //             new AlertDialog.Builder(GameActivity.this, R.style.AlertDialogCustom).setTitle(R.string.dialog_input_name_title)
+        //                     .setView(editName)
+        //                     .setCancelable(false)
+        //                     .setNegativeButton(R.string.button_cancel, (d, w) -> goHistory.run())
+        //                     .setPositiveButton(R.string.button_ok, (dialogName, witch) -> surfaceView.post(() -> {
+        //                         String name = editName.getText().toString();
+        //                         new AlertDialog.Builder(GameActivity.this, R.style.AlertDialogCustom).setTitle(R.string.dialog_input_message_title)
+        //                                 .setView(editMessage)
+        //                                 .setCancelable(false)
+        //                                 .setNegativeButton(R.string.button_cancel, (d, w) -> goHistory.run())
+        //                                 .setPositiveButton(R.string.button_ok, (dialogMessage, witch2) -> {
+        //                                     String message = editMessage.getText().toString();
+        //                                     HistoryImplAndroid.getInstance(GameActivity.this).addOne(
+        //                                             new HistoryObjectFactory(
+        //                                                     name,
+        //                                                     RunningConfig.score,
+        //                                                     message,
+        //                                                     RunningConfig.difficulty)
+        //                                                     .create()
+        //                                     );
+        //                                     HistoryImplAndroid.getInstance(GameActivity.this).display();
+        //                                     goHistory.run();
+        //                                 }).show();
+        //                     }))
+        //                     .show();
+        //         }
+        //     });
+        // });
         game.setOnFrame(heroControllerAndroid::onFrame);
-        surfaceView.setOnTouchListener((v, event) -> {
+        gameView.setOnTouchListener((v, event) -> {
             heroControllerAndroid.onTouchEvent(event);
             v.performClick();
             return true;
@@ -190,8 +103,8 @@ public class GameActivity extends AppCompatActivity {
 
     private void resetScale() {
         UtilsAndroid.setScreen(this);
-        int windowWidth = surfaceView.getMeasuredWidth();
-        int windowHeight = surfaceView.getMeasuredHeight();
+        int windowWidth = gameView.getMeasuredWidth();
+        int windowHeight = gameView.getMeasuredHeight();
 
         if (RunningConfig.allowResize) {
             RunningConfig.windowWidth = windowWidth;

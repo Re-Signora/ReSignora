@@ -17,7 +17,6 @@ import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.activity.XBundle;
-import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.x.ui.builder.XViewCallback;
 import work.chiro.game.x.ui.event.XEventType;
 import work.chiro.game.x.ui.view.XButton;
@@ -52,13 +51,16 @@ public class BattleActivity extends XActivity {
     @Override
     protected void onCreate(XBundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utils.getLogger().warn("BattleActivity onCreate() !");
         setContentView("battle");
         buttonBack = (XButton) findViewById("button返回");
         buttonBack.setOnClick((xView, xEvent) -> finish());
         Utils.getLogger().info("loading resource...");
         // synchronized (XGraphics.class) {
-            new LaSignora().preLoadResources(ResourceProvider.getInstance().getXGraphics());
-            ResourceProvider.getInstance().stopXGraphics();
+
+        // new LaSignora().preLoadResources(ResourceProvider.getInstance().getXGraphics());
+        // ResourceProvider.getInstance().stopXGraphics();
+
         // }
         Utils.getLogger().info("loading resource done");
         signora = new LaSignora(new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight * 1. / 2), new AbstractAction(null));
