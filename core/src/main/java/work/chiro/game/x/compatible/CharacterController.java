@@ -1,12 +1,12 @@
 package work.chiro.game.x.compatible;
 
 import work.chiro.game.config.RunningConfig;
-import work.chiro.game.objects.AbstractObject;
+import work.chiro.game.objects.thing.character.AbstractCharacter;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.ui.view.XJoySticks;
 
-public abstract class ObjectController {
+public abstract class CharacterController {
     protected Double lastFrameTime = null;
     protected double movingScale = 0.26;
     final public double MOVE_SPEED = 1;
@@ -14,13 +14,13 @@ public abstract class ObjectController {
 
     abstract public boolean isShootPressed();
 
-    private AbstractObject<?> target = null;
+    private AbstractCharacter target = null;
 
-    public void setTarget(AbstractObject<?> target) {
+    public void setTarget(AbstractCharacter target) {
         this.target = target;
     }
 
-    public AbstractObject<?> getTarget() {
+    public AbstractCharacter getTarget() {
         return target;
     }
 

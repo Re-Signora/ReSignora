@@ -9,9 +9,9 @@ import work.chiro.game.game.Game;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Vec2;
-import work.chiro.game.x.compatible.ObjectController;
+import work.chiro.game.x.compatible.CharacterController;
 
-public class ObjectControllerAndroidImpl extends ObjectController {
+public class CharacterControllerAndroidImpl extends CharacterController {
     private double scale = 1.0;
 
     @Override

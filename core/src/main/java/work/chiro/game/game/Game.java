@@ -29,7 +29,7 @@ import work.chiro.game.utils.timer.Timer;
 import work.chiro.game.utils.timer.TimerController;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.activity.XActivityManager;
-import work.chiro.game.x.compatible.ObjectController;
+import work.chiro.game.x.compatible.CharacterController;
 import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.x.ui.layout.XLayout;
 import work.chiro.game.x.ui.layout.XLayoutManager;
@@ -43,10 +43,10 @@ public class Game {
         return instance;
     }
 
-    public static Game createInstance(ObjectController objectController) {
+    public static Game createInstance(CharacterController characterController) {
         Utils.getLogger().info("will create Game!");
         assert instance == null;
-        instance = new Game(objectController);
+        instance = new Game(characterController);
         return instance;
     }
 
@@ -75,7 +75,7 @@ public class Game {
     private BasicCallback onFinish = null;
     private BasicCallback onPaint = null;
     private BasicCallback onFrame = null;
-    private final ObjectController objectController;
+    private final CharacterController characterController;
     private final XActivityManager activityManager = new XActivityManager(this);
 
     public XActivityManager getActivityManager() {
@@ -113,8 +113,8 @@ public class Game {
         timerController.clear();
     }
 
-    private Game(ObjectController objectController) {
-        this.objectController = objectController;
+    private Game(CharacterController characterController) {
+        this.characterController = characterController;
         RunningConfig.config = new ConfigFactory(RunningConfig.difficulty).create();
         backgrounds.add(null);
         backgrounds.add(null);
@@ -169,7 +169,7 @@ public class Game {
             if (RunningConfig.autoShoot) {
                 characterAttack();
             } else {
-                if (objectController.isShootPressed()) {
+                if (characterController.isShootPressed()) {
                     characterAttack();
                 }
             }
@@ -312,8 +312,8 @@ public class Game {
         }
     }
 
-    public ObjectController getObjectController() {
-        return objectController;
+    public CharacterController getObjectController() {
+        return characterController;
     }
 
     /**

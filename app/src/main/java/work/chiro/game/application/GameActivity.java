@@ -19,7 +19,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import work.chiro.game.compatible.ObjectControllerAndroidImpl;
+import work.chiro.game.compatible.CharacterControllerAndroidImpl;
 import work.chiro.game.compatible.HistoryImplAndroid;
 import work.chiro.game.compatible.ResourceProviderAndroid;
 import work.chiro.game.compatible.XGraphicsAndroid;
@@ -39,7 +39,7 @@ public class GameActivity extends AppCompatActivity {
     private SurfaceHolder surfaceHolder;
     private Game game = null;
     SurfaceView surfaceView = null;
-    private final ObjectControllerAndroidImpl heroControllerAndroid = new ObjectControllerAndroidImpl();
+    private final CharacterControllerAndroidImpl heroControllerAndroid = new CharacterControllerAndroidImpl();
 
     private XGraphicsAndroid getXGraphics() {
         // Canvas canvas = surfaceHolder.lockCanvas();

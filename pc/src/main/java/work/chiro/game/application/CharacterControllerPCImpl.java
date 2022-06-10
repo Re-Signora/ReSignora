@@ -12,7 +12,7 @@ import work.chiro.game.game.Game;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Vec2;
-import work.chiro.game.x.compatible.ObjectController;
+import work.chiro.game.x.compatible.CharacterController;
 
 /**
  * 英雄机控制类
@@ -20,23 +20,29 @@ import work.chiro.game.x.compatible.ObjectController;
  *
  * @author hitsz
  */
-public class ObjectControllerPCImpl extends ObjectController {
+public class CharacterControllerPCImpl extends CharacterController {
     static public class KeyCode {
         public final static int UP = KeyEvent.VK_W;
         public final static int DOWN = KeyEvent.VK_S;
         public final static int LEFT = KeyEvent.VK_A;
         public final static int RIGHT = KeyEvent.VK_D;
+        public final static int SKILL = KeyEvent.VK_E;
+        public final static int CHARGED = KeyEvent.VK_Q;
+        public final static int CHARACTER_1 = KeyEvent.VK_1;
+        public final static int CHARACTER_2 = KeyEvent.VK_2;
+        public final static int CHARACTER_3 = KeyEvent.VK_3;
+        public final static int CHARACTER_4 = KeyEvent.VK_4;
         public final static int QUIT = KeyEvent.VK_ENTER;
     }
 
     final private Set<Integer> pressedKeys = new HashSet<>();
-    private static ObjectControllerPCImpl instance = null;
+    private static CharacterControllerPCImpl instance = null;
 
     private Vec2 getScaledPosition(MouseEvent e) {
         return new Vec2().fromVector(new Vec2(e.getX(), e.getY()).divide(GamePanel.getScale()));
     }
 
-    public ObjectControllerPCImpl(GamePanel game) {
+    public CharacterControllerPCImpl(GamePanel game) {
         KeyAdapter keyAdapter = new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -123,10 +129,10 @@ public class ObjectControllerPCImpl extends ObjectController {
         lastFrameTime = now;
     }
 
-    static public ObjectControllerPCImpl getInstance(GamePanel game) {
+    static public CharacterControllerPCImpl getInstance(GamePanel game) {
         if (instance == null) {
-            synchronized (ObjectControllerPCImpl.class) {
-                instance = new ObjectControllerPCImpl(game);
+            synchronized (CharacterControllerPCImpl.class) {
+                instance = new CharacterControllerPCImpl(game);
             }
         }
         return instance;
