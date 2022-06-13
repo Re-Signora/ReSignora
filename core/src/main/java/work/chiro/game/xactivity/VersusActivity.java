@@ -4,6 +4,7 @@ import work.chiro.game.dialogue.DialogueBean;
 import work.chiro.game.dialogue.DialogueManager;
 import work.chiro.game.game.Game;
 import work.chiro.game.objects.thing.character.signora.LaSignora;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.thread.MyThreadFactory;
 import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.x.activity.XBundle;
@@ -25,6 +26,7 @@ public class VersusActivity extends BattleActivity {
         super.onStart();
         if (!connected) {
             TimeManager.timePause();
+            Utils.getLogger().info("pause");
             MyThreadFactory.getInstance().newThread(() -> {
                 dialogue.setVisible(true);
                 dialogue.setDialogueManager(new DialogueManager() {
@@ -38,6 +40,7 @@ public class VersusActivity extends BattleActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                TimeManager.timeResume();
                 connected = true;
                 dialogue.setDialogueManager(new DialogueManager() {
                     @Override
@@ -46,7 +49,7 @@ public class VersusActivity extends BattleActivity {
                     }
                 });
                 dialogue.setOnNextText((xView, xEvent) -> dialogue.setVisible(false));
-            });
+            }).start();
         }
     }
 }

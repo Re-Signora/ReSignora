@@ -40,6 +40,7 @@ public class Butterfly extends AbstractAttack {
             if (RunningConfig.modePC) {
                 setSize(targetSize);
             } else {
+                if (getSize() == null) setSize(targetSize);
                 // Android 平台进行缩放性能好一些
                 sizeAnimate = new Animate.SmoothTo<>(
                         getSize(),
