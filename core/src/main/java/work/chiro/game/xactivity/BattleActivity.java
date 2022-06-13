@@ -105,10 +105,12 @@ public class BattleActivity extends XActivity {
             getGame().addEnemyThing(shogunateSolderInitial);
         }).start();
 
-        getGame().getTimerController().add(getClass(), new Timer(50000, (controller, timer) -> {
+        getGame().getTimerController().add(getClass(), new Timer(5000, (controller, timer) -> {
             Utils.getLogger().info("generate enemies");
             ShogunateSoldier shogunateSolder = new ShogunateSoldier(
-                    new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight * 1. / 2),
+                    Utils.randomPosition(
+                            new Vec2().fromVector(new Vec2(RunningConfig.windowWidth, RunningConfig.windowHeight).times(0.1)),
+                            new Vec2().fromVector(new Vec2(RunningConfig.windowWidth, RunningConfig.windowHeight).times(0.9))),
                     new AbstractAction(null));
             shogunateSolder.getAnimateContainer().setThing(shogunateSolder);
             shogunateSolder.setFlipped(true);
