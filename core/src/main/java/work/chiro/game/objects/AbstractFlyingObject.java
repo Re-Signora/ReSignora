@@ -1,6 +1,7 @@
 package work.chiro.game.objects;
 
 import work.chiro.game.animate.AnimateContainer;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 

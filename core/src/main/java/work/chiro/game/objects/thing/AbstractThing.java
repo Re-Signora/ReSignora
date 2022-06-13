@@ -9,6 +9,7 @@ import work.chiro.game.logic.attributes.BasicThingAttributes;
 import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.resource.CanPreLoadResources;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.XGraphics;
@@ -19,6 +20,7 @@ public abstract class AbstractThing<T extends BasicThingAttributes, A extends An
     final private String labelName;
     private BasicThingAttributes basicAttributes;
     private String imageDisplaying;
+    protected double timeStart = 0;
 
     public AbstractThing(String labelName, Class<T> attributesClass, Vec2 posInit, A animateContainer, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super(posInit, animateContainer, sizeInit, rotationInit, alpha);
@@ -33,6 +35,9 @@ public abstract class AbstractThing<T extends BasicThingAttributes, A extends An
                 ex.printStackTrace();
                 basicAttributes = null;
             }
+        }
+        if (getBasicAttributes() != null) {
+            timeStart = TimeManager.getTimeMills();
         }
         imageDisplaying = getSelfImageFilename();
     }
@@ -75,5 +80,16 @@ public abstract class AbstractThing<T extends BasicThingAttributes, A extends An
     @Override
     public void preLoadResources(XGraphics g) {
         getImage();
+    }
+
+    @Override
+    public void forward() {
+        // 取消区域限制
+        getAnimateContainer().updateAll(TimeManager.getTimeMills());
+        if (getBasicAttributes().getDuration() > 0
+                && timeStart > 0 &&
+                TimeManager.getTimeMills() - timeStart > getBasicAttributes().getDuration() * 1000) {
+            vanish();
+        }
     }
 }
