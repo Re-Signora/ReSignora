@@ -51,6 +51,10 @@ public abstract class XGraphicsAndroid extends XGraphics {
 
     @Override
     public XImage<?> resizeImage(XImage<?> image, double w, double h) {
+        if (w == 0 || h == 0) {
+            w = image.getWidth() * getCanvasScale();
+            h = image.getHeight() * getCanvasScale();
+        }
         Utils.CacheImageInfo info = new Utils.CacheImageInfo((int) w, (int) h, image.getName());
         XImage<?> cachedImage = Utils.getCachedImageFromCache(info);
         if (cachedImage != null) return cachedImage;
