@@ -2,6 +2,7 @@ package work.chiro.game.objects.thing.character;
 
 import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.config.Constants;
+import work.chiro.game.logic.DamageCalculator;
 import work.chiro.game.logic.attributes.dynamic.DynamicCharacterAttributes;
 import work.chiro.game.logic.attributes.loadable.BasicCharacterAttributes;
 import work.chiro.game.objects.thing.AbstractThing;
@@ -64,9 +65,20 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
         return dynamicCharacterAttributes;
     }
 
+    protected void bearDamage(int damage) {
+        Utils.getLogger().warn("bearDamage: {}", damage);
+        if (getHp() >= damage) {
+            getDynamicCharacterAttributes().setHp(getHp() - damage);
+        } else {
+            getDynamicCharacterAttributes().setHp(0);
+            vanish();
+        }
+    }
+
     @Override
     public void applyAttack(AbstractAttack attack) {
-        attack.apply(this);
+        bearDamage(DamageCalculator.calculate(attack, this));
+        attack.vanish();
     }
 
     @Override

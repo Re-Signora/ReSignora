@@ -7,6 +7,7 @@ import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.animate.action.BasicImageCarouselAction;
 import work.chiro.game.animate.action.ReversedImageCarouselAction;
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.objects.thing.character.AbstractCharacter;
 import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec;
@@ -23,8 +24,8 @@ public class Butterfly extends AbstractAttack {
         return new ReversedImageCarouselAction("attacks/" + labelName, labelName, 200);
     }
 
-    public Butterfly(Vec2 posInit, Vec2 sizeInit, Scale rotationInit, Scale alpha, boolean setSizeAnimate) {
-        super(labelName, posInit, getAction(), sizeInit, rotationInit, alpha);
+    public Butterfly(AbstractCharacter source, Vec2 posInit, Vec2 sizeInit, Scale rotationInit, Scale alpha, boolean setSizeAnimate) {
+        super(source, labelName, posInit, getAction(), sizeInit, rotationInit, alpha);
         getAnimateContainer().setThing(this);
         moveAnimate = new Animate.SmoothTo<>(
                 posInit,
@@ -52,12 +53,12 @@ public class Butterfly extends AbstractAttack {
         }
     }
 
-    public Butterfly(Vec2 posInit) {
-        this(posInit, null);
+    public Butterfly(AbstractCharacter source, Vec2 posInit) {
+        this(source, posInit, null);
     }
 
-    public Butterfly(Vec2 posInit, Vec2 sizeInit) {
-        this(posInit, sizeInit, null, null, true);
+    public Butterfly(AbstractCharacter source, Vec2 posInit, Vec2 sizeInit) {
+        this(source, posInit, sizeInit, null, null, true);
     }
 
     @Override

@@ -20,14 +20,14 @@ public class LaSignora extends AbstractCharacter {
         private final Vec2 butterflyOffset = new Vec2(60, -56);
         private static final Vec2 butterflySize = new Vec2(24, 24);
 
-        public HandButterfly(Vec2 posInit, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
-            super(posInit, sizeInit, rotationInit, alpha, false);
+        public HandButterfly(AbstractCharacter source, Vec2 posInit, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
+            super(source, posInit, sizeInit, rotationInit, alpha, false);
             getAnimateContainer().removeAnimate(moveAnimate);
             if (sizeAnimate != null) getAnimateContainer().removeAnimate(sizeAnimate);
         }
 
-        public HandButterfly(Vec2 posInit) {
-            this(posInit, butterflySize, null, null);
+        public HandButterfly(AbstractCharacter source, Vec2 posInit) {
+            this(source, posInit, butterflySize, null, null);
         }
 
         @Override
@@ -46,7 +46,7 @@ public class LaSignora extends AbstractCharacter {
 
     public LaSignora(Vec2 posInit, AbstractAction abstractAction, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super("la-signora", BasicCharacterAttributes.class, posInit, abstractAction, sizeInit, rotationInit, alpha);
-        handButterfly = new HandButterfly(getPosition());
+        handButterfly = new HandButterfly(this, getPosition());
         normalAttackTask = new Timer(getBasicAttributes().getNormalAttackCoolDown() * 1000, (controller, timer) -> this.normalAttack());
         Game.getInstance().getTimerController().add(getClass(), normalAttackTask);
     }
@@ -86,7 +86,7 @@ public class LaSignora extends AbstractCharacter {
     public void normalAttack() {
         super.normalAttack();
         Game.getInstance().addThing(
-                new Butterfly(handButterfly.getPosition().copy(), handButterfly.getSize().copy())
+                new Butterfly(this, handButterfly.getPosition().copy(), handButterfly.getSize().copy())
                         .setImageIndexNow(handButterfly.getImageIndexNow())
         );
     }
@@ -106,7 +106,7 @@ public class LaSignora extends AbstractCharacter {
         applyAction(skillAttackDelayTask,
                 getBasicAttributes().getSkillAttackCoolDown() * 1000,
                 () -> Game.getInstance().addThing(
-                        new Butterfly(handButterfly.getPosition().copy(), handButterfly.getSize().copy())
+                        new Butterfly(this, handButterfly.getPosition().copy(), handButterfly.getSize().copy())
                                 .setImageIndexNow(handButterfly.getImageIndexNow())
                 ));
     }
@@ -117,7 +117,7 @@ public class LaSignora extends AbstractCharacter {
         applyAction(chargedAttackDelayTask,
                 getBasicAttributes().getChargedAttackCoolDown() * 1000,
                 () -> Game.getInstance().addThing(
-                        new Butterfly(handButterfly.getPosition().copy(), handButterfly.getSize().copy())
+                        new Butterfly(this, handButterfly.getPosition().copy(), handButterfly.getSize().copy())
                                 .setImageIndexNow(handButterfly.getImageIndexNow())
                 ));
     }
@@ -131,7 +131,7 @@ public class LaSignora extends AbstractCharacter {
     @Override
     public void preLoadResources(XGraphics g) {
         super.preLoadResources(g);
-        new HandButterfly(getPosition()).preLoadResources(g);
+        new HandButterfly(null, getPosition()).preLoadResources(g);
     }
 
     @Override
