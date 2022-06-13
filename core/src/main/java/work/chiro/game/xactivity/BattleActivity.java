@@ -26,8 +26,8 @@ import work.chiro.game.x.ui.view.XView;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class BattleActivity extends XActivity {
-    private XButton buttonBack;
-    private LaSignora signora;
+    protected XButton buttonBack;
+    protected LaSignora signora;
 
     private static class ButtonGroupItem {
         public XView button;

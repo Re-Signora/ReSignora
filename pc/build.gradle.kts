@@ -26,6 +26,9 @@ dependencies {
 
     // 对 `core` 模块的依赖
     implementation(project(":core"))
+
+    // Websocket Server / Client
+    implementation("org.java-websocket:Java-WebSocket:1.5.3")
 }
 
 application {
