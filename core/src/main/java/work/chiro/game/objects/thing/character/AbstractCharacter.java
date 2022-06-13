@@ -77,7 +77,7 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
 
     protected void bearDamage(int damage) {
         Utils.getLogger().info("{} bearDamage: {}", this, damage);
-        Game.getInstance().getTopLayout().addView(new DamagePopup(getPosition().plus(new Vec2(0, 10)), Element.Cryo, damage));
+        Game.getInstance().getTopLayout().addView(new DamagePopup(getPosition().plus(new Vec2(0, 10)), Element.Pyro, damage));
         if (getHp() >= damage) {
             getDynamicCharacterAttributes().setHp(getHp() - damage);
         } else {
