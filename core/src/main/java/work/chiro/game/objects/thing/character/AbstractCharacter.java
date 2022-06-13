@@ -66,7 +66,6 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
     }
 
     protected void bearDamage(int damage) {
-        Utils.getLogger().warn("bearDamage: {}", damage);
         if (getHp() >= damage) {
             getDynamicCharacterAttributes().setHp(getHp() - damage);
         } else {
@@ -143,5 +142,10 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
     public void draw(XGraphics g) {
         drawWithoutHp(g);
         drawHp(g);
+    }
+
+    @Override
+    public AbstractCharacter getRelativeCharacter() {
+        return this;
     }
 }
