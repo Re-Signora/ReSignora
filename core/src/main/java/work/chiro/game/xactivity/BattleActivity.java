@@ -62,7 +62,7 @@ public class BattleActivity extends XActivity {
             ResourceProvider.getInstance().stopXGraphics();
         }
         Utils.getLogger().info("loading resource done");
-        signora = new LaSignora(new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight * 1. / 2), new AbstractAction(null));
+        signora = new LaSignora(new Vec2(RunningConfig.windowWidth * 1. / 4, RunningConfig.windowHeight * 2. / 3), new AbstractAction(null));
         signora.getAnimateContainer().setThing(signora);
         getGame().addThing(signora);
         getGame().getObjectController().setTarget(signora);
