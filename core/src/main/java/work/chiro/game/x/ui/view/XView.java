@@ -234,4 +234,8 @@ public class XView extends AbstractObject<AnimateContainer> {
     public void forward() {
         getAnimateContainer().updateAll(TimeManager.getTimeMills());
     }
+
+    public boolean isVisible() {
+        return visible;
+    }
 }

@@ -96,6 +96,7 @@ public abstract class XActivity {
             Vec2 pos = posList.get(i);
             for (int j = layout.size() - 1; j >= 0; j--) {
                 XView view = layout.get(j);
+                if (!view.isValid() || !view.isVisible()) continue;
                 view.setWillStopTrigger(false);
                 if (enteredMark.containsKey(view)) return;
                 Vec2 relativePosition = pos.minus(view.getPosition());
@@ -123,6 +124,7 @@ public abstract class XActivity {
     public void actionPointerRelease(Vec2 pos) {
         for (int j = layout.size() - 1; j >= 0; j--) {
             XView view = layout.get(j);
+            if (!view.isValid() || !view.isVisible()) continue;
             view.setWillStopTrigger(false);
             Vec2 relativePosition = pos.minus(view.getPosition());
             if (view.isIn(relativePosition)) {
