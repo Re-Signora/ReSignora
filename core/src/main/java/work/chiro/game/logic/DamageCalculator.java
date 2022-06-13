@@ -26,20 +26,19 @@ public class DamageCalculator {
         DynamicCharacterAttributes dynamicCharacterAttributes = attack.getSource().getDynamicCharacterAttributes();
         BasicCharacterAttributes underAttackCharacterAttributes = attack.getSource().getBasicAttributes();
         DynamicCharacterAttributes underAttacksDynamicCharacterAttributes = attack.getSource().getDynamicCharacterAttributes();
-        Utils.getLogger().info("ATK={}, DEF={}, P={}, Ext={}, CRIT={}",
-                characterAttributes.getATK(),
-                (1 - underAttackCharacterAttributes.getDEF() / (characterAttributes.getATK() + underAttackCharacterAttributes.getDEF())),
-                (1 - characterAttributes.getPierce()),
-                characterAttributes.getExtraDMGRate(),
-                (isCRIT(characterAttributes.getCRIT_Rate()) ? (characterAttributes.getCRIT_DMG() * 1.0 / 100) : 1.0)
-        );
+        double ATK = characterAttributes.getATK();
+        double DEF = (1 - (underAttackCharacterAttributes.getDEF() * 1.0) / (characterAttributes.getATK() + underAttackCharacterAttributes.getDEF()));
+        double P = (1 - characterAttributes.getPierce());
+        double EXT = characterAttributes.getExtraDMGRate();
+        double CRIT = (isCRIT(characterAttributes.getCRIT_Rate()) ? (characterAttributes.getCRIT_DMG() * 1.0 / 100) : 1.0);
+        Utils.getLogger().info("ATK={}, DEF={}, P={}, Ext={}, CRIT={}", ATK, DEF, P, EXT, CRIT);
         return (int) (1.0
-                * characterAttributes.getATK()
-                * (1 - underAttackCharacterAttributes.getDEF() / (characterAttributes.getATK() + underAttackCharacterAttributes.getDEF()))
-                * (1 - characterAttributes.getPierce())
-                * characterAttributes.getExtraDMGRate()
+                * ATK
+                * DEF
+                * P
+                * EXT
                 // * 特殊技能加成
-                * (isCRIT(characterAttributes.getCRIT_Rate()) ? (characterAttributes.getCRIT_DMG() * 1.0 / 100) : 1.0)
+                * CRIT
         );
     }
 }

@@ -31,7 +31,7 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
         skillAttackDelayTask.setValid();
         chargedAttackDelayTask.setValid();
         if (getBasicAttributes().isSizeAvailable()) {
-            Utils.getLogger().warn("setSize: {}", getBasicAttributes().getSize());
+            Utils.getLogger().debug("setSize: {}", getBasicAttributes().getSize());
             setSize(getBasicAttributes().getSize());
         }
     }
