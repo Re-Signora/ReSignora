@@ -133,7 +133,7 @@ public abstract class XGraphicsAndroid extends XGraphics {
     public XGraphics drawBoarderString(Vec2 position, Vec2 size, String text) {
         if (text == null) return this;
         if (text.length() == 0) return this;
-        setAlpha(alpha);
+        getPaint().setAlpha((int) (alpha * 255));
         getPaint().setStyle(Paint.Style.FILL_AND_STROKE);
         getPaint().setFakeBoldText(true);
         getPaint().setStrokeWidth((float) (4.5 * getCanvasScale()));
@@ -151,11 +151,13 @@ public abstract class XGraphicsAndroid extends XGraphics {
         getCanvas().translate((float) translate.getX(), (float) translate.getY());
         // 描边
         getPaint().setColor(colorBoarder);
+        getPaint().setAlpha((int) (alpha * 255));
         getCanvas().drawText(text, 0, 0, getPaint());
         // 文字
         getPaint().setFakeBoldText(false);
         getPaint().setColor(color);
         getPaint().setStrokeWidth(0);
+        getPaint().setAlpha((int) (alpha * 255));
         getCanvas().drawText(text, 0, 0, getPaint());
         getCanvas().translate((float) -translate.getX(), (float) -translate.getY());
         return this;

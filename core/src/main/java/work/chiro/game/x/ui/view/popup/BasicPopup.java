@@ -58,6 +58,7 @@ public class BasicPopup extends XView {
         super.draw(g, false);
         if (getText() != null && getText().length() > 0) {
             g.applyCoupleColor(DrawColor.getEnumColors(getType()));
+            g.setAlpha(getAlpha().getX());
             g.drawUIString(this, getText());
         }
     }
