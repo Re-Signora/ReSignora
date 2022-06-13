@@ -123,7 +123,8 @@ public class BattleActivity extends XActivity {
             button.setAlpha(new Scale(0.6));
             button.setText(sinceString);
         } else {
-            // button.setAlpha(new Scale(1));
+            // Android 不靠 keyUp 恢复透明度
+            if (!RunningConfig.modePC) button.setAlpha(new Scale(1));
             button.setText("");
         }
     }
