@@ -71,4 +71,10 @@ public class ShogunateSoldier extends AbstractCharacter {
         normalAttacking = true;
         getAnimateContainer().addAnimate(new Animate.Delay<>(new Vec2(), normalAttackDuration).setAnimateCallback(animate -> normalAttacking = false));
     }
+
+    @Override
+    public void forward() {
+        super.forward();
+        setFlipped(getPosition().getX() > Game.getInstance().getObjectController().getTarget().getPosition().getX());
+    }
 }
