@@ -63,7 +63,9 @@ public class VersusActivity extends BattleActivity {
     @Override
     protected void onFrame() {
         super.onFrame();
-        eSignora.setPosition(signora.getPosition().times(new Vec2(-1, 1)));
-        eSignora.setFlipped(!signora.isFlipped());
+        if (eSignora != null) {
+            eSignora.setPosition(new Vec2(RunningConfig.windowWidth - signora.getLocationX(), signora.getLocationY()));
+            eSignora.setFlipped(!signora.isFlipped());
+        }
     }
 }
