@@ -1,8 +1,8 @@
 package work.chiro.game.utils.timer;
 
 public class DelayTimer implements TimerCallback {
-    private final Class<?> from;
-    public DelayTimer(Class<?> from) {
+    private final Object from;
+    public DelayTimer(Object from) {
         this.from = from;
     }
 

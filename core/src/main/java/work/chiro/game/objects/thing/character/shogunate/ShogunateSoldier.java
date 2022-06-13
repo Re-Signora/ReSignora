@@ -47,7 +47,7 @@ public class ShogunateSoldier extends AbstractCharacter {
 
     @Override
     protected DelayTimer getDelayTimer() {
-        return new DelayTimer(getClass());
+        return new DelayTimer(this);
     }
 
     public ShogunateSoldier() {
