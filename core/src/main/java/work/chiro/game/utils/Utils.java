@@ -85,7 +85,7 @@ public class Utils {
             return;
         }
         synchronized (CACHED_IMAGE) {
-            Utils.getLogger().info("update cache: info = {}", info);
+            if (info.width > 300) Utils.getLogger().info("update large cache: info = {}", info);
             CACHED_IMAGE.putIfAbsent(info, image);
         }
     }
