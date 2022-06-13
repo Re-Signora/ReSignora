@@ -51,6 +51,7 @@ public class TimerController {
             timers.get(from).forEach(timer -> Utils.getLogger().debug("\tRemoving timer: {}", timer));
             timers.get(from).clear();
         }
+        // DO NOT USE!!
         // timers.remove(from);
     }
 
