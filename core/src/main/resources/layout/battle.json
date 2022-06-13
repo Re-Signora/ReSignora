@@ -83,6 +83,10 @@
     {
       "type": "JoySticks",
       "id": "joySticks"
+    },
+    {
+      "type": "Dialogue",
+      "id": "dialogue"
     }
   ]
 }

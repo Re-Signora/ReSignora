@@ -21,6 +21,7 @@ import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.x.ui.builder.XViewCallback;
 import work.chiro.game.x.ui.event.XEventType;
 import work.chiro.game.x.ui.view.XButton;
+import work.chiro.game.x.ui.view.XDialogue;
 import work.chiro.game.x.ui.view.XJoySticks;
 import work.chiro.game.x.ui.view.XView;
 
@@ -28,6 +29,7 @@ import work.chiro.game.x.ui.view.XView;
 public class BattleActivity extends XActivity {
     protected XButton buttonBack;
     protected LaSignora signora;
+    protected XDialogue dialogue;
 
     private static class ButtonGroupItem {
         public XView button;
@@ -94,6 +96,9 @@ public class BattleActivity extends XActivity {
             buttonGroupItem.button.setOnClick(buttonGroupItem.onClick);
             buttonGroupItem.button.setFont("genshin");
         });
+
+        dialogue = (XDialogue) findViewById("dialogue");
+        dialogue.setVisible(false);
 
         Runnable createEnemies = () -> {
             Utils.getLogger().info("generate enemies");
