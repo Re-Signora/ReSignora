@@ -28,6 +28,9 @@ dependencies {
 
     // json decode / encode
     implementation("com.google.code.gson:gson:2.9.0")
+
+    // Websocket Server / Client
+    implementation("org.java-websocket:Java-WebSocket:1.5.3")
 }
 
 tasks.withType<JavaCompile> {
