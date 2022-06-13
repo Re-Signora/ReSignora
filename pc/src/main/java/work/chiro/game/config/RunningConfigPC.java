@@ -9,4 +9,6 @@ public class RunningConfigPC {
     // public static double ProportionForScreen = 0.3;
     public static int displayWindowWidth = RunningConfig.windowWidth;
     public static int displayWindowHeight = RunningConfig.windowHeight;
+
+    public static boolean dragControlObject = true;
 }

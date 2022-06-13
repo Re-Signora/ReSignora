@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import work.chiro.game.config.RunningConfig;
+import work.chiro.game.config.RunningConfigPC;
 import work.chiro.game.game.Game;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.timer.TimeManager;
@@ -66,12 +68,12 @@ public class CharacterControllerPCImpl extends CharacterController {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
-                // if (getTarget() != null && !TimeManager.isPaused()) {
-                //     getTarget().setPosition(new Vec2().fromVector(new Vec2(
-                //             Utils.setInRange(e.getX(), 0, RunningConfig.windowWidth),
-                //             Utils.setInRange(e.getY(), 0, RunningConfig.windowHeight)
-                //     ).divide(GamePanel.getScale())));
-                // }
+                if (RunningConfigPC.dragControlObject && getTarget() != null && !TimeManager.isPaused()) {
+                    getTarget().setPosition(new Vec2().fromVector(new Vec2(
+                            Utils.setInRange(e.getX(), 0, RunningConfig.windowWidth),
+                            Utils.setInRange(e.getY(), 0, RunningConfig.windowHeight)
+                    ).divide(GamePanel.getScale())));
+                }
                 Game.getInstance().getTopActivity().actionPointerDragged(List.of(getScaledPosition(e)));
             }
 
