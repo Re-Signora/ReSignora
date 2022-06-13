@@ -101,7 +101,7 @@ public class BattleActivity extends XActivity {
                     new AbstractAction(null));
             shogunateSolder.getAnimateContainer().setThing(shogunateSolder);
             shogunateSolder.setFlipped(true);
-            getGame().addThing(shogunateSolder);
+            getGame().addEnemyThing(shogunateSolder);
         }));
     }
 

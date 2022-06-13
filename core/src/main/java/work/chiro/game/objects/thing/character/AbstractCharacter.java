@@ -61,4 +61,9 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
     public DelayTimer getChargedAttackDelayTask() {
         return chargedAttackDelayTask;
     }
+
+    @Override
+    public boolean isCrashAttack(AbstractAttack attack) {
+        return crash(attack);
+    }
 }

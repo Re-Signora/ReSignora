@@ -117,6 +117,7 @@ public class HeroAircraft extends AbstractAircraft {
         return shootNum;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean crash(AbstractObject<?> abstractObject) {
         return box.crash(abstractObject);

@@ -64,9 +64,11 @@ public class Game {
     private final List<AbstractBackground> backgrounds = new LinkedList<>();
     private final List<AbstractCharacter> characters = new LinkedList<>();
     private final List<AbstractAttack> attacks = new LinkedList<>();
+    private final List<AbstractAttack> enemiesAttacks = new LinkedList<>();
     private final List<UnderAttack> underAttacks = new LinkedList<>();
+    private final List<UnderAttack> enemiesUnderAttacks = new LinkedList<>();
     private final List<List<? extends AbstractThing<?, ?>>> allThings = Arrays.asList(
-            characters, attacks
+            characters, attacks, enemiesAttacks
     );
     private boolean gameOverFlag = false;
     private Future<?> future = null;
@@ -251,10 +253,28 @@ public class Game {
         future = executorService.scheduleWithFixedDelay(mainTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
     }
 
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
+    private void crashCheckAttacksAndUnderAttacks(List<AbstractAttack> attackList, List<UnderAttack> underAttackList) {
+        synchronized (attackList) {
+            attackList.forEach(abstractAttack -> {
+                synchronized (underAttackList) {
+                    underAttackList.forEach(underAttack -> {
+                        if (underAttack.isCrashAttack(abstractAttack)) {
+                            underAttack.applyAttack(abstractAttack);
+                        }
+                    });
+                }
+            });
+        }
+    }
+
     /**
      * 碰撞检测
      */
     private void crashCheckAction() {
+        // 检测 Attacks 和 UnderAttacks
+        crashCheckAttacksAndUnderAttacks(attacks, enemiesUnderAttacks);
+        crashCheckAttacksAndUnderAttacks(enemiesAttacks, underAttacks);
     }
 
     public List<List<? extends AbstractThing<?, ?>>> getAllThings() {
@@ -296,21 +316,41 @@ public class Game {
         return underAttacks;
     }
 
+    public List<UnderAttack> getEnemiesUnderAttacks() {
+        return enemiesUnderAttacks;
+    }
+
+    public List<AbstractAttack> getEnemiesAttacks() {
+        return enemiesAttacks;
+    }
+
     public void addOneAttack(AbstractAttack attack) {
         synchronized (attacks) {
             attacks.add(attack);
         }
     }
 
-    public void addOneCharacter(AbstractCharacter character) {
-        synchronized (characters) {
-            characters.add(character);
-        }
-    }
-
     public void addOneUnderAttack(UnderAttack underAttack) {
         synchronized (underAttacks) {
             underAttacks.add(underAttack);
+        }
+    }
+
+    public void addOneEnemiesAttack(AbstractAttack attack) {
+        synchronized (enemiesAttacks) {
+            enemiesAttacks.add(attack);
+        }
+    }
+
+    public void addOneEnemiesUnderAttack(UnderAttack underAttack) {
+        synchronized (enemiesUnderAttacks) {
+            enemiesUnderAttacks.add(underAttack);
+        }
+    }
+
+    public void addOneCharacter(AbstractCharacter character) {
+        synchronized (characters) {
+            characters.add(character);
         }
     }
 
@@ -334,6 +374,20 @@ public class Game {
         }
         if (thing instanceof UnderAttack) {
             addOneUnderAttack((UnderAttack) thing);
+        }
+        return this;
+    }
+
+    public Game addEnemyThing(AbstractThing<?, ?> thing) {
+        // 模板匹配不支持
+        if (thing instanceof AbstractCharacter) {
+            addOneCharacter((AbstractCharacter) thing);
+        }
+        if (thing instanceof AbstractAttack) {
+            addOneEnemiesAttack((AbstractAttack) thing);
+        }
+        if (thing instanceof UnderAttack) {
+            addOneEnemiesUnderAttack((UnderAttack) thing);
         }
         return this;
     }
