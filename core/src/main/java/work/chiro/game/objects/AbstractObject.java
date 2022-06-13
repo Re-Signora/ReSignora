@@ -226,7 +226,7 @@ public abstract class AbstractObject<A extends AnimateContainer> {
             }
         }
         if (keepImage()) {
-            if (cachedImage.containsKey(image) && !getRawImage && RunningConfig.modePC && RunningConfig.enableImageCache) {
+            if (cachedImage.containsKey(image) && !getRawImage && RunningConfig.enableImageCache) {
                 return cachedImage.get(image);
             }
             return image;

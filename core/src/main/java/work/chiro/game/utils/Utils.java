@@ -72,7 +72,7 @@ public class Utils {
     public static final Map<CacheImageInfo, XImage<?>> CACHED_IMAGE = new HashMap<>();
 
     public static XImage<?> getCachedImageFromCache(CacheImageInfo info) {
-        if (!RunningConfig.modePC) {
+        if (!RunningConfig.enableImageCache) {
             return null;
         }
         synchronized (CACHED_IMAGE) {
@@ -81,7 +81,7 @@ public class Utils {
     }
 
     public static void putCachedImageToCache(CacheImageInfo info, XImage<?> image) {
-        if (!RunningConfig.modePC) {
+        if (!RunningConfig.enableImageCache) {
             return;
         }
         synchronized (CACHED_IMAGE) {
