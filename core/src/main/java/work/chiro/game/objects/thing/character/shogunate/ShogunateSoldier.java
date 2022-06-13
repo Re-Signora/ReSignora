@@ -37,8 +37,10 @@ public class ShogunateSoldier extends AbstractCharacter {
             getAnimateContainer().addAnimate(new Animate.SmoothTo<>(getPosition(), newPos, AnimateVectorType.Others, TimeManager.getTimeMills(), moveDuration / 3
             ).setAnimateCallback(animate -> moving = false));
         });
-        Game.getInstance().getTimerController().add(getClass(), normalAttackTask);
-        Game.getInstance().getTimerController().add(getClass(), moveTask);
+        // Game.getInstance().getTimerController().add(getClass(), normalAttackTask);
+        // Game.getInstance().getTimerController().add(getClass(), moveTask);
+        Game.getInstance().getTimerController().add(this, normalAttackTask);
+        Game.getInstance().getTimerController().add(this, moveTask);
     }
 
     public ShogunateSoldier(Vec2 posInit, AbstractAction abstractAction) {
@@ -77,5 +79,11 @@ public class ShogunateSoldier extends AbstractCharacter {
     public void forward() {
         super.forward();
         setFlipped(getPosition().getX() > Game.getInstance().getObjectController().getTarget().getPosition().getX());
+    }
+
+    @Override
+    public void vanish() {
+        super.vanish();
+        Game.getInstance().getTimerController().remove(this);
     }
 }
