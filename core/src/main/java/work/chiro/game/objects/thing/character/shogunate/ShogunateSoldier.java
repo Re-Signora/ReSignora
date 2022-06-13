@@ -37,8 +37,8 @@ public class ShogunateSoldier extends AbstractCharacter {
             getAnimateContainer().addAnimate(new Animate.SmoothTo<>(getPosition(), newPos, AnimateVectorType.Others, TimeManager.getTimeMills(), moveDuration / 3
             ).setAnimateCallback(animate -> moving = false));
         });
-        Game.getInstance().getTimerController().add(getClass(), normalAttackTask);
-        Game.getInstance().getTimerController().add(getClass(), moveTask);
+        Game.getInstance().getTimerController().add(this, normalAttackTask);
+        Game.getInstance().getTimerController().add(this, moveTask);
     }
 
     public ShogunateSoldier(Vec2 posInit, AbstractAction abstractAction) {

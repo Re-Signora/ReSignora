@@ -55,7 +55,7 @@ public class LaSignora extends AbstractCharacter {
         super("la-signora", BasicCharacterAttributes.class, posInit, abstractAction, sizeInit, rotationInit, alpha);
         handButterfly = new HandButterfly(this, getPosition());
         normalAttackTask = new Timer(getBasicAttributes().getNormalAttackCoolDown() * 1000, (controller, timer) -> this.normalAttack());
-        Game.getInstance().getTimerController().add(getClass(), normalAttackTask);
+        Game.getInstance().getTimerController().add(this, normalAttackTask);
     }
 
     public LaSignora(Vec2 posInit, AbstractAction abstractAction) {
@@ -104,7 +104,7 @@ public class LaSignora extends AbstractCharacter {
             ifValid.run();
             delayTimer.setNotValid();
             delayTimer.setTimeMark(TimeManager.getTimeMills());
-            Game.getInstance().getTimerController().add(getClass(), new Timer(delayMs, delayTimer));
+            Game.getInstance().getTimerController().add(this, new Timer(delayMs, delayTimer));
         }
     }
 

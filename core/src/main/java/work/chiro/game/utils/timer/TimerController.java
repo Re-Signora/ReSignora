@@ -16,7 +16,7 @@ public class TimerController {
     private double frameTime = 0;
     private double lastFrameTime = 0;
     private final LinkedList<Double> frameCounter = new LinkedList<>();
-    private final Map<Class<?>, List<Timer>> timers = new HashMap<>();
+    private final Map<Object, List<Timer>> timers = new HashMap<>();
     private boolean available = true;
 
     public void init(double startTime) {
@@ -27,7 +27,7 @@ public class TimerController {
         available = false;
     }
 
-    synchronized public void add(Class<?> from, Timer c) {
+    synchronized public void add(Object from, Timer c) {
         if (timers.containsKey(from)) {
             timers.get(from).add(c);
         } else {
@@ -37,19 +37,22 @@ public class TimerController {
         }
     }
 
-    synchronized public boolean remove(Class<?> from, Timer c) {
+    synchronized public boolean remove(Object from, Timer c) {
         if (timers.containsKey(from)) {
-            return timers.get(from).remove(c);
+            boolean res = timers.get(from).remove(c);
+            if (timers.get(from).size() == 0) timers.remove(from);
+            return res;
         } else {
             return false;
         }
     }
 
-    synchronized public void remove(Class<?> from) {
+    synchronized public void remove(Object from) {
         Utils.getLogger().debug("Removing timer class: {}", from);
         if (timers.containsKey(from)) {
             timers.get(from).forEach(timer -> Utils.getLogger().debug("\tRemoving timer: {}", timer));
             timers.get(from).clear();
+            timers.remove(from);
         }
         // DO NOT USE!!
         // timers.remove(from);
@@ -60,7 +63,7 @@ public class TimerController {
             timers.values().forEach(timersList -> timersList.forEach(timer -> timer.execute(this)));
     }
 
-    synchronized public List<Timer> getTimers(Class<?> from) {
+    synchronized public List<Timer> getTimers(Object from) {
         if (timers.containsKey(from)) {
             return timers.get(from);
         } else {
