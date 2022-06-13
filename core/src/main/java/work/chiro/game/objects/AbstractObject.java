@@ -6,6 +6,7 @@ import java.util.Map;
 
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.config.RunningConfig;
+import work.chiro.game.game.Game;
 import work.chiro.game.objects.aircraft.AbstractAircraft;
 import work.chiro.game.resource.ImageManager;
 import work.chiro.game.utils.Utils;
@@ -283,6 +284,7 @@ public abstract class AbstractObject<A extends AnimateContainer> {
         if (onVanish != null) {
             onVanish.run();
         }
+        Game.getInstance().getTimerController().remove(getClass());
     }
 
     public Vec2 getSize() {

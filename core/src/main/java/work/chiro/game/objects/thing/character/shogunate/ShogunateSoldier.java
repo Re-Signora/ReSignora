@@ -18,10 +18,12 @@ public class ShogunateSoldier extends AbstractCharacter {
     private boolean normalAttacking = false;
     private int normalAttackDuration = 1000;
     private Timer normalAttackTask = null;
+    private Timer moveTask = null;
 
     public ShogunateSoldier(Vec2 posInit, AbstractAction abstractAction, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super("shogunate-soldier", BasicCharacterAttributes.class, posInit, abstractAction, sizeInit, rotationInit, alpha);
         normalAttackTask = new Timer(getBasicAttributes().getNormalAttackCoolDown() * 1000, (controller, timer) -> this.normalAttack());
+        moveTask = new Timer(100.0 / getBasicAttributes().getSpeed(), (controller, timer) -> {});
         Game.getInstance().getTimerController().add(getClass(), normalAttackTask);
     }
 
@@ -55,11 +57,5 @@ public class ShogunateSoldier extends AbstractCharacter {
         super.normalAttack();
         normalAttacking = true;
         getAnimateContainer().addAnimate(new Animate.Delay<>(new Vec2(), normalAttackDuration).setAnimateCallback(animate -> normalAttacking = false));
-    }
-
-    @Override
-    public void vanish() {
-        super.vanish();
-        Game.getInstance().getTimerController().remove(getClass(), normalAttackTask);
     }
 }

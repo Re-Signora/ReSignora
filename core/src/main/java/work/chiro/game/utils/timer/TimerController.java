@@ -43,6 +43,10 @@ public class TimerController {
         }
     }
 
+    synchronized public void remove(Class<?> from) {
+        timers.remove(from);
+    }
+
     public void execute() {
         if (available)
             timers.values().forEach(timersList -> timersList.forEach(timer -> timer.execute(this)));

@@ -127,12 +127,6 @@ public class LaSignora extends AbstractCharacter {
     }
 
     @Override
-    public void vanish() {
-        super.vanish();
-        Game.getInstance().getTimerController().remove(getClass(), normalAttackTask);
-    }
-
-    @Override
     public void preLoadResources(XGraphics g) {
         super.preLoadResources(g);
         new HandButterfly(null, getPosition()).preLoadResources(g);
