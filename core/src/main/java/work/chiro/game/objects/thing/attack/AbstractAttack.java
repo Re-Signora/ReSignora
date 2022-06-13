@@ -16,6 +16,7 @@ public class AbstractAttack extends AbstractThing<BasicAttackAttributes, Abstrac
     public AbstractAttack(AbstractCharacter source, String labelName, Vec2 posInit, AbstractAction abstractAction, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super(labelName, BasicAttackAttributes.class, posInit, abstractAction, sizeInit, rotationInit, alpha);
         this.source = source;
+        if (source != null) setEnemy(source.isEnemy());
         dynamicAttackAttributes = DynamicAttackAttributes.initFromCharacterAttributes((BasicAttackAttributes) getBasicAttributes());
     }
 
@@ -29,12 +30,19 @@ public class AbstractAttack extends AbstractThing<BasicAttackAttributes, Abstrac
     }
 
     public AbstractAttack setEnemy(boolean isEnemy) {
-        getDynamicAttackAttributes().setEnemy(isEnemy);
+        if (getDynamicAttackAttributes() != null)
+            getDynamicAttackAttributes().setEnemy(isEnemy);
         return this;
     }
 
     @Override
     public BasicDynamicAttributes getBasicDynamicAttributes() {
         return getDynamicAttackAttributes();
+    }
+
+    public boolean isEnemy() {
+        if (getDynamicAttackAttributes() != null)
+            return getDynamicAttackAttributes().isEnemy();
+        return false;
     }
 }

@@ -16,6 +16,7 @@ public abstract class CharacterController {
     abstract public boolean isShootPressed();
 
     private AbstractCharacter target = null;
+    private AbstractCharacter secondaryTarget = null;
 
     public void setTarget(AbstractCharacter target) {
         this.target = target;
@@ -23,6 +24,14 @@ public abstract class CharacterController {
 
     public AbstractCharacter getTarget() {
         return target;
+    }
+
+    public AbstractCharacter getSecondaryTarget() {
+        return secondaryTarget;
+    }
+
+    public void setSecondaryTarget(AbstractCharacter secondaryTarget) {
+        this.secondaryTarget = secondaryTarget;
     }
 
     private BattleActivity battleActivity = null;

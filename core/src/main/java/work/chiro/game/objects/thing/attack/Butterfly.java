@@ -29,7 +29,7 @@ public class Butterfly extends AbstractAttack {
         getAnimateContainer().setThing(this);
         moveAnimate = new Animate.SmoothTo<>(
                 posInit,
-                new Vec2(isFlipped() ? 0 : RunningConfig.windowWidth, posInit.getY()),
+                new Vec2(isEnemy() ? 0 : RunningConfig.windowWidth, posInit.getY()),
                 AnimateVectorType.PositionLike,
                 TimeManager.getTimeMills(),
                 6000)

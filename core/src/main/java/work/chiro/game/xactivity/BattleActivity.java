@@ -30,6 +30,7 @@ public class BattleActivity extends XActivity {
     protected XButton buttonBack;
     protected LaSignora signora;
     protected XDialogue dialogue;
+    protected XJoySticks joySticks;
 
     private static class ButtonGroupItem {
         public XView button;
@@ -67,7 +68,7 @@ public class BattleActivity extends XActivity {
         signora.getAnimateContainer().setThing(signora);
         getGame().addThing(signora);
         getGame().getObjectController().setTarget(signora);
-        XJoySticks joySticks = (XJoySticks) findViewById("joySticks");
+        joySticks = (XJoySticks) findViewById("joySticks");
         getGame().getObjectController().setJoySticks(joySticks);
         getGame().getObjectController().setBattleActivity(this);
 

@@ -14,7 +14,7 @@ import work.chiro.game.x.activity.XBundle;
 
 public class VersusActivity extends BattleActivity {
     protected LaSignora eSignora;
-    protected boolean connected = false;
+    protected boolean connected = true;
 
     public VersusActivity(Game game) {
         super(game);
@@ -25,8 +25,10 @@ public class VersusActivity extends BattleActivity {
         super.onCreate(savedInstanceState);
         eSignora = new LaSignora(new Vec2(RunningConfig.windowWidth * 1. / 4, RunningConfig.windowHeight * 2. / 3), new AbstractAction(null));
         eSignora.getAnimateContainer().setThing(eSignora);
-        getGame().addEnemyThing(eSignora);
         eSignora.getDynamicCharacterAttributes().setEnemy(true);
+        eSignora.normalAttack();
+        getGame().getObjectController().setSecondaryTarget(eSignora);
+        getGame().addThing(eSignora);
     }
 
     @Override

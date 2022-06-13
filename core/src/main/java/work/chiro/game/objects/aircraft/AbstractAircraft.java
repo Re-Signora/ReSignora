@@ -103,7 +103,7 @@ public abstract class AbstractAircraft
         if (getHp() == maxHp && !forceDraw) {
             return;
         }
-        int hpBarHeight = Constants.DRAW_HP_BAR;
+        int hpBarHeight = RunningConfig.drawHpBar;
         g.setColor(colorBack)
                 .fillRect(getLocationX() - getWidth() / 2, getLocationY() - getHeight() / 2,
                         getWidth(), hpBarHeight)

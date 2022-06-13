@@ -81,9 +81,6 @@ public class LaSignora extends AbstractCharacter {
     public void draw(XGraphics g) {
         super.drawWithoutHp(g);
         handButterfly.draw(g);
-        drawHp(g,
-                new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight * 0.93),
-                new Vec2(RunningConfig.windowWidth * 0.37, 0));
     }
 
     @Override
@@ -147,8 +144,13 @@ public class LaSignora extends AbstractCharacter {
     }
 
     @Override
-    protected void drawHp(XGraphics g, Vec2 pos, Vec2 size) {
-        drawHp(g, DrawColor.green, DrawColor.gray, pos, size, true);
+    public void drawHp(XGraphics g, Vec2 pos, Vec2 size) {
+        synchronized (LaSignora.class) {
+            RunningConfig.drawHpBar *= 3;
+            if (!isEnemy()) drawHp(g, DrawColor.green, DrawColor.gray, pos, size, true);
+            else drawHp(g, DrawColor.orange, DrawColor.gray, pos, size, true);
+            RunningConfig.drawHpBar /= 3;
+        }
     }
 
     @Override

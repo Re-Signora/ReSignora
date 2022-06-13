@@ -3,7 +3,7 @@ package work.chiro.game.objects.thing.character;
 import java.util.Locale;
 
 import work.chiro.game.animate.action.AbstractAction;
-import work.chiro.game.config.Constants;
+import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.logic.DamageCalculator;
 import work.chiro.game.logic.attributes.dynamic.BasicDynamicAttributes;
@@ -120,7 +120,7 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
         if (getHp() == getBasicAttributes().getMaxHp() && !forceDraw) {
             return;
         }
-        int hpBarHeight = Constants.DRAW_HP_BAR;
+        int hpBarHeight = RunningConfig.drawHpBar;
         g.setColor(colorBack)
                 .fillRect(pos.getX() - sizeUse.getX() / 2, pos.getY() - sizeUse.getY() / 2,
                         sizeUse.getX(), hpBarHeight)
@@ -129,7 +129,7 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
                         sizeUse.getX() / getBasicAttributes().getMaxHp() * getHp(), hpBarHeight);
     }
 
-    protected void drawHp(XGraphics g, Vec2 pos, Vec2 size) {
+    public void drawHp(XGraphics g, Vec2 pos, Vec2 size) {
         drawHp(g, DrawColor.red, DrawColor.gray, pos, size, true);
     }
 
@@ -170,4 +170,6 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
     public BasicDynamicAttributes getBasicDynamicAttributes() {
         return getDynamicCharacterAttributes();
     }
+
+
 }
