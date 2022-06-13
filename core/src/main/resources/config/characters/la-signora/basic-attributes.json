@@ -8,5 +8,7 @@
   "CRIT_Rate": 5,
   "CRIT_DMG": 105,
   "extraDMGRate": 50,
-  "normalAttackSpeed": 5.0
+  "normalAttackSpeed": 5.0,
+  "height": 255,
+  "width": 230
 }

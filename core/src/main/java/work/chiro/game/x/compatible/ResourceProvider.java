@@ -85,7 +85,7 @@ public abstract class ResourceProvider {
     public abstract XFont<?> getFont(String name, double fontSize);
 
     public <T extends BasicThingAttributes> T getAttributesFromResource(String name, Class<T> clazz, String directory) throws IOException {
-        String path = "config/" + directory + "/" + name + "/basic-attributes.json";
+        String path = "/config/" + directory + "/" + name + "/basic-attributes.json";
         return new Gson().fromJson(Utils.getStringFromResource(path), clazz);
     }
 

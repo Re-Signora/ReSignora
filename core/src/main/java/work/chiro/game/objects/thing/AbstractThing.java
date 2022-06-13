@@ -8,6 +8,7 @@ import work.chiro.game.logic.attributes.AttributesBuilder;
 import work.chiro.game.logic.attributes.BasicThingAttributes;
 import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.resource.CanPreLoadResources;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.XGraphics;
@@ -25,6 +26,7 @@ public abstract class AbstractThing<T extends BasicThingAttributes, A extends An
         try {
             basicAttributes = AttributesBuilder.buildFromResource(labelName, attributesClass);
         } catch (IOException e) {
+            Utils.getLogger().warn("{} load attributes failed! {}", labelName, e);
             try {
                 basicAttributes = attributesClass.getConstructor().newInstance();
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {

@@ -119,5 +119,9 @@
 
 ## Notes
 
-1. 左侧虚拟摇杆：https://github.com/kongqw/AndroidRocker
-
+- [x] 左侧虚拟摇杆：https://github.com/kongqw/AndroidRocker
+- [ ] 战斗场地尺寸
+  - [ ] 屏幕尺寸：2400x1080
+  - [ ] 每个格子：120x120
+  - [ ] 总共格子：20x9
+  - [ ] 人物大小：平均2格左右，240x240
