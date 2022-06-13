@@ -1,6 +1,8 @@
 package work.chiro.game.logic.attributes.loadable;
 
-public class BasicCharacterAttributes extends ThingAttributes {
+public class BasicCharacterAttributes
+        extends ThingAttributes
+        implements LoadableAttributes {
     public int maxHp = 400;
     /**
      * 攻击力

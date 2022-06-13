@@ -4,9 +4,11 @@ import java.util.Locale;
 
 import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.config.Constants;
+import work.chiro.game.game.Game;
 import work.chiro.game.logic.DamageCalculator;
 import work.chiro.game.logic.attributes.dynamic.DynamicCharacterAttributes;
 import work.chiro.game.logic.attributes.loadable.BasicCharacterAttributes;
+import work.chiro.game.logic.element.Element;
 import work.chiro.game.objects.thing.AbstractThing;
 import work.chiro.game.objects.thing.attack.AbstractAttack;
 import work.chiro.game.objects.thing.attack.UnderAttack;
@@ -16,6 +18,7 @@ import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.colors.DrawColor;
+import work.chiro.game.x.ui.view.popup.DamagePopup;
 
 public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttributes, AbstractAction>
         implements UnderAttack {
@@ -74,6 +77,7 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
 
     protected void bearDamage(int damage) {
         Utils.getLogger().info("{} bearDamage: {}", this, damage);
+        Game.getInstance().getTopLayout().addView(new DamagePopup(getPosition().plus(new Vec2(0, 10)), Element.Cryo, damage));
         if (getHp() >= damage) {
             getDynamicCharacterAttributes().setHp(getHp() - damage);
         } else {
