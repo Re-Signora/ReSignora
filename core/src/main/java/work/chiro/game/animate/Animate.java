@@ -216,7 +216,7 @@ public class Animate {
             if (sum.getX() == 0) {
                 return;
             }
-            getSpeed().set(getNewVecInstance().fromVector(delta.times(this.speed / sum.getX())));
+            getSpeed().set(getNewVecInstance().fromVector(delta.times(this.speed / (sum.getX() == 0 ? 1e-5 : sum.getX()))));
         }
 
         @Override
@@ -285,6 +285,7 @@ public class Animate {
         @Override
         public Boolean update(double timeNow) {
             double t = timeNow - timeStart;
+            assert timeSpan != 0;
             getVector().set(getSource().plus(getDelta().times(t * t / (timeSpan * timeSpan))));
             return isDone(timeNow);
         }
@@ -293,6 +294,7 @@ public class Animate {
         public T getSpeed(double timeNow) {
             double t = timeNow - timeStart;
             if (getAnimateVectorType() == AnimateVectorType.PositionLike && !isDone(timeNow)) {
+                assert timeSpan * timeNow != 0;
                 return getNewVecInstance().fromVector(getDelta().times(2 * t / (timeSpan * timeNow)));
             } else {
                 return getNewVecInstance().getNewInstance();
@@ -343,6 +345,7 @@ public class Animate {
             double t = timeNow - timeStart;
             if (getAnimateVectorType() == AnimateVectorType.PositionLike && !isDone(timeNow)) {
                 //noinspection AlibabaUndefineMagicConstant
+                assert timeSpan != 0;
                 if (t < timeSpan / 2) {
                     return getNewVecInstance().fromVector(getDelta().times(2.0 / timeSpan * (t / timeSpan)));
                 } else {

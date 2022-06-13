@@ -83,6 +83,7 @@ public class VectorType {
                     res.get().set(i, get().get(i) * that.get().get(i));
                     break;
                 case DIVIDE:
+                    assert that.get().get(i) != 0;
                     res.get().set(i, get().get(i) / that.get().get(i));
                     break;
                 default:

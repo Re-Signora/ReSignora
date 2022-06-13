@@ -37,6 +37,7 @@ public abstract class AbstractBackground extends AbstractObject<AnimateContainer
     }
 
     private static double getScaledHeight(double width, double windowWidth, double height) {
+        assert width != 0;
         return windowWidth * height / width;
     }
 
@@ -48,6 +49,7 @@ public abstract class AbstractBackground extends AbstractObject<AnimateContainer
         }
         g.drawImage(newImage, getLocationX(), getLocationY() - 2 * getHeight(), getWidth(), getHeight() + 2);
         g.drawImage(newImage, getLocationX(), getLocationY() - getHeight(), getWidth(), getHeight() + 2);
+        // assert getHeight() != 0;
         for (int i = 0; i <= RunningConfig.windowHeight / getHeight(); i++) {
             g.drawImage(newImage, getLocationX(), getLocationY() + getHeight() * (i + 1), getWidth(), getHeight() + 2);
         }

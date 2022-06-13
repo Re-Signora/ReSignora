@@ -27,6 +27,7 @@ public class DamageCalculator {
         BasicCharacterAttributes underAttackCharacterAttributes = attack.getSource().getBasicAttributes();
         DynamicCharacterAttributes underAttacksDynamicCharacterAttributes = attack.getSource().getDynamicCharacterAttributes();
         double ATK = characterAttributes.getATK();
+        assert characterAttributes.getATK() + underAttackCharacterAttributes.getDEF() != 0;
         double DEF = (1 - (underAttackCharacterAttributes.getDEF() * 1.0) / (characterAttributes.getATK() + underAttackCharacterAttributes.getDEF()));
         double P = (1 - characterAttributes.getPierce());
         double EXT = characterAttributes.getExtraDMGRate();

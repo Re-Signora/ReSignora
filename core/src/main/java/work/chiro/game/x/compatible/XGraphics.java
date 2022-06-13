@@ -190,6 +190,7 @@ public abstract class XGraphics {
     }
 
     public void paintInfo(Game game) {
+        assert getCanvasScale() != 0;
         int d = (int) (getFontSize() / getCanvasScale());
         int x = 10;
         int y = d;

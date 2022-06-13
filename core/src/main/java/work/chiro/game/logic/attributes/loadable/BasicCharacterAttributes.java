@@ -90,6 +90,7 @@ public class BasicCharacterAttributes
     }
 
     public double getNormalAttackCoolDown() {
+        assert getNormalAttackSpeed() != 0;
         return 5.0 / getNormalAttackSpeed();
     }
 
