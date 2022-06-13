@@ -40,7 +40,7 @@ public class TimerController {
     synchronized public boolean remove(Object from, Timer c) {
         if (timers.containsKey(from)) {
             boolean res = timers.get(from).remove(c);
-            if (timers.get(from).size() == 0) timers.remove(from);
+            // if (timers.get(from).size() == 0) timers.remove(from);
             return res;
         } else {
             return false;
@@ -52,7 +52,7 @@ public class TimerController {
         if (timers.containsKey(from)) {
             timers.get(from).forEach(timer -> Utils.getLogger().debug("\tRemoving timer: {}", timer));
             timers.get(from).clear();
-            timers.remove(from);
+            // timers.remove(from);
         }
         // DO NOT USE!!
         // timers.remove(from);
