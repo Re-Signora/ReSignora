@@ -23,6 +23,7 @@ public class XView extends AbstractObject<AnimateContainer> {
     protected String text = "";
     protected String font = "main";
     protected String id = "View" + Utils.idGenerator();
+    protected boolean visible = true;
     private final Map<XEventType, LinkedList<XViewCallback>> listeners = new HashMap<>();
     protected String imageResource = null;
     protected XViewType type;
@@ -131,6 +132,7 @@ public class XView extends AbstractObject<AnimateContainer> {
 
     @Override
     public void draw(XGraphics g) {
+        if (!visible) return;
         draw(g, false);
         if (getText() != null && getText().length() > 0) {
             g.applyCoupleColor(DrawColor.getEnumColors(UIColors.Default));
@@ -145,6 +147,7 @@ public class XView extends AbstractObject<AnimateContainer> {
      */
     @Override
     final public void draw(XGraphics g, boolean center) {
+        if (!visible) return;
         super.draw(g, false);
     }
 
@@ -219,5 +222,9 @@ public class XView extends AbstractObject<AnimateContainer> {
 
     public String getFont() {
         return font;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 }

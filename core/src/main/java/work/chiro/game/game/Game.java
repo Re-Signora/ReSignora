@@ -219,6 +219,7 @@ public class Game {
                 synchronized (allThings) {
                     allThings.forEach(objList -> objList.forEach(AbstractObject::forward));
                 }
+                getTopLayout().forEach(AbstractObject::forward);
                 // 撞击检测
                 crashCheckAction();
                 // 后处理
@@ -396,5 +397,11 @@ public class Game {
             addOneEnemiesUnderAttack((UnderAttack) thing);
         }
         return this;
+    }
+
+    public void removeInvisibleViews() {
+        synchronized (Game.class) {
+            getTopLayout().removeIf(view -> !view.isValid());
+        }
     }
 }

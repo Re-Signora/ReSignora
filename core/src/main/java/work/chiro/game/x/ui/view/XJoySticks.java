@@ -18,7 +18,7 @@ public class XJoySticks extends XView {
         super(stickViewOffset);
         setSize(new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight).minus(stickViewOffset));
         if (RunningConfig.modePC) {
-            vanish();
+            setVisible(false);
             return;
         }
         setOnMove((xView, xEvent) -> pointer = xEvent.getPosition().plus(stickViewOffset));
@@ -35,6 +35,7 @@ public class XJoySticks extends XView {
     @Override
     public void draw(XGraphics g) {
         super.draw(g);
+        if (!visible) return;
         double r = stickSize.getX() / 2;
         g.setColor(DrawColor.green);
         g.circle(stickOffset.fromVector(stickOffset.plus(stickSize.divide(2))), r);
@@ -61,10 +62,5 @@ public class XJoySticks extends XView {
             return new Vec2();
         }
         return new Vec2().fromVector(Objects.requireNonNull(getLimitedCenteredPointer()).divide(stickSize.getX() / 2));
-    }
-
-    @Override
-    public void vanish() {
-        isValid = false;
     }
 }

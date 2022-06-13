@@ -150,6 +150,9 @@ public abstract class XGraphics {
                 if (view.isValid()) view.draw(this);
             }
         });
+
+        // 删除 views
+        game.removeInvisibleViews();
     }
 
     private XFont<?> font = null;
