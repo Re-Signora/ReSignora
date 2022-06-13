@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 
 import java.util.Objects;
 
+import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
@@ -53,7 +54,7 @@ public abstract class XGraphicsAndroid extends XGraphics {
         Utils.CacheImageInfo info = new Utils.CacheImageInfo((int) w, (int) h, image.getName());
         XImage<?> cachedImage = Utils.getCachedImageFromCache(info);
         if (cachedImage != null) return cachedImage;
-        Utils.getLogger().warn("update cache image: {}", image);
+        if (RunningConfig.modePC) Utils.getLogger().warn("update cache image: {}", image);
         Matrix matrix = new Matrix();
         matrix.postScale((float) (w / image.getWidth()), (float) (h / image.getHeight()));
         Bitmap scaledBitmap = Bitmap.createBitmap((Bitmap) image.getImage(), 0, 0, image.getWidth(), image.getHeight(), matrix, true);

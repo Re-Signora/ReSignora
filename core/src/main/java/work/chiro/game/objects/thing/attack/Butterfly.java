@@ -64,7 +64,9 @@ public class Butterfly extends AbstractAttack {
     public XImage<?> getImage(boolean getRawImage) {
         XImage<?> im = ((BasicImageCarouselAction) getAnimateContainer()).getImageNow();
         if (getRawImage) return im;
-        return cachedImage.getOrDefault(im, im);
+        if (RunningConfig.enableImageCache)
+            return cachedImage.getOrDefault(im, im);
+        else return im;
     }
 
     @Override

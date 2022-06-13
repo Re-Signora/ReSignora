@@ -31,6 +31,7 @@ public class RunningConfig {
     }
 
     public static boolean modePC = true;
+    public static boolean enableImageCache = true;
 
     public static boolean enableHardwareSpeedup = true;
     // public static boolean enableHardwareSpeedup = false;

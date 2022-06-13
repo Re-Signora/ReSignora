@@ -32,6 +32,7 @@ public class GameActivity extends AppCompatActivity {
 
         // 设置内部模式
         RunningConfig.modePC = false;
+        RunningConfig.enableImageCache = false;
         RunningConfig.scaleBackground = false;
 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);

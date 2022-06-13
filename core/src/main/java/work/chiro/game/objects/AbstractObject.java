@@ -226,7 +226,7 @@ public abstract class AbstractObject<A extends AnimateContainer> {
             }
         }
         if (keepImage()) {
-            if (cachedImage.containsKey(image) && !getRawImage) {
+            if (cachedImage.containsKey(image) && !getRawImage && RunningConfig.modePC && RunningConfig.enableImageCache) {
                 return cachedImage.get(image);
             }
             return image;
@@ -328,7 +328,7 @@ public abstract class AbstractObject<A extends AnimateContainer> {
                         (getLocationX() - (center ? getWidth() / 2 : 0)),
                         getLocationY() - (center ? getHeight() / 2 : 0),
                         getWidth(), getHeight(), flipped);
-        if (!cachedImage.containsValue(newImage)) {
+        if (!cachedImage.containsValue(newImage) && RunningConfig.modePC) {
             cachedImage.put(getImage(true), newImage);
         }
     }

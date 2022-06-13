@@ -14,6 +14,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 
+import work.chiro.game.config.RunningConfig;
 import work.chiro.game.objects.bullet.BaseBullet;
 import work.chiro.game.objects.bullet.EnemyBulletFactory;
 import work.chiro.game.x.compatible.ResourceProvider;
@@ -71,12 +72,18 @@ public class Utils {
     public static final Map<CacheImageInfo, XImage<?>> CACHED_IMAGE = new HashMap<>();
 
     public static XImage<?> getCachedImageFromCache(CacheImageInfo info) {
+        if (!RunningConfig.modePC) {
+            return null;
+        }
         synchronized (CACHED_IMAGE) {
             return CACHED_IMAGE.getOrDefault(info, null);
         }
     }
 
     public static void putCachedImageToCache(CacheImageInfo info, XImage<?> image) {
+        if (!RunningConfig.modePC) {
+            return;
+        }
         synchronized (CACHED_IMAGE) {
             Utils.getLogger().info("update cache: info = {}", info);
             CACHED_IMAGE.putIfAbsent(info, image);
