@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import work.chiro.game.utils.Utils;
+
 /**
  * 基于事件的定时器控制类
  *
@@ -44,7 +46,12 @@ public class TimerController {
     }
 
     synchronized public void remove(Class<?> from) {
-        timers.remove(from);
+        Utils.getLogger().debug("Removing timer class: {}", from);
+        if (timers.containsKey(from)) {
+            timers.get(from).forEach(timer -> Utils.getLogger().debug("\tRemoving timer: {}", timer));
+            timers.get(from).clear();
+        }
+        // timers.remove(from);
     }
 
     public void execute() {
