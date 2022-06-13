@@ -98,6 +98,7 @@ public class LaSignora extends AbstractCharacter {
         Game.getInstance().addThing(
                 new Butterfly(this, handButterfly.getPosition().copy(), handButterfly.getSize().copy())
                         .setImageIndexNow(handButterfly.getImageIndexNow())
+                        .setEnemy(isEnemy())
         );
     }
 
@@ -122,7 +123,7 @@ public class LaSignora extends AbstractCharacter {
             butterfly.getAnimateContainer().addAnimate(new Animate.SmoothTo<>(butterfly.getPosition(), nearEnemies.get(0).getPosition(), AnimateVectorType.PositionLike, TimeManager.getTimeMills(), 3000));
             applyAction(skillAttackDelayTask,
                     getBasicAttributes().getSkillAttackCoolDown() * 1000,
-                    () -> Game.getInstance().addThing(butterfly));
+                    () -> Game.getInstance().addThing(butterfly.setEnemy(isEnemy())));
         }
     }
 
@@ -134,6 +135,7 @@ public class LaSignora extends AbstractCharacter {
                 () -> Game.getInstance().addThing(
                         new Butterfly(this, handButterfly.getPosition().copy(), handButterfly.getSize().copy())
                                 .setImageIndexNow(handButterfly.getImageIndexNow())
+                                .setEnemy(isEnemy())
                 ));
     }
 

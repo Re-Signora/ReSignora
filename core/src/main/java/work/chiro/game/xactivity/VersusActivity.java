@@ -26,6 +26,7 @@ public class VersusActivity extends BattleActivity {
         eSignora = new LaSignora(new Vec2(RunningConfig.windowWidth * 1. / 4, RunningConfig.windowHeight * 2. / 3), new AbstractAction(null));
         eSignora.getAnimateContainer().setThing(eSignora);
         getGame().addEnemyThing(eSignora);
+        eSignora.getDynamicCharacterAttributes().setEnemy(true);
     }
 
     @Override

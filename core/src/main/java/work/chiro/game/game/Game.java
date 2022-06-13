@@ -383,6 +383,9 @@ public class Game {
      * @return this
      */
     public Game addThing(AbstractThing<?, ?> thing) {
+        if (thing.getBasicDynamicAttributes().isEnemy()) {
+            return addEnemyThing(thing);
+        }
         // 模板匹配不支持
         if (thing instanceof AbstractCharacter) {
             addOneCharacter((AbstractCharacter) thing);

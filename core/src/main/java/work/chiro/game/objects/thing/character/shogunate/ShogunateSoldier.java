@@ -27,6 +27,7 @@ public class ShogunateSoldier extends AbstractCharacter {
 
     public ShogunateSoldier(Vec2 posInit, AbstractAction abstractAction, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super("shogunate-soldier", BasicCharacterAttributes.class, posInit, abstractAction, sizeInit, rotationInit, alpha);
+        getDynamicCharacterAttributes().setEnemy(true);
         moveDuration = 100.0 / getBasicAttributes().getSpeed() * 1000;
         normalAttackTask = new Timer(getBasicAttributes().getNormalAttackCoolDown() * 1000, (controller, timer) -> this.normalAttack());
         moveTask = new Timer(moveDuration, (controller, timer) -> {

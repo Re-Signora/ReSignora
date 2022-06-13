@@ -6,6 +6,7 @@ import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.config.Constants;
 import work.chiro.game.game.Game;
 import work.chiro.game.logic.DamageCalculator;
+import work.chiro.game.logic.attributes.dynamic.BasicDynamicAttributes;
 import work.chiro.game.logic.attributes.dynamic.DynamicCharacterAttributes;
 import work.chiro.game.logic.attributes.loadable.BasicCharacterAttributes;
 import work.chiro.game.logic.element.Element;
@@ -159,5 +160,14 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
     @Override
     public AbstractCharacter getRelativeCharacter() {
         return this;
+    }
+
+    public boolean isEnemy() {
+        return getDynamicCharacterAttributes().isEnemy();
+    }
+
+    @Override
+    public BasicDynamicAttributes getBasicDynamicAttributes() {
+        return getDynamicCharacterAttributes();
     }
 }

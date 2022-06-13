@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.logic.attributes.AttributesBuilder;
 import work.chiro.game.logic.attributes.BasicThingAttributes;
+import work.chiro.game.logic.attributes.dynamic.BasicDynamicAttributes;
 import work.chiro.game.objects.AbstractFlyingObject;
 import work.chiro.game.resource.CanPreLoadResources;
 import work.chiro.game.utils.Utils;
@@ -92,4 +93,6 @@ public abstract class AbstractThing<T extends BasicThingAttributes, A extends An
             vanish();
         }
     }
+
+    abstract public BasicDynamicAttributes getBasicDynamicAttributes();
 }
