@@ -157,11 +157,17 @@ public abstract class XGraphics {
             game.getObjectController().getTarget().drawHp(this,
                     new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight * 0.93),
                     new Vec2(RunningConfig.windowWidth * 0.37, 0));
+            if (!game.getObjectController().getTarget().isValid()) {
+                game.getObjectController().setTarget(null);
+            }
         }
         if (game.getObjectController().getSecondaryTarget() != null) {
             game.getObjectController().getSecondaryTarget().drawHp(this,
                     new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight * 0.07),
                     new Vec2(RunningConfig.windowWidth * 0.37, 0));
+            if (!game.getObjectController().getSecondaryTarget().isValid()) {
+                game.getObjectController().setSecondaryTarget(null);
+            }
         }
 
         // 删除 views

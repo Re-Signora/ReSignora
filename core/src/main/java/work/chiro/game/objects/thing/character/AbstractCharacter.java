@@ -123,10 +123,14 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
         int hpBarHeight = RunningConfig.drawHpBar;
         g.setColor(colorBack)
                 .fillRect(pos.getX() - sizeUse.getX() / 2, pos.getY() - sizeUse.getY() / 2,
-                        sizeUse.getX(), hpBarHeight)
-                .setColor(colorFront)
-                .fillRect(pos.getX() - sizeUse.getX() / 2, pos.getY() - sizeUse.getY() / 2,
-                        sizeUse.getX() / getBasicAttributes().getMaxHp() * getHp(), hpBarHeight);
+                        sizeUse.getX(), hpBarHeight);
+        if (getBasicAttributes().getMaxHp() * 0.3 > getHp()) {
+            g.setColor(DrawColor.red);
+        } else {
+            g.setColor(colorFront);
+        }
+        g.fillRect(pos.getX() - sizeUse.getX() / 2, pos.getY() - sizeUse.getY() / 2,
+                sizeUse.getX() / getBasicAttributes().getMaxHp() * getHp(), hpBarHeight);
     }
 
     public void drawHp(XGraphics g, Vec2 pos, Vec2 size) {
