@@ -1,4 +1,4 @@
-package work.chiro.game.logic;
+package work.chiro.game.logic.element;
 
 public enum ElementalReactions {
     // 潮湿

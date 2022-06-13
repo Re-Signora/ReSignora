@@ -2,8 +2,8 @@ package work.chiro.game.x.compatible.colors;
 
 import java.util.Map;
 
-import work.chiro.game.logic.Element;
-import work.chiro.game.logic.ElementalReactions;
+import work.chiro.game.logic.element.Element;
+import work.chiro.game.logic.element.ElementalReactions;
 
 public class DrawColor {
     public static int green = 0xFF00FF00;
