@@ -10,7 +10,6 @@ import work.chiro.game.game.Game;
 import work.chiro.game.objects.thing.character.shogunate.ShogunateSoldier;
 import work.chiro.game.objects.thing.character.signora.LaSignora;
 import work.chiro.game.utils.Utils;
-import work.chiro.game.utils.thread.MyThreadFactory;
 import work.chiro.game.utils.timer.DelayTimer;
 import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.utils.timer.Timer;
@@ -96,16 +95,7 @@ public class BattleActivity extends XActivity {
             buttonGroupItem.button.setFont("genshin");
         });
 
-        MyThreadFactory.getInstance().newThread(() -> {
-            ShogunateSoldier shogunateSolderInitial = new ShogunateSoldier(
-                    new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight * 1. / 2),
-                    new AbstractAction(null));
-            shogunateSolderInitial.getAnimateContainer().setThing(shogunateSolderInitial);
-            shogunateSolderInitial.setFlipped(true);
-            getGame().addEnemyThing(shogunateSolderInitial);
-        }).start();
-
-        getGame().getTimerController().add(getClass(), new Timer(5000, (controller, timer) -> {
+        Runnable createEnemies = () -> {
             Utils.getLogger().info("generate enemies");
             ShogunateSoldier shogunateSolder = new ShogunateSoldier(
                     Utils.randomPosition(
@@ -115,7 +105,11 @@ public class BattleActivity extends XActivity {
             shogunateSolder.getAnimateContainer().setThing(shogunateSolder);
             shogunateSolder.setFlipped(true);
             getGame().addEnemyThing(shogunateSolder);
-        }));
+        };
+
+        createEnemies.run();
+
+        getGame().getTimerController().add(getClass(), new Timer(2000, (controller, timer) -> createEnemies.run()));
     }
 
     @Override

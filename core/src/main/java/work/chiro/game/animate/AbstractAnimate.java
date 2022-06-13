@@ -15,7 +15,7 @@ public abstract class AbstractAnimate<T extends VectorType & VectorFactory<T>> {
     private final T vec;
     private final T source;
     protected double timeStart;
-    protected final double timeSpan;
+    protected double timeSpan;
     protected AnimateCallback<T> animateCallback = null;
 
     AbstractAnimate(T vecSource, AnimateType animateType, AnimateVectorType animateVectorType, double timeStart, double timeSpan) {
@@ -29,6 +29,14 @@ public abstract class AbstractAnimate<T extends VectorType & VectorFactory<T>> {
 
     public void setTimeStart(double timeStart) {
         this.timeStart = timeStart;
+    }
+
+    public void setTimeSpan(double timeSpan) {
+        this.timeSpan = timeSpan;
+    }
+
+    public double getTimeSpan() {
+        return timeSpan;
     }
 
     public AnimateType getAnimateType() {
