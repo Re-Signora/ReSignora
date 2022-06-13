@@ -20,8 +20,9 @@ public class LaSignora extends AbstractCharacter {
         private static final Vec2 butterflySize = new Vec2(24, 24);
 
         public HandButterfly(Vec2 posInit, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
-            super(posInit, sizeInit, rotationInit, alpha);
+            super(posInit, sizeInit, rotationInit, alpha, false);
             getAnimateContainer().removeAnimate(moveAnimate);
+            if (sizeAnimate != null) getAnimateContainer().removeAnimate(sizeAnimate);
         }
 
         public HandButterfly(Vec2 posInit) {

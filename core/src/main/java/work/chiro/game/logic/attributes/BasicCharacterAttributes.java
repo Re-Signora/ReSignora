@@ -3,10 +3,6 @@ package work.chiro.game.logic.attributes;
 public class BasicCharacterAttributes extends BasicThingAttributes {
     public int maxHp = 400;
     /**
-     * 移动速度
-     */
-    public int speed = 10;
-    /**
      * 攻击力
      */
     public int ATK = 20;
@@ -45,14 +41,6 @@ public class BasicCharacterAttributes extends BasicThingAttributes {
 
     public void setMaxHp(int maxHp) {
         this.maxHp = maxHp;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
     }
 
     public int getATK() {

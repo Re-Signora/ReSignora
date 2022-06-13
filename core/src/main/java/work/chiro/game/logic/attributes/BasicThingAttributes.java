@@ -12,6 +12,10 @@ public class BasicThingAttributes {
      */
     public double duration = 0;
     /**
+     * 移动速度
+     */
+    public int speed = 10;
+    /**
      * 宽度
      */
     public double width = 0;
@@ -20,7 +24,31 @@ public class BasicThingAttributes {
      */
     public double height = 0;
 
-    public boolean sizeAvailable() {
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public boolean isCollision() {
+        return collision;
+    }
+
+    public void setCollision(boolean collision) {
+        this.collision = collision;
+    }
+
+    public double getDuration() {
+        return duration;
+    }
+
+    public void setDuration(double duration) {
+        this.duration = duration;
+    }
+
+    public boolean isSizeAvailable() {
         return width != 0 && height != 0;
     }
 

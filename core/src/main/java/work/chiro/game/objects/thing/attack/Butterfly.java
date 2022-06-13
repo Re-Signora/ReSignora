@@ -17,12 +17,13 @@ import work.chiro.game.x.compatible.XImage;
 public class Butterfly extends AbstractAttack {
     private final static String labelName = "la-signora-butterfly";
     protected AbstractAnimate<Vec> moveAnimate;
+    protected AbstractAnimate<Vec> sizeAnimate = null;
 
     public static AbstractAction getAction() {
         return new ReversedImageCarouselAction("attacks/" + labelName, labelName, 200);
     }
 
-    public Butterfly(Vec2 posInit, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
+    public Butterfly(Vec2 posInit, Vec2 sizeInit, Scale rotationInit, Scale alpha, boolean setSizeAnimate) {
         super(labelName, posInit, getAction(), sizeInit, rotationInit, alpha);
         getAnimateContainer().setThing(this);
         moveAnimate = new Animate.SmoothTo<>(
@@ -33,6 +34,22 @@ public class Butterfly extends AbstractAttack {
                 6000)
                 .setAnimateCallback(animate -> vanish());
         getAnimateContainer().addAnimate(moveAnimate);
+        if (getBasicAttributes().isSizeAvailable() && setSizeAnimate) {
+            Vec2 targetSize = getBasicAttributes().getSize();
+            if (RunningConfig.modePC) {
+                setSize(targetSize);
+            } else {
+                // Android 平台进行缩放性能好一些
+                sizeAnimate = new Animate.SmoothTo<>(
+                        getSize(),
+                        targetSize,
+                        AnimateVectorType.Others,
+                        TimeManager.getTimeMills(),
+                        3000
+                );
+                getAnimateContainer().addAnimate(sizeAnimate);
+            }
+        }
     }
 
     public Butterfly(Vec2 posInit) {
@@ -40,7 +57,7 @@ public class Butterfly extends AbstractAttack {
     }
 
     public Butterfly(Vec2 posInit, Vec2 sizeInit) {
-        this(posInit, sizeInit, null, null);
+        this(posInit, sizeInit, null, null, true);
     }
 
     @Override
