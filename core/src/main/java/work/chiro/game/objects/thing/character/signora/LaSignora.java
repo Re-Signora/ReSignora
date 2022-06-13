@@ -141,6 +141,7 @@ public class LaSignora extends AbstractCharacter {
     public void preLoadResources(XGraphics g) {
         super.preLoadResources(g);
         new HandButterfly(null, getPosition()).preLoadResources(g);
+        new Butterfly(null, getPosition()).preLoadResources(g);
     }
 
     @Override

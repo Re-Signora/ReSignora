@@ -19,6 +19,8 @@ public class HomeActivity extends XActivity {
         setContentView("main");
         XButton historyButton = (XButton) findViewById("button剧情模式");
         historyButton.setOnClick((xView, xEvent) -> startActivity(StageSelectActivity.class));
+        XButton versusButton = (XButton) findViewById("button对战模式");
+        versusButton.setOnClick((xView, xEvent) -> startActivity(VersusActivity.class));
         XButton buttonSettings = (XButton) findViewById("button设置");
         buttonSettings.setOnClick((xView, xEvent) -> TimeManager.timePauseToggle());
         buttonBack = (XButton) findViewById("button返回");

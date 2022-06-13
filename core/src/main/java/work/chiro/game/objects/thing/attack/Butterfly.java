@@ -79,6 +79,7 @@ public class Butterfly extends AbstractAttack {
     public void preLoadResources(XGraphics g) {
         super.preLoadResources(g);
         getAnimateContainer().preLoadResources(g);
+        ((ReversedImageCarouselAction) getAnimateContainer()).preLoadResources(g, getBasicAttributes().getSize());
     }
 
     public Butterfly setImageIndexNow(int imageIndexNow) {
