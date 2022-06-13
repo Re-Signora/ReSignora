@@ -118,7 +118,9 @@ public class BattleActivity extends XActivity {
         buttonBack.popEvent(XEventType.Click);
         TimeManager.timeResume();
         getGame().getCharacters().clear();
+        getGame().getEnemies().clear();
         getGame().getAttacks().clear();
+        getGame().getUnderAttacks().clear();
         getGame().getTimerController().clear();
     }
 
