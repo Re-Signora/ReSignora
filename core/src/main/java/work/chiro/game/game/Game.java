@@ -70,6 +70,9 @@ public class Game {
     private final List<List<? extends AbstractThing<?, ?>>> allThings = Arrays.asList(
             characters, attacks, enemiesAttacks
     );
+    private final List<List<? extends UnderAttack>> allUnderAttacks = Arrays.asList(
+            underAttacks, enemiesUnderAttacks
+    );
     private boolean gameOverFlag = false;
     private Future<?> future = null;
     private final TimerController timerController = new TimerController();
@@ -221,6 +224,9 @@ public class Game {
                 // 后处理
                 synchronized (allThings) {
                     allThings.forEach(objList -> objList.removeIf(obj -> !obj.isValid()));
+                }
+                synchronized (allUnderAttacks) {
+                    allUnderAttacks.forEach(underAttacksList -> underAttacksList.removeIf(underAttack -> !underAttack.getRelativeCharacter().isValid()));
                 }
                 // 每个时刻重绘界面
                 if (onPaint != null) {
