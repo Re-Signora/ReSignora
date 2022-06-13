@@ -39,7 +39,7 @@ public class LaSignora extends AbstractCharacter {
 
         @Override
         public Vec2 getPosition() {
-            return super.getPosition().plus(butterflyOffset);
+            return super.getPosition().plus(isFlipped() ? butterflyOffset.times(new Vec2(-1, 1)) : butterflyOffset);
         }
 
         @Override
@@ -113,7 +113,7 @@ public class LaSignora extends AbstractCharacter {
     @Override
     public void skillAttack() {
         super.skillAttack();
-        List <AbstractCharacter> enemies = Game.getInstance().getEnemies();
+        List<AbstractCharacter> enemies = Game.getInstance().getEnemies();
         List<AbstractCharacter> nearEnemies = enemies.stream().sorted(Comparator.comparing(item -> item.getPosition().minus(getPosition()).getScale().getX())).collect(Collectors.toList());
         if (nearEnemies.size() > 0) {
             Butterfly butterfly = new Butterfly(this, handButterfly.getPosition().copy(), handButterfly.getSize().copy())
@@ -147,5 +147,11 @@ public class LaSignora extends AbstractCharacter {
     @Override
     protected void drawHp(XGraphics g, Vec2 pos, Vec2 size) {
         drawHp(g, DrawColor.green, DrawColor.gray, pos, size, true);
+    }
+
+    @Override
+    public void setFlipped(boolean flipped) {
+        super.setFlipped(flipped);
+        handButterfly.setFlipped(flipped);
     }
 }

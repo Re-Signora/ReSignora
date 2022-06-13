@@ -329,7 +329,7 @@ public abstract class AbstractObject<A extends AnimateContainer> {
                 .drawImage(getImage(),
                         (getLocationX() - (center ? getWidth() / 2 : 0)),
                         getLocationY() - (center ? getHeight() / 2 : 0),
-                        getWidth(), getHeight(), flipped);
+                        getWidth(), getHeight(), isFlipped());
         if (!cachedImage.containsValue(newImage) && RunningConfig.modePC) {
             cachedImage.put(getImage(true), newImage);
         }
@@ -385,6 +385,10 @@ public abstract class AbstractObject<A extends AnimateContainer> {
 
     public void setFlipped(boolean flipped) {
         this.flipped = flipped;
+    }
+
+    public boolean isFlipped() {
+        return flipped;
     }
 }
 
