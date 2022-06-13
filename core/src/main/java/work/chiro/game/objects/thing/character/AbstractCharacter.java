@@ -104,21 +104,29 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
     }
 
     @SuppressWarnings("SameParameterValue")
-    protected void drawHp(XGraphics g, int colorFront, int colorBack, boolean forceDraw) {
+    protected void drawHp(XGraphics g, int colorFront, int colorBack, Vec2 pos, Vec2 sizeUse, boolean forceDraw) {
         if (getHp() == getBasicAttributes().getMaxHp() && !forceDraw) {
             return;
         }
         int hpBarHeight = Constants.DRAW_HP_BAR;
         g.setColor(colorBack)
-                .fillRect(getLocationX() - getWidth() / 2, getLocationY() - getHeight() / 2,
-                        getWidth(), hpBarHeight)
+                .fillRect(pos.getX() - sizeUse.getX() / 2, pos.getY() - sizeUse.getY() / 2,
+                        sizeUse.getX(), hpBarHeight)
                 .setColor(colorFront)
-                .fillRect(getLocationX() - getWidth() / 2, getLocationY() - getHeight() / 2,
-                        getWidth() / getBasicAttributes().getMaxHp() * getHp(), hpBarHeight);
+                .fillRect(pos.getX() - sizeUse.getX() / 2, pos.getY() - sizeUse.getY() / 2,
+                        sizeUse.getX() / getBasicAttributes().getMaxHp() * getHp(), hpBarHeight);
+    }
+
+    protected void drawHp(XGraphics g, Vec2 pos, Vec2 size) {
+        drawHp(g, DrawColor.red, DrawColor.gray, pos, size, true);
+    }
+
+    protected void drawHp(XGraphics g, int colorFront, int colorBack) {
+        drawHp(g, colorFront, colorBack, getPosition(), getSize(), true);
     }
 
     protected void drawHp(XGraphics g) {
-        drawHp(g, DrawColor.red, DrawColor.gray, true);
+        drawHp(g, DrawColor.red, DrawColor.gray);
     }
 
     @Override
@@ -127,9 +135,13 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
         super.draw(g, center);
     }
 
+    public void drawWithoutHp(XGraphics g) {
+        super.draw(g);
+    }
+
     @Override
     public void draw(XGraphics g) {
-        super.draw(g);
+        drawWithoutHp(g);
         drawHp(g);
     }
 }

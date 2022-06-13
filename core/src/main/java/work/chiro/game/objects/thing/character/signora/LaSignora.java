@@ -2,6 +2,7 @@ package work.chiro.game.objects.thing.character.signora;
 
 import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.animate.action.ReversedImageCarouselAction;
+import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.logic.attributes.loadable.BasicCharacterAttributes;
 import work.chiro.game.objects.thing.attack.Butterfly;
@@ -72,8 +73,11 @@ public class LaSignora extends AbstractCharacter {
 
     @Override
     public void draw(XGraphics g) {
-        super.draw(g);
+        super.drawWithoutHp(g);
         handButterfly.draw(g);
+        drawHp(g,
+                new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight * 0.93),
+                new Vec2(RunningConfig.windowWidth * 0.37, 0));
     }
 
     @Override
@@ -135,7 +139,7 @@ public class LaSignora extends AbstractCharacter {
     }
 
     @Override
-    protected void drawHp(XGraphics g) {
-        drawHp(g, DrawColor.green, DrawColor.gray, true);
+    protected void drawHp(XGraphics g, Vec2 pos, Vec2 size) {
+        drawHp(g, DrawColor.green, DrawColor.gray, pos, size, true);
     }
 }
