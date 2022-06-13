@@ -1,5 +1,7 @@
 package work.chiro.game.objects.thing.character;
 
+import java.util.Locale;
+
 import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.config.Constants;
 import work.chiro.game.logic.DamageCalculator;
@@ -65,7 +67,13 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
         return dynamicCharacterAttributes;
     }
 
+    @Override
+    public String toString() {
+        return String.format(Locale.CHINA, "Character %s", getLabelName());
+    }
+
     protected void bearDamage(int damage) {
+        Utils.getLogger().info("{} bearDamage: {}", this, damage);
         if (getHp() >= damage) {
             getDynamicCharacterAttributes().setHp(getHp() - damage);
         } else {
