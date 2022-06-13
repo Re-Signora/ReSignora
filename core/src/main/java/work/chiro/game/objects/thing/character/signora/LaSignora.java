@@ -1,5 +1,11 @@
 package work.chiro.game.objects.thing.character.signora;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import work.chiro.game.animate.Animate;
+import work.chiro.game.animate.AnimateVectorType;
 import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.animate.action.ReversedImageCarouselAction;
 import work.chiro.game.config.RunningConfig;
@@ -23,8 +29,8 @@ public class LaSignora extends AbstractCharacter {
 
         public HandButterfly(AbstractCharacter source, Vec2 posInit, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
             super(source, posInit, sizeInit, rotationInit, alpha, false);
-            getAnimateContainer().removeAnimate(moveAnimate);
-            if (sizeAnimate != null) getAnimateContainer().removeAnimate(sizeAnimate);
+            removeMoveAnimate();
+            removeSizeAnimate();
         }
 
         public HandButterfly(AbstractCharacter source, Vec2 posInit) {
@@ -107,12 +113,17 @@ public class LaSignora extends AbstractCharacter {
     @Override
     public void skillAttack() {
         super.skillAttack();
-        applyAction(skillAttackDelayTask,
-                getBasicAttributes().getSkillAttackCoolDown() * 1000,
-                () -> Game.getInstance().addThing(
-                        new Butterfly(this, handButterfly.getPosition().copy(), handButterfly.getSize().copy())
-                                .setImageIndexNow(handButterfly.getImageIndexNow())
-                ));
+        List <AbstractCharacter> enemies = Game.getInstance().getEnemies();
+        List<AbstractCharacter> nearEnemies = enemies.stream().sorted(Comparator.comparing(item -> item.getPosition().minus(getPosition()).getScale().getX())).collect(Collectors.toList());
+        if (nearEnemies.size() > 0) {
+            Butterfly butterfly = new Butterfly(this, handButterfly.getPosition().copy(), handButterfly.getSize().copy())
+                    .setImageIndexNow(handButterfly.getImageIndexNow());
+            butterfly.removeMoveAnimate();
+            butterfly.getAnimateContainer().addAnimate(new Animate.SmoothTo<>(butterfly.getPosition(), nearEnemies.get(0).getPosition(), AnimateVectorType.PositionLike, TimeManager.getTimeMills(), 3000));
+            applyAction(skillAttackDelayTask,
+                    getBasicAttributes().getSkillAttackCoolDown() * 1000,
+                    () -> Game.getInstance().addThing(butterfly));
+        }
     }
 
     @Override

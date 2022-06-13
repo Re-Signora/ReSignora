@@ -63,12 +63,13 @@ public class Game {
 
     private final List<AbstractBackground> backgrounds = new LinkedList<>();
     private final List<AbstractCharacter> characters = new LinkedList<>();
+    private final List<AbstractCharacter> enemies = new LinkedList<>();
     private final List<AbstractAttack> attacks = new LinkedList<>();
     private final List<AbstractAttack> enemiesAttacks = new LinkedList<>();
     private final List<UnderAttack> underAttacks = new LinkedList<>();
     private final List<UnderAttack> enemiesUnderAttacks = new LinkedList<>();
     private final List<List<? extends AbstractThing<?, ?>>> allThings = Arrays.asList(
-            characters, attacks, enemiesAttacks
+            characters, enemies, attacks, enemiesAttacks
     );
     private final List<List<? extends UnderAttack>> allUnderAttacks = Arrays.asList(
             underAttacks, enemiesUnderAttacks
@@ -331,6 +332,10 @@ public class Game {
         return enemiesAttacks;
     }
 
+    public List<AbstractCharacter> getEnemies() {
+        return enemies;
+    }
+
     public void addOneAttack(AbstractAttack attack) {
         synchronized (attacks) {
             attacks.add(attack);
@@ -361,6 +366,12 @@ public class Game {
         }
     }
 
+    public void addOneEnemy(AbstractCharacter enemy) {
+        synchronized (enemies) {
+            enemies.add(enemy);
+        }
+    }
+
     public CharacterController getObjectController() {
         return characterController;
     }
@@ -388,7 +399,7 @@ public class Game {
     public Game addEnemyThing(AbstractThing<?, ?> thing) {
         // 模板匹配不支持
         if (thing instanceof AbstractCharacter) {
-            addOneCharacter((AbstractCharacter) thing);
+            addOneEnemy((AbstractCharacter) thing);
         }
         if (thing instanceof AbstractAttack) {
             addOneEnemiesAttack((AbstractAttack) thing);

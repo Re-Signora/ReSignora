@@ -89,4 +89,12 @@ public class Butterfly extends AbstractAttack {
     public int getImageIndexNow() {
         return ((BasicImageCarouselAction) getAnimateContainer()).getImageIndexNow();
     }
+
+    public void removeMoveAnimate() {
+        getAnimateContainer().removeAnimate(moveAnimate);
+    }
+
+    public void removeSizeAnimate() {
+        getAnimateContainer().removeAnimate(sizeAnimate);
+    }
 }
