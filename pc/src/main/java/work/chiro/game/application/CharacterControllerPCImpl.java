@@ -48,7 +48,7 @@ public class CharacterControllerPCImpl extends CharacterController {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (!pressedKeys.contains(e.getKeyCode())) {
-                    Utils.getLogger().info("key down: {}", e.getKeyChar());
+                    Utils.getLogger().debug("key down: {}", e.getKeyChar());
                     onKeyDown(e.getKeyCode());
                 }
                 pressedKeys.add(e.getKeyCode());
@@ -56,7 +56,7 @@ public class CharacterControllerPCImpl extends CharacterController {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                Utils.getLogger().info("key up: {}", e.getKeyChar());
+                Utils.getLogger().debug("key up: {}", e.getKeyChar());
                 onKeyUp(e.getKeyCode());
                 pressedKeys.remove(e.getKeyCode());
             }

@@ -3,7 +3,7 @@ package work.chiro.game.objects.thing.character.signora;
 import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.animate.action.ReversedImageCarouselAction;
 import work.chiro.game.game.Game;
-import work.chiro.game.logic.attributes.BasicCharacterAttributes;
+import work.chiro.game.logic.attributes.loadable.BasicCharacterAttributes;
 import work.chiro.game.objects.thing.attack.Butterfly;
 import work.chiro.game.objects.thing.character.AbstractCharacter;
 import work.chiro.game.utils.callback.BasicCallback;
@@ -13,6 +13,7 @@ import work.chiro.game.utils.timer.Timer;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.XGraphics;
+import work.chiro.game.x.compatible.colors.DrawColor;
 
 public class LaSignora extends AbstractCharacter {
     static class HandButterfly extends Butterfly {
@@ -70,8 +71,8 @@ public class LaSignora extends AbstractCharacter {
     }
 
     @Override
-    public void draw(XGraphics g, boolean center) {
-        super.draw(g, center);
+    public void draw(XGraphics g) {
+        super.draw(g);
         handButterfly.draw(g);
     }
 
@@ -131,5 +132,10 @@ public class LaSignora extends AbstractCharacter {
     public void preLoadResources(XGraphics g) {
         super.preLoadResources(g);
         new HandButterfly(getPosition()).preLoadResources(g);
+    }
+
+    @Override
+    protected void drawHp(XGraphics g) {
+        drawHp(g, DrawColor.green, DrawColor.gray, true);
     }
 }

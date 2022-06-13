@@ -3,6 +3,8 @@ package work.chiro.game.logic.attributes;
 import java.io.IOException;
 import java.util.Map;
 
+import work.chiro.game.logic.attributes.loadable.BasicAttackAttributes;
+import work.chiro.game.logic.attributes.loadable.BasicCharacterAttributes;
 import work.chiro.game.x.compatible.ResourceProvider;
 
 public class AttributesBuilder {

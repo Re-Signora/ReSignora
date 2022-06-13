@@ -1,7 +1,7 @@
 package work.chiro.game.objects.thing.character.shogunate;
 
 import work.chiro.game.animate.action.AbstractAction;
-import work.chiro.game.logic.attributes.BasicCharacterAttributes;
+import work.chiro.game.logic.attributes.loadable.BasicCharacterAttributes;
 import work.chiro.game.objects.thing.character.AbstractCharacter;
 import work.chiro.game.utils.timer.DelayTimer;
 import work.chiro.game.vector.Scale;

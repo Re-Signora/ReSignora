@@ -1,7 +1,7 @@
 package work.chiro.game.objects.thing.attack;
 
 import work.chiro.game.animate.action.AbstractAction;
-import work.chiro.game.logic.attributes.BasicAttackAttributes;
+import work.chiro.game.logic.attributes.loadable.BasicAttackAttributes;
 import work.chiro.game.objects.thing.AbstractThing;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;

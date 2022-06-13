@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 
 import work.chiro.game.compatible.ResourceProviderPC;
-import work.chiro.game.logic.attributes.BasicCharacterAttributes;
+import work.chiro.game.logic.attributes.loadable.BasicCharacterAttributes;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.x.ui.layout.XLayout;
