@@ -151,6 +151,7 @@ public abstract class XGraphics {
             }
         });
 
+        setAlpha(0.8);
         // 绘制血条
         if (game.getObjectController().getTarget() != null) {
             game.getObjectController().getTarget().drawHp(this,
