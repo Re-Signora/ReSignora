@@ -1,0 +1,10 @@
+{
+  "name": "aircraft",
+  "background": "bg-landscape.jpg",
+  "views": [
+    {
+      "type": "JoySticks",
+      "id": "joySticks"
+    }
+  ]
+}
