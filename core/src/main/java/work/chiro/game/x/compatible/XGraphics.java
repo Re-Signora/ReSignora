@@ -152,7 +152,7 @@ public abstract class XGraphics {
         });
 
         // 删除 views
-        game.removeInvisibleViews();
+        game.removeInvalidViews();
     }
 
     private XFont<?> font = null;

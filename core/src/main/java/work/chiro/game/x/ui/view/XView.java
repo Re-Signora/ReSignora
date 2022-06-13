@@ -9,6 +9,7 @@ import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.config.Constants;
 import work.chiro.game.objects.AbstractObject;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.compatible.XGraphics;
@@ -226,5 +227,10 @@ public class XView extends AbstractObject<AnimateContainer> {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+    }
+
+    @Override
+    public void forward() {
+        getAnimateContainer().updateAll(TimeManager.getTimeMills());
     }
 }

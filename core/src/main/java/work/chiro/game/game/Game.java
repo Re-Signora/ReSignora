@@ -399,7 +399,7 @@ public class Game {
         return this;
     }
 
-    public void removeInvisibleViews() {
+    public void removeInvalidViews() {
         synchronized (Game.class) {
             getTopLayout().removeIf(view -> !view.isValid());
         }

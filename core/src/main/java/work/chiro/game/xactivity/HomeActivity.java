@@ -1,15 +1,11 @@
 package work.chiro.game.xactivity;
 
-import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
-import work.chiro.game.logic.element.Element;
 import work.chiro.game.utils.timer.TimeManager;
-import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.activity.XActivity;
 import work.chiro.game.x.activity.XBundle;
 import work.chiro.game.x.ui.event.XEventType;
 import work.chiro.game.x.ui.view.XButton;
-import work.chiro.game.x.ui.view.popup.DamagePopup;
 
 public class HomeActivity extends XActivity {
     private XButton buttonBack;
@@ -41,7 +37,7 @@ public class HomeActivity extends XActivity {
         //     ha.set(ha + "哈");
         // });
 
-        getLayout().addView(new DamagePopup(new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight * 1. / 2), Element.Cryo, 1100));
+        // getLayout().addView(new DamagePopup(new Vec2(RunningConfig.windowWidth * 1. / 2, RunningConfig.windowHeight * 1. / 2), Element.Cryo, 1100));
     }
 
     @Override
