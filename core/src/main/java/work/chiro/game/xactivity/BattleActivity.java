@@ -30,12 +30,12 @@ public class BattleActivity extends XActivity {
     private LaSignora signora;
 
     private static class ButtonGroupItem {
-        public XButton button;
+        public XView button;
         public DelayTimer delayTimer;
         public double coolDownDelayMs;
         public XViewCallback onClick;
 
-        public ButtonGroupItem(XButton button, DelayTimer delayTimer, double coolDownDelayMs, XViewCallback onClick) {
+        public ButtonGroupItem(XView button, DelayTimer delayTimer, double coolDownDelayMs, XViewCallback onClick) {
             this.button = button;
             this.delayTimer = delayTimer;
             this.coolDownDelayMs = coolDownDelayMs;
@@ -67,10 +67,11 @@ public class BattleActivity extends XActivity {
         getGame().getObjectController().setTarget(signora);
         XJoySticks joySticks = (XJoySticks) findViewById("joySticks");
         getGame().getObjectController().setJoySticks(joySticks);
+        getGame().getObjectController().setBattleActivity(this);
 
         buttonGroup.addAll(List.of(
                 new ButtonGroupItem(
-                        (XButton) findViewById("buttonSkillAttack"),
+                        findViewById("buttonSkillAttack"),
                         signora.getSkillAttackDelayTask(),
                         signora.getBasicAttributes().getSkillAttackCoolDown() * 1000,
                         (xView, xEvent) -> {
@@ -79,7 +80,7 @@ public class BattleActivity extends XActivity {
                         }
                 ),
                 new ButtonGroupItem(
-                        (XButton) findViewById("buttonChargedAttack"),
+                        findViewById("buttonChargedAttack"),
                         signora.getChargedAttackDelayTask(),
                         signora.getBasicAttributes().getChargedAttackCoolDown() * 1000,
                         (xView, xEvent) -> {
@@ -122,7 +123,7 @@ public class BattleActivity extends XActivity {
             button.setAlpha(new Scale(0.6));
             button.setText(sinceString);
         } else {
-            button.setAlpha(new Scale(1));
+            // button.setAlpha(new Scale(1));
             button.setText("");
         }
     }
@@ -132,5 +133,29 @@ public class BattleActivity extends XActivity {
         super.onFrame();
         if (signora == null) return;
         buttonGroup.forEach(buttonGroupItem -> applyActionToButton(buttonGroupItem.button, buttonGroupItem.delayTimer, buttonGroupItem.coolDownDelayMs));
+    }
+
+    public void normalAttack() {
+    }
+
+    public void skillAttack() {
+        findViewById("buttonSkillAttack").setAlpha(new Scale(1));
+        signora.skillAttack();
+    }
+
+    public void chargedAttack() {
+        findViewById("buttonChargedAttack").setAlpha(new Scale(1));
+        signora.chargedAttack();
+    }
+
+    public void beforeNormalAttack() {
+    }
+
+    public void beforeSkillAttack() {
+        findViewById("buttonSkillAttack").setAlpha(new Scale(0.6));
+    }
+
+    public void beforeChargedAttack() {
+        findViewById("buttonChargedAttack").setAlpha(new Scale(0.6));
     }
 }

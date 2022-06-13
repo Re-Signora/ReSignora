@@ -48,7 +48,7 @@ public class CharacterControllerPCImpl extends CharacterController {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (!pressedKeys.contains(e.getKeyCode())) {
-                    Utils.getLogger().debug("key down: {}", e.getKeyChar());
+                    Utils.getLogger().info("key down: {}", e.getKeyChar());
                     onKeyDown(e.getKeyCode());
                 }
                 pressedKeys.add(e.getKeyCode());
@@ -56,6 +56,8 @@ public class CharacterControllerPCImpl extends CharacterController {
 
             @Override
             public void keyReleased(KeyEvent e) {
+                Utils.getLogger().info("key up: {}", e.getKeyChar());
+                onKeyUp(e.getKeyCode());
                 pressedKeys.remove(e.getKeyCode());
             }
         };
@@ -99,6 +101,21 @@ public class CharacterControllerPCImpl extends CharacterController {
     }
 
     protected void onKeyDown(int code) {
+        // 需要控制 Object 的部分
+        if (getBattleActivity() != null) {
+            switch (code) {
+                case KeyCode.SKILL:
+                    getBattleActivity().beforeSkillAttack();
+                    break;
+                case KeyCode.CHARGED:
+                    getBattleActivity().beforeChargedAttack();
+                default:
+                    break;
+            }
+        }
+    }
+
+    protected void onKeyUp(int code) {
         // 不需要控制 Object 的部分
         switch (code) {
             case KeyCode.QUIT:
@@ -113,13 +130,13 @@ public class CharacterControllerPCImpl extends CharacterController {
                 break;
         }
         // 需要控制 Object 的部分
-        if (getTarget() == null) return;
+        if (getBattleActivity() == null) return;
         switch (code) {
             case KeyCode.SKILL:
-                getTarget().skillAttack();
+                getBattleActivity().skillAttack();
                 break;
             case KeyCode.CHARGED:
-                getTarget().chargedAttack();
+                getBattleActivity().chargedAttack();
             default:
                 break;
         }

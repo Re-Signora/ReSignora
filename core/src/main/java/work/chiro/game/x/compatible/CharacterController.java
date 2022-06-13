@@ -5,6 +5,7 @@ import work.chiro.game.objects.thing.character.AbstractCharacter;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.ui.view.XJoySticks;
+import work.chiro.game.xactivity.BattleActivity;
 
 public abstract class CharacterController {
     protected Double lastFrameTime = null;
@@ -22,6 +23,16 @@ public abstract class CharacterController {
 
     public AbstractCharacter getTarget() {
         return target;
+    }
+
+    private BattleActivity battleActivity = null;
+
+    public BattleActivity getBattleActivity() {
+        return battleActivity;
+    }
+
+    public void setBattleActivity(BattleActivity battleActivity) {
+        this.battleActivity = battleActivity;
     }
 
     abstract public void onFrame();

@@ -44,6 +44,15 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
     public void chargedAttack() {
     }
 
+    public void beforeNormalAttack() {
+    }
+
+    public void beforeSkillAttack() {
+    }
+
+    public void beforeChargedAttack() {
+    }
+
     @Override
     public void applyAttack(AbstractAttack attack) {
         attack.apply(this);

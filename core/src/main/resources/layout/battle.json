@@ -64,7 +64,7 @@
     },
     {
       "id": "buttonSkillAttack",
-      "type": "Button",
+      "type": "View",
       "image": "icons/元素战技.png",
       "position": [
         1977,
@@ -73,7 +73,7 @@
     },
     {
       "id": "buttonChargedAttack",
-      "type": "Button",
+      "type": "View",
       "image": "icons/元素爆发.png",
       "position": [
         2218,
