@@ -48,6 +48,7 @@ public class ShogunateSoldier extends AbstractCharacter {
         // normalAttackTask.setName("" + this + "普通攻击");
         // moveTask.setName("" + this + "移动");
 
+        // fixme: 不知道为啥这里如果用 this 或者另外建立的 Object 做计时器钩子，会卡死，未知原因
         // Game.getInstance().getTimerController().add(getClass(), normalAttackTask);
         // Game.getInstance().getTimerController().add(getClass(), moveTask);
         // Game.getInstance().getTimerController().add(mark, normalAttackTask);

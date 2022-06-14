@@ -22,7 +22,13 @@ import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.colors.DrawColor;
 
+/**
+ * 女士
+ */
 public class LaSignora extends AbstractCharacter {
+    /**
+     * 女士手上那个蝴蝶
+     */
     static class HandButterfly extends Butterfly {
         private final Vec2 butterflyOffset = new Vec2(60, -56);
         private static final Vec2 butterflySize = new Vec2(24, 24);

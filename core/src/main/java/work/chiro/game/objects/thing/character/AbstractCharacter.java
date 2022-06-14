@@ -21,12 +21,29 @@ import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.colors.DrawColor;
 import work.chiro.game.x.ui.view.popup.DamagePopup;
 
+/**
+ * 抽象角色类
+ */
 public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttributes, AbstractAction>
         implements UnderAttack {
+    /**
+     * 元素战技对应的 DelayTimer
+     */
     protected final DelayTimer skillAttackDelayTask = getDelayTimer();
+    /**
+     * 元素爆发对应的 DelayTimer
+     */
     protected final DelayTimer chargedAttackDelayTask = getDelayTimer();
+    /**
+     * 角色的动态属性
+     */
     protected final DynamicCharacterAttributes dynamicCharacterAttributes;
 
+    /**
+     * 获取新的 DelayTimer 对象
+     *
+     * @return DelayTimer
+     */
     protected abstract DelayTimer getDelayTimer();
 
     public AbstractCharacter(String labelName, Class<BasicCharacterAttributes> attributesClass, Vec2 posInit, AbstractAction animateContainer, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
@@ -44,26 +61,47 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
         this(labelName, attributesClass, posInit, animateContainer, null, null, null);
     }
 
+    /**
+     * 用于资源加载的临时类
+     */
     public AbstractCharacter() {
         super();
         dynamicCharacterAttributes = null;
     }
 
+    /**
+     * 普攻
+     */
     public void normalAttack() {
     }
 
+    /**
+     * 元素战技
+     */
     public void skillAttack() {
     }
 
+    /**
+     * 元素爆发
+     */
     public void chargedAttack() {
     }
 
+    /**
+     * 普攻前钩子
+     */
     public void beforeNormalAttack() {
     }
 
+    /**
+     * 元素战技前钩子
+     */
     public void beforeSkillAttack() {
     }
 
+    /**
+     * 元素爆发前钩子
+     */
     public void beforeChargedAttack() {
     }
 
@@ -76,8 +114,14 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
         return String.format(Locale.CHINA, "Character %s", getLabelName());
     }
 
+    /**
+     * 角色承受攻击伤害
+     *
+     * @param damage 伤害
+     */
     protected void bearDamage(int damage) {
         Utils.getLogger().info("{} bearDamage: {}", this, damage);
+        // 生成一个伤害 Popup
         Game.getInstance().getTopLayout().addView(new DamagePopup(getPosition().plus(new Vec2(0, 10)), Element.Pyro, damage));
         if (getHp() > damage) {
             getDynamicCharacterAttributes().setHp(getHp() - damage);
@@ -115,6 +159,16 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
         return getDynamicCharacterAttributes().getHp();
     }
 
+    /**
+     * 绘制血条，绘制在 pos 对应 size 的正上方
+     *
+     * @param g          xGraphics
+     * @param colorFront 前景色
+     * @param colorBack  背景色
+     * @param pos        中心
+     * @param sizeUse    目标的 size
+     * @param forceDraw  当血量等于最大血量的时候是否绘制
+     */
     @SuppressWarnings("SameParameterValue")
     protected void drawHp(XGraphics g, int colorFront, int colorBack, Vec2 pos, Vec2 sizeUse, boolean forceDraw) {
         if (getHp() == getBasicAttributes().getMaxHp() && !forceDraw) {
