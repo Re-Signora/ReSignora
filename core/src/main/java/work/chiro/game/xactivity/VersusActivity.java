@@ -8,6 +8,7 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.InetSocketAddress;
 import java.net.URI;
+import java.util.Locale;
 
 import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.config.RunningConfig;
@@ -101,7 +102,9 @@ public class VersusActivity extends BattleActivity {
             dialogue.setDialogueManager(new DialogueManager() {
                 @Override
                 public DialogueBean getDialogue() {
-                    return new DialogueBean("等待连接…… as " + (RunningConfig.targetServerHost != null ? "Client" : "Server"));
+                    return new DialogueBean("等待连接…… as " + (RunningConfig.targetServerHost != null ?
+                            ("Client" + String.format(Locale.CHINA, "(%s:%d)", RunningConfig.targetServerHost, RunningConfig.targetServerPort)) :
+                            ("Server" + String.format(Locale.CHINA, "(%s)", server.getAddress()))));
                 }
             });
             MyThreadFactory.getInstance().newThread(() -> {
