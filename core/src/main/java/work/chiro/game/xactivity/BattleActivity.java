@@ -131,6 +131,8 @@ public class BattleActivity extends XActivity {
         getGame().getAttacks().clear();
         getGame().getUnderAttacks().clear();
         getGame().getTimerController().clear();
+        getGame().getObjectController().setTarget(null);
+        getGame().getObjectController().setSecondaryTarget(null);
     }
 
     protected void applyActionToButton(XView button, DelayTimer delayTimer, double maxTimeMs) {
