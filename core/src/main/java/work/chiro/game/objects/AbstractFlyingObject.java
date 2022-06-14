@@ -1,7 +1,6 @@
 package work.chiro.game.objects;
 
 import work.chiro.game.animate.AnimateContainer;
-import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 
@@ -18,10 +17,20 @@ public class AbstractFlyingObject<A extends AnimateContainer> extends AbstractOb
         super(posInit, animateContainer);
     }
 
+    /**
+     * 获取锚定位置，用于判断碰撞
+     *
+     * @return 锚定的位置
+     */
     public Vec2 getAnchor() {
         return getPosition();
     }
 
+    /**
+     * 获取碰撞判断半径
+     *
+     * @return 碰撞判定半径
+     */
     public double getRadius() {
         Vec2 size = getSize();
         return Math.min(size.getX(), size.getY()) / 2;
