@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:autofillHints="@string/hint_address_fill"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -35,8 +34,7 @@
                 android:layout_height="wrap_content"
                 android:autofillHints="@string/hint_address_fill"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/hint_address" />
+                android:inputType="textPersonName" />
 
         </LinearLayout>
 

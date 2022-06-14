@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,10 +36,16 @@ public class MainActivity extends AppCompatActivity {
                 // R.id.button_mode_hard, Difficulty.Hard
         );
 
+        EditText editText = findViewById(R.id.editTextRemoteAddress);
+        editText.setText(RunningConfig.targetServerHost);
+
         buttonMap.forEach((id, difficulty) -> {
             Button button = findViewById(id);
             button.setOnClickListener(v -> {
                 RunningConfig.difficulty = difficulty;
+                if (editText.getText() == null || (editText.getText() != null && editText.getText().length() == 0)) {
+                    RunningConfig.targetServerHost = null;
+                }
                 startActivity(new Intent(MainActivity.this, GameActivity.class));
             });
         });

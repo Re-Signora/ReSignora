@@ -60,6 +60,7 @@ public class GamePanel extends JPanel {
     }
 
     public void action() {
+        if (RunningConfig.modePC) RunningConfig.targetServerHost = null;
         if (Game.getInstance() == null) {
             Game.createInstance(heroControllerImpl);
         }

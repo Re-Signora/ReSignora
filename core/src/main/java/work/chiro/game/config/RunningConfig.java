@@ -38,7 +38,8 @@ public class RunningConfig {
     public static boolean enableHardwareSpeedup = true;
     // public static boolean enableHardwareSpeedup = false;
 
-    public static String targetServerHost = "127.0.0.1";
+    // public static String targetServerHost = "127.0.0.1";
+    public static String targetServerHost = "pc.chiro.work";
     public static int targetServerPort = 11451;
 
     public static int eventSendDivide = 10;
