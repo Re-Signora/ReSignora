@@ -115,7 +115,10 @@ public class BattleActivity extends XActivity {
 
         createEnemies.run();
 
-        getGame().getTimerController().add(getClass(), new Timer(2000, (controller, timer) -> createEnemies.run()));
+        Timer createEnemyTask = new Timer(2000, (controller, timer) -> createEnemies.run());
+        createEnemyTask.setName("生成敌人");
+
+        getGame().getTimerController().add(getClass(), createEnemyTask);
     }
 
     @Override

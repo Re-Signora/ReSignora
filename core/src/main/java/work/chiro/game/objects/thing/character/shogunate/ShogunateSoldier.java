@@ -29,18 +29,23 @@ public class ShogunateSoldier extends AbstractCharacter {
         super("shogunate-soldier", BasicCharacterAttributes.class, posInit, abstractAction, sizeInit, rotationInit, alpha);
         getDynamicCharacterAttributes().setEnemy(true);
         moveDuration = 100.0 / getBasicAttributes().getSpeed() * 1000;
-        normalAttackTask = new Timer(getBasicAttributes().getNormalAttackCoolDown() * 1000, (controller, timer) -> this.normalAttack());
+        normalAttackTask = new Timer(getBasicAttributes().getNormalAttackCoolDown() * 1000, (controller, timer) -> {
+            if (isValid()) this.normalAttack();
+        });
         moveTask = new Timer(moveDuration, (controller, timer) -> {
+            if (!isValid()) return;
             Vec2 delta = Game.getInstance().getObjectController().getTarget().getPosition().minus(getPosition());
             Vec2 newPos = delta.fromVector(getPosition().plus(delta.divide(Math.sqrt(delta.getScale().getX())).times(getBasicAttributes().getSpeed() * 20)));
             moving = true;
             getAnimateContainer().addAnimate(new Animate.SmoothTo<>(getPosition(), newPos, AnimateVectorType.Others, TimeManager.getTimeMills(), moveDuration / 3
             ).setAnimateCallback(animate -> moving = false));
         });
-        // Game.getInstance().getTimerController().add(getClass(), normalAttackTask);
-        // Game.getInstance().getTimerController().add(getClass(), moveTask);
-        Game.getInstance().getTimerController().add(this, normalAttackTask);
-        Game.getInstance().getTimerController().add(this, moveTask);
+        normalAttackTask.setName("" + this + "普通攻击");
+        moveTask.setName("" + this + "移动");
+        Game.getInstance().getTimerController().add(getClass(), normalAttackTask);
+        Game.getInstance().getTimerController().add(getClass(), moveTask);
+        // Game.getInstance().getTimerController().add(this, normalAttackTask);
+        // Game.getInstance().getTimerController().add(this, moveTask);
     }
 
     public ShogunateSoldier(Vec2 posInit, AbstractAction abstractAction) {
