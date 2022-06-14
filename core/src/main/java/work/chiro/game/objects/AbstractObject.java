@@ -284,7 +284,8 @@ public abstract class AbstractObject<A extends AnimateContainer> {
         if (onVanish != null) {
             onVanish.run();
         }
-        Game.getInstance().getTimerController().remove(getClass());
+        // Game.getInstance().getTimerController().remove(getClass());
+        Game.getInstance().getTimerController().remove(this);
     }
 
     public Vec2 getSize() {

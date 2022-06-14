@@ -109,7 +109,8 @@ public class LaSignora extends AbstractCharacter {
             ifValid.run();
             delayTimer.setNotValid();
             delayTimer.setTimeMark(TimeManager.getTimeMills());
-            Game.getInstance().getTimerController().add(getClass(), new Timer(delayMs, delayTimer));
+            // Game.getInstance().getTimerController().add(getClass(), new Timer(delayMs, delayTimer));
+            Game.getInstance().getTimerController().add(this, new Timer(delayMs, delayTimer));
         }
     }
 

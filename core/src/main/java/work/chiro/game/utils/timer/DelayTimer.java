@@ -1,8 +1,8 @@
 package work.chiro.game.utils.timer;
 
 public class DelayTimer implements TimerCallback {
-    private final Class<?> from;
-    public DelayTimer(Class<?> from) {
+    private final Object from;
+    public DelayTimer(Object from) {
         this.from = from;
     }
 
@@ -33,6 +33,6 @@ public class DelayTimer implements TimerCallback {
     @Override
     public void run(TimerController controller, Timer timer) {
         valid = true;
-        // controller.remove(from, timer);
+        controller.remove(from, timer);
     }
 }

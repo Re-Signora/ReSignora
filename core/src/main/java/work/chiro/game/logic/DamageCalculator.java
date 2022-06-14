@@ -28,12 +28,14 @@ public class DamageCalculator {
         DynamicCharacterAttributes underAttacksDynamicCharacterAttributes = attack.getSource().getDynamicCharacterAttributes();
         double ATK = characterAttributes.getATK();
         assert characterAttributes.getATK() + underAttackCharacterAttributes.getDEF() != 0;
-        double DEF = (1 - (underAttackCharacterAttributes.getDEF() * 1.0) / (characterAttributes.getATK() + underAttackCharacterAttributes.getDEF()));
         double P = (1 - characterAttributes.getPierce());
-        double EXT = characterAttributes.getExtraDMGRate();
+        double DEF = (1 - (P * underAttackCharacterAttributes.getDEF()) / (characterAttributes.getATK() + underAttackCharacterAttributes.getDEF()));
+        // double EXT = characterAttributes.getExtraDMGRate() * 1.0 / 100;
+        // TODO: fix me
+        double EXT = characterAttributes.getExtraDMGRate() * 1.0;
         double CRIT = (isCRIT(characterAttributes.getCRIT_Rate()) ? (characterAttributes.getCRIT_DMG() * 1.0 / 100) : 1.0);
         Utils.getLogger().info("ATK={}, DEF={}, P={}, Ext={}, CRIT={}", ATK, DEF, P, EXT, CRIT);
-        return (int) (1.0
+        return (int) Math.ceil(1.0
                 * ATK
                 * DEF
                 * P
