@@ -9,9 +9,12 @@ import work.chiro.game.vector.Vec;
 import work.chiro.game.vector.Vec2;
 
 /**
+ * 用工厂方式生产 AnimateContainer 或者 Animate
+ *
  * @author Chiro
  */
 public class AnimateContainerFactory {
+    // 所有支持的生成类型
     public enum ContainerType {
         // 固定速度值
         ConstSpeed,
@@ -33,7 +36,13 @@ public class AnimateContainerFactory {
         Empty
     }
 
+    /**
+     * 生成目标类型
+     */
     private final ContainerType containerType;
+    /**
+     * 源位置向量
+     */
     private final Vec2 position;
 
     public AnimateContainerFactory(ContainerType containerType, Vec2 position) {
@@ -41,6 +50,9 @@ public class AnimateContainerFactory {
         this.position = position;
     }
 
+    /**
+     * 2维速度向量
+     */
     private Vec2 speed2d = null;
 
     public AnimateContainerFactory setupSpeed(Vec2 speed2d) {
@@ -53,6 +65,9 @@ public class AnimateContainerFactory {
         return this;
     }
 
+    /**
+     * 速度标量
+     */
     private Double speed1d = null;
 
     public AnimateContainerFactory setupSpeed(Double speed1d) {
@@ -62,6 +77,9 @@ public class AnimateContainerFactory {
         return this;
     }
 
+    /**
+     * 目标向量
+     */
     private Vec2 target = null;
 
     public AnimateContainerFactory setupTarget(Vec2 target) {
@@ -73,6 +91,9 @@ public class AnimateContainerFactory {
         return this;
     }
 
+    /**
+     * 动画运动范围1，即开始范围
+     */
     private Vec2 range = null;
 
     public AnimateContainerFactory setupRange(Vec2 range) {
@@ -82,6 +103,9 @@ public class AnimateContainerFactory {
         return this;
     }
 
+    /**
+     * 动画运动范围2，即终止范围
+     */
     private Vec2 range2 = null;
 
     public AnimateContainerFactory setupRange2(Vec2 range2) {
@@ -90,6 +114,9 @@ public class AnimateContainerFactory {
         return this;
     }
 
+    /**
+     * 设置动画持续时间
+     */
     private double timeSpan = 0;
 
     public AnimateContainerFactory setupTimeSpan(double timeSpan) {
@@ -100,6 +127,9 @@ public class AnimateContainerFactory {
         return this;
     }
 
+    /**
+     * 设置动画是否会结束
+     */
     private boolean willStop = true;
 
     public AnimateContainerFactory setupWillStop(boolean willStop) {
@@ -108,6 +138,9 @@ public class AnimateContainerFactory {
         return this;
     }
 
+    /**
+     * 设置动画全部完成回调
+     */
     private AnimateContainerCallback animateContainerCallback = null;
 
     public AnimateContainerFactory setupAnimateCallback(AnimateContainerCallback animateContainerCallback) {
@@ -115,6 +148,11 @@ public class AnimateContainerFactory {
         return this;
     }
 
+    /**
+     * 根据已经留下的信息创建动画
+     *
+     * @return 创建的动画
+     */
     public AbstractAnimate<Vec> createAnimate() {
         switch (containerType) {
             case Empty:
@@ -146,6 +184,11 @@ public class AnimateContainerFactory {
         return null;
     }
 
+    /**
+     * 根据留下的信息创建动画容器
+     *
+     * @return 创建的动画容器
+     */
     public AnimateContainer create() {
         AbstractAnimate<Vec> animate = createAnimate();
         if (animate == null) {
