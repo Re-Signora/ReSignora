@@ -157,6 +157,11 @@ public class Animate {
         }
     }
 
+    /**
+     * 线性循环动画，到达边界之后自动回归初始值
+     *
+     * @param <T>
+     */
     public static class LinearLoop<T extends VectorType & VectorFactory<T>> extends Linear<T> {
         private final Vec2 range;
 
@@ -170,6 +175,12 @@ public class Animate {
             return false;
         }
 
+        /**
+         * 对向量模一下
+         *
+         * @param timeNow 当前时间
+         * @return 动画是否完成
+         */
         @Override
         public Boolean update(double timeNow) {
             super.update(timeNow);
@@ -182,6 +193,11 @@ public class Animate {
         }
     }
 
+    /**
+     * 线性循环动画，到达边界后向量增量反向
+     *
+     * @param <T>
+     */
     public static class LinearRebound<T extends VectorType & VectorFactory<T>> extends Linear<T> {
         private final Vec2 rangeLeft;
         private final Vec2 rangeRight;
@@ -201,6 +217,12 @@ public class Animate {
             return false;
         }
 
+        /**
+         * update 的时候改变速度方向
+         *
+         * @param timeNow 当前时间
+         * @return 动画是否结束
+         */
         @Override
         public Boolean update(double timeNow) {
             T speed = getSpeed(timeNow);
@@ -221,6 +243,11 @@ public class Animate {
         }
     }
 
+    /**
+     * 对 Animate 添加 Target 的 Feature，设置之后会到达设定的目标
+     *
+     * @param <T>
+     */
     protected interface AnimateWithTarget<T extends VectorType> {
         /**
          * 获得 vecTarget
@@ -230,6 +257,11 @@ public class Animate {
         T getVecTarget();
     }
 
+    /**
+     * 线性，固定速率，但是到达目标向量
+     *
+     * @param <T>
+     */
     public static class LinearToTarget<T extends VectorType & VectorFactory<T>>
             extends Linear<T>
             implements AnimateWithTarget<T> {
@@ -240,6 +272,7 @@ public class Animate {
         public LinearToTarget(T vecSource, T vecTarget, double speed, double timeStart, boolean willStop) {
             super(vecSource, vecTarget.copy(), AnimateVectorType.PositionLike, timeStart);
             this.vecTarget = vecTarget;
+            // 添加一个 1000 的缩放，不然数字太小了
             this.speed = speed * 1000;
             this.willStop = willStop;
             updateSpeed();
@@ -254,6 +287,9 @@ public class Animate {
             return vecTarget;
         }
 
+        /**
+         * 更新当前速度向量
+         */
         public void updateSpeed() {
             T delta = getDelta();
             Scale sum = delta.getScale();
@@ -268,6 +304,12 @@ public class Animate {
             return getNewVecInstance().fromVector(getVecTarget().minus(getSource()));
         }
 
+        /**
+         * 到达目标向量算结束
+         *
+         * @param timeNow 当前时间
+         * @return 动画是否结束
+         */
         @Override
         public Boolean isDone(double timeNow) {
             return willStop && (super.isDone(timeNow) ||
@@ -287,6 +329,11 @@ public class Animate {
         }
     }
 
+    /**
+     * 跟随某个向量，即每当被跟随的向量改变位置，使得开始点和被跟随向量始终在一条直线上；固定速率
+     *
+     * @param <T>
+     */
     public static class LinearTracking<T extends VectorType & VectorFactory<T>>
             extends LinearToTarget<T>
             implements AnimateWithTarget<T> {
@@ -301,6 +348,11 @@ public class Animate {
         }
     }
 
+    /**
+     * 非线性动画，设定时间后到达目标位置
+     *
+     * @param <T>
+     */
     public static class NonLinear<T extends VectorType & VectorFactory<T>>
             extends AbstractAnimate<T>
             implements AnimateWithTarget<T> {
@@ -326,6 +378,12 @@ public class Animate {
             }
         }
 
+        /**
+         * 一个二次方程计算位置
+         *
+         * @param timeNow 当前时间
+         * @return 动画是否结束
+         */
         @Override
         public Boolean update(double timeNow) {
             double t = timeNow - timeStart;
@@ -334,6 +392,12 @@ public class Animate {
             return isDone(timeNow);
         }
 
+        /**
+         * 对 PositionLike 更新速度向量
+         *
+         * @param timeNow 当前时间
+         * @return 速度向量
+         */
         @Override
         public T getSpeed(double timeNow) {
             double t = timeNow - timeStart;
@@ -356,6 +420,11 @@ public class Animate {
         }
     }
 
+    /**
+     * 在规定时间后平滑移动到目标向量，前一半路程是非线性动画，后一半路程是前一半路程的相反
+     *
+     * @param <T>
+     */
     public static class SmoothTo<T extends VectorType & VectorFactory<T>>
             extends AbstractAnimate<T>
             implements AnimateWithTarget<T> {
