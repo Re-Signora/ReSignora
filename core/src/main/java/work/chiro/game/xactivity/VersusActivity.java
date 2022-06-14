@@ -183,7 +183,7 @@ public class VersusActivity extends BattleActivity {
             eSignora.setFlipped(!signora.isFlipped());
         }
         if (connectedAsClient) {
-            if (connectedAsServer && dataSendCnt == RunningConfig.eventSendDivide - 1) {
+            if (connectedAsServer || dataSendCnt == RunningConfig.eventSendDivide - 1) {
                 DataBean data = new DataBean();
                 data.setCommand("position");
                 data.setPosition(new PositionBean(Game.getInstance().getObjectController().getTarget().getPosition()));
@@ -191,6 +191,19 @@ public class VersusActivity extends BattleActivity {
                 dataSendCnt = 0;
             } else {
                 dataSendCnt += 1;
+            }
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (client != null && client.isOpen()) client.close();
+        if (server != null) {
+            try {
+                server.stop();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
