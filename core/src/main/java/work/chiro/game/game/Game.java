@@ -34,14 +34,31 @@ import work.chiro.game.x.ui.layout.XLayout;
 import work.chiro.game.x.ui.layout.XLayoutManager;
 import work.chiro.game.xactivity.HomeActivity;
 
+/**
+ * 游戏主体类
+ */
 public class Game {
+    /**
+     * Singleton 模式保存 Game 实例，方便全局获取
+     */
     private static Game instance = null;
 
+    /**
+     * 获取 Game 实例，必须保证已经显式创建
+     *
+     * @return Game instance
+     */
     public static Game getInstance() {
         assert instance != null;
         return instance;
     }
 
+    /**
+     * 显式创建 Game 实例
+     *
+     * @param characterController 角色控制器
+     * @return Game
+     */
     public static Game createInstance(CharacterController characterController) {
         Utils.getLogger().info("will create Game!");
         assert instance == null;
@@ -49,6 +66,11 @@ public class Game {
         return instance;
     }
 
+    /**
+     * 清除创建的 Game 实例，重启游戏时用到
+     *
+     * @return 旧的 Game 实例
+     */
     public static Game clearInstance() {
         Game lastGame = instance;
         instance = null;
@@ -61,26 +83,74 @@ public class Game {
     @SuppressWarnings("AlibabaThreadPoolCreation")
     static private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(Constants.GAME_POOL_SIZE, MyThreadFactory.getInstance());
 
+    /**
+     * 背景列表
+     */
     private final List<AbstractBackground> backgrounds = new LinkedList<>();
+    /**
+     * 角色列表
+     */
     private final List<AbstractCharacter> characters = new LinkedList<>();
+    /**
+     * 敌方角色列表
+     */
     private final List<AbstractCharacter> enemies = new LinkedList<>();
+    /**
+     * 己方攻击列表
+     */
     private final List<AbstractAttack> attacks = new LinkedList<>();
+    /**
+     * 敌方攻击列表
+     */
     private final List<AbstractAttack> enemiesAttacks = new LinkedList<>();
+    /**
+     * 己方受攻击对象列表
+     */
     private final List<UnderAttack> underAttacks = new LinkedList<>();
+    /**
+     * 敌方受攻击对象列表
+     */
     private final List<UnderAttack> enemiesUnderAttacks = new LinkedList<>();
+    /**
+     * 所有的 things
+     */
     private final List<List<? extends AbstractThing<?, ?>>> allThings = Arrays.asList(
             characters, enemies, attacks, enemiesAttacks
     );
+    /**
+     * 所有的受攻击对象
+     */
     private final List<List<? extends UnderAttack>> allUnderAttacks = Arrays.asList(
             underAttacks, enemiesUnderAttacks
     );
     private boolean gameOverFlag = false;
+    /**
+     * 用于取消线程池运行
+     */
     private Future<?> future = null;
+    /**
+     * 计时器控制器
+     */
     private final TimerController timerController = new TimerController();
+    /**
+     * 游戏结束时候的钩子
+     */
     private BasicCallback onFinish = null;
+    /**
+     * 每次重绘画面钩子
+     */
     private BasicCallback onPaint = null;
+    /**
+     * 每帧钩子
+     */
     private BasicCallback onFrame = null;
+    /**
+     * 角色控制器
+     */
     private final CharacterController characterController;
+    /**
+     * 活动管理器
+     */
     private final XActivityManager activityManager = new XActivityManager(this);
 
     public XActivityManager getActivityManager() {
@@ -99,18 +169,28 @@ public class Game {
         return getActivityManager().getTop();
     }
 
+    /**
+     * 游戏退出钩子
+     */
     private BasicCallback onExit = null;
 
     public void setOnExit(BasicCallback onExit) {
         this.onExit = onExit;
     }
 
+    /**
+     * 清除所有 things
+     */
+    @Deprecated
     public void clearThings() {
         characters.clear();
         attacks.clear();
     }
 
-    // public void resetStates() {
+    /**
+     * 重置游戏状态
+     */
+    @Deprecated
     private void resetStates() {
         gameOverFlag = false;
         RunningConfig.score = 0;
@@ -144,6 +224,7 @@ public class Game {
         return backgrounds;
     }
 
+    @Deprecated
     private void characterAttack() {
         synchronized (attacks) {
             Utils.getLogger().debug("characters attacks");
@@ -162,6 +243,9 @@ public class Game {
         this.onFrame = onFrame;
     }
 
+    /**
+     * 天机一下默认的定时器
+     */
     public void setTimers() {
         timerController.init(TimeManager.getTimeMills());
         // // 英雄射击事件
@@ -176,6 +260,9 @@ public class Game {
         // }));
     }
 
+    /**
+     * 当游戏退出，game 实例销毁之前
+     */
     private void onGameExit() {
         if (future != null) {
             future.cancel(true);
@@ -190,6 +277,7 @@ public class Game {
         }
     }
 
+    @Deprecated
     private void onGameOver() {
         // 游戏结束
         if (future != null) {
@@ -205,6 +293,11 @@ public class Game {
         }
     }
 
+    /**
+     * 获取主线程循环逻辑
+     *
+     * @return 主线程循环逻辑
+     */
     protected Runnable getMainTask() {
         return () -> {
             try {
@@ -261,6 +354,12 @@ public class Game {
         future = executorService.scheduleWithFixedDelay(mainTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
     }
 
+    /**
+     * 对一对 attacks 和 underAttacks 检查并处理碰撞事件
+     *
+     * @param attackList      attacks
+     * @param underAttackList underAttacks
+     */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     private void crashCheckAttacksAndUnderAttacks(List<AbstractAttack> attackList, List<UnderAttack> underAttackList) {
         synchronized (attackList) {
@@ -289,6 +388,11 @@ public class Game {
         return allThings;
     }
 
+    /**
+     * 对所有对象按照 Y 坐标从大到小排序，用于按顺序绘制
+     *
+     * @return 排序后的 List
+     */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public List<AbstractFlyingObject<?>> getSortedThings() {
         List<List<? extends AbstractThing<?, ?>>> allThings = getAllThings();
@@ -399,6 +503,12 @@ public class Game {
         return this;
     }
 
+    /**
+     * 添加一个敌方 Thing
+     *
+     * @param thing 敌方 Thing
+     * @return this
+     */
     public Game addEnemyThing(AbstractThing<?, ?> thing) {
         // 模板匹配不支持
         if (thing instanceof AbstractCharacter) {
@@ -413,6 +523,9 @@ public class Game {
         return this;
     }
 
+    /**
+     * 移除 inValid == false 的 XView
+     */
     public void removeInvalidViews() {
         synchronized (Game.class) {
             getTopLayout().removeIf(view -> !view.isValid());
