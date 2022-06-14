@@ -5,17 +5,38 @@ import work.chiro.game.vector.VectorFactory;
 import work.chiro.game.vector.VectorType;
 
 /**
- * 抽象动画类
+ * 抽象动画类，用于给 VecType 相关的量设置和时间相关的变化。
  *
  * @author Chiro
  */
 public abstract class AbstractAnimate<T extends VectorType & VectorFactory<T>> {
+    /**
+     * 动画类型，如线性、非线性、平滑等
+     */
     private final AnimateType animateType;
+    /**
+     * 动画应用对象类型，用于判断合成向量时是否考虑这个动画向量
+     */
     private final AnimateVectorType animateVectorType;
+    /**
+     * 动画相关向量
+     */
     private final T vec;
+    /**
+     * 动画相关 `vec` 的 copy
+     */
     private final T source;
+    /**
+     * 动画开始时间
+     */
     protected double timeStart;
+    /**
+     * 动画持续时长
+     */
     protected double timeSpan;
+    /**
+     * 动画执行结束钩子
+     */
     protected AnimateCallback<T> animateCallback = null;
 
     AbstractAnimate(T vecSource, AnimateType animateType, AnimateVectorType animateVectorType, double timeStart, double timeSpan) {
@@ -27,10 +48,20 @@ public abstract class AbstractAnimate<T extends VectorType & VectorFactory<T>> {
         this.timeSpan = timeSpan;
     }
 
+    /**
+     * 设置动画的开始时间，当动画需要重启的时候重新设置这个值
+     *
+     * @param timeStart 开始时间
+     */
     public void setTimeStart(double timeStart) {
         this.timeStart = timeStart;
     }
 
+    /**
+     * 动画的时长，当动画 `willStop` 并且 `timeNow - timeStart > timeSpan` 的时候，使得 `isDone` 返回 `true`
+     *
+     * @param timeSpan 动画时长
+     */
     public void setTimeSpan(double timeSpan) {
         this.timeSpan = timeSpan;
     }
@@ -63,8 +94,11 @@ public abstract class AbstractAnimate<T extends VectorType & VectorFactory<T>> {
      */
     abstract public Boolean update(double timeNow);
 
-    // abstract public Boolean isDone(double timeNow);
-
+    /**
+     * 返回当前动画是否结束，默认当超过 `timeSpan` 则结束
+     * @param timeNow 当前时间
+     * @return 动画是否结束
+     */
     public Boolean isDone(double timeNow) {
         boolean done = timeNow > timeStart + timeSpan;
         if (done && animateCallback != null) animateCallback.onFinish(this);
@@ -86,15 +120,28 @@ public abstract class AbstractAnimate<T extends VectorType & VectorFactory<T>> {
      */
     abstract public T getDelta();
 
+    /**
+     * 返回一个当前 T 类型的新对象
+     * @return new T
+     */
     protected T getNewVecInstance() {
         return getSource().getNewInstance();
     }
 
+    /**
+     * 设置动画完成回调
+     * @param animateCallback 动画完成回调
+     * @return this
+     */
     public AbstractAnimate<T> setAnimateCallback(AnimateCallback<T> animateCallback) {
         this.animateCallback = animateCallback;
         return this;
     }
 
+    /**
+     * 得到动画完成回调
+     * @return 动画完成回调
+     */
     public AnimateCallback<T> getAnimateCallback() {
         return animateCallback;
     }

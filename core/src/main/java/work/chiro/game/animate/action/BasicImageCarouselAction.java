@@ -13,6 +13,9 @@ import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
 
+/**
+ * 图片轮播 Action
+ */
 public class BasicImageCarouselAction extends AbstractAction {
     final private String labelName;
     /**

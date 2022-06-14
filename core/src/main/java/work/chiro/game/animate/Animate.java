@@ -7,11 +7,16 @@ import work.chiro.game.vector.VectorFactory;
 import work.chiro.game.vector.VectorType;
 
 /**
- * 动画
+ * 动画类型
  *
  * @author Chiro
  */
 public class Animate {
+    /**
+     * 空动画，什么也不做；不会结束
+     *
+     * @param <T>
+     */
     public static class Empty<T extends VectorType & VectorFactory<T>> extends AbstractAnimate<T> {
         public Empty(T vecSource) {
             super(vecSource, AnimateType.Empty, AnimateVectorType.Others, 0, 0);
@@ -38,6 +43,11 @@ public class Animate {
         }
     }
 
+    /**
+     * 延迟动画，用于在 AnimateContainer 中设置延时回调等
+     *
+     * @param <T>
+     */
     public static class Delay<T extends VectorType & VectorFactory<T>> extends AbstractAnimate<T> {
         public Delay(T vecSource, double delayMs) {
             super(vecSource, AnimateType.Delay, AnimateVectorType.Others, TimeManager.getTimeMills(), delayMs);
