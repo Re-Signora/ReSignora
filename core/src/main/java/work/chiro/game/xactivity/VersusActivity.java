@@ -38,6 +38,24 @@ public class VersusActivity extends BattleActivity {
         super(game);
     }
 
+    public void onMessage(String message) {
+        Utils.getLogger().debug("server got string: {}", message);
+        try {
+            DataBean data = new Gson().fromJson(message, DataBean.class);
+            if (eSignora != null) {
+                switch (data.getCommand()) {
+                    case "position":
+                        eSignora.setPosition(new Vec2(RunningConfig.windowWidth, 0).minus(new Vec2(data.getPosition().getX(), -data.getPosition().getY())));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void onCreate(XBundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,25 +76,12 @@ public class VersusActivity extends BattleActivity {
             public void onClose(WebSocket conn, int code, String reason, boolean remote) {
                 connectedAsServer = false;
                 Utils.getLogger().info("Server lost a connection: {}, {}, {}, {}", conn, code, reason, remote);
+                finish();
             }
 
             @Override
             public void onMessage(WebSocket conn, String message) {
-                Utils.getLogger().debug("server got string: {}", message);
-                try {
-                    DataBean data = new Gson().fromJson(message, DataBean.class);
-                    if (eSignora != null) {
-                        switch (data.getCommand()) {
-                            case "position":
-                                eSignora.setPosition(new Vec2(RunningConfig.windowWidth, 0).minus(new Vec2(data.getPosition().getX(), -data.getPosition().getY())));
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                VersusActivity.this.onMessage(message);
             }
 
             @Override
@@ -121,11 +126,13 @@ public class VersusActivity extends BattleActivity {
 
                             @Override
                             public void onMessage(String message) {
+                                VersusActivity.this.onMessage(message);
                             }
 
                             @Override
                             public void onClose(int code, String reason, boolean remote) {
                                 connectedAsClient = false;
+                                finish();
                             }
 
                             @Override
