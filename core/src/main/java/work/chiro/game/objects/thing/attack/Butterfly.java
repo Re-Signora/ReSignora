@@ -16,9 +16,18 @@ import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
 
+/**
+ * 女士的蝴蝶攻击
+ */
 public class Butterfly extends AbstractAttack {
     private final static String labelName = "la-signora-butterfly";
+    /**
+     * 蝴蝶移动动画
+     */
     protected AbstractAnimate<Vec> moveAnimate;
+    /**
+     * 蝴蝶大小变换动画
+     */
     protected AbstractAnimate<Vec> sizeAnimate = null;
 
     public static AbstractAction getAction() {
@@ -43,6 +52,7 @@ public class Butterfly extends AbstractAttack {
             Vec2 targetSize = getBasicAttributes().getSize();
             if (RunningConfig.modePC) {
                 setSize(targetSize);
+                // PC 上就不用缩放动画了，怪慢的
             } else {
                 if (getSize() == null) setSize(targetSize);
                 // Android 平台进行缩放性能好一些
