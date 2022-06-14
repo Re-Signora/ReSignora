@@ -33,7 +33,7 @@ public class ShogunateSoldier extends AbstractCharacter {
         getDynamicCharacterAttributes().setEnemy(true);
         moveDuration = 100.0 / getBasicAttributes().getSpeed() * 1000;
         double normalCD = getBasicAttributes().getNormalAttackCoolDown() * 1000;
-        Utils.getLogger().warn("moveDuration = {}, normalCD = {}", moveDuration, normalCD);
+        Utils.getLogger().debug("moveDuration = {}, normalCD = {}", moveDuration, normalCD);
         // normalAttackTask = new Timer(normalCD, (controller, timer) -> {
         //     // if (isValid()) this.normalAttack();
         // });
