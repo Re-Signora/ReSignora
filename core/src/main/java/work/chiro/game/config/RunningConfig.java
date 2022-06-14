@@ -42,5 +42,5 @@ public class RunningConfig {
     public static String targetServerHost = "pc.chiro.work";
     public static int targetServerPort = 11451;
 
-    public static int eventSendDivide = 10;
+    public static int eventSendDivide = 1;
 }
