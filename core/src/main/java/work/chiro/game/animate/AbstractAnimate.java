@@ -90,7 +90,7 @@ public abstract class AbstractAnimate<T extends VectorType & VectorFactory<T>> {
      * 当动画需要被更新时调用，更新该动画所管理的随时间变化的变量。
      *
      * @param timeNow 当前时间
-     * @return 是否更新
+     * @return 动画是否已经结束
      */
     abstract public Boolean update(double timeNow);
 

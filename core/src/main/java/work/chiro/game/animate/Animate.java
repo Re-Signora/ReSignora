@@ -13,7 +13,7 @@ import work.chiro.game.vector.VectorType;
  */
 public class Animate {
     /**
-     * 空动画，什么也不做；不会结束
+     * 空动画，什么也不做；不会结束，没有相关向量
      *
      * @param <T>
      */
@@ -69,8 +69,19 @@ public class Animate {
         }
     }
 
+    /**
+     * 线性变化的动画
+     *
+     * @param <T>
+     */
     public static class Linear<T extends VectorType & VectorFactory<T>> extends AbstractAnimate<T> {
+        /**
+         * 变化速率向量
+         */
         private final T speed;
+        /**
+         * 当前动画是否会结束，不结束则默认一直执行下去
+         */
         private final Boolean willStop;
 
         public Linear(T vecSource, T speed, AnimateVectorType animateVectorType, double timeStart) {
@@ -91,6 +102,12 @@ public class Animate {
             return speed;
         }
 
+        /**
+         * 按时间比例设置向量大小，其实就是依据速度确定当前时间下的向量的值
+         *
+         * @param timeNow 当前时间
+         * @return 动画是否已经结束
+         */
         @Override
         public Boolean update(double timeNow) {
             Boolean done = isDone(timeNow);
@@ -99,6 +116,12 @@ public class Animate {
             return done;
         }
 
+        /**
+         * 动画是否结束；加入 `willStop` 判断
+         *
+         * @param timeNow 当前时间
+         * @return 动画是否结束
+         */
         @Override
         public Boolean isDone(double timeNow) {
             if (willStop && timeSpan > 0) {
@@ -108,6 +131,12 @@ public class Animate {
             }
         }
 
+        /**
+         * 如果是位置相关，则返回速度向量；否则返回零向量
+         *
+         * @param timeNow 当前时间
+         * @return 速度向量
+         */
         @Override
         public T getSpeed(double timeNow) {
             if (getAnimateVectorType() == AnimateVectorType.PositionLike) {
@@ -117,6 +146,11 @@ public class Animate {
             }
         }
 
+        /**
+         * 变化矢量为零向量
+         *
+         * @return 零向量
+         */
         @Override
         public T getDelta() {
             return getNewVecInstance();
