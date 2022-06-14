@@ -33,6 +33,7 @@ public class VersusActivity extends BattleActivity {
     protected boolean connectedAsClient = false;
     protected MyWebsocketClient client;
     protected MyWebsocketServer server;
+    protected WebSocket clientConn = null;
 
     public VersusActivity(Game game) {
         super(game);
@@ -70,6 +71,7 @@ public class VersusActivity extends BattleActivity {
             public void onOpen(WebSocket conn, ClientHandshake handshake) {
                 connectedAsServer = true;
                 Utils.getLogger().info("Server got new connection: {}, {}", conn, handshake);
+                clientConn = conn;
             }
 
             @Override
@@ -192,12 +194,18 @@ public class VersusActivity extends BattleActivity {
         if (eSignora != null) {
             eSignora.setFlipped(!signora.isFlipped());
         }
-        if (connectedAsClient) {
-            if (connectedAsServer || dataSendCnt == RunningConfig.eventSendDivide - 1) {
+        if (connectedAsClient || connectedAsServer) {
+            if (dataSendCnt == RunningConfig.eventSendDivide - 1) {
                 DataBean data = new DataBean();
                 data.setCommand("position");
                 data.setPosition(new PositionBean(Game.getInstance().getObjectController().getTarget().getPosition()));
-                client.send(new Gson().toJson(data));
+                String text = new Gson().toJson(data);
+                if (connectedAsServer && clientConn != null) {
+                    clientConn.send(text);
+                }
+                if (connectedAsClient && client != null) {
+                    client.send(text);
+                }
                 dataSendCnt = 0;
             } else {
                 dataSendCnt += 1;

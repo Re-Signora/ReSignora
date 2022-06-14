@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
                 RunningConfig.difficulty = difficulty;
                 if (editText.getText() == null || (editText.getText() != null && editText.getText().length() == 0)) {
                     RunningConfig.targetServerHost = null;
+                } else {
+                    if (editText.getText() != null && editText.getText().length() != 0) {
+                        RunningConfig.targetServerHost = String.valueOf(editText.getText());
+                    }
                 }
                 startActivity(new Intent(MainActivity.this, GameActivity.class));
             });
