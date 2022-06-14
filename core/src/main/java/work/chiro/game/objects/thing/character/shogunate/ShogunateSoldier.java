@@ -83,6 +83,8 @@ public class ShogunateSoldier extends AbstractCharacter {
     }
 
     synchronized protected void startMoving() {
+        if (Game.getInstance() == null) return;
+        if (Game.getInstance().getObjectController().getTarget() == null) return;
         Vec2 delta = Game.getInstance().getObjectController().getTarget().getPosition().minus(getPosition());
         Vec2 newPos = delta.fromVector(getPosition().plus(delta.divide(Math.sqrt(delta.getScale().getX())).times(getBasicAttributes().getSpeed() * 20)));
         moving = true;

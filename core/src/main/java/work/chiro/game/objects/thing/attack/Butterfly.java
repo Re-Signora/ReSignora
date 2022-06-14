@@ -8,6 +8,7 @@ import work.chiro.game.animate.action.BasicImageCarouselAction;
 import work.chiro.game.animate.action.ReversedImageCarouselAction;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.objects.thing.character.AbstractCharacter;
+import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec;
@@ -27,6 +28,9 @@ public class Butterfly extends AbstractAttack {
     public Butterfly(AbstractCharacter source, Vec2 posInit, Vec2 sizeInit, Scale rotationInit, Scale alpha, boolean setSizeAnimate) {
         super(source, labelName, posInit, getAction(), sizeInit, rotationInit, alpha);
         getAnimateContainer().setThing(this);
+        if (source != null)
+            setEnemy(source.isEnemy());
+        Utils.getLogger().warn("create butterfly is enemy: {}", isEnemy());
         moveAnimate = new Animate.SmoothTo<>(
                 posInit,
                 new Vec2(isEnemy() ? 0 : RunningConfig.windowWidth, posInit.getY()),

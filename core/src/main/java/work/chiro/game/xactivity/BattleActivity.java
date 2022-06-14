@@ -7,6 +7,7 @@ import java.util.Locale;
 import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
+import work.chiro.game.objects.AbstractObject;
 import work.chiro.game.objects.thing.character.shogunate.ShogunateSoldier;
 import work.chiro.game.objects.thing.character.signora.LaSignora;
 import work.chiro.game.utils.Utils;
@@ -126,6 +127,9 @@ public class BattleActivity extends XActivity {
         super.onStop();
         buttonBack.popEvent(XEventType.Click);
         TimeManager.timeResume();
+        getGame().getCharacters().forEach(AbstractObject::vanish);
+        getGame().getEnemies().forEach(AbstractObject::vanish);
+        getGame().getAttacks().forEach(AbstractObject::vanish);
         getGame().getCharacters().clear();
         getGame().getEnemies().clear();
         getGame().getAttacks().clear();
