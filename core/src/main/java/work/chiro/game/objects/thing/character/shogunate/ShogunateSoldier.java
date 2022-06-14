@@ -64,7 +64,7 @@ public class ShogunateSoldier extends AbstractCharacter {
                     break;
                 }
             }
-        }).start();
+        });//.start();
         MyThreadFactory.getInstance().newThread(() -> {
             while (isValid()) {
                 startMoving();
@@ -75,7 +75,7 @@ public class ShogunateSoldier extends AbstractCharacter {
                     break;
                 }
             }
-        }).start();
+        });//.start();
     }
 
     public ShogunateSoldier(Vec2 posInit, AbstractAction abstractAction) {
