@@ -30,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Map<Integer, Difficulty> buttonMap = Map.of(
-                R.id.button_mode_easy, Difficulty.Easy,
-                R.id.button_mode_medium, Difficulty.Medium,
-                R.id.button_mode_hard, Difficulty.Hard
+                R.id.button_start, Difficulty.Easy
+                // R.id.button_mode_medium, Difficulty.Medium,
+                // R.id.button_mode_hard, Difficulty.Hard
         );
 
         buttonMap.forEach((id, difficulty) -> {

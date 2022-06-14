@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:autofillHints="@string/hint_address_fill"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -23,22 +24,19 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/button_mode_easy"
+                android:id="@+id/button_start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/button_mode_easy" />
+                android:text="@string/button_mode_start" />
 
-            <Button
-                android:id="@+id/button_mode_medium"
+            <EditText
+                android:id="@+id/editTextRemoteAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/button_mode_medium" />
-
-            <Button
-                android:id="@+id/button_mode_hard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/button_mode_hard" />
+                android:autofillHints="@string/hint_address_fill"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/hint_address" />
 
         </LinearLayout>
 

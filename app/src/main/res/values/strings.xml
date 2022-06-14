@@ -4,11 +4,14 @@
     <string name="title_activity_history">排行榜</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="button_mode_easy">简单</string>
+    <string name="button_mode_start">开始游戏</string>
     <string name="button_mode_medium">中等</string>
     <string name="button_mode_hard">困难</string>
     <string name="button_history">排行榜</string>
     <string name="checkbox_music">开启音效</string>
     <string name="default_text">TextView</string>
+    <string name="hint_address">远程地址</string>
+    <string name="hint_address_fill">pc.chiro.work</string>
     <string name="button_delete_item">删除</string>
     <string name="dialog_input_name_title">输入名字</string>
     <string name="dialog_input_name_default">Nanashi</string>
