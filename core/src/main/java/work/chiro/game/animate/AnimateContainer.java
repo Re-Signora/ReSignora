@@ -35,7 +35,7 @@ public class AnimateContainer {
         return animateList;
     }
 
-    protected List<Boolean> updateAllInner(double timeNow) {
+    synchronized protected List<Boolean> updateAllInner(double timeNow) {
         return animateList.stream().map(animate -> animate.update(timeNow)).collect(Collectors.toList());
     }
 
@@ -45,7 +45,7 @@ public class AnimateContainer {
      * @param timeNow 当前时间
      * @return 所有动画都结束了？
      */
-    public Boolean updateAll(double timeNow) {
+    synchronized public Boolean updateAll(double timeNow) {
         List<Boolean> innerRes = updateAllInner(timeNow);
         boolean finished = innerRes.isEmpty() || (innerRes.stream().mapToInt(res -> res ? 0 : 1).sum() == 0);
         if (finished && animateContainerCallback != null) {
@@ -58,7 +58,7 @@ public class AnimateContainer {
         return finished;
     }
 
-    public Vec getSpeed(double timeNow) {
+    synchronized public Vec getSpeed(double timeNow) {
         if (animateList.isEmpty()) {
             return new Vec();
         } else {
@@ -73,7 +73,7 @@ public class AnimateContainer {
         }
     }
 
-    public Vec getDelta() {
+    synchronized public Vec getDelta() {
         if (animateList.isEmpty()) {
             return new Vec();
         } else {
@@ -88,7 +88,7 @@ public class AnimateContainer {
         }
     }
 
-    public Scale getRotation() {
+    synchronized public Scale getRotation() {
         Vec delta = getDelta();
         if (delta.getSize() == 0) {
             return new Scale();

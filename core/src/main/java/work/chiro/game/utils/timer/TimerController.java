@@ -60,9 +60,19 @@ public class TimerController {
         // timers.remove(from);
     }
 
-    public void execute() {
-        if (available)
-            timers.values().forEach(timersList -> timersList.forEach(timer -> timer.execute(this)));
+    synchronized public void execute() {
+        if (available) {
+            timers.keySet().forEach(key -> {
+                List<Timer> list = timers.get(key);
+                if (list.size() == 0) return;
+                for (int i = 0; i < list.size(); i++) {
+                    Timer timer = list.get(i);
+                    Utils.getLogger().warn("executing [{}/{}] timer: {} from {}", i, list.size() - 1, timer, key);
+                    timer.execute(this);
+                }
+            });
+            // timers.values().forEach(timersList -> timersList.forEach(timer -> timer.execute(this)));
+        }
     }
 
     synchronized public List<Timer> getTimers(Object from) {

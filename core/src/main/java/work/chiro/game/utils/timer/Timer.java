@@ -10,6 +10,7 @@ public class Timer {
     private final TimerCallback callback;
     private double time = 0;
     private final TimerLinearChange change;
+    private String name = null;
 
     public Timer(TimerLinearChange change, TimerCallback callback) {
         this.duration = change.getScaleNow().getX();
@@ -42,5 +43,17 @@ public class Timer {
         if (change != null) {
             change.update(timeNow);
         }
+    }
+
+    @Override
+    public String toString() {
+        if (name == null) return super.toString();
+        return "Timer{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -153,6 +153,7 @@ public abstract class XActivity {
     }
 
     protected void onStop() {
+        Game.getInstance().getTimerController().remove(this);
     }
 
     protected void onFrame() {

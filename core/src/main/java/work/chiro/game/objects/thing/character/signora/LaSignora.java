@@ -54,7 +54,12 @@ public class LaSignora extends AbstractCharacter {
     public LaSignora(Vec2 posInit, AbstractAction abstractAction, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super("la-signora", BasicCharacterAttributes.class, posInit, abstractAction, sizeInit, rotationInit, alpha);
         handButterfly = new HandButterfly(this, getPosition());
-        normalAttackTask = new Timer(getBasicAttributes().getNormalAttackCoolDown() * 1000, (controller, timer) -> this.normalAttack());
+        normalAttackTask = new Timer(getBasicAttributes().getNormalAttackCoolDown() * 1000, (controller, timer) -> {
+            if (isValid())
+                this.normalAttack();
+        });
+        normalAttackTask.setName("" + this + "普通攻击");
+        // Game.getInstance().getTimerController().add(getClass(), normalAttackTask);
         Game.getInstance().getTimerController().add(this, normalAttackTask);
     }
 
@@ -64,7 +69,7 @@ public class LaSignora extends AbstractCharacter {
 
     @Override
     protected DelayTimer getDelayTimer() {
-        return new DelayTimer(this);
+        return new DelayTimer(getClass());
     }
 
     public LaSignora() {
@@ -104,6 +109,7 @@ public class LaSignora extends AbstractCharacter {
             ifValid.run();
             delayTimer.setNotValid();
             delayTimer.setTimeMark(TimeManager.getTimeMills());
+            // Game.getInstance().getTimerController().add(getClass(), new Timer(delayMs, delayTimer));
             Game.getInstance().getTimerController().add(this, new Timer(delayMs, delayTimer));
         }
     }
@@ -157,5 +163,11 @@ public class LaSignora extends AbstractCharacter {
     public void setFlipped(boolean flipped) {
         super.setFlipped(flipped);
         handButterfly.setFlipped(flipped);
+    }
+
+    @Override
+    public void vanish() {
+        super.vanish();
+        Game.getInstance().getTimerController().remove(this);
     }
 }

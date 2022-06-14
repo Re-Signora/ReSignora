@@ -115,7 +115,10 @@ public class BattleActivity extends XActivity {
 
         createEnemies.run();
 
-        getGame().getTimerController().add(this, new Timer(2000, (controller, timer) -> createEnemies.run()));
+        Timer createEnemyTask = new Timer(2000, (controller, timer) -> createEnemies.run());
+        createEnemyTask.setName("生成敌人");
+
+        getGame().getTimerController().add(getClass(), createEnemyTask);
     }
 
     @Override
@@ -128,6 +131,8 @@ public class BattleActivity extends XActivity {
         getGame().getAttacks().clear();
         getGame().getUnderAttacks().clear();
         getGame().getTimerController().clear();
+        getGame().getObjectController().setTarget(null);
+        getGame().getObjectController().setSecondaryTarget(null);
     }
 
     protected void applyActionToButton(XView button, DelayTimer delayTimer, double maxTimeMs) {
