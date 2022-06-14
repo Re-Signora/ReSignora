@@ -1,5 +1,8 @@
 package work.chiro.game.dialogue;
 
+/**
+ * 对话展示数据，每一屏幕对话对应一个 DialogueBean 数据
+ */
 public class DialogueBean {
     private String speaker = null;
     private String text = "文本";
