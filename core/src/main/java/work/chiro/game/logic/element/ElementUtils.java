@@ -2,6 +2,9 @@ package work.chiro.game.logic.element;
 
 import java.util.Map;
 
+/**
+ * 用于元素反应处理的静态类
+ */
 public class ElementUtils {
 
     private static final Map<Element, String> elementSting = Map.of(
@@ -24,6 +27,11 @@ public class ElementUtils {
             ElementalReactions.Crystallize, "结晶"
     );
 
+    /**
+     * 元素、元素反应等枚举转换成字符串
+     * @param elementType 枚举
+     * @return 字符串 | "ErrorType"
+     */
     public static String elementToString(Enum<?> elementType) {
         if (elementType instanceof Element)
             return elementSting.getOrDefault(elementType, "ErrorType");

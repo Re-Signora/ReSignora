@@ -1,5 +1,8 @@
 package work.chiro.game.logic.element;
 
+/**
+ * 元素枚举
+ */
 public enum Element {
     // 无元素
     None,

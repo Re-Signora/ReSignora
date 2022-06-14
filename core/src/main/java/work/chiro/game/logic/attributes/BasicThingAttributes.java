@@ -2,6 +2,9 @@ package work.chiro.game.logic.attributes;
 
 import work.chiro.game.vector.Vec2;
 
+/**
+ * Thing 属性基类，使用独立于 AbstractObjects 的属性，减少继承造成的数据耦合关系
+ */
 public class BasicThingAttributes {
     /**
      * 是否可碰撞
