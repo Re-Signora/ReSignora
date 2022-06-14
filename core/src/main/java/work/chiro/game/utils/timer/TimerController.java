@@ -38,6 +38,7 @@ public class TimerController {
         }
     }
 
+    @SuppressWarnings("UnnecessaryLocalVariable")
     synchronized public boolean remove(Object from, Timer c) {
         Utils.getLogger().warn("remove({}, {})", from, c);
         if (timers.containsKey(from)) {
@@ -50,7 +51,7 @@ public class TimerController {
     }
 
     synchronized public void remove(Object from) {
-        Utils.getLogger().warn("Removing timer created by obj: {}", from);
+        Utils.getLogger().debug("Removing timer created by obj: {}", from);
         if (timers.containsKey(from)) {
             timers.get(from).forEach(timer -> Utils.getLogger().debug("\tRemoving timer: {}", timer));
             timers.get(from).clear();

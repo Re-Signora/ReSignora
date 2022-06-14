@@ -99,6 +99,7 @@ public class PCTest {
 
             }
         };
+        client.connect();
         try {
             synchronized (PCTest.class) {
                 PCTest.class.wait(1000);

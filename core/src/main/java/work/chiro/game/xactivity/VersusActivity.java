@@ -1,5 +1,7 @@
 package work.chiro.game.xactivity;
 
+import com.google.gson.Gson;
+
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.handshake.ServerHandshake;
@@ -13,6 +15,8 @@ import work.chiro.game.dialogue.DialogueBean;
 import work.chiro.game.dialogue.DialogueManager;
 import work.chiro.game.game.Game;
 import work.chiro.game.network.client.MyWebsocketClient;
+import work.chiro.game.network.data.DataBean;
+import work.chiro.game.network.data.PositionBean;
 import work.chiro.game.network.sever.MyWebsocketServer;
 import work.chiro.game.objects.thing.character.signora.LaSignora;
 import work.chiro.game.utils.Utils;
@@ -21,6 +25,7 @@ import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.activity.XBundle;
 
+@SuppressWarnings({"SwitchStatementWithTooFewBranches", "BusyWait"})
 public class VersusActivity extends BattleActivity {
     protected LaSignora eSignora;
     protected boolean connectedAsServer = false;
@@ -56,7 +61,21 @@ public class VersusActivity extends BattleActivity {
 
             @Override
             public void onMessage(WebSocket conn, String message) {
-
+                Utils.getLogger().debug("server got string: {}", message);
+                try {
+                    DataBean data = new Gson().fromJson(message, DataBean.class);
+                    if (eSignora != null) {
+                        switch (data.getCommand()) {
+                            case "position":
+                                eSignora.setPosition(new Vec2(RunningConfig.windowWidth, 0).minus(new Vec2(data.getPosition().getX(), -data.getPosition().getY())));
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -111,6 +130,7 @@ public class VersusActivity extends BattleActivity {
 
                             }
                         };
+                        client.connect();
                     } catch (Exception e) {
                         e.printStackTrace();
                         return;
@@ -154,12 +174,24 @@ public class VersusActivity extends BattleActivity {
         }
     }
 
+    private static int dataSendCnt = 0;
+
     @Override
     protected void onFrame() {
         super.onFrame();
         if (eSignora != null) {
-            eSignora.setPosition(new Vec2(RunningConfig.windowWidth - signora.getLocationX(), signora.getLocationY()));
             eSignora.setFlipped(!signora.isFlipped());
+        }
+        if (connectedAsClient) {
+            if (dataSendCnt == RunningConfig.eventSendDivide - 1) {
+                DataBean data = new DataBean();
+                data.setCommand("position");
+                data.setPosition(new PositionBean(Game.getInstance().getObjectController().getTarget().getPosition()));
+                client.send(new Gson().toJson(data));
+                dataSendCnt = 0;
+            } else {
+                dataSendCnt += 1;
+            }
         }
     }
 }
