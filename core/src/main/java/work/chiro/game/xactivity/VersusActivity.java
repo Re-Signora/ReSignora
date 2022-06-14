@@ -183,7 +183,7 @@ public class VersusActivity extends BattleActivity {
             eSignora.setFlipped(!signora.isFlipped());
         }
         if (connectedAsClient) {
-            if (dataSendCnt == RunningConfig.eventSendDivide - 1) {
+            if (connectedAsServer && dataSendCnt == RunningConfig.eventSendDivide - 1) {
                 DataBean data = new DataBean();
                 data.setCommand("position");
                 data.setPosition(new PositionBean(Game.getInstance().getObjectController().getTarget().getPosition()));
