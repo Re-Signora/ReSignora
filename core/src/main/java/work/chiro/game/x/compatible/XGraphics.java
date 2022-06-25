@@ -1,5 +1,6 @@
 package work.chiro.game.x.compatible;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import work.chiro.game.config.RunningConfig;
@@ -219,6 +220,13 @@ public abstract class XGraphics {
         drawString("SCORE:" + (int) (RunningConfig.score), x, y);
         y = y + d;
         drawString("FPS:" + game.getTimerController().getFps(), x, y);
+//        LinkedList<Double> frameCounter = game.getTimerController().getFrameCounter();
+//        LinkedList<Double> frameDelta = frameCounter.stream()
+//        int fpsDrawCount = Math.max(10, frameCounter.size());
+//        for (int i = 0; i < fpsDrawCount; i++) {
+//            y = y + d;
+//            drawString("FPS []:", x, y);
+//        }
     }
 
     /**

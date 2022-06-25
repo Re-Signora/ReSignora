@@ -118,4 +118,8 @@ public class TimerController {
         frameCounter.clear();
         timers.clear();
     }
+
+    public LinkedList<Double> getFrameCounter() {
+        return frameCounter;
+    }
 }
