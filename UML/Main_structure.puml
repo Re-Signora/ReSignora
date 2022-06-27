@@ -1,0 +1,3058 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 999,
+    "backwardDepth": 0,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": false,
+    "hideInterfaceCalls": false, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "work.chiro.game.application.Main",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_94631393 { 
+   	label=chiro
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1640492065 { 
+   	label=game
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   AbstractAction394846411[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AbstractAction</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   thing: AbstractThing&lt;?, AbstractAction&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ preLoadResources(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateAll(timeNow: double): Boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AbstractAircraft642598014[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AbstractAircraft</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   hp: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   maxHp: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   score: double [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ decreaseHp(decrease: double)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ draw(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" ># drawHp(g: XGraphics, colorFront: int, colorBack: int, forceDraw: boolean)</TD></TR>
+<TR><TD ALIGN="LEFT" ># drawHp(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ dropProps(): LinkedList&lt;AbstractProp&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onPropHandle()</TD></TR>
+<TR><TD ALIGN="LEFT" ># playBeShootMusic()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ shoot(): LinkedList&lt;BaseBullet&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ vanish(increaseScore: boolean)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AbstractAircraftFactory642598014[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)AbstractAircraftFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ create(): AbstractAircraft</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+AbstractAnimate874664497[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AbstractAnimate&lt;T extends VectorType &amp; VectorFactory&lt;T&gt;&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   animateCallback: AnimateCallback&lt;T&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   animateType: AnimateType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   animateVectorType: AnimateVectorType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   source: T [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   timeSpan: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   timeStart: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   vec: T [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getSpeed(timeNow: double): T</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isDone(timeNow: double): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setAnimateCallback(animateCallback: AnimateCallback&lt;T&gt;): AbstractAnimate&lt;T&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ update(timeNow: double): Boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AbstractAttack1076968012[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AbstractAttack</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   dynamicAttackAttributes: DynamicAttackAttributes [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   source: AbstractCharacter [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ setEnemy(isEnemy: boolean): AbstractAttack</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AbstractBackground155614874[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AbstractBackground</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   initImageFilename: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ draw(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >- getScaledHeight(width: double, windowWidth: double, height: double): double</TD></TR>
+<TR><TD ALIGN="LEFT" ># init()</TD></TR>
+<TR><TD ALIGN="LEFT" ># keepImage(): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ newInstance(posInit: Vec2, animateContainer: AnimateContainer): AbstractBackground</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AbstractCharacter1494850621[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AbstractCharacter</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   chargedAttackDelayTask: DelayTimer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   dynamicCharacterAttributes: DynamicCharacterAttributes [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   skillAttackDelayTask: DelayTimer [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ applyAttack(attack: AbstractAttack)</TD></TR>
+<TR><TD ALIGN="LEFT" ># bearDamage(damage: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ beforeChargedAttack()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ beforeNormalAttack()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ beforeSkillAttack()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ chargedAttack()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ draw(g: XGraphics, center: boolean)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ draw(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" ># drawHp(g: XGraphics, colorFront: int, colorBack: int, pos: Vec2, sizeUse: Vec2, forceDraw: boolean)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawHp(g: XGraphics, pos: Vec2, size: Vec2)</TD></TR>
+<TR><TD ALIGN="LEFT" ># drawHp(g: XGraphics, colorFront: int, colorBack: int)</TD></TR>
+<TR><TD ALIGN="LEFT" ># drawHp(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawWithoutHp(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isCrashAttack(attack: AbstractAttack): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ normalAttack()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ skillAttack()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AbstractFlyingObject1677377534[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AbstractFlyingObject&lt;A extends AnimateContainer&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ crash(abstractObject: AbstractObject&lt;?&gt;, locationX: double, locationY: double, width: double, height: double): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ crash(abstractObject: AbstractObject&lt;?&gt;): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ crash(abstractObject: AbstractFlyingObject&lt;?&gt;): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AbstractLogger792623464[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)AbstractLogger</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ debug(format: String, args: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ error(format: String, args: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fatal(format: String, args: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ info(format: String, args: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ log(format: String, args: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ warn(format: String, args: Object...)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+AbstractObject1677377534[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AbstractObject&lt;A extends AnimateContainer&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   alpha: Scale [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   animateContainer: A [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   cachedImage: Map&lt;XImage&lt;?&gt;, XImage&lt;?&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   flipped: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   height: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   image: XImage&lt;?&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   invincible: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   isValid: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   onVanish: BasicCallback [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   position: Vec2 [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   rotation: Scale [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   size: Vec2 [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   width: double [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># checkInBoundary(): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ crash(abstractObject: AbstractObject&lt;?&gt;, locationX: double, locationY: double, width: double, height: double): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ crash(abstractObject: AbstractObject&lt;?&gt;): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ draw(g: XGraphics, center: boolean)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ draw(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ forward()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getImage(getRawImage: boolean): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getRotation(update: boolean): Scale</TD></TR>
+<TR><TD ALIGN="LEFT" ># keepImage(): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateRotation(): Scale</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateRotation(rotationNew: Scale): Scale</TD></TR>
+<TR><TD ALIGN="LEFT" >+ vanish()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AbstractProp1533627855[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AbstractProp</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   enemyAircrafts: List&lt;AbstractAircraft&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   enemyBullets: List&lt;BaseBullet&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># playSupplyMusic()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ subscribeEnemyAircrafts(enemyAircrafts: List&lt;AbstractAircraft&gt;): AbstractProp</TD></TR>
+<TR><TD ALIGN="LEFT" >+ subscribeEnemyBullets(enemyBullets: List&lt;BaseBullet&gt;): AbstractProp</TD></TR>
+<TR><TD ALIGN="LEFT" >+ update(): AbstractProp</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AbstractPropFactory1533627855[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AbstractPropFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   position: Vec2 [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># create(): AbstractProp</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AbstractSceneClient466777850[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AbstractSceneClient</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   waitObject: Object [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ nextScene(clazz: Class&lt;? extends AbstractSceneClient&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startAction()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AbstractSceneRunnable466777850[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AbstractSceneRunnable</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ run()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AbstractThing301213698[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AbstractThing&lt;T extends BasicThingAttributes, A extends AnimateContainer&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   basicAttributes: BasicThingAttributes [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   imageDisplaying: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   labelName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   timeStart: double [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># checkInBoundary(): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ forward()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ preLoadResources(g: XGraphics)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AircraftBox642598014[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AircraftBox</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ forward()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AircraftHeroBox642598014[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AircraftHeroBox</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ draw(g: XGraphics)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AircraftWarActivity635335413[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AircraftWarActivity</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># onCreate(savedInstanceState: XBundle)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AnimateCallback6324860[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)AnimateCallback&lt;T extends VectorType &amp; VectorFactory&lt;T&gt;&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ onFinish(animate: AbstractAnimate&lt;T&gt;)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+AnimateContainer874664497[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AnimateContainer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   animateContainerCallback: AnimateContainerCallback [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   animateList: List&lt;AbstractAnimate&lt;Vec&gt;&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addAnimate(animate: AbstractAnimate&lt;Vec&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ clearAllAnimates(): AnimateContainer</TD></TR>
+<TR><TD ALIGN="LEFT" >+ clearAnimateCallback()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getSpeed(timeNow: double): Vec</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeAnimate(animate: AbstractAnimate&lt;Vec&gt;): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateAll(timeNow: double): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" ># updateAllInner(timeNow: double): List&lt;Boolean&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AnimateContainerCallback6324860[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)AnimateContainerCallback</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ onFinish(animateContainer: AnimateContainer): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+AnimateContainerFactory874664497[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AnimateContainerFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   animateContainerCallback: AnimateContainerCallback [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   containerType: ContainerType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   position: Vec2 [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   range: Vec2 [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   range2: Vec2 [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   speed1d: Double [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   speed2d: Vec2 [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   target: Vec2 [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   timeSpan: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   willStop: boolean [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ create(): AnimateContainer</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createAnimate(): AbstractAnimate&lt;Vec&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setupAnimateCallback(animateContainerCallback: AnimateContainerCallback): AnimateContainerFactory</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setupRange(range: Vec2): AnimateContainerFactory</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setupRange2(range2: Vec2): AnimateContainerFactory</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setupSpeed(speed2d: Vec2): AnimateContainerFactory</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setupSpeed(speed1d: Double): AnimateContainerFactory</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setupTarget(target: Vec2): AnimateContainerFactory</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setupTimeSpan(timeSpan: double): AnimateContainerFactory</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setupWillStop(willStop: boolean): AnimateContainerFactory</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AnimateWithTarget1680782942[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)AnimateWithTarget&lt;T extends VectorType&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getVecTarget(): T</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+BaseBullet244458606[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BaseBullet</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   power: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ onPropHandle()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BaseBulletFactory244458606[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BaseBulletFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   position: Vec2 [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># create(): BaseBullet</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createMany(requireNum: int): List&lt;BaseBullet&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BasicAttackAttributes684833067[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BasicAttackAttributes</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BasicBackground155614874[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BasicBackground</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   backgroundName: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># keepImage(): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ newInstance(posInit: Vec2, animateContainer: AnimateContainer): AbstractBackground</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BasicCallback3983820[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)BasicCallback</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ run()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+BasicCharacterAttributes684833067[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BasicCharacterAttributes</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   ATK: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   CRIT_DMG: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   CRIT_Rate: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   DEF: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   chargedAttackCoolDown: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   maxHp: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   normalAttackSpeed: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   pierce: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   skillAttackCoolDown: double [1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BasicDynamicAttributes1974744566[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BasicDynamicAttributes</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   isEnemy: boolean [1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BasicImageCarouselAction394846411[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BasicImageCarouselAction</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   availableImages: List&lt;XImage&lt;?&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   duration: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   imageIndexNow: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   labelName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   prefix: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getImageFullPath(index: int): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ loadAllAvailableImageFiles()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ preLoadResources(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ preLoadResources(g: XGraphics, size: Vec2)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setImageIndexNow(imageIndexNow: int): BasicImageCarouselAction</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateAll(timeNow: double): Boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BasicLogger792623464[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BasicLogger</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ debug(format: String, args: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ error(format: String, args: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fatal(format: String, args: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ info(format: String, args: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ log(printStream: PrintStream, stackLevel: int, format: String, args: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ log(format: String, stackLevel: int, args: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ log(format: String, args: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ warn(format: String, args: Object...)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BasicPopup475600459[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BasicPopup</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   type: Enum&lt;?&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ draw(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ vanish()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BasicThingAttributes50209465[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BasicThingAttributes</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   collision: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   duration: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   height: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   speed: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   width: double [1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BattleActivity635335413[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BattleActivity</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   buttonBack: XButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonGroup: List&lt;ButtonGroupItem&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   dialogue: XDialogue [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   joySticks: XJoySticks [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   signora: LaSignora [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># applyActionToButton(button: XView, delayTimer: DelayTimer, maxTimeMs: double)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ beforeChargedAttack()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ beforeNormalAttack()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ beforeSkillAttack()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ chargedAttack()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ normalAttack()</TD></TR>
+<TR><TD ALIGN="LEFT" ># onCreate(savedInstanceState: XBundle)</TD></TR>
+<TR><TD ALIGN="LEFT" ># onFrame()</TD></TR>
+<TR><TD ALIGN="LEFT" ># onStop()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ skillAttack()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BloodProp1533627855[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BloodProp</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   increaseHp: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ update(): AbstractProp</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BloodPropFactory1533627855[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BloodPropFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ create(): BloodProp</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BombProp1533627855[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BombProp</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ update(): AbstractProp</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BombPropFactory1533627855[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BombPropFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ create(): BombProp</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BossEnemy642598014[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BossEnemy</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># checkInBoundary(): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" ># drawHp(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ dropProps(): LinkedList&lt;AbstractProp&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ shoot(): LinkedList&lt;BaseBullet&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ vanish()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BossEnemyFactory642598014[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BossEnemyFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   onVanish: BasicCallback [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ clearInstance()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ create(): BossEnemy</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BulletProp1533627855[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BulletProp</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ update(): AbstractProp</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BulletPropFactory1533627855[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BulletPropFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ create(): BulletProp</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Butterfly1076968012[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Butterfly</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   moveAnimate: AbstractAnimate&lt;Vec&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   sizeAnimate: AbstractAnimate&lt;Vec&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ forward()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getImage(getRawImage: boolean): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ preLoadResources(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeMoveAnimate()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeSizeAnimate()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setImageIndexNow(imageIndexNow: int): Butterfly</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ButtonGroupItem1531639840[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ButtonGroupItem</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   button: XView [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   coolDownDelayMs: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   delayTimer: DelayTimer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   onClick: XViewCallback [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+CanPreLoadResources890657056[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)CanPreLoadResources</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ preLoadResources(g: XGraphics)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+CharacterController1624201252[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)CharacterController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   MOVE_SPEED: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   battleActivity: BattleActivity [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   joySticks: XJoySticks [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   lastFrameTime: Double [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   movingScale: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   secondaryTarget: AbstractCharacter [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   target: AbstractCharacter [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ onFrame()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+CharacterControllerAndroidImpl719892186[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)CharacterControllerAndroidImpl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   scale: double [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- getScaledPosition(e: MotionEvent, index: int): Vec2</TD></TR>
+<TR><TD ALIGN="LEFT" >- getScaledPosition(e: MotionEvent): Vec2</TD></TR>
+<TR><TD ALIGN="LEFT" >- handleMultiMove(e: MotionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onFrame()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onTouchEvent(e: MotionEvent)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+CharacterControllerPCImpl1063409982[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)CharacterControllerPCImpl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   pressedKeys: Set&lt;Integer&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ clear()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getInstance(game: GamePanel): CharacterControllerPCImpl</TD></TR>
+<TR><TD ALIGN="LEFT" >- getScaledPosition(e: MouseEvent): Vec2</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onFrame()</TD></TR>
+<TR><TD ALIGN="LEFT" ># onKeyDown(code: int)</TD></TR>
+<TR><TD ALIGN="LEFT" ># onKeyUp(code: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ pressed(keyCode: int): Boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ConfigFactory1138487956[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ConfigFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   difficulty: Difficulty [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ create(): AbstractConfig</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+DamageCalculator460672460[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DamageCalculator</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ calculate(attack: AbstractAttack, underAttack: UnderAttack): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isCRIT(rate: int): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+DamagePopup475600459[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DamagePopup</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Delay1680782942[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Delay&lt;T extends VectorType &amp; VectorFactory&lt;T&gt;&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getSpeed(timeNow: double): T</TD></TR>
+<TR><TD ALIGN="LEFT" >+ update(timeNow: double): Boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+DelayTimer1545293750[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DelayTimer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   from: Object [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   timeMark: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   valid: boolean [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ run(controller: TimerController, timer: Timer)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+DialogActivity635335413[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DialogActivity</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+DialogueGetter783434582[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)DialogueGetter</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getDialogue(): DialogueBean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+DialogueManager783434582[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DialogueManager</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+DrawColor1161128898[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DrawColor</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getEnumColors(e: Enum&lt;?&gt;): CoupleColor</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+DynamicAttackAttributes1974744566[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DynamicAttackAttributes</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ initFromCharacterAttributes(characterAttributes: BasicAttackAttributes): DynamicAttackAttributes</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+DynamicCharacterAttributes1974744566[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DynamicCharacterAttributes</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   energy: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   hp: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ initFromCharacterAttributes(characterAttributes: BasicCharacterAttributes): DynamicCharacterAttributes</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+EliteEnemy642598014[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)EliteEnemy</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ dropProps(): LinkedList&lt;AbstractProp&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ shoot(): LinkedList&lt;BaseBullet&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+EliteEnemyFactory642598014[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)EliteEnemyFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ create(): EliteEnemy</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Empty1680782942[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Empty&lt;T extends VectorType &amp; VectorFactory&lt;T&gt;&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getSpeed(timeNow: double): T</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isDone(timeNow: double): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ update(timeNow: double): Boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+EnemyBullet244458606[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)EnemyBullet</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+EnemyBulletFactory244458606[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)EnemyBulletFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   bulletType: BulletType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   random: Random [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ create(): BaseBullet</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Game291792836[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Game</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   activityManager: XActivityManager [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   allThings: List&lt;List&lt;? extends AbstractThing&lt;?, ?&gt;&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   allUnderAttacks: List&lt;List&lt;? extends UnderAttack&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   attacks: List&lt;AbstractAttack&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   backgrounds: List&lt;AbstractBackground&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   characterController: CharacterController [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   characters: List&lt;AbstractCharacter&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   enemies: List&lt;AbstractCharacter&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   enemiesAttacks: List&lt;AbstractAttack&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   enemiesUnderAttacks: List&lt;UnderAttack&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   future: Future&lt;?&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   gameOverFlag: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   onExit: BasicCallback [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   onFinish: BasicCallback [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   onFrame: BasicCallback [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   onPaint: BasicCallback [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   timerController: TimerController [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   underAttacks: List&lt;UnderAttack&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ action()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addEnemyThing(thing: AbstractThing&lt;?, ?&gt;): Game</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addOneAttack(attack: AbstractAttack)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addOneCharacter(character: AbstractCharacter)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addOneEnemiesAttack(attack: AbstractAttack)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addOneEnemiesUnderAttack(underAttack: UnderAttack)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addOneEnemy(enemy: AbstractCharacter)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addOneUnderAttack(underAttack: UnderAttack)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addThing(thing: AbstractThing&lt;?, ?&gt;): Game</TD></TR>
+<TR><TD ALIGN="LEFT" >- characterAttack()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ clearInstance(): Game</TD></TR>
+<TR><TD ALIGN="LEFT" >+ clearThings()</TD></TR>
+<TR><TD ALIGN="LEFT" >- crashCheckAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >- crashCheckAttacksAndUnderAttacks(attackList: List&lt;AbstractAttack&gt;, underAttackList: List&lt;UnderAttack&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createInstance(characterController: CharacterController): Game</TD></TR>
+<TR><TD ALIGN="LEFT" >- onGameExit()</TD></TR>
+<TR><TD ALIGN="LEFT" >- onGameOver()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeInvalidViews()</TD></TR>
+<TR><TD ALIGN="LEFT" >- resetStates()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+GamePanel1063409982[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)GamePanel</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   heroControllerImpl: CharacterControllerPCImpl [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   lastProvidedMessage: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   lastProvidedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   waitObject: Object [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ action()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addTimers()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ paint(g: Graphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >- paintFast()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ resetStates()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+GameWindow1331764593[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)GameWindow</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ clearGamePanelInstance()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ nextScene(clazz: Class&lt;? extends AbstractSceneClient&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startAction()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+HandButterfly705385358[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)HandButterfly</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   butterflyOffset: Vec2 [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ preLoadResources(g: XGraphics)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+HeroAircraft642598014[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)HeroAircraft</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   box: AircraftHeroBox [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   heroLastPlayMusic: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   shootNum: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ crash(abstractObject: AbstractObject&lt;?&gt;): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ decreaseShootNum()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ draw(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" ># drawHp(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ dropProps(): LinkedList&lt;AbstractProp&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ forward()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ increaseShootNum()</TD></TR>
+<TR><TD ALIGN="LEFT" ># playBeShootMusic()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ shoot(): LinkedList&lt;BaseBullet&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ shoot(allEnemyAircrafts: List&lt;List&lt;? extends AbstractAircraft&gt;&gt;): LinkedList&lt;BaseBullet&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startInvincibleState()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ vanish()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+HeroAircraftFactory642598014[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)HeroAircraftFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ clearInstance(): HeroAircraftFactory</TD></TR>
+<TR><TD ALIGN="LEFT" >+ create(): HeroAircraft</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+HeroBullet244458606[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)HeroBullet</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+HeroBulletFactory244458606[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)HeroBulletFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   enemyAircrafts: List&lt;AbstractAircraft&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ create(): BaseBullet</TD></TR>
+<TR><TD ALIGN="LEFT" >- createDirectBullet(index: int, shootNum: int): BaseBullet</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createMany(required: int): List&lt;BaseBullet&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >- createTrackingBullets(required: int): List&lt;BaseBullet&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+HistoryDAO1789118193[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)HistoryDAO</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addOne(historyObject: HistoryObject)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deleteAll()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deleteByTime(time: long): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ dump()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getAll(): List&lt;HistoryObject&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getByDifficulty(difficulty: Difficulty): List&lt;HistoryObject&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getByName(name: String): Optional&lt;HistoryObject&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ load()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ set(data: List&lt;HistoryObject&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ sort()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateByTime(time: long, newHistory: HistoryObject): Boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+HistoryImpl1789118193[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)HistoryImpl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   data: List&lt;HistoryObject&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addOne(historyObject: HistoryObject)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deleteAll()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deleteByTime(time: long): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ display()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ dump()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getByDifficulty(difficulty: Difficulty): List&lt;HistoryObject&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getByName(name: String): Optional&lt;HistoryObject&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ load()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ sort()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateByTime(time: long, newHistory: HistoryObject): Boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+HistoryImplAndroid719892186[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)HistoryImplAndroid</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   sp: SharedPreferences [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ dump()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getInstance(context: Context): HistoryImplAndroid</TD></TR>
+<TR><TD ALIGN="LEFT" >+ load()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+HistoryObject1789118193[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)HistoryObject</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   difficulty: Difficulty [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   message: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   score: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   time: long [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ copy(newTime: long): HistoryObject</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+HistoryWindow1331764593[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)HistoryWindow</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   difficultyLabel: JLabel [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   historyTable: JTable [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   mainPanel: JPanel [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   selectDifficultyComboBox: JComboBox&lt;String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   selectedDifficulty: Difficulty [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ startAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ syncWithDao()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+HomeActivity635335413[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)HomeActivity</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonBack: XButton [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># onCreate(savedInstanceState: XBundle)</TD></TR>
+<TR><TD ALIGN="LEFT" ># onStop()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ImageManager890657056[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ImageManager</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   BLOOD_PROP_IMAGE: XImage&lt;?&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   BOMB_PROP_IMAGE: XImage&lt;?&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   BOSS_ENEMY_IMAGE: XImage&lt;?&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   BOX_HERO: XImage&lt;?&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   BULLET_PROP_IMAGE: XImage&lt;?&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   CLASSNAME_IMAGE_MAP: Map&lt;String, XImage&lt;?&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   ELITE_ENEMY_IMAGE: XImage&lt;?&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   ENEMY_BULLET_IMAGE: XImage&lt;?&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   HERO_BULLET_IMAGE: XImage&lt;?&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   HERO_IMAGE: XImage&lt;?&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   MOB_ENEMY_IMAGE: XImage&lt;?&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ get(className: String): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ get(clazz: Class&lt;?&gt;): XImage&lt;?&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LaSignora1593490256[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LaSignora</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   handButterfly: HandButterfly [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   normalAttackTask: Timer [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># applyAction(delayTimer: DelayTimer, delayMs: double, ifValid: BasicCallback)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ chargedAttack()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ draw(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawHp(g: XGraphics, pos: Vec2, size: Vec2)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ forward()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ normalAttack()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ preLoadResources(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ skillAttack()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ vanish()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Linear1680782942[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Linear&lt;T extends VectorType &amp; VectorFactory&lt;T&gt;&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   speed: T [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   willStop: Boolean [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getSpeed(timeNow: double): T</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isDone(timeNow: double): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ update(timeNow: double): Boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LinearLoop1680782942[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LinearLoop&lt;T extends VectorType &amp; VectorFactory&lt;T&gt;&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   range: Vec2 [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ isDone(timeNow: double): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ update(timeNow: double): Boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LinearRebound1680782942[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LinearRebound&lt;T extends VectorType &amp; VectorFactory&lt;T&gt;&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   rangeLeft: Vec2 [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   rangeRight: Vec2 [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ isDone(timeNow: double): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ update(timeNow: double): Boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LinearToTarget1680782942[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LinearToTarget&lt;T extends VectorType &amp; VectorFactory&lt;T&gt;&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   speed: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   vecTarget: T [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   willStop: boolean [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ isDone(timeNow: double): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ update(timeNow: double): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateSpeed()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LinearTracking1680782942[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LinearTracking&lt;T extends VectorType &amp; VectorFactory&lt;T&gt;&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ update(timeNow: double): Boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LoadableAttributes684833067[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)LoadableAttributes</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+LoggerAndroid719892186[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LoggerAndroid</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ debug(format: String, args: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ error(format: String, args: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fatal(format: String, args: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ info(format: String, args: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ log(format: String, args: Object...)</TD></TR>
+<TR><TD ALIGN="LEFT" ># parseFormatString(format: String, args: Object...): StringBuilder</TD></TR>
+<TR><TD ALIGN="LEFT" >+ warn(format: String, args: Object...)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Main1063409982[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Main</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ main(args: String[])</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MainWindow1331764593[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MainWindow</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   autoShootCheckBox: JCheckBox [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   mainPanel: JPanel [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   musicOnCheckBox: JCheckBox [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MobEnemy642598014[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MobEnemy</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ dropProps(): LinkedList&lt;AbstractProp&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ shoot(): LinkedList&lt;BaseBullet&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MobEnemyFactory642598014[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MobEnemyFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ create(): MobEnemy</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MusicLoopThread461786259[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MusicLoopThread</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># writeDataToAudioBlock(source: InputStream, dataLine: SourceDataLine, bufferSize: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MusicManagerPC461786259[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MusicManagerPC</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ get(type: MusicType): byte[]</TD></TR>
+<TR><TD ALIGN="LEFT" >- getFilename(type: MusicType): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMusicAudioFormat(type: MusicType): AudioFormat</TD></TR>
+<TR><TD ALIGN="LEFT" >- getMusicFileData(musicType: MusicType): byte[]</TD></TR>
+<TR><TD ALIGN="LEFT" >- getMusicFileDataAsStream(musicType: MusicType): InputStream</TD></TR>
+<TR><TD ALIGN="LEFT" >- getSamplesFromStream(stream: AudioInputStream, audioFormat: AudioFormat): byte[]</TD></TR>
+<TR><TD ALIGN="LEFT" >+ initAll()</TD></TR>
+<TR><TD ALIGN="LEFT" >- readMusicSamples(musicType: MusicType): byte[]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MusicThread461786259[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MusicThread</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   interrupted: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   musicType: MusicType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   onStop: Runnable [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   stop: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   willStop: boolean [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ interrupt()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ play(source: InputStream)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ run()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setOnStop(onStop: Runnable): MusicThread</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setWillStop(willStop: boolean): MusicThread</TD></TR>
+<TR><TD ALIGN="LEFT" >- stop()</TD></TR>
+<TR><TD ALIGN="LEFT" ># writeDataToAudioBlock(source: InputStream, dataLine: SourceDataLine, bufferSize: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MusicThreadFactory461786259[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MusicThreadFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   musicThreads: List&lt;MusicThread&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ interruptAll()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ newLoopMusicThread(type: MusicType): Thread</TD></TR>
+<TR><TD ALIGN="LEFT" >+ newMusicThread(type: MusicType): Thread</TD></TR>
+<TR><TD ALIGN="LEFT" >+ newMusicThread(type: MusicType, noStop: Boolean): Thread</TD></TR>
+<TR><TD ALIGN="LEFT" >+ stopMusic(type: MusicType)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MyThreadFactory658691001[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MyThreadFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   counter: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   debug: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   pool: List&lt;Thread&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   stats: List&lt;String&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ newThread(run: Runnable): Thread</TD></TR>
+<TR><TD ALIGN="LEFT" >+ newThread(run: Runnable, setName: String): Thread</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MyWebsocketClient900330275[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MyWebsocketClient</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MyWebsocketServer1261388609[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MyWebsocketServer</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+NonLinear1680782942[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)NonLinear&lt;T extends VectorType &amp; VectorFactory&lt;T&gt;&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   vecTarget: T [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   willStop: boolean [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getSpeed(timeNow: double): T</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isDone(timeNow: double): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ update(timeNow: double): Boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PropHandler1533627855[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)PropHandler</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ onPropHandle()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+ResourceProvider1624201252[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ResourceProvider</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   cachedFont: Map&lt;String, XFont&lt;?&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   xGraphicsGetter: XGraphicsGetter [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getAttributesFromResource(name: String, clazz: Class&lt;T&gt;, directory: String): T</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getFont(name: String, fontSize: double): XFont&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getImageFromResource(path: String): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getLayoutBeanFromResource(name: String): XLayoutBean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getSoundBytesFromResource(path: String): byte[]</TD></TR>
+<TR><TD ALIGN="LEFT" >+ musicLoadAll()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startLoopMusic(type: MusicType)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startMusic(type: MusicType)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startMusic(type: MusicType, noStop: Boolean)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ stopAllMusic()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ stopMusic(type: MusicType)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ stopXGraphics()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ waitXGraphicsObject(): Object</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ResourceProviderAndroid719892186[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ResourceProviderAndroid</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   musicIDMap: Map&lt;MusicType, Integer&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   musicNoStop: Map&lt;MusicType, Boolean&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   resourceMap: Map&lt;String, Integer&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   soundPool: SoundPool [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getFont(name: String, fontSize: double): XFont&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getImageFromResource(path: String): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ musicLoadAll()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startLoopMusic(type: MusicType)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startMusic(type: MusicType, noStop: Boolean, loop: Boolean)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startMusic(type: MusicType, noStop: Boolean)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ stopAllMusic()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ stopMusic(type: MusicType)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ResourceProviderPC719892186[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ResourceProviderPC</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getFont(name: String, fontSize: double): XFont&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getImageFromResource(path: String): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ musicLoadAll()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startLoopMusic(type: MusicType)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startMusic(type: MusicType, noStop: Boolean)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ stopAllMusic()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ stopMusic(type: MusicType)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ReversedImageCarouselAction394846411[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ReversedImageCarouselAction</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   direction: int [1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+RunningConfig1138487956[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)RunningConfig</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ increaseScore(increase: double)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Scale1672892565[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Scale</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ copy(): Scale</TD></TR>
+<TR><TD ALIGN="LEFT" >+ divide(that: Scale): Scale</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fromVector(that: VectorType): Scale</TD></TR>
+<TR><TD ALIGN="LEFT" >+ minus(that: Scale): Scale</TD></TR>
+<TR><TD ALIGN="LEFT" >+ plus(that: Scale): Scale</TD></TR>
+<TR><TD ALIGN="LEFT" >+ times(that: Scale): Scale</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Scene466777850[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Scene</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   sceneRunnable: AbstractSceneRunnable [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ run()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SceneRun466777850[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SceneRun</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   cardLayout: CardLayout [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   frame: JFrame [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nextScene: Scene [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   sceneList: LinkedList&lt;Scene&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   wrapperPanel: JPanel [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ newInstance(parent: JFrame, sceneList: List&lt;Scene&gt;): SceneRun</TD></TR>
+<TR><TD ALIGN="LEFT" >+ run()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setNextScene(nextScene: Scene): SceneRun</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setNextScene(clazz: Class&lt;? extends AbstractSceneClient&gt;): SceneRun</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ShogunateSoldier1091915237[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ShogunateSoldier</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   moveDuration: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   moveTask: Timer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   moving: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   normalAttackDuration: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   normalAttackTask: Timer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   normalAttacking: boolean [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ forward()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getImage(getRawImage: boolean): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ normalAttack()</TD></TR>
+<TR><TD ALIGN="LEFT" ># startMoving()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ vanish()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SmoothTo1680782942[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SmoothTo&lt;T extends VectorType &amp; VectorFactory&lt;T&gt;&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   vecTarget: T [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getSpeed(timeNow: double): T</TD></TR>
+<TR><TD ALIGN="LEFT" >+ update(timeNow: double): Boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+StageSelectActivity635335413[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)StageSelectActivity</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonBack: XButton [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># onCreate(savedInstanceState: XBundle)</TD></TR>
+<TR><TD ALIGN="LEFT" ># onStop()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SwitchActivityCallback883596777[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)SwitchActivityCallback</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ run(newActivity: XActivity)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+ThingAttributes684833067[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ThingAttributes</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   extraDMGRate: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   st: int [1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TimeManager1545293750[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TimeManager</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ timePause()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ timePauseToggle()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ timeResume()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Timer1545293750[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Timer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   callback: TimerCallback [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   change: TimerLinearChange [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   duration: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   time: double [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ execute(timerController: TimerController)</TD></TR>
+<TR><TD ALIGN="LEFT" >- judgeToRun(timerController: TimerController)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ update(timeNow: double)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TimerCallback1545293750[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)TimerCallback</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ run(controller: TimerController, timer: Timer)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+TimerController1545293750[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TimerController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   available: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   frameCounter: LinkedList&lt;Double&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   frameTime: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   lastFrameTime: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   timers: Map&lt;Object, List&lt;Timer&gt;&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ add(from: Object, c: Timer)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ clear()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ disable()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ done()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ execute()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getTimers(from: Object): List&lt;Timer&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ init(startTime: double)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ remove(from: Object, c: Timer): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ remove(from: Object)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ update()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TimerLinearChange1545293750[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TimerLinearChange</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   animate: AbstractAnimate&lt;Vec&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   initial: Scale [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ update(timeNow: double): TimerLinearChange</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UnderAttack1076968012[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)UnderAttack</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ applyAttack(attack: AbstractAttack)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getRelativeCharacter(): AbstractCharacter</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isCrashAttack(attack: AbstractAttack): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+Utils469135135[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Utils</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ convertDoubleToString(val: double): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ difficultyFromString(string: String): Difficulty</TD></TR>
+<TR><TD ALIGN="LEFT" >+ difficultyToString(difficulty: Difficulty): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getCachedImageFromCache(info: CacheImageInfo): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getCachedImageFromResource(filePath: String): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getStringFromResource(path: String): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ idGenerator(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isInRange(value: double, down: double, up: double): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ letEnemyShoot(position: Vec2): LinkedList&lt;BaseBullet&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ putCachedImageToCache(info: CacheImageInfo, image: XImage&lt;?&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ randomPosition(rangeLeft: Vec2, rangeRight: Vec2): Vec2</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setInRange(value: double, down: double, up: double): double</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UtilsPC469135135[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UtilsPC</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ refreshWindowSize()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ refreshWindowSize(windowWidth: double, windowHeight: double)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Vec1672892565[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Vec</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ copy(): Vec</TD></TR>
+<TR><TD ALIGN="LEFT" >+ divide(that: Vec): Vec</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fromVector(that: VectorType): Vec</TD></TR>
+<TR><TD ALIGN="LEFT" >+ minus(that: Vec): Vec</TD></TR>
+<TR><TD ALIGN="LEFT" >+ plus(that: Vec): Vec</TD></TR>
+<TR><TD ALIGN="LEFT" >+ times(that: Vec): Vec</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Vec21672892565[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Vec2</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ copy(): Vec2</TD></TR>
+<TR><TD ALIGN="LEFT" >+ divide(that: Vec2): Vec2</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fromVector(that: VectorType): Vec2</TD></TR>
+<TR><TD ALIGN="LEFT" >+ minus(that: Vec2): Vec2</TD></TR>
+<TR><TD ALIGN="LEFT" >+ plus(that: Vec2): Vec2</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setX(x: double): Vec2</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setY(y: double): Vec2</TD></TR>
+<TR><TD ALIGN="LEFT" >+ times(that: Vec2): Vec2</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+VectorFactory1672892565[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)VectorFactory&lt;T&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ copy(): T</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fromVector(that: VectorType): T</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getNewInstance(): T</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+VectorType1672892565[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)VectorType</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   content: LinkedList&lt;Double&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   size: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># calc(that: VectorType, operator: Operator): VectorType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ divide(that: VectorType): VectorType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ divide(that: double): VectorType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ minus(that: VectorType): VectorType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ minus(that: double): VectorType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ plus(that: VectorType): VectorType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ plus(that: double): VectorType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ times(that: VectorType): VectorType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ times(that: double): VectorType</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+VectorTypeFactory1672892565[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)VectorTypeFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># fromDouble(size: int, value: double): VectorType</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+VersusActivity635335413[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)VersusActivity</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   client: MyWebsocketClient [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   clientConn: WebSocket [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   connectedAsClient: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   connectedAsServer: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   eSignora: LaSignora [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   server: MyWebsocketServer [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># onCreate(savedInstanceState: XBundle)</TD></TR>
+<TR><TD ALIGN="LEFT" ># onFrame()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onMessage(message: String)</TD></TR>
+<TR><TD ALIGN="LEFT" ># onStart()</TD></TR>
+<TR><TD ALIGN="LEFT" ># onStop()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XActivity883596777[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XActivity</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   game: Game [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   layout: XLayout [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ actionPointerDragged(posList: List&lt;Vec2&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ actionPointerPressed(pos: Vec2)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ actionPointerRelease(pos: Vec2)</TD></TR>
+<TR><TD ALIGN="LEFT" ># findViewById(id: String): XView</TD></TR>
+<TR><TD ALIGN="LEFT" ># finish()</TD></TR>
+<TR><TD ALIGN="LEFT" ># onCreate(savedInstanceState: XBundle)</TD></TR>
+<TR><TD ALIGN="LEFT" ># onFrame()</TD></TR>
+<TR><TD ALIGN="LEFT" ># onStart()</TD></TR>
+<TR><TD ALIGN="LEFT" ># onStop()</TD></TR>
+<TR><TD ALIGN="LEFT" ># startActivity(clazz: Class&lt;T&gt;, bundle: XBundle)</TD></TR>
+<TR><TD ALIGN="LEFT" ># startActivity(clazz: Class&lt;T&gt;)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XActivityManager883596777[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XActivityManager</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   activities: LinkedList&lt;XActivity&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   game: Game [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   layoutManager: XLayoutManager [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   onFinishAllActivities: BasicCallback [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   onSwitchActivity: SwitchActivityCallback [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ canExit(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ finishActivity(activity: XActivity): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onFrame()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startActivityWithBundle(activityClazz: Class&lt;T&gt;, bundle: XBundle): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startActivityWithBundle(activityClazz: Class&lt;T&gt;): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XButton372109751[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XButton</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XDialogue372109751[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XDialogue</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   dialogueManager: DialogueManager [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   displayingThings: List&lt;AbstractThing&lt;?, ?&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   onNextText: XViewCallback [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addThing(thing: AbstractThing&lt;?, ?&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ draw(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" ># drawDialogue(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeThing(thing: AbstractThing&lt;?, ?&gt;): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XEvent1364812344[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XEvent</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   eventType: XEventType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   position: Vec2 [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ setPosition(position: Vec2): XEvent</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XFont1624201252[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XFont&lt;T&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   font: T [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XGraphics1624201252[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XGraphics</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   alpha: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   color: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   colorBoarder: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   font: XFont&lt;?&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   rotation: double [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ applyCoupleColor(coupleColor: CoupleColor): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ circle(x: double, y: double, r: double): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ circle(pos: Vec2, r: double): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawBoarderString(position: Vec2, text: String): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawBoarderString(position: Vec2, size: Vec2, text: String): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawImage(image: XImage&lt;?&gt;, x: double, y: double): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawImage(image: XImage&lt;?&gt;, x: double, y: double, flipped: boolean): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawImage(image: XImage&lt;?&gt;, x: double, y: double, w: double, h: double): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawImage(image: XImage&lt;?&gt;, x: double, y: double, w: double, h: double, flipped: boolean): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawString(text: String, x: double, y: double): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawString(text: String, pos: Vec2): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawUIString(view: XView, text: String): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ ellipse(x: double, y: double, r1: double, r2: double): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ ellipse(pos: Vec2, r: Vec2): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fillRect(x: double, y: double, width: double, height: double): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ paintInOrdered(game: Game)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ paintInfo(game: Game)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ resizeImage(image: XImage&lt;?&gt;, w: double, h: double): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ resizeImage(image: XImage&lt;?&gt;): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setAlpha(alpha: double): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setBoarderColor(colorBoarder: int): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setColor(color: int): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setFont(font: XFont&lt;?&gt;): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setFont(name: String): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setRotation(rotation: double): XGraphics</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XGraphicsAndroid719892186[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XGraphicsAndroid</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ circle(x: double, y: double, r: double): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawBoarderString(position: Vec2, size: Vec2, text: String): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawImage(image: XImage&lt;?&gt;, x: double, y: double, flipped: boolean): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawImage(image: XImage&lt;?&gt;, x: double, y: double, w: double, h: double, flipped: boolean): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawString(text: String, x: double, y: double): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawUIString(view: XView, text: String): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ ellipse(x: double, y: double, r1: double, r2: double): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fillRect(x: double, y: double, width: double, height: double): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ paintInfo(game: Game)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ resizeImage(image: XImage&lt;?&gt;, w: double, h: double): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setAlpha(alpha: double): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setColor(color: int): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setFont(font: XFont&lt;?&gt;): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setRotation(rotation: double): XGraphics</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XGraphicsGetter3983820[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)XGraphicsGetter</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ get(): XGraphics</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+XGraphicsPC719892186[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XGraphicsPC</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ circle(x: double, y: double, r: double): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawBoarderString(position: Vec2, size: Vec2, text: String): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawImage(image: XImage&lt;?&gt;, x: double, y: double, flipped: boolean): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawImage(image: XImage&lt;?&gt;, x: double, y: double, w: double, h: double, flipped: boolean): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawString(text: String, x: double, y: double): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawUIString(view: XView, text: String): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ ellipse(x: double, y: double, r1: double, r2: double): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fillRect(x: double, y: double, width: double, height: double): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ resizeImage(image: XImage&lt;?&gt;, w: double, h: double): XImage&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setAlpha(alpha: double): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setColor(color: int): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setFont(font: XFont&lt;?&gt;): XGraphics</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setRotation(rotation: double): XGraphics</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XImage1624201252[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XImage&lt;T&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getPixel(pos: Vec2): int</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XImageFactoryAndroid719892186[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XImageFactoryAndroid</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ create(image: Bitmap): XImage&lt;Bitmap&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XImageFactoryInterface1624201252[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)XImageFactoryInterface&lt;T&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ create(image: T): XImage&lt;T&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+XImageFactoryPC719892186[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XImageFactoryPC</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ create(image: BufferedImage): XImage&lt;BufferedImage&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createScaled(image: BufferedImage): XImage&lt;BufferedImage&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XJoySticks372109751[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XJoySticks</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   pointer: Vec2 [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   stickOffset: Vec2 [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   stickSize: Vec2 [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ draw(g: XGraphics)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XLayout822097340[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XLayout</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   background: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addView(view: XView): XLayout</TD></TR>
+<TR><TD ALIGN="LEFT" >+ clearView(): XLayout</TD></TR>
+<TR><TD ALIGN="LEFT" >+ replaceLayout(that: XLayout): XLayout</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setBackground(background: String): XLayout</TD></TR>
+<TR><TD ALIGN="LEFT" >+ show(g: XGraphics): XLayout</TD></TR>
+<TR><TD ALIGN="LEFT" >+ trigger(event: XEvent): XLayout</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XLayoutBuilder822097340[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XLayoutBuilder</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   layoutManager: XLayoutManager [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   layoutName: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ build(layoutBean: XLayoutBean): XLayout</TD></TR>
+<TR><TD ALIGN="LEFT" >+ build(): XLayout</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XLayoutManager822097340[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XLayoutManager</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   layouts: Map&lt;String, XLayout&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   viewIDMap: Map&lt;String, XView&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- buildNewLayout(name: String): XLayout</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getLayout(name: String): XLayout</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getViewByID(id: String): XView</TD></TR>
+<TR><TD ALIGN="LEFT" >+ putViewByID(id: String, view: XView)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XView372109751[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XView</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   bindingActivity: XActivity [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   font: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   id: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   imageResource: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   isEntered: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   listeners: Map&lt;XEventType, LinkedList&lt;XViewCallback&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   text: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   type: XViewType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   visible: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   willStopTrigger: boolean [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addListener(eventType: XEventType, callback: XViewCallback): XView</TD></TR>
+<TR><TD ALIGN="LEFT" >+ draw(g: XGraphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ draw(g: XGraphics, center: boolean)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ forward()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isIn(pos: Vec2): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ popEvent(type: XEventType): XView</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setBindingActivity(bindingActivity: XActivity): XView</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setFont(font: String): XView</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setId(id: String): XView</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setImageResource(imageResource: String): XView</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setOnClick(callback: XViewCallback): XView</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setOnDown(callback: XViewCallback): XView</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setOnEnter(callback: XViewCallback): XView</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setOnLeft(callback: XViewCallback): XView</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setOnMove(callback: XViewCallback): XView</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setOnUp(callback: XViewCallback): XView</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setText(text: String): XView</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setType(viewType: XViewType): XView</TD></TR>
+<TR><TD ALIGN="LEFT" >+ stopTrigger()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ stringToType(type: String): XViewType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ trigger(event: XEvent): XView</TD></TR>
+<TR><TD ALIGN="LEFT" >+ vanish()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XViewBuilder12187831[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)XViewBuilder</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   posInit: Vec2 [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   type: XViewType [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ build(): XView</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+XViewCallback12187831[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)XViewCallback</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ onEvent(xView: XView, xEvent: XEvent)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+} 
+} 
+
+'edges    
+AbstractAction394846411 -> AbstractThing301213698[label="thing
+[0..1]"];
+AbstractAction394846411 -> BasicImageCarouselAction394846411[arrowhead=none, arrowtail=empty, dir=both];
+AbstractAircraft642598014 -> BossEnemy642598014[arrowhead=none, arrowtail=empty, dir=both];
+AbstractAircraft642598014 -> EliteEnemy642598014[arrowhead=none, arrowtail=empty, dir=both];
+AbstractAircraft642598014 -> HeroAircraft642598014[arrowhead=none, arrowtail=empty, dir=both];
+AbstractAircraft642598014 -> MobEnemy642598014[arrowhead=none, arrowtail=empty, dir=both];
+AbstractAircraft642598014 -> ResourceProvider1624201252[label="playBeShootMusic() -> startMusic()"];
+AbstractAircraft642598014 -> RunningConfig1138487956[label="vanish() -> increaseScore()"];
+AbstractAircraftFactory642598014 -> BossEnemyFactory642598014[arrowhead=none, arrowtail=empty, dir=both];
+AbstractAircraftFactory642598014 -> EliteEnemyFactory642598014[arrowhead=none, arrowtail=empty, dir=both];
+AbstractAircraftFactory642598014 -> HeroAircraftFactory642598014[arrowhead=none, arrowtail=empty, dir=both];
+AbstractAircraftFactory642598014 -> MobEnemyFactory642598014[arrowhead=none, arrowtail=empty, dir=both];
+AbstractAnimate874664497 -> AnimateCallback6324860[label="animateCallback
+[0..1]"];
+AbstractAnimate874664497 -> Delay1680782942[arrowhead=none, arrowtail=empty, dir=both];
+AbstractAnimate874664497 -> Empty1680782942[arrowhead=none, arrowtail=empty, dir=both];
+AbstractAnimate874664497 -> Linear1680782942[arrowhead=none, arrowtail=empty, dir=both];
+AbstractAnimate874664497 -> NonLinear1680782942[arrowhead=none, arrowtail=empty, dir=both];
+AbstractAnimate874664497 -> SmoothTo1680782942[arrowhead=none, arrowtail=empty, dir=both];
+AbstractAttack1076968012 -> AbstractCharacter1494850621[label="source
+[0..1]"];
+AbstractAttack1076968012 -> Butterfly1076968012[arrowhead=none, arrowtail=empty, dir=both];
+AbstractAttack1076968012 -> DynamicAttackAttributes1974744566[label="dynamicAttackAttributes
+[0..1]"];
+AbstractBackground155614874 -> BasicBackground155614874[arrowhead=none, arrowtail=empty, dir=both];
+AbstractCharacter1494850621 -> AbstractFlyingObject1677377534[label="isCrashAttack() -> crash()"];
+AbstractCharacter1494850621 -> AbstractLogger792623464[label="bearDamage() -> info()"];
+AbstractCharacter1494850621 -> DamageCalculator460672460[label="applyAttack() -> calculate()"];
+AbstractCharacter1494850621 -> DelayTimer1545293750[label="chargedAttackDelayTask
+[0..1]"];
+AbstractCharacter1494850621 -> DelayTimer1545293750[label="skillAttackDelayTask
+[0..1]"];
+AbstractCharacter1494850621 -> DynamicCharacterAttributes1974744566[label="dynamicCharacterAttributes
+[0..1]"];
+AbstractCharacter1494850621 -> LaSignora1593490256[arrowhead=none, arrowtail=empty, dir=both];
+AbstractCharacter1494850621 -> ShogunateSoldier1091915237[arrowhead=none, arrowtail=empty, dir=both];
+AbstractCharacter1494850621 -> Vec21672892565[label="bearDamage() -> plus()"];
+AbstractCharacter1494850621 -> XLayout822097340[label="bearDamage() -> addView()"];
+AbstractFlyingObject1677377534 -> AbstractAircraft642598014[arrowhead=none, arrowtail=empty, dir=both];
+AbstractFlyingObject1677377534 -> AbstractProp1533627855[arrowhead=none, arrowtail=empty, dir=both];
+AbstractFlyingObject1677377534 -> AbstractThing301213698[arrowhead=none, arrowtail=empty, dir=both];
+AbstractFlyingObject1677377534 -> BaseBullet244458606[arrowhead=none, arrowtail=empty, dir=both];
+AbstractFlyingObject1677377534 -> HeroAircraft642598014[label="crash() -> crash()"];
+AbstractFlyingObject1677377534 -> Vec21672892565[label="crash() -> minus()"];
+AbstractLogger792623464 -> BasicLogger792623464[arrowhead=none, arrowtail=empty, dir=both];
+AbstractLogger792623464 -> LoggerAndroid719892186[arrowhead=none, arrowtail=empty, dir=both];
+AbstractObject1677377534 -> AbstractAircraft642598014[label="draw() -> draw()"];
+AbstractObject1677377534 -> AbstractBackground155614874[arrowhead=none, arrowtail=empty, dir=both];
+AbstractObject1677377534 -> AbstractFlyingObject1677377534[arrowhead=none, arrowtail=empty, dir=both];
+AbstractObject1677377534 -> AircraftBox642598014[arrowhead=none, arrowtail=empty, dir=both];
+AbstractObject1677377534 -> AircraftHeroBox642598014[label="draw() -> draw()"];
+AbstractObject1677377534 -> AnimateContainer874664497[label="forward() -> updateAll()"];
+AbstractObject1677377534 -> BasicCallback3983820[label="onVanish
+[0..1]"];
+AbstractObject1677377534 -> Butterfly1076968012[label="getImage() -> getImage()"];
+AbstractObject1677377534 -> ImageManager890657056[label="getImage() -> get()"];
+AbstractObject1677377534 -> LaSignora1593490256[label="vanish() -> vanish()"];
+AbstractObject1677377534 -> Scale1672892565[label="alpha
+[0..1]"];
+AbstractObject1677377534 -> Scale1672892565[label="rotation
+[0..1]"];
+AbstractObject1677377534 -> TimerController1545293750[label="vanish() -> remove()"];
+AbstractObject1677377534 -> Utils469135135[label="getImage() -> getCachedImageFromResource()"];
+AbstractObject1677377534 -> Vec21672892565[label="position
+[0..1]"];
+AbstractObject1677377534 -> Vec21672892565[label="size
+[0..1]"];
+AbstractObject1677377534 -> XImage1624201252[label="cachedImage
+[0..*]"];
+AbstractObject1677377534 -> XImage1624201252[label="image
+[0..1]"];
+AbstractObject1677377534 -> XView372109751[arrowhead=none, arrowtail=empty, dir=both];
+AbstractProp1533627855 -> AbstractAircraft642598014[label="enemyAircrafts
+[0..*]"];
+AbstractProp1533627855 -> BaseBullet244458606[label="enemyBullets
+[0..*]"];
+AbstractProp1533627855 -> BloodProp1533627855[arrowhead=none, arrowtail=empty, dir=both];
+AbstractProp1533627855 -> BombProp1533627855[arrowhead=none, arrowtail=empty, dir=both];
+AbstractProp1533627855 -> BulletProp1533627855[arrowhead=none, arrowtail=empty, dir=both];
+AbstractProp1533627855 -> ResourceProvider1624201252[label="playSupplyMusic() -> startMusic()"];
+AbstractPropFactory1533627855 -> BloodPropFactory1533627855[arrowhead=none, arrowtail=empty, dir=both];
+AbstractPropFactory1533627855 -> BombPropFactory1533627855[arrowhead=none, arrowtail=empty, dir=both];
+AbstractPropFactory1533627855 -> BulletPropFactory1533627855[arrowhead=none, arrowtail=empty, dir=both];
+AbstractPropFactory1533627855 -> Vec21672892565[label="position
+[0..1]"];
+AbstractSceneClient466777850 -> GameWindow1331764593[arrowhead=none, arrowtail=empty, dir=both];
+AbstractSceneClient466777850 -> HistoryWindow1331764593[arrowhead=none, arrowtail=empty, dir=both];
+AbstractSceneClient466777850 -> MainWindow1331764593[arrowhead=none, arrowtail=empty, dir=both];
+AbstractSceneClient466777850 -> SceneRun466777850[label="nextScene() -> setNextScene()"];
+AbstractSceneRunnable466777850 -> AbstractLogger792623464[label="run() -> warn()"];
+AbstractThing301213698 -> AbstractAttack1076968012[arrowhead=none, arrowtail=empty, dir=both];
+AbstractThing301213698 -> AbstractCharacter1494850621[arrowhead=none, arrowtail=empty, dir=both];
+AbstractThing301213698 -> AbstractObject1677377534[label="forward() -> vanish()"];
+AbstractThing301213698 -> AnimateContainer874664497[label="forward() -> updateAll()"];
+AbstractThing301213698 -> BasicThingAttributes50209465[label="basicAttributes
+[0..1]"];
+AbstractThing301213698 -> ShogunateSoldier1091915237[label="forward() -> forward()"];
+AircraftBox642598014 -> AircraftHeroBox642598014[arrowhead=none, arrowtail=empty, dir=both];
+AircraftHeroBox642598014 -> AbstractObject1677377534[label="draw() -> draw()"];
+AircraftWarActivity635335413 -> XActivity883596777[label="onCreate() -> findViewById()"];
+AnimateContainer874664497 -> AbstractAction394846411[arrowhead=none, arrowtail=empty, dir=both];
+AnimateContainer874664497 -> AbstractAnimate874664497[label="animateList
+[0..*]"];
+AnimateContainer874664497 -> AnimateContainerCallback6324860[label="animateContainerCallback
+[0..1]"];
+AnimateContainer874664497 -> Vec1672892565[label="animateList
+[0..*]"];
+AnimateContainerFactory874664497 -> AnimateContainerCallback6324860[label="animateContainerCallback
+[0..1]"];
+AnimateContainerFactory874664497 -> Vec21672892565[label="position
+[0..1]"];
+AnimateContainerFactory874664497 -> Vec21672892565[label="range
+[0..1]"];
+AnimateContainerFactory874664497 -> Vec21672892565[label="range2
+[0..1]"];
+AnimateContainerFactory874664497 -> Vec21672892565[label="speed2d
+[0..1]"];
+AnimateContainerFactory874664497 -> Vec21672892565[label="target
+[0..1]"];
+AnimateWithTarget1680782942 -> LinearToTarget1680782942[arrowhead=none, arrowtail=empty, dir=both];
+AnimateWithTarget1680782942 -> LinearTracking1680782942[arrowhead=none, arrowtail=empty, dir=both];
+AnimateWithTarget1680782942 -> NonLinear1680782942[arrowhead=none, arrowtail=empty, dir=both];
+AnimateWithTarget1680782942 -> SmoothTo1680782942[arrowhead=none, arrowtail=empty, dir=both];
+BaseBullet244458606 -> AbstractObject1677377534[label="onPropHandle() -> vanish()"];
+BaseBullet244458606 -> EnemyBullet244458606[arrowhead=none, arrowtail=empty, dir=both];
+BaseBullet244458606 -> HeroBullet244458606[arrowhead=none, arrowtail=empty, dir=both];
+BaseBulletFactory244458606 -> EnemyBulletFactory244458606[arrowhead=none, arrowtail=empty, dir=both];
+BaseBulletFactory244458606 -> HeroBulletFactory244458606[arrowhead=none, arrowtail=empty, dir=both];
+BaseBulletFactory244458606 -> Vec21672892565[label="position
+[0..1]"];
+BasicDynamicAttributes1974744566 -> DynamicAttackAttributes1974744566[arrowhead=none, arrowtail=empty, dir=both];
+BasicDynamicAttributes1974744566 -> DynamicCharacterAttributes1974744566[arrowhead=none, arrowtail=empty, dir=both];
+BasicImageCarouselAction394846411 -> ReversedImageCarouselAction394846411[arrowhead=none, arrowtail=empty, dir=both];
+BasicImageCarouselAction394846411 -> Utils469135135[label="loadAllAvailableImageFiles() -> getCachedImageFromResource()"];
+BasicImageCarouselAction394846411 -> XGraphics1624201252[label="preLoadResources() -> resizeImage()"];
+BasicImageCarouselAction394846411 -> XImage1624201252[label="availableImages
+[0..*]"];
+BasicPopup475600459 -> BasicCallback3983820[label="vanish() -> run()"];
+BasicPopup475600459 -> DamagePopup475600459[arrowhead=none, arrowtail=empty, dir=both];
+BasicPopup475600459 -> DrawColor1161128898[label="draw() -> getEnumColors()"];
+BasicThingAttributes50209465 -> BasicAttackAttributes684833067[arrowhead=none, arrowtail=empty, dir=both];
+BasicThingAttributes50209465 -> BasicDynamicAttributes1974744566[arrowhead=none, arrowtail=empty, dir=both];
+BasicThingAttributes50209465 -> ThingAttributes684833067[arrowhead=none, arrowtail=empty, dir=both];
+BattleActivity635335413 -> AircraftWarActivity635335413[arrowhead=none, arrowtail=empty, dir=both];
+BattleActivity635335413 -> ButtonGroupItem1531639840[label="buttonGroup
+[0..*]"];
+BattleActivity635335413 -> LaSignora1593490256[label="signora
+[0..1]"];
+BattleActivity635335413 -> TimeManager1545293750[label="onStop() -> timeResume()"];
+BattleActivity635335413 -> Utils469135135[label="onCreate() -> randomPosition()"];
+BattleActivity635335413 -> VersusActivity635335413[arrowhead=none, arrowtail=empty, dir=both];
+BattleActivity635335413 -> XButton372109751[label="buttonBack
+[0..1]"];
+BattleActivity635335413 -> XDialogue372109751[label="dialogue
+[0..1]"];
+BattleActivity635335413 -> XJoySticks372109751[label="joySticks
+[0..1]"];
+BloodProp1533627855 -> AbstractAircraft642598014[label="update() -> decreaseHp()"];
+BombProp1533627855 -> AbstractLogger792623464[label="update() -> info()"];
+BombProp1533627855 -> ResourceProvider1624201252[label="update() -> startMusic()"];
+BossEnemy642598014 -> AbstractObject1677377534[label="vanish() -> vanish()"];
+BossEnemy642598014 -> BloodPropFactory1533627855[label="dropProps() -> create()"];
+BossEnemy642598014 -> BombPropFactory1533627855[label="dropProps() -> create()"];
+BossEnemy642598014 -> BossEnemyFactory642598014[label="vanish() -> clearInstance()"];
+BossEnemy642598014 -> BulletPropFactory1533627855[label="dropProps() -> create()"];
+BossEnemyFactory642598014 -> BasicCallback3983820[label="onVanish
+[0..1]"];
+BulletProp1533627855 -> AbstractLogger792623464[label="update() -> info()"];
+BulletProp1533627855 -> MyThreadFactory658691001[label="update() -> newThread()"];
+Butterfly1076968012 -> AbstractAnimate874664497[label="moveAnimate
+[0..1]"];
+Butterfly1076968012 -> AbstractAnimate874664497[label="sizeAnimate
+[0..1]"];
+Butterfly1076968012 -> AbstractThing301213698[label="preLoadResources() -> preLoadResources()"];
+Butterfly1076968012 -> HandButterfly705385358[arrowhead=none, arrowtail=empty, dir=both];
+Butterfly1076968012 -> Vec1672892565[label="moveAnimate
+[0..1]"];
+Butterfly1076968012 -> Vec1672892565[label="sizeAnimate
+[0..1]"];
+ButtonGroupItem1531639840 -> DelayTimer1545293750[label="delayTimer
+[0..1]"];
+ButtonGroupItem1531639840 -> XView372109751[label="button
+[0..1]"];
+ButtonGroupItem1531639840 -> XViewCallback12187831[label="onClick
+[0..1]"];
+CanPreLoadResources890657056 -> AbstractAction394846411[arrowhead=none, arrowtail=empty, dir=both];
+CanPreLoadResources890657056 -> AbstractThing301213698[arrowhead=none, arrowtail=empty, dir=both];
+CharacterController1624201252 -> AbstractCharacter1494850621[label="secondaryTarget
+[0..1]"];
+CharacterController1624201252 -> AbstractCharacter1494850621[label="target
+[0..1]"];
+CharacterController1624201252 -> BattleActivity635335413[label="battleActivity
+[0..1]"];
+CharacterController1624201252 -> CharacterControllerAndroidImpl719892186[arrowhead=none, arrowtail=empty, dir=both];
+CharacterController1624201252 -> CharacterControllerPCImpl1063409982[arrowhead=none, arrowtail=empty, dir=both];
+CharacterController1624201252 -> XJoySticks372109751[label="joySticks
+[0..1]"];
+CharacterControllerPCImpl1063409982 -> XActivityManager883596777[label="onKeyUp() -> finishActivity()"];
+DamageCalculator460672460 -> AbstractLogger792623464[label="calculate() -> info()"];
+DelayTimer1545293750 -> TimerController1545293750[label="run() -> remove()"];
+DialogueGetter783434582 -> DialogueManager783434582[arrowhead=none, arrowtail=empty, dir=both];
+EliteEnemy642598014 -> BloodPropFactory1533627855[label="dropProps() -> create()"];
+EliteEnemy642598014 -> BombPropFactory1533627855[label="dropProps() -> create()"];
+EliteEnemy642598014 -> BulletPropFactory1533627855[label="dropProps() -> create()"];
+EliteEnemy642598014 -> TimerLinearChange1545293750[label="dropProps() -> update()"];
+EliteEnemyFactory642598014 -> TimerLinearChange1545293750[label="create() -> update()"];
+Game291792836 -> AbstractAttack1076968012[label="attacks
+[0..*]"];
+Game291792836 -> AbstractAttack1076968012[label="enemiesAttacks
+[0..*]"];
+Game291792836 -> AbstractBackground155614874[label="backgrounds
+[0..*]"];
+Game291792836 -> AbstractCharacter1494850621[label="characters
+[0..*]"];
+Game291792836 -> AbstractCharacter1494850621[label="enemies
+[0..*]"];
+Game291792836 -> BasicCallback3983820[label="onExit
+[0..1]"];
+Game291792836 -> BasicCallback3983820[label="onFinish
+[0..1]"];
+Game291792836 -> BasicCallback3983820[label="onFrame
+[0..1]"];
+Game291792836 -> BasicCallback3983820[label="onPaint
+[0..1]"];
+Game291792836 -> CharacterController1624201252[label="characterController
+[0..1]"];
+Game291792836 -> ConfigFactory1138487956[label="resetStates() -> create()"];
+Game291792836 -> TimerController1545293750[label="timerController
+[0..1]"];
+Game291792836 -> UnderAttack1076968012[label="enemiesUnderAttacks
+[0..*]"];
+Game291792836 -> UnderAttack1076968012[label="underAttacks
+[0..*]"];
+Game291792836 -> XActivityManager883596777[label="activityManager
+[0..1]"];
+GamePanel1063409982 -> AbstractLogger792623464[label="paint() -> debug()"];
+GamePanel1063409982 -> CharacterControllerPCImpl1063409982[label="heroControllerImpl
+[0..1]"];
+GamePanel1063409982 -> TimerController1545293750[label="addTimers() -> add()"];
+GameWindow1331764593 -> GamePanel1063409982[label="startAction() -> action()"];
+HandButterfly705385358 -> BasicImageCarouselAction394846411[label="preLoadResources() -> preLoadResources()"];
+HandButterfly705385358 -> Vec21672892565[label="butterflyOffset
+[0..1]"];
+HeroAircraft642598014 -> AbstractObject1677377534[label="crash() -> crash()"];
+HeroAircraft642598014 -> AircraftHeroBox642598014[label="box
+[0..1]"];
+HeroAircraft642598014 -> MyThreadFactory658691001[label="startInvincibleState() -> newThread()"];
+HeroAircraft642598014 -> ResourceProvider1624201252[label="playBeShootMusic() -> startMusic()"];
+HeroAircraft642598014 -> Vec21672892565[label="shoot() -> copy()"];
+HeroBulletFactory244458606 -> AbstractAircraft642598014[label="enemyAircrafts
+[0..*]"];
+HistoryDAO1789118193 -> HistoryImpl1789118193[arrowhead=none, arrowtail=empty, dir=both];
+HistoryImpl1789118193 -> HistoryImplAndroid719892186[arrowhead=none, arrowtail=empty, dir=both];
+HistoryImpl1789118193 -> HistoryObject1789118193[label="data
+[0..*]"];
+HistoryWindow1331764593 -> HistoryImpl1789118193[label="syncWithDao() -> sort()"];
+HomeActivity635335413 -> XButton372109751[label="buttonBack
+[0..1]"];
+ImageManager890657056 -> XImage1624201252[label="BLOOD_PROP_IMAGE
+[0..1]"];
+ImageManager890657056 -> XImage1624201252[label="BOMB_PROP_IMAGE
+[0..1]"];
+ImageManager890657056 -> XImage1624201252[label="BOSS_ENEMY_IMAGE
+[0..1]"];
+ImageManager890657056 -> XImage1624201252[label="BOX_HERO
+[0..1]"];
+ImageManager890657056 -> XImage1624201252[label="BULLET_PROP_IMAGE
+[0..1]"];
+ImageManager890657056 -> XImage1624201252[label="CLASSNAME_IMAGE_MAP
+[0..*]"];
+ImageManager890657056 -> XImage1624201252[label="ELITE_ENEMY_IMAGE
+[0..1]"];
+ImageManager890657056 -> XImage1624201252[label="ENEMY_BULLET_IMAGE
+[0..1]"];
+ImageManager890657056 -> XImage1624201252[label="HERO_BULLET_IMAGE
+[0..1]"];
+ImageManager890657056 -> XImage1624201252[label="HERO_IMAGE
+[0..1]"];
+ImageManager890657056 -> XImage1624201252[label="MOB_ENEMY_IMAGE
+[0..1]"];
+LaSignora1593490256 -> AnimateContainer874664497[label="skillAttack() -> addAnimate()"];
+LaSignora1593490256 -> BasicCallback3983820[label="applyAction() -> run()"];
+LaSignora1593490256 -> HandButterfly705385358[label="handButterfly
+[0..1]"];
+LaSignora1593490256 -> Timer1545293750[label="normalAttackTask
+[0..1]"];
+Linear1680782942 -> LinearLoop1680782942[arrowhead=none, arrowtail=empty, dir=both];
+Linear1680782942 -> LinearRebound1680782942[arrowhead=none, arrowtail=empty, dir=both];
+Linear1680782942 -> LinearToTarget1680782942[arrowhead=none, arrowtail=empty, dir=both];
+Linear1680782942 -> VectorFactory1672892565[label="update() -> fromVector()"];
+LinearLoop1680782942 -> Vec21672892565[label="range
+[0..1]"];
+LinearRebound1680782942 -> Vec21672892565[label="rangeLeft
+[0..1]"];
+LinearRebound1680782942 -> Vec21672892565[label="rangeRight
+[0..1]"];
+LinearToTarget1680782942 -> LinearTracking1680782942[arrowhead=none, arrowtail=empty, dir=both];
+LinearToTarget1680782942 -> VectorFactory1672892565[label="updateSpeed() -> fromVector()"];
+LinearToTarget1680782942 -> VectorType1672892565[label="updateSpeed() -> times()"];
+LoadableAttributes684833067 -> BasicAttackAttributes684833067[arrowhead=none, arrowtail=empty, dir=both];
+LoadableAttributes684833067 -> BasicCharacterAttributes684833067[arrowhead=none, arrowtail=empty, dir=both];
+Main1063409982 -> UtilsPC469135135[label="main() -> refreshWindowSize()"];
+MobEnemyFactory642598014 -> TimerLinearChange1545293750[label="create() -> update()"];
+MusicManagerPC461786259 -> ResourceProvider1624201252[label="getMusicFileData() -> getSoundBytesFromResource()"];
+MusicThread461786259 -> MusicLoopThread461786259[arrowhead=none, arrowtail=empty, dir=both];
+MusicThreadFactory461786259 -> MusicThread461786259[label="musicThreads
+[0..*]"];
+MyThreadFactory658691001 -> MusicThreadFactory461786259[arrowhead=none, arrowtail=empty, dir=both];
+PropHandler1533627855 -> AbstractAircraft642598014[arrowhead=none, arrowtail=empty, dir=both];
+PropHandler1533627855 -> BaseBullet244458606[arrowhead=none, arrowtail=empty, dir=both];
+ResourceProvider1624201252 -> ResourceProviderAndroid719892186[arrowhead=none, arrowtail=empty, dir=both];
+ResourceProvider1624201252 -> ResourceProviderPC719892186[arrowhead=none, arrowtail=empty, dir=both];
+ResourceProvider1624201252 -> XFont1624201252[label="cachedFont
+[0..*]"];
+ResourceProvider1624201252 -> XGraphicsGetter3983820[label="xGraphicsGetter
+[0..1]"];
+ResourceProviderAndroid719892186 -> XImageFactoryAndroid719892186[label="getImageFromResource() -> create()"];
+ResourceProviderPC719892186 -> MusicManagerPC461786259[label="musicLoadAll() -> initAll()"];
+ResourceProviderPC719892186 -> XImageFactoryPC719892186[label="getImageFromResource() -> create()"];
+Scene466777850 -> AbstractLogger792623464[label="run() -> info()"];
+Scene466777850 -> AbstractSceneRunnable466777850[label="sceneRunnable
+[0..1]"];
+SceneRun466777850 -> AbstractSceneClient466777850[label="run() -> startAction()"];
+SceneRun466777850 -> MyThreadFactory658691001[label="run() -> newThread()"];
+SceneRun466777850 -> Scene466777850[label="nextScene
+[0..1]"];
+SceneRun466777850 -> Scene466777850[label="sceneList
+[0..*]"];
+ShogunateSoldier1091915237 -> AbstractThing301213698[label="forward() -> forward()"];
+ShogunateSoldier1091915237 -> Timer1545293750[label="moveTask
+[0..1]"];
+ShogunateSoldier1091915237 -> Timer1545293750[label="normalAttackTask
+[0..1]"];
+ShogunateSoldier1091915237 -> Utils469135135[label="getImage() -> getCachedImageFromResource()"];
+StageSelectActivity635335413 -> TimeManager1545293750[label="onStop() -> timeResume()"];
+StageSelectActivity635335413 -> XButton372109751[label="buttonBack
+[0..1]"];
+ThingAttributes684833067 -> BasicCharacterAttributes684833067[arrowhead=none, arrowtail=empty, dir=both];
+Timer1545293750 -> TimerCallback1545293750[label="callback
+[0..1]"];
+Timer1545293750 -> TimerLinearChange1545293750[label="change
+[0..1]"];
+TimerCallback1545293750 -> DelayTimer1545293750[arrowhead=none, arrowtail=empty, dir=both];
+TimerController1545293750 -> Timer1545293750[label="timers
+[0..*]"];
+TimerLinearChange1545293750 -> AbstractAnimate874664497[label="animate
+[0..1]"];
+TimerLinearChange1545293750 -> Scale1672892565[label="initial
+[0..1]"];
+TimerLinearChange1545293750 -> Vec1672892565[label="animate
+[0..1]"];
+UnderAttack1076968012 -> AbstractCharacter1494850621[arrowhead=none, arrowtail=empty, dir=both];
+Utils469135135 -> AbstractLogger792623464[label="putCachedImageToCache() -> info()"];
+Utils469135135 -> EnemyBulletFactory244458606[label="letEnemyShoot() -> create()"];
+Utils469135135 -> ResourceProvider1624201252[label="getCachedImageFromResource() -> getImageFromResource()"];
+UtilsPC469135135 -> AbstractLogger792623464[label="refreshWindowSize() -> warn()"];
+Vec1672892565 -> Scale1672892565[arrowhead=none, arrowtail=empty, dir=both];
+Vec1672892565 -> Vec21672892565[arrowhead=none, arrowtail=empty, dir=both];
+VectorFactory1672892565 -> Vec1672892565[arrowhead=none, arrowtail=empty, dir=both];
+VectorType1672892565 -> Vec1672892565[arrowhead=none, arrowtail=empty, dir=both];
+VersusActivity635335413 -> Game291792836[label="onCreate() -> addThing()"];
+VersusActivity635335413 -> LaSignora1593490256[label="eSignora
+[0..1]"];
+VersusActivity635335413 -> MyWebsocketClient900330275[label="client
+[0..1]"];
+VersusActivity635335413 -> MyWebsocketServer1261388609[label="server
+[0..1]"];
+VersusActivity635335413 -> Vec21672892565[label="onMessage() -> minus()"];
+XActivity883596777 -> AbstractLogger792623464[label="actionPointerRelease() -> info()"];
+XActivity883596777 -> BattleActivity635335413[arrowhead=none, arrowtail=empty, dir=both];
+XActivity883596777 -> DialogActivity635335413[arrowhead=none, arrowtail=empty, dir=both];
+XActivity883596777 -> Game291792836[label="game
+[0..1]"];
+XActivity883596777 -> HomeActivity635335413[arrowhead=none, arrowtail=empty, dir=both];
+XActivity883596777 -> StageSelectActivity635335413[arrowhead=none, arrowtail=empty, dir=both];
+XActivity883596777 -> TimerController1545293750[label="onStop() -> remove()"];
+XActivity883596777 -> VersusActivity635335413[label="onStart() -> onStart()"];
+XActivity883596777 -> XLayout822097340[label="layout
+[0..*]"];
+XActivity883596777 -> XLayoutManager822097340[label="findViewById() -> getViewByID()"];
+XActivityManager883596777 -> BasicCallback3983820[label="onFinishAllActivities
+[0..1]"];
+XActivityManager883596777 -> Game291792836[label="game
+[0..1]"];
+XActivityManager883596777 -> SwitchActivityCallback883596777[label="onSwitchActivity
+[0..1]"];
+XActivityManager883596777 -> XActivity883596777[label="activities
+[0..*]"];
+XActivityManager883596777 -> XLayoutManager822097340[label="layoutManager
+[0..1]"];
+XDialogue372109751 -> AbstractThing301213698[label="displayingThings
+[0..*]"];
+XDialogue372109751 -> DialogueManager783434582[label="dialogueManager
+[0..1]"];
+XDialogue372109751 -> ResourceProvider1624201252[label="drawDialogue() -> getFont()"];
+XDialogue372109751 -> XViewCallback12187831[label="onNextText
+[0..1]"];
+XEvent1364812344 -> Vec21672892565[label="position
+[0..1]"];
+XGraphics1624201252 -> AbstractObject1677377534[label="paintInOrdered() -> draw()"];
+XGraphics1624201252 -> Game291792836[label="paintInOrdered() -> removeInvalidViews()"];
+XGraphics1624201252 -> ResourceProvider1624201252[label="setFont() -> getFont()"];
+XGraphics1624201252 -> XFont1624201252[label="font
+[0..1]"];
+XGraphics1624201252 -> XGraphicsAndroid719892186[arrowhead=none, arrowtail=empty, dir=both];
+XGraphics1624201252 -> XGraphicsPC719892186[arrowhead=none, arrowtail=empty, dir=both];
+XGraphicsAndroid719892186 -> AbstractLogger792623464[label="resizeImage() -> warn()"];
+XGraphicsAndroid719892186 -> Vec21672892565[label="drawBoarderString() -> fromVector()"];
+XGraphicsAndroid719892186 -> XImageFactoryAndroid719892186[label="resizeImage() -> create()"];
+XGraphicsPC719892186 -> AbstractLogger792623464[label="resizeImage() -> warn()"];
+XGraphicsPC719892186 -> Vec21672892565[label="drawBoarderString() -> fromVector()"];
+XGraphicsPC719892186 -> XImageFactoryPC719892186[label="resizeImage() -> createScaled()"];
+XImageFactoryInterface1624201252 -> XImageFactoryAndroid719892186[arrowhead=none, arrowtail=empty, dir=both];
+XImageFactoryInterface1624201252 -> XImageFactoryPC719892186[arrowhead=none, arrowtail=empty, dir=both];
+XJoySticks372109751 -> Vec21672892565[label="pointer
+[0..1]"];
+XJoySticks372109751 -> Vec21672892565[label="stickOffset
+[0..1]"];
+XJoySticks372109751 -> Vec21672892565[label="stickSize
+[0..1]"];
+XLayoutBuilder822097340 -> ResourceProvider1624201252[label="build() -> getLayoutBeanFromResource()"];
+XLayoutBuilder822097340 -> XLayoutManager822097340[label="layoutManager
+[0..1]"];
+XLayoutBuilder822097340 -> XViewBuilder12187831[label="build() -> build()"];
+XLayoutManager822097340 -> XLayout822097340[label="layouts
+[0..*]"];
+XLayoutManager822097340 -> XLayoutBuilder822097340[label="buildNewLayout() -> build()"];
+XLayoutManager822097340 -> XView372109751[label="viewIDMap
+[0..*]"];
+XView372109751 -> AnimateContainer874664497[label="forward() -> updateAll()"];
+XView372109751 -> BasicPopup475600459[arrowhead=none, arrowtail=empty, dir=both];
+XView372109751 -> DrawColor1161128898[label="draw() -> getEnumColors()"];
+XView372109751 -> XActivity883596777[label="bindingActivity
+[0..1]"];
+XView372109751 -> XButton372109751[arrowhead=none, arrowtail=empty, dir=both];
+XView372109751 -> XDialogue372109751[arrowhead=none, arrowtail=empty, dir=both];
+XView372109751 -> XImage1624201252[label="isIn() -> getPixel()"];
+XView372109751 -> XJoySticks372109751[arrowhead=none, arrowtail=empty, dir=both];
+XView372109751 -> XViewCallback12187831[label="listeners
+[0..*]"];
+XViewBuilder12187831 -> Vec21672892565[label="posInit
+[0..1]"];
+    
+}
+@enduml
