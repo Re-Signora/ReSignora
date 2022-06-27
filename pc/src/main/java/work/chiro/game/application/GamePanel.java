@@ -132,7 +132,8 @@ public class GamePanel extends JPanel {
                 }
             }
         });
-        Game.getInstance().setOnPaint(this::repaint);
+//        Game.getInstance().setOnPaint(this::repaint);
+        Game.getInstance().setOnPaint(this::paintFast);
         Game.getInstance().setOnFrame(heroControllerImpl::onFrame);
         addComponentListener(new ComponentAdapter() {
             @Override
@@ -149,6 +150,10 @@ public class GamePanel extends JPanel {
     public void addTimers() {
         // 获取键盘焦点
         Game.getInstance().getTimerController().add(this, new Timer(100, (controller, timer) -> this.requestFocus()));
+    }
+
+    private void paintFast() {
+        paintImmediately(getBounds());
     }
 
     /**

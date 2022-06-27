@@ -89,7 +89,7 @@ public class RunningConfig {
      * Android: Hardware Canvas 加速
      */
     public static boolean enableHardwareSpeedup = true;
-    // public static boolean enableHardwareSpeedup = false;
+//     public static boolean enableHardwareSpeedup = false;
 
     /**
      * 默认联机服务器，在启动 Game 前修改
@@ -105,4 +105,6 @@ public class RunningConfig {
      * 设置发送信息计数器，间隔 `eventSendDivide` 帧才会发送一次数据（最小为 1）
      */
     public static int eventSendDivide = 1;
+
+    public static boolean lowFpsWarn = true;
 }

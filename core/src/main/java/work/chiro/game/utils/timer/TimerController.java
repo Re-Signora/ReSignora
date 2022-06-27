@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import work.chiro.game.config.RunningConfig;
 import work.chiro.game.utils.Utils;
 
 /**
@@ -100,6 +101,10 @@ public class TimerController {
 
     synchronized public int getFps() {
         if (frameCounter.size() < 2) return 0;
+        double delta = frameCounter.getLast() - frameCounter.getFirst();
+        if (RunningConfig.lowFpsWarn && delta > 700 && frameCounter.getLast() - frameCounter.get(frameCounter.size() - 2) > 100) {
+            return 1;
+        }
         return (int) (frameCounter.size() * 1000 / (frameCounter.getLast() - frameCounter.getFirst() + 1e-3));
     }
 
