@@ -24,7 +24,7 @@ public class GameActivity extends AppCompatActivity {
     private Game game = null;
     GameView gameView = null;
     private final CharacterControllerAndroidImpl heroControllerAndroid = new CharacterControllerAndroidImpl();
-
+//为什么跳到了andorid上面啊qwq
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +130,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         UtilsAndroid.setScreen(this);
+//        前面的好像是自带的吧~？？？？
         resetGame();
         MyThreadFactory.getInstance().newThread(() -> {
             try {

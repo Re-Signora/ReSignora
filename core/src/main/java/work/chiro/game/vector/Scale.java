@@ -21,7 +21,7 @@ public class Scale extends Vec {
     public double getX() {
         return get().get(0);
     }
-
+//？？？？什么东西？一维向量？针对整个类都不知道是个啥玩意儿qwq
     public void setX(double x) {
         get().set(0, x);
     }

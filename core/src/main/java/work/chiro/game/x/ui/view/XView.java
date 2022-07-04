@@ -27,6 +27,7 @@ public class XView extends AbstractObject<AnimateContainer> {
     protected boolean visible = true;
     private final Map<XEventType, LinkedList<XViewCallback>> listeners = new HashMap<>();
     protected String imageResource = null;
+//    最后跳回去的图片是imageResource ？？？？
     protected XViewType type;
     private boolean isEntered = false;
     private XActivity bindingActivity = null;
@@ -128,6 +129,7 @@ public class XView extends AbstractObject<AnimateContainer> {
     protected String getImageFilename() {
         if (imageResource == null)
             return super.getImageFilename();
+//        这东西不还是个空嘛qwq
         else return imageResource;
     }
 

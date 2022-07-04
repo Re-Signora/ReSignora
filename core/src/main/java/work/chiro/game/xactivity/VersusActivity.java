@@ -28,6 +28,7 @@ import work.chiro.game.x.activity.XBundle;
 
 @SuppressWarnings({"SwitchStatementWithTooFewBranches", "BusyWait"})
 public class VersusActivity extends BattleActivity {
+//    我不理解这个报错是怎么来的 ，但是似乎他并不影响运行
     protected LaSignora eSignora;
     protected boolean connectedAsServer = false;
     protected boolean connectedAsClient = false;

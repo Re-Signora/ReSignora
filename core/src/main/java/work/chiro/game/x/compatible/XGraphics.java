@@ -93,6 +93,7 @@ public abstract class XGraphics {
      * @return this
      */
     public abstract XGraphics fillRect(double x, double y, double width, double height);
+//    我每个都只能找到抽象的类，好烦哦，有没有不抽象的emmmmmm
 
     /**
      * 绘制文字

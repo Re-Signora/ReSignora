@@ -20,7 +20,7 @@ public interface UnderAttack {
      * @return 是否碰撞
      */
     boolean isCrashAttack(AbstractAttack attack);
-
+//判断在哪里啊
     /**
      * 获取受攻击对应的角色
      *

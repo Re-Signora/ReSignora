@@ -18,7 +18,9 @@ import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.x.compatible.XFont;
 import work.chiro.game.x.compatible.XImage;
 
+//图片、音乐、字体
 public class ResourceProviderPC extends ResourceProvider {
+//    重新定义了一下 图片路径
     @Override
     public XImage<?> getImageFromResource(String path) throws IOException {
         Utils.getLogger().info("getImageFromResource({})", path);
@@ -33,7 +35,7 @@ public class ResourceProviderPC extends ResourceProvider {
         }
         return new XImageFactoryPC(path).create(bufferedImage);
     }
-
+//  音乐加载 musicEnable应该是判断音乐是否可以播放吧
     @Override
     public void musicLoadAll() {
         if (RunningConfig.musicEnable) {
@@ -47,7 +49,7 @@ public class ResourceProviderPC extends ResourceProvider {
             MusicThreadFactory.getInstance().newMusicThread(type, noStop).start();
         }
     }
-
+//  音乐停止
     @Override
     public void stopMusic(MusicType type) {
         MusicThreadFactory.getInstance().stopMusic(type);
@@ -64,9 +66,11 @@ public class ResourceProviderPC extends ResourceProvider {
             MusicThreadFactory.getInstance().newLoopMusicThread(type).start();
         }
     }
+//
 
     @Override
     public XFont<?> getFont(String name, double fontSize) {
+//        HashMap检查是否有key 哦，这个是字体嘛
         if (cachedFont.containsKey(name)) return cachedFont.get(name);
         Font f;
         try {

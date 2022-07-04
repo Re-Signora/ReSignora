@@ -20,6 +20,8 @@ public class XLayoutManager {
     // }
 
     private XLayout buildNewLayout(String name) {
+//        名字是啥啊？？？？，这个layout又是个什么玩意儿，呜呜,搜不到调用？？？？什么鬼啊，但是又不是灰色的，什么xp
+//        在哪儿有调用的啊qwq，没找到调用呢，name是从哪里来的啊>w<
         XLayout layout = new XLayoutBuilder(this, name).build();
         layouts.put(name, layout);
         return layout;
@@ -34,6 +36,7 @@ public class XLayoutManager {
 
     public XLayout getLayout(String name) {
         XLayout res = layouts.get(name);
+//        是从这里出来的？？？？，前面那个res是判空是嘛，为什么叠了那么多层啊
         if (res == null) {
             return buildNewLayout(name);
         }

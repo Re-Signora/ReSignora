@@ -39,6 +39,8 @@ public class GamePanel extends JPanel {
     private static double scale = 1.0;
     private static boolean justResized = false;
 
+
+//    面板设置？
     public static void setScale(double scale) {
         GamePanel.scale = scale;
     }
@@ -64,6 +66,8 @@ public class GamePanel extends JPanel {
         if (Game.getInstance() == null) {
             Game.createInstance(heroControllerImpl);
         }
+//        开启英雄控制？
+//        开始操作？？？？这是啥玩意~？
         Game.getInstance().action();
         addTimers();
     }
@@ -73,7 +77,10 @@ public class GamePanel extends JPanel {
     }
 
     public GamePanel() {
+//        这句话没有看懂
         ResourceProvider.getInstance().setXGraphicsGetter(() -> new XGraphicsPC() {
+//            XGraphicsPC()这东西没有初始化的嘛qwq
+//            c，居然还能这样重定义 ，绝了
             @Override
             protected Graphics2D getGraphics() {
                 return getGraphics2D();
@@ -84,7 +91,9 @@ public class GamePanel extends JPanel {
                 return getGraphicsConfiguration();
             }
         });
+//        就是从这个地方开始游戏了呗qwq
         Game.createInstance(heroControllerImpl);
+
         // Game.getInstance().setOnExit(() -> window.nextScene(MainWindow.class));
         Game.getInstance().setOnExit(() -> {
             SceneRun.getInstance().setNextScene(MainWindow.class);
@@ -93,6 +102,7 @@ public class GamePanel extends JPanel {
             }
         });
         Utils.getLogger().info("GamePanel instance created!");
+//        这玩意儿是不是应该删掉啊qwq？？？？
         Game.getInstance().setOnFinish(() -> {
             Utils.getLogger().info("finish!");
             if (RunningConfig.score > 0) {
@@ -132,6 +142,7 @@ public class GamePanel extends JPanel {
                 }
             }
         });
+//        ？？？？一直很想问qwq  ：：是啥意思啊
         Game.getInstance().setOnPaint(this::repaint);
         Game.getInstance().setOnFrame(heroControllerImpl::onFrame);
         addComponentListener(new ComponentAdapter() {
@@ -141,6 +152,7 @@ public class GamePanel extends JPanel {
                 // if (RunningConfig.allowResize) {
                 UtilsPC.refreshWindowSize(getWidth(), getHeight());
                 justResized = true;
+//                调整大小完成，但是为什么要记录呢qwq，不理解？？？？
                 // }
             }
         });

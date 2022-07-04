@@ -11,12 +11,14 @@ public class RunningConfig {
      * 有很多。
      */
     // public static boolean debug = true;
+//            所以说这个类其实等于是控制器？
     public static boolean debug = false;
 
     /**
      * 当前难度
      */
     public static Difficulty difficulty = Difficulty.Easy;
+//    我不理解，这要什么难度，呜呜？？？？
     /**
      * 是否开启音效
      */
@@ -39,6 +41,7 @@ public class RunningConfig {
     /**
      * 绘图场地长度，实际显示会先按比例缩放到屏幕指定尺寸
      */
+//    ？？？？缩放用
     public static int windowWidth = 2400;
     /**
      * 绘图场地高度，实际显示会先按比例缩放到屏幕指定尺寸
@@ -82,6 +85,7 @@ public class RunningConfig {
      * 默认血条高度
      */
     public static int drawHpBar = 5;
+//    高度是什么？？？？
 
     /**
      * 是否启用硬件加速。<br/>

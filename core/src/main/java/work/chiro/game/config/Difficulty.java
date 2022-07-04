@@ -6,6 +6,7 @@ package work.chiro.game.config;
  * @author Chiro
  */
 public enum Difficulty {
+//    枚举个mxqq。。。。这是枚举啥啊>W<。
     // 简单
     Easy,
     // 中等

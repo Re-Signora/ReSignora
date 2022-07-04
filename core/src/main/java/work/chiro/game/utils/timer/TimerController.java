@@ -13,6 +13,8 @@ import work.chiro.game.utils.Utils;
  * @author Chiro
  */
 public class TimerController {
+//    感觉这个应该是控制动画的，但很可惜没看懂emm？？？？
+//    但是注释的是键盘控制啊qwq，不是很能理解
     private double frameTime = 0;
     private double lastFrameTime = 0;
     private final LinkedList<Double> frameCounter = new LinkedList<>();
@@ -30,8 +32,10 @@ public class TimerController {
     synchronized public void add(Object from, Timer c) {
         Utils.getLogger().warn("add({}, {})", from, c);
         if (timers.containsKey(from)) {
+//            如果有映射的话？？？？不是很理解add了个啥玩意儿
             timers.get(from).add(c);
         } else {
+//            如果没有映射？就重新新建一个映射，就等于多类一个物体呗qwq
             List<Timer> list = new LinkedList<>();
             list.add(c);
             timers.put(from, list);
@@ -66,6 +70,7 @@ public class TimerController {
             timers.keySet().forEach(key -> {
                 List<Timer> list = timers.get(key);
                 if (list.size() == 0) return;
+//                ==0的话，这个物体就是消散了吗？qwq
                 for (int i = 0; i < list.size(); i++) {
                     Timer timer = list.get(i);
                     // Utils.getLogger().debug("executing [{}/{}] timer: {} from {}", i, list.size() - 1, timer, key);
@@ -88,6 +93,7 @@ public class TimerController {
 
     synchronized public void update() {
         if (TimeManager.isPaused()) return;
+//        ？？？？update和getTimeMills？
         frameTime = TimeManager.getTimeMills();
         frameCounter.add(frameTime);
         frameCounter.removeIf(t -> t < ((frameTime >= 1000) ? (frameTime - 1000) : 0));
@@ -104,6 +110,7 @@ public class TimerController {
     }
 
     public double getTimeDelta() {
+//        ？？？？时间差？
         return frameTime - lastFrameTime;
     }
 

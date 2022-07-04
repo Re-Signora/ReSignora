@@ -140,10 +140,12 @@ public class Game {
      * 每次重绘画面钩子
      */
     private BasicCallback onPaint = null;
+//    再次没找到xxxx，呜呜呜，为什么每次都是从空开始啊？？？？，找不不到初始化和其他乱七八糟的东西诶，进去居然还是只是给接口，呜呜呜
     /**
      * 每帧钩子
      */
     private BasicCallback onFrame = null;
+//    是在哪儿把这个变成非null了啊？？？？没找到qwq
     /**
      * 角色控制器
      */
@@ -230,7 +232,7 @@ public class Game {
             Utils.getLogger().debug("characters attacks");
         }
     }
-
+//    钩子判断是否完成工作？
     public void setOnFinish(BasicCallback onFinish) {
         this.onFinish = onFinish;
     }
@@ -244,7 +246,7 @@ public class Game {
     }
 
     /**
-     * 天机一下默认的定时器
+     * 添加一下默认的定时器？？？
      */
     public void setTimers() {
         timerController.init(TimeManager.getTimeMills());
@@ -264,6 +266,7 @@ public class Game {
      * 当游戏退出，game 实例销毁之前
      */
     private void onGameExit() {
+//        这是干什么的啊？？？？
         if (future != null) {
             future.cancel(true);
         }
@@ -299,8 +302,12 @@ public class Game {
      * @return 主线程循环逻辑
      */
     protected Runnable getMainTask() {
+//        前面这个return是啥？？？？
         return () -> {
+//            好烦哦，各个模块都找不到所对应的地方，好烦啊┭┮﹏┭┮？？？？
+//            对了，除此以外，创造敌人，和创造魔偶的地方在哪里啊
             try {
+//                我觉得这个是动画处理，但是我没有证据，我看不懂qwq？？？？
                 timerController.update();
                 // execute all
                 timerController.execute();
@@ -310,13 +317,16 @@ public class Game {
                 }
                 getActivityManager().onFrame();
                 // 所有物体移动
+//                你这个跳太多层了qwq，找不到getActivityManager是干嘛的┭┮﹏┭┮？？？？
                 synchronized (allThings) {
                     allThings.forEach(objList -> objList.forEach(AbstractObject::forward));
                 }
+//                循环把每一个往前移？
                 getTopLayout().forEach(AbstractObject::forward);
                 // 撞击检测
                 crashCheckAction();
                 // 后处理
+//                没细看，但想必应该就是没血了就消失，然后不显示qwq吧？？？？
                 synchronized (allThings) {
                     allThings.forEach(objList -> objList.removeIf(obj -> !obj.isValid()));
                 }
@@ -327,6 +337,7 @@ public class Game {
                 if (onPaint != null) {
                     onPaint.run();
                 }
+//                又是找不到run了个啥的一天，呜呜呜，你是在学可莉炸鱼嘛？？？？
                 // 游戏结束检查和处理
                 // if (!Constants.DEBUG_NO_DEATH && !gameOverFlag) {
                 //     onGameOver();
@@ -334,6 +345,7 @@ public class Game {
                 timerController.done();
                 Thread.sleep(1);
             } catch (InterruptedException e) {
+//                我还是没看懂线程是从哪里来的>w<啊啊啊啊？？？？
                 Utils.getLogger().warn("this thread will exit: " + e);
             }
         };
@@ -344,13 +356,16 @@ public class Game {
      */
     public void action() {
         ResourceProvider.getInstance().musicLoadAll();
+//        加载音乐？？？？
         Utils.getLogger().info("Game action start with difficulty: " + RunningConfig.difficulty);
+//        我觉得，这个东西，应该是不需要的吧qwq
         setTimers();
         ResourceProvider.getInstance().startLoopMusic(MusicType.BGM);
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable mainTask = getMainTask();
         int timeInterval = 1;
         // 以固定延迟时间进行执行本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
+//        这又是个什么函数，没有看太懂.....
         future = executorService.scheduleWithFixedDelay(mainTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
     }
 
@@ -367,6 +382,7 @@ public class Game {
                 synchronized (underAttackList) {
                     underAttackList.forEach(underAttack -> {
                         if (underAttack.isCrashAttack(abstractAttack)) {
+//                            ？？？？我没找到撞击的判断程序在哪里
                             underAttack.applyAttack(abstractAttack);
                         }
                     });

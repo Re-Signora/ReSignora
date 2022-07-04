@@ -32,7 +32,9 @@ public class Timer {
     }
 
     public void execute(TimerController timerController) {
+//        ？？？？这是什么玩意儿啊
         time += timerController.getTimeDelta();
+//        frameTime - lastFrameTime时间差？不是很理解，这个差是拿来干什么的啊
         if (change != null) {
             duration = change.getScaleNow().getX();
         }
@@ -40,6 +42,7 @@ public class Timer {
     }
 
     public void update(double timeNow) {
+//        就是这个拿来改成下一个的？？？？动画更新下一帧图片？
         if (change != null) {
             change.update(timeNow);
         }

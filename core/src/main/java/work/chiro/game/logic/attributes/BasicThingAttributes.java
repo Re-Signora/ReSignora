@@ -34,7 +34,7 @@ public class BasicThingAttributes {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
-
+//  英文不好的我只知道crash呜呜呜呜，查了才知道collision是个啥玩意儿
     public boolean isCollision() {
         return collision;
     }
@@ -42,7 +42,7 @@ public class BasicThingAttributes {
     public void setCollision(boolean collision) {
         this.collision = collision;
     }
-
+//期间？？？这是个什么玩意儿
     public double getDuration() {
         return duration;
     }
@@ -51,6 +51,7 @@ public class BasicThingAttributes {
         this.duration = duration;
     }
 
+//    设置图片大小？？？什么玩意儿
     public boolean isSizeAvailable() {
         return width != 0 && height != 0;
     }

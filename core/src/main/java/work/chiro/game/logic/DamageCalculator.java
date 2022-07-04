@@ -42,7 +42,7 @@ public class DamageCalculator {
         // double EXT = characterAttributes.getExtraDMGRate() * 1.0 / 100;
         // TODO: fix me 额外伤害是百分数
         double EXT = characterAttributes.getExtraDMGRate() * 1.0;
-        double CRIT = (isCRIT(characterAttributes.getCRIT_Rate()) ? (characterAttributes.getCRIT_DMG() * 1.0 / 100) : 1.0);
+        double CRIT = (isCRIT(characterAttributes.getCRIT_Rate()) ? (characterAttributes.getCRIT_DMG() * 1.0 / 100.0) : 1.0);
         Utils.getLogger().info("ATK={}, DEF={}, P={}, Ext={}, CRIT={}", ATK, DEF, P, EXT, CRIT);
         return (int) Math.ceil(1.0
                 * ATK

@@ -28,7 +28,10 @@ public class Main {
     public static void main(String[] args) {
         ResourceProvider.setInstance(new ResourceProviderPC());
         Utils.getLogger().info("Hello Re-Signora");
+//        这只是个调试语句嘛？？？
 
+//        设置系统设置是设置什么啊~？？？硬件加速？
+//        只是几条语句而已qwq   running
         if (RunningConfig.enableHardwareSpeedup) {
             System.setProperty("sun.java2d.opengl", "true");
             System.setProperty("swing.aatext", "true");
@@ -41,11 +44,14 @@ public class Main {
         // 获得屏幕的分辨率，初始化 Frame
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         UtilsPC.refreshWindowSize();
+//        刷新？？
         JFrame frame = new JFrame();
         frame.setSize(RunningConfigPC.displayWindowWidth, RunningConfigPC.displayWindowHeight);
         if (!RunningConfig.allowResize) {
             frame.setResizable(false);
         }
+
+
         // 设置窗口的大小和位置,居中放置
         frame.setBounds(((int) screenSize.getWidth() - RunningConfigPC.displayWindowWidth) / 2,
                 ((int) screenSize.getHeight() - RunningConfigPC.displayWindowHeight) / 2,
@@ -71,6 +77,9 @@ public class Main {
             frame.setUndecorated(true);
         }
 
+//        设置边框，画面框等
+
+//        没看懂，启动程序在哪？？？
         try {
             SceneRun.newInstance(frame, Arrays.asList(
                             new Scene("Main Window", MainWindow.getInstance()),

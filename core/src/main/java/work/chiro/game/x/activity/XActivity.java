@@ -48,6 +48,15 @@ public abstract class XActivity {
      * @param layoutName xLayout 名称
      */
     final protected void setContentView(String layoutName) {
+//        啊啊啊就是这里，找到了捏，开心？？？？
+//        喵的，我找这个name番了多少个函数了，这甲叠的，不是很能理解
+//        咦咦咦，这里居然只是界面的画图，但是人物的画图在哪里调用的啊，没找到诶，还有
+        /**
+        * main 主界面
+        * battle 战斗界面
+         * stageslect 关卡选择界面
+         * aircraft ？？？？什么玩意儿？？
+        * */
         layout.replaceLayout(game.getLayoutManager().getLayout(layoutName));
     }
 

@@ -7,7 +7,6 @@ import java.util.Map;
 import work.chiro.game.animate.AnimateContainer;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
-import work.chiro.game.objects.aircraft.AbstractAircraft;
 import work.chiro.game.resource.ImageManager;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.callback.BasicCallback;
@@ -166,8 +165,10 @@ public abstract class AbstractObject<A extends AnimateContainer> {
             return false;
         }
         // 缩放因子，用于控制 y轴方向区域范围
-        int factor = this instanceof AbstractAircraft ? 2 : 1;
-        int fFactor = abstractObject instanceof AbstractAircraft ? 2 : 1;
+//        int factor = this instanceof AbstractAircraft ? 2 : 1;
+//        int fFactor = abstractObject instanceof AbstractAircraft ? 2 : 1;
+        int factor = 1;
+        int fFactor = 1;
 
         double x = abstractObject.getLocationX();
         double y = abstractObject.getLocationY();
@@ -216,6 +217,8 @@ public abstract class AbstractObject<A extends AnimateContainer> {
         if (image == null) {
             try {
                 String filename = getImageFilename();
+//                这个会把图片传下去，但是这个地址来源我们看懂在哪里qwq
+//                真的，专场看的我头晕，好累，java代码看的好辛苦？？？？
                 if (filename == null) {
                     image = ImageManager.getInstance().get(this.getClass());
                 } else {
@@ -353,6 +356,7 @@ public abstract class AbstractObject<A extends AnimateContainer> {
      */
     protected String getImageFilename() {
         return null;
+//        但是为什么出来是空啊qwq，是怎么进去的啊？？？？
     }
 
     /**

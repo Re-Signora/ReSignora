@@ -11,6 +11,7 @@ import work.chiro.game.animate.action.ReversedImageCarouselAction;
 import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.logic.attributes.loadable.BasicCharacterAttributes;
+import work.chiro.game.logic.buff.AbstractBuffFactory;
 import work.chiro.game.objects.thing.attack.Butterfly;
 import work.chiro.game.objects.thing.character.AbstractCharacter;
 import work.chiro.game.utils.callback.BasicCallback;
@@ -94,6 +95,9 @@ public class LaSignora extends AbstractCharacter {
         handButterfly.draw(g);
     }
 
+
+
+    //!!!!!!!!!
     @Override
     public void forward() {
         super.forward();
@@ -175,5 +179,10 @@ public class LaSignora extends AbstractCharacter {
     public void vanish() {
         super.vanish();
         Game.getInstance().getTimerController().remove(this);
+    }
+
+    @Override
+    public void getBuff(AbstractBuffFactory abstractBuffFactory) {
+        super.getBuff(abstractBuffFactory);
     }
 }

@@ -8,7 +8,9 @@ public class TimeManager {
     private static long timePauseStart = 0;
 
     public static double getTimeMills() {
+//        这是个啥玩意儿？？？？有什么作用啊，没有发现有啥用，呜呜
         if (timeStartGlobal == 0) {
+//            又是一个看不懂的系统函数，啊啊啊啊啊啊
             timeStartGlobal = System.currentTimeMillis();
         }
         if (paused) {

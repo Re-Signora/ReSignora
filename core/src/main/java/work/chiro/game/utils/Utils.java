@@ -15,8 +15,6 @@ import java.util.Random;
 import java.util.Set;
 
 import work.chiro.game.config.RunningConfig;
-import work.chiro.game.objects.bullet.BaseBullet;
-import work.chiro.game.objects.bullet.EnemyBulletFactory;
 import work.chiro.game.x.compatible.ResourceProvider;
 import work.chiro.game.x.compatible.XImage;
 import work.chiro.game.config.Difficulty;
@@ -29,12 +27,6 @@ import work.chiro.game.vector.Vec2;
  * @author Chiro
  */
 public class Utils {
-    public static LinkedList<BaseBullet> letEnemyShoot(Vec2 position) {
-        LinkedList<BaseBullet> ret = new LinkedList<>();
-        ret.add(new EnemyBulletFactory(position, EnemyBulletFactory.BulletType.Direct).create());
-        return ret;
-    }
-
     public static Boolean isInRange(double value, double down, double up) {
         return down <= value && value < up;
     }
@@ -168,6 +160,7 @@ public class Utils {
 
     @SuppressWarnings("StringOperationCanBeSimplified")
     public static String getStringFromResource(String path) throws IOException {
+
         InputStream fileInputStream = Utils.class.getResourceAsStream(path);
         if (fileInputStream == null) {
             throw new IOException(path + " not found!");

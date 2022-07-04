@@ -18,6 +18,7 @@ public class UtilsPC {
         double scaleWidth = windowWidth / RunningConfig.windowWidth;
         double scaleHeight = windowHeight / RunningConfig.windowHeight;
         double scale = Math.min(scaleWidth, scaleHeight);
+//        所以这个是缩放倍数，进行大小缩放的？？？？
         Utils.getLogger().warn("set scale: {}", scale);
         GamePanel.setScale(scale);
         RunningConfigPC.displayWindowWidth = (int) (1.0 * RunningConfig.windowWidth * scale);
