@@ -12,12 +12,14 @@ import work.chiro.game.config.RunningConfig;
 import work.chiro.game.game.Game;
 import work.chiro.game.logic.attributes.loadable.BasicCharacterAttributes;
 import work.chiro.game.logic.buff.AbstractBuffFactory;
+import work.chiro.game.logic.buff.FiringBuffFactory;
 import work.chiro.game.objects.thing.attack.Butterfly;
 import work.chiro.game.objects.thing.character.AbstractCharacter;
 import work.chiro.game.utils.callback.BasicCallback;
 import work.chiro.game.utils.timer.DelayTimer;
 import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.utils.timer.Timer;
+import work.chiro.game.utils.timer.TimerController;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
 import work.chiro.game.x.compatible.XGraphics;
@@ -27,6 +29,7 @@ import work.chiro.game.x.compatible.colors.DrawColor;
  * 女士
  */
 public class LaSignora extends AbstractCharacter {
+
     /**
      * 女士手上那个蝴蝶
      */
@@ -97,7 +100,6 @@ public class LaSignora extends AbstractCharacter {
 
 
 
-    //!!!!!!!!!
     @Override
     public void forward() {
         super.forward();
@@ -112,6 +114,8 @@ public class LaSignora extends AbstractCharacter {
                         .setImageIndexNow(handButterfly.getImageIndexNow())
                         .setEnemy(isEnemy())
         );
+//        abstractBuffFactories.add(new FiringBuffFactory());
+
     }
 
     protected void applyAction(DelayTimer delayTimer, double delayMs, BasicCallback ifValid) {
@@ -184,5 +188,10 @@ public class LaSignora extends AbstractCharacter {
     @Override
     public void getBuff(AbstractBuffFactory abstractBuffFactory) {
         super.getBuff(abstractBuffFactory);
+    }
+
+    @Override
+    public void issueBuff(AbstractCharacter abstractCharacter) {
+        super.issueBuff(abstractCharacter);
     }
 }

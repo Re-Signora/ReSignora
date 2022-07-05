@@ -1,6 +1,8 @@
 package work.chiro.game.logic.buff;
 
 import work.chiro.game.logic.attributes.BasicThingAttributes;
+import work.chiro.game.logic.element.Element;
+import work.chiro.game.objects.thing.character.AbstractCharacter;
 
 /**
  * @author uruom
@@ -14,6 +16,7 @@ import work.chiro.game.logic.attributes.BasicThingAttributes;
 // eg：若在灼烧期间，受到了一次为100的伤害，则在该伤害结算后，再次受到灼烧带来的50点火焰伤害。
 
 public class FiringBuff extends AbstractBuff{
+
     @Override
     public void onStart() {
         buffName="Firing";
@@ -43,8 +46,18 @@ public class FiringBuff extends AbstractBuff{
 
 
     @Override
-    public void value(int damageType, int damage) {
-        super.value(damageType, damage);
-
+    public int value(Element damageType, int damage, AbstractCharacter abstractCharacter) {
+//        伤害增益
+        if (damageType== Element.Pyro) {
+            damage*=3;
+        }
+//        灼烧伤害
+        int firingDamage=damage/2;
+        if (abstractCharacter.getHp() > damage) {
+            abstractCharacter.getDynamicCharacterAttributes().setHp(abstractCharacter.getHp() - firingDamage);
+        } else {
+            abstractCharacter.getDynamicCharacterAttributes().setHp(0);
+        }
+        return damage;
     }
 }

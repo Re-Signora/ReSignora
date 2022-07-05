@@ -4,8 +4,10 @@ import java.util.Random;
 
 import work.chiro.game.logic.attributes.dynamic.DynamicCharacterAttributes;
 import work.chiro.game.logic.attributes.loadable.BasicCharacterAttributes;
+import work.chiro.game.logic.element.Element;
 import work.chiro.game.objects.thing.attack.AbstractAttack;
 import work.chiro.game.objects.thing.attack.UnderAttack;
+import work.chiro.game.objects.thing.character.AbstractCharacter;
 import work.chiro.game.utils.Utils;
 
 /**
@@ -30,7 +32,7 @@ public class DamageCalculator {
      * @param underAttack 伤害的被攻击对象
      * @return 产生的伤害
      */
-    static public int calculate(AbstractAttack attack, UnderAttack underAttack) {
+    static public int calculate(AbstractAttack attack, AbstractCharacter underAttack) {
         BasicCharacterAttributes characterAttributes = attack.getSource().getBasicAttributes();
         DynamicCharacterAttributes dynamicCharacterAttributes = attack.getSource().getDynamicCharacterAttributes();
         BasicCharacterAttributes underAttackCharacterAttributes = attack.getSource().getBasicAttributes();
@@ -44,13 +46,21 @@ public class DamageCalculator {
         double EXT = characterAttributes.getExtraDMGRate() * 1.0;
         double CRIT = (isCRIT(characterAttributes.getCRIT_Rate()) ? (characterAttributes.getCRIT_DMG() * 1.0 / 100.0) : 1.0);
         Utils.getLogger().info("ATK={}, DEF={}, P={}, Ext={}, CRIT={}", ATK, DEF, P, EXT, CRIT);
-        return (int) Math.ceil(1.0
+
+
+//       计算buff
+
+        int damage= (int)Math.ceil(1.0
                 * ATK
                 * DEF
                 * P
                 * EXT
                 // * 特殊技能加成
                 * CRIT
+                *0.01
         );
+        damage = underAttack.buffCaculate(Element.Pyro, damage, underAttack);
+        attack.getSource().issueBuff(underAttack);
+        return damage;
     }
 }

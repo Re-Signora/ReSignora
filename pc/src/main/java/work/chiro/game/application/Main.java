@@ -25,7 +25,7 @@ import work.chiro.game.windows.MainWindow;
  * @author hitsz
  */
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SceneRun.SceneRunDoneException {
         ResourceProvider.setInstance(new ResourceProviderPC());
         Utils.getLogger().info("Hello Re-Signora");
 //        这只是个调试语句嘛？？？
@@ -80,17 +80,27 @@ public class Main {
 //        设置边框，画面框等
 
 //        没看懂，启动程序在哪？？？
-        try {
+        boolean isDebug = true;
+        if (isDebug) {
             SceneRun.newInstance(frame, Arrays.asList(
                             new Scene("Main Window", MainWindow.getInstance()),
-                            new Scene("Game Window", GameWindow.getInstance()),
-                            new Scene("History Window", HistoryWindow.getInstance())
-                    ))
-                    .setNextScene(MainWindow.class)
-                    .run();
-        } catch (SceneRun.SceneRunDoneException e) {
-            Utils.getLogger().info("All scene run done.");
+                        new Scene("Game Window", GameWindow.getInstance())
+                ))
+                .setNextScene(MainWindow.class)
+                .run();
+        } else {
+            try {
+                SceneRun.newInstance(frame, Arrays.asList(
+                                new Scene("Main Window", MainWindow.getInstance()),
+                                new Scene("Game Window", GameWindow.getInstance()),
+                                new Scene("History Window", HistoryWindow.getInstance())
+                        ))
+                        .setNextScene(MainWindow.class)
+                        .run();
+            } catch (SceneRun.SceneRunDoneException e) {
+                Utils.getLogger().info("All scene run done.");
+            }
+            System.exit(0);
         }
-        System.exit(0);
     }
 }

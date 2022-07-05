@@ -1,5 +1,7 @@
 package work.chiro.game.objects.thing.character;
 
+import org.apache.commons.math3.analysis.function.Abs;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -13,6 +15,7 @@ import work.chiro.game.logic.attributes.dynamic.DynamicCharacterAttributes;
 import work.chiro.game.logic.attributes.loadable.BasicCharacterAttributes;
 import work.chiro.game.logic.buff.AbstractBuff;
 import work.chiro.game.logic.buff.AbstractBuffFactory;
+import work.chiro.game.logic.buff.FiringBuffFactory;
 import work.chiro.game.logic.element.Element;
 import work.chiro.game.objects.thing.AbstractThing;
 import work.chiro.game.objects.thing.attack.AbstractAttack;
@@ -43,6 +46,7 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
      */
     protected final DynamicCharacterAttributes dynamicCharacterAttributes;
 //    什么玩意儿？？？？
+    private List<AbstractBuff> buffList = new LinkedList<>();
 
     /**
      * 获取新的 DelayTimer 对象
@@ -77,7 +81,12 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
     /**
      * 普攻
      */
+
+    public List<AbstractBuffFactory> abstractBuffFactories;
     public void normalAttack() {
+
+
+
     }
 
     /**
@@ -127,7 +136,13 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
     protected void bearDamage(int damage) {
         Utils.getLogger().info("{} bearDamage: {}", this, damage);
         // 生成一个伤害 Popup
+//
         Game.getInstance().getTopLayout().addView(new DamagePopup(getPosition().plus(new Vec2(0, 10)), Element.Pyro, damage));
+//        增加个Buff判断？
+//        这个元素是怎么从攻击哪里传递进来的，我还没有想好qwq，先试试，默认为火吧（也只有先做火
+
+
+//        ！！！！！！
         if (getHp() > damage) {
             getDynamicCharacterAttributes().setHp(getHp() - damage);
         } else {
@@ -135,6 +150,14 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
             vanish();
         }
     }
+
+    public int buffCaculate(Element element, int damage, AbstractCharacter abstractCharacter){
+        for (AbstractBuff abstractBuff:buffList){
+            damage=abstractBuff.value(element,damage,abstractCharacter);
+        }
+        return damage;
+    }
+
 
     @Override
     public void applyAttack(AbstractAttack attack) {
@@ -248,7 +271,7 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
 
 
 //    add buff
-    private List<AbstractBuff> buffList = new LinkedList<>();
+
 
     public void getBuff(AbstractBuffFactory abstractBuffFactory){
         String buffName=abstractBuffFactory.getName();
@@ -256,15 +279,26 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
         for (AbstractBuff abstractBuff:buffList){
             if (abstractBuff.getBuffName()==buffName) {
                 abstractBuff.update();
-                notUpdate=true;
+                notUpdate=false;
             }
         }
         if (notUpdate) {
             buffList.add(abstractBuffFactory.create());
         }
     }
+
+
 //  timer.TimeManager;
 //    净化效果的remove？没想好，正常的remove应该是时间到了自动？？
+    public void issueBuff(AbstractCharacter abstractCharacter){
+//        for(AbstractBuffFactory abstractBuffFactory:this.abstractBuffFactories){
+//            abstractCharacter.getBuff(abstractBuffFactory);
+//        }
+        AbstractBuffFactory abstractBuffFactory= new FiringBuffFactory();
+        abstractCharacter.getBuff(abstractBuffFactory);
+
+    }
+
     public void removeBuff (){
 
     }

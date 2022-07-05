@@ -21,6 +21,10 @@ public class AbstractAttack extends AbstractThing<BasicAttackAttributes, Abstrac
      * 攻击对应动态属性
      */
     protected final DynamicAttackAttributes dynamicAttackAttributes;
+    /**
+     * 攻击发类型
+     */
+    protected AttackKind attackKind;
 
     public AbstractAttack(AbstractCharacter source, String labelName, Vec2 posInit, AbstractAction abstractAction, Vec2 sizeInit, Scale rotationInit, Scale alpha) {
         super(labelName, BasicAttackAttributes.class, posInit, abstractAction, sizeInit, rotationInit, alpha);

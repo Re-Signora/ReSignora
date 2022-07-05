@@ -7,6 +7,7 @@ import work.chiro.game.animate.AnimateVectorType;
 import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.game.Game;
 import work.chiro.game.logic.attributes.loadable.BasicCharacterAttributes;
+import work.chiro.game.logic.buff.AbstractBuffFactory;
 import work.chiro.game.objects.thing.character.AbstractCharacter;
 import work.chiro.game.utils.Utils;
 import work.chiro.game.utils.thread.MyThreadFactory;
@@ -21,7 +22,7 @@ import work.chiro.game.x.compatible.XImage;
 public class ShogunateSoldier extends AbstractCharacter {
     private boolean normalAttacking = false;
     private boolean moving = false;
-    private final int normalAttackDuration = 400;
+    private final int normalAttackDuration = 10000;
     private double moveDuration = 0;
     private Timer normalAttackTask = null;
     private Timer moveTask = null;
@@ -138,5 +139,15 @@ public class ShogunateSoldier extends AbstractCharacter {
         Game.getInstance().getTimerController().remove(this);
         Game.getInstance().getTimerController().remove(getClass());
         // Game.getInstance().getTimerController().remove(mark);
+    }
+
+    @Override
+    public void issueBuff(AbstractCharacter abstractCharacter) {
+        super.issueBuff(abstractCharacter);
+    }
+
+    @Override
+    public void getBuff(AbstractBuffFactory abstractBuffFactory) {
+        super.getBuff(abstractBuffFactory);
     }
 }

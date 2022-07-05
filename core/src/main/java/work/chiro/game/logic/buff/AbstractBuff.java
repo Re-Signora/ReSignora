@@ -1,8 +1,10 @@
 package work.chiro.game.logic.buff;
 
-import java.util.LinkedList;
+
 
 import work.chiro.game.logic.attributes.BasicThingAttributes;
+import work.chiro.game.logic.element.Element;
+import work.chiro.game.objects.thing.character.AbstractCharacter;
 
 //工厂模式？？
 
@@ -39,10 +41,10 @@ public abstract class AbstractBuff {
     public String getBuffName(){return buffName;}
 
 //    标记？
-    public void imageShow(){};
+    public void imageShow(){}
 
 //    Buff效果
-    public void value(int damageType,int damage){};
+    public int value(Element damageType, int damage, AbstractCharacter abstractCharacter){return damage;}
 
     public void onStop() {
     }

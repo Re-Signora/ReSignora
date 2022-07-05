@@ -40,6 +40,7 @@ public class Butterfly extends AbstractAttack {
         if (source != null)
             setEnemy(source.isEnemy());
         Utils.getLogger().warn("create butterfly is enemy: {}", isEnemy());
+//        System.out.println("ppp??");
         moveAnimate = new Animate.SmoothTo<>(
                 posInit,
                 new Vec2(isEnemy() ? 0 : RunningConfig.windowWidth, posInit.getY()),
