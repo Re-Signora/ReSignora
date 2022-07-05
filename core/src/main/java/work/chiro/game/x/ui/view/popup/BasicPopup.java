@@ -15,7 +15,7 @@ import work.chiro.game.x.ui.view.XView;
 public class BasicPopup extends XView {
     public Enum<?> type;
 
-    public BasicPopup(Vec2 posInit, Enum<?> type, String text) {
+    public BasicPopup(Vec2 posInit, Enum<?> type, String text,Vec2 size) {
         super(posInit);
         this.type = type;
         if (text != null && text.length() > 0) {
@@ -23,7 +23,8 @@ public class BasicPopup extends XView {
         }
         setId(getClass() + "-" + (text == null ? "null" : text));
         setFont("genshin");
-        setSize(new Vec2(10, 10));
+//        setSize(new Vec2(10, 10));
+        setSize(size);
         int duration = 1000;
         AbstractAnimate<Vec> upAnimate = new Animate.SmoothTo<>(getPosition(), getPosition().minus(new Vec2(0, 200)), AnimateVectorType.Others, TimeManager.getTimeMills(), duration);
         upAnimate.setAnimateCallback(animate -> vanish());
@@ -33,9 +34,9 @@ public class BasicPopup extends XView {
         getAnimateContainer().addAnimate(alphaAnimate);
     }
 
-    public BasicPopup(Vec2 posInit, Enum<?> type) {
-        this(posInit, type, "");
-    }
+//    public BasicPopup(Vec2 posInit, Enum<?> type) {
+//        this(posInit, type, "");
+//    }
 
     public Enum<?> getType() {
         return type;

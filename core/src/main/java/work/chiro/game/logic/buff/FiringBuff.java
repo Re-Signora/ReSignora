@@ -1,8 +1,11 @@
 package work.chiro.game.logic.buff;
 
+import work.chiro.game.game.Game;
 import work.chiro.game.logic.attributes.BasicThingAttributes;
 import work.chiro.game.logic.element.Element;
 import work.chiro.game.objects.thing.character.AbstractCharacter;
+import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.ui.view.popup.DamagePopup;
 
 /**
  * @author uruom
@@ -19,8 +22,8 @@ public class FiringBuff extends AbstractBuff{
 
     @Override
     public void onStart() {
-        buffName="Firing";
         super.onStart();
+        buffName="Firing";
     }
 
     @Override
@@ -53,7 +56,9 @@ public class FiringBuff extends AbstractBuff{
         }
 //        灼烧伤害
         int firingDamage=damage/2;
-        if (abstractCharacter.getHp() > damage) {
+        Game.getInstance().getTopLayout().addView(new DamagePopup(abstractCharacter.getPosition().plus(new Vec2(20, 10)), Element.Pyro, firingDamage,new Vec2(1,1)));
+
+        if (abstractCharacter.getHp() > firingDamage) {
             abstractCharacter.getDynamicCharacterAttributes().setHp(abstractCharacter.getHp() - firingDamage);
         } else {
             abstractCharacter.getDynamicCharacterAttributes().setHp(0);

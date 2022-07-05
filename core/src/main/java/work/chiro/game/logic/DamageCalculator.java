@@ -2,6 +2,7 @@ package work.chiro.game.logic;
 
 import java.util.Random;
 
+import work.chiro.game.game.Game;
 import work.chiro.game.logic.attributes.dynamic.DynamicCharacterAttributes;
 import work.chiro.game.logic.attributes.loadable.BasicCharacterAttributes;
 import work.chiro.game.logic.element.Element;
@@ -9,6 +10,8 @@ import work.chiro.game.objects.thing.attack.AbstractAttack;
 import work.chiro.game.objects.thing.attack.UnderAttack;
 import work.chiro.game.objects.thing.character.AbstractCharacter;
 import work.chiro.game.utils.Utils;
+import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.ui.view.popup.DamagePopup;
 
 /**
  * 用于伤害计算的静态类
@@ -60,6 +63,8 @@ public class DamageCalculator {
                 *0.01
         );
         damage = underAttack.buffCaculate(Element.Pyro, damage, underAttack);
+//        Game.getInstance().getTopLayout().addView(new DamagePopup(getPosition().plus(new Vec2(0, 10)), Element.Pyro, damage));
+
         attack.getSource().issueBuff(underAttack);
         return damage;
     }

@@ -24,8 +24,13 @@ import work.chiro.game.objects.thing.character.AbstractCharacter;
 public abstract class AbstractBuff {
     String buffName;
     int numberOfBuff;
+
     public void onStart() {
 
+    }
+
+    public AbstractBuff(){
+        onStart();
     }
 
 

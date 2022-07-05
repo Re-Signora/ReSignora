@@ -137,7 +137,7 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
         Utils.getLogger().info("{} bearDamage: {}", this, damage);
         // 生成一个伤害 Popup
 //
-        Game.getInstance().getTopLayout().addView(new DamagePopup(getPosition().plus(new Vec2(0, 10)), Element.Pyro, damage));
+        Game.getInstance().getTopLayout().addView(new DamagePopup(getPosition().plus(new Vec2(0, 10)), Element.Pyro, damage,new Vec2(100,100)));
 //        增加个Buff判断？
 //        这个元素是怎么从攻击哪里传递进来的，我还没有想好qwq，先试试，默认为火吧（也只有先做火
 
@@ -154,6 +154,7 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
     public int buffCaculate(Element element, int damage, AbstractCharacter abstractCharacter){
         for (AbstractBuff abstractBuff:buffList){
             damage=abstractBuff.value(element,damage,abstractCharacter);
+
         }
         return damage;
     }
@@ -280,9 +281,13 @@ public abstract class AbstractCharacter extends AbstractThing<BasicCharacterAttr
             if (abstractBuff.getBuffName()==buffName) {
                 abstractBuff.update();
                 notUpdate=false;
+
             }
+//            System.out.println(abstractBuff.getBuffName());
         }
+//        System.out.println("111");
         if (notUpdate) {
+            System.out.println(buffName);
             buffList.add(abstractBuffFactory.create());
         }
     }
