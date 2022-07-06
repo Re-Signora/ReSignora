@@ -217,8 +217,6 @@ public abstract class AbstractObject<A extends AnimateContainer> {
         if (image == null) {
             try {
                 String filename = getImageFilename();
-//                这个会把图片传下去，但是这个地址来源我们看懂在哪里qwq
-//                真的，专场看的我头晕，好累，java代码看的好辛苦？？？？
                 if (filename == null) {
                     image = ImageManager.getInstance().get(this.getClass());
                 } else {
@@ -334,6 +332,7 @@ public abstract class AbstractObject<A extends AnimateContainer> {
                         (getLocationX() - (center ? getWidth() / 2 : 0)),
                         getLocationY() - (center ? getHeight() / 2 : 0),
                         getWidth(), getHeight(), isFlipped());
+//                        20, 20, isFlipped());
         if (!cachedImage.containsValue(newImage) && RunningConfig.modePC) {
             cachedImage.put(getImage(true), newImage);
         }

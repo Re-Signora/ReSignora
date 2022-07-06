@@ -19,5 +19,6 @@ public enum Element {
     // 冰元素
     Cryo,
     // 岩元素
-    Geo
+    Geo,
+
 }

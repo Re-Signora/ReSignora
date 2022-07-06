@@ -16,13 +16,14 @@ import work.chiro.game.utils.timer.TimeManager;
 import work.chiro.game.utils.timer.Timer;
 import work.chiro.game.vector.Scale;
 import work.chiro.game.vector.Vec2;
+import work.chiro.game.x.compatible.XGraphics;
 import work.chiro.game.x.compatible.XImage;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class ShogunateSoldier extends AbstractCharacter {
     private boolean normalAttacking = false;
     private boolean moving = false;
-    private final int normalAttackDuration = 10000;
+    private final int normalAttackDuration = 1000;
     private double moveDuration = 0;
     private Timer normalAttackTask = null;
     private Timer moveTask = null;
@@ -82,21 +83,24 @@ public class ShogunateSoldier extends AbstractCharacter {
 
     public ShogunateSoldier(Vec2 posInit, AbstractAction abstractAction) {
         this(posInit, abstractAction, null, null, null);
+//        这东西注释了就没有战斗界面和敌人了，但是，我不是很理解这个地方和战斗界面有什么关系
+//        在这个地方应该是生成而不是显示，因为蝴蝶从左到右打完没有碰到障碍物减血qwq
     }
 
     synchronized protected void startMoving() {
-        if (Game.getInstance() == null) return;
-        if (Game.getInstance().getObjectController().getTarget() == null) return;
-        Vec2 delta = Game.getInstance().getObjectController().getTarget().getPosition().minus(getPosition());
-        Vec2 newPos = delta.fromVector(getPosition().plus(delta.divide(Math.sqrt(delta.getScale().getX())).times(getBasicAttributes().getSpeed() * 20)));
-        moving = true;
-        getAnimateContainer().addAnimate(new Animate.SmoothTo<>(
-                getPosition(),
-                newPos,
-                AnimateVectorType.Others,
-                TimeManager.getTimeMills(),
-                moveDuration / 3
-        ).setAnimateCallback(animate -> moving = false));
+//        if (Game.getInstance() == null) return;
+//        if (Game.getInstance().getObjectController().getTarget() == null) return;
+//        Vec2 delta = Game.getInstance().getObjectController().getTarget().getPosition().minus(getPosition());
+//        Vec2 newPos = delta.fromVector(getPosition().plus(delta.divide(Math.sqrt(delta.getScale().getX())).times(getBasicAttributes().getSpeed() * 20)));
+//        moving = true;
+//        getAnimateContainer().addAnimate(new Animate.SmoothTo<>(
+//                getPosition(),
+//                newPos,
+//                AnimateVectorType.Others,
+//                TimeManager.getTimeMills(),
+//                moveDuration / 3
+//        ).setAnimateCallback(animate -> moving = false));
+//        这注释了也能跑？要你何用？
     }
 
     @Override
@@ -108,17 +112,20 @@ public class ShogunateSoldier extends AbstractCharacter {
         super();
     }
 
-    @Override
-    public XImage<?> getImage(boolean getRawImage) {
-        if (normalAttacking || moving) {
-            try {
-                return Utils.getCachedImageFromResource("characters/" + getLabelName() + "/attack.png");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return super.getImage(getRawImage);
-    }
+//    @Override
+//    public XImage<?> getImage(boolean getRawImage) {
+//        if (normalAttacking || moving) {
+//            try {
+//                return Utils.getCachedImageFromResource("characters/" + getLabelName() + "/attack.png");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+////        上面注释掉后居然没有影响qwq不理解
+//        return super.getImage(getRawImage);
+//    }
+
+//    整个函数注释了都能跑？那你tm真正绘图的是哪个函数啊
 
     @Override
     synchronized public void normalAttack() {
@@ -149,5 +156,10 @@ public class ShogunateSoldier extends AbstractCharacter {
     @Override
     public void getBuff(AbstractBuffFactory abstractBuffFactory) {
         super.getBuff(abstractBuffFactory);
+    }
+
+    @Override
+    public void draw(XGraphics g) {
+        super.draw(g);
     }
 }

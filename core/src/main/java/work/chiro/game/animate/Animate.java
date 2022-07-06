@@ -273,6 +273,7 @@ public class Animate {
             super(vecSource, vecTarget.copy(), AnimateVectorType.PositionLike, timeStart);
             this.vecTarget = vecTarget;
             // 添加一个 1000 的缩放，不然数字太小了
+//            ????你这儿也没有缩放啊qwq
             this.speed = speed * 1000;
             this.willStop = willStop;
             updateSpeed();
@@ -477,5 +478,6 @@ public class Animate {
         public T getVecTarget() {
             return vecTarget;
         }
+//        大小究竟在哪里啊！！！！！！
     }
 }

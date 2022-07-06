@@ -240,4 +240,27 @@ public class XView extends AbstractObject<AnimateContainer> {
     public boolean isVisible() {
         return visible;
     }
+
+    @Override
+    public Vec2 getSize() {
+        return super.getSize();
+    }
+
+    @Override
+    public void setSize(Vec2 size) {
+        super.setSize(size);
+    }
+
+    @Override
+    public double getHeight() {
+//        System.out.println(super.getHeight());
+        return super.getHeight();
+    }
+
+    @Override
+    public double getWidth() {
+//        System.out.println(super.getWidth());
+        return super.getWidth();
+
+    }
 }

@@ -26,6 +26,10 @@ public class ElementUtils {
             ElementalReactions.Frozen, "冻结",
             ElementalReactions.Crystallize, "结晶"
     );
+    private static final Map<ElementalBuff,String> elementalBuffSting = Map.of(
+//            元素Buff
+            ElementalBuff.Firing,"灼烧"
+    );
 
     /**
      * 元素、元素反应等枚举转换成字符串

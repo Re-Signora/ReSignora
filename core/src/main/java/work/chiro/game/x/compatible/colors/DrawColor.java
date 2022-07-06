@@ -3,6 +3,7 @@ package work.chiro.game.x.compatible.colors;
 import java.util.Map;
 
 import work.chiro.game.logic.element.Element;
+import work.chiro.game.logic.element.ElementalBuff;
 import work.chiro.game.logic.element.ElementalReactions;
 
 public class DrawColor {
@@ -31,7 +32,9 @@ public class DrawColor {
             Element.Electro, new CoupleColor(0xFFe19bff, 0xFF853ad6),
 
             // 元素反应
-            ElementalReactions.Wet, new CoupleColor(0xFF66ccff, 0xFF3f68b3)
+            ElementalReactions.Wet, new CoupleColor(0xFF66ccff, 0xFF3f68b3),
+//            元素buff
+            ElementalBuff.Firing , new CoupleColor(0xFFff0000,0xFFcc3333)
     );
 
     public static CoupleColor getEnumColors(Enum<?> e) {

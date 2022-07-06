@@ -2,8 +2,14 @@ package work.chiro.game.logic.buff;
 
 
 
+import java.awt.Graphics;
+
+import work.chiro.game.animate.action.AbstractAction;
 import work.chiro.game.logic.attributes.BasicThingAttributes;
+import work.chiro.game.logic.attributes.dynamic.BasicDynamicAttributes;
+import work.chiro.game.logic.attributes.loadable.BasicAttackAttributes;
 import work.chiro.game.logic.element.Element;
+import work.chiro.game.objects.thing.AbstractThing;
 import work.chiro.game.objects.thing.character.AbstractCharacter;
 
 //工厂模式？？
@@ -21,7 +27,7 @@ import work.chiro.game.objects.thing.character.AbstractCharacter;
 //6.生机之草：在生机之草生效期间，清除并免疫自身所有负面效果。若在生机之草持续时间内没有受到任何伤害，则在生机之草结束后，恢复自身当前血量的10%。（最后的恢复不享受治疗加成）。生机之草持续时间5s。
 //
 //7.千嶂之岩：在千嶂之岩持续时间内，岩属性伤害降低至50%，并使得自身受到的其他伤害减少至80%。当以此方法免疫超过自身最大血量10%的伤害时，千嶂之岩消失。千嶂之岩最大持续时间8s。
-public abstract class AbstractBuff {
+public class AbstractBuff extends AbstractThing<BasicAttackAttributes, AbstractAction> {
     String buffName;
     int numberOfBuff;
 
@@ -31,6 +37,11 @@ public abstract class AbstractBuff {
 
     public AbstractBuff(){
         onStart();
+    }
+
+    @Override
+    public BasicDynamicAttributes getBasicDynamicAttributes() {
+        return getBasicDynamicAttributes();
     }
 
 
@@ -46,7 +57,9 @@ public abstract class AbstractBuff {
     public String getBuffName(){return buffName;}
 
 //    标记？
-    public void imageShow(){}
+//    public void imageShow(){
+//        Graphics g = getGraphics();
+//    }
 
 //    Buff效果
     public int value(Element damageType, int damage, AbstractCharacter abstractCharacter){return damage;}
@@ -59,4 +72,5 @@ public abstract class AbstractBuff {
 //    重新计时，但是我没有计时器啊qwq
 //        层数++？
     }
+
 }
