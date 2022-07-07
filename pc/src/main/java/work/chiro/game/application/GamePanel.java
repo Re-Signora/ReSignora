@@ -53,19 +53,19 @@ public class GamePanel extends JPanel {
         return GamePanel.justResized;
     }
 
-    public void resetStates() {
-        heroControllerImpl.clear();
-        if (Game.getInstance() == null) {
-            Game.createInstance(heroControllerImpl);
-        }
-        // Game.getInstance().resetStates();
-    }
+//    public void resetStates() {
+//        heroControllerImpl.clear();
+//        if (Game.getInstance() == null) {
+//            Game.createInstance(heroControllerImpl);
+//        }
+//        // Game.getInstance().resetStates();
+//    }
 
     public void action() {
         if (RunningConfig.modePC) RunningConfig.targetServerHost = null;
-        if (Game.getInstance() == null) {
-            Game.createInstance(heroControllerImpl);
-        }
+//        if (Game.getInstance() == null) {
+//            Game.createInstance(heroControllerImpl);
+//        }
 //        开启英雄控制？
 //        开始操作？？？？这是啥玩意~？
         Game.getInstance().action();
@@ -77,10 +77,8 @@ public class GamePanel extends JPanel {
     }
 
     public GamePanel() {
-//        这句话没有看懂
         ResourceProvider.getInstance().setXGraphicsGetter(() -> new XGraphicsPC() {
-//            XGraphicsPC()这东西没有初始化的嘛qwq
-//            c，居然还能这样重定义 ，绝了
+
             @Override
             protected Graphics2D getGraphics() {
                 return getGraphics2D();
@@ -94,68 +92,22 @@ public class GamePanel extends JPanel {
 //        就是从这个地方开始游戏了呗qwq
         Game.createInstance(heroControllerImpl);
 
-        // Game.getInstance().setOnExit(() -> window.nextScene(MainWindow.class));
-        Game.getInstance().setOnExit(() -> {
-            SceneRun.getInstance().setNextScene(MainWindow.class);
-            synchronized (waitObject) {
-                waitObject.notify();
-            }
-        });
         Utils.getLogger().info("GamePanel instance created!");
-//        这玩意儿是不是应该删掉啊qwq？？？？
-        Game.getInstance().setOnFinish(() -> {
-            Utils.getLogger().info("finish!");
-            if (RunningConfig.score > 0) {
-                try {
-                    String name = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "Nanshi" : lastProvidedName);
-                    if (name == null) {
-                        String name2 = JOptionPane.showInputDialog("输入你的名字", lastProvidedName == null ? "Nanshi" : lastProvidedName);
-                        if (name2 == null) {
-                            int res = JOptionPane.showConfirmDialog(null, "不保存记录?", "Save Game", JOptionPane.OK_CANCEL_OPTION);
-                            if (res == JOptionPane.YES_OPTION) {
-                                throw new Exception();
-                            }
-                        } else {
-                            lastProvidedName = name2;
-                        }
-                    } else {
-                        lastProvidedName = name;
-                    }
-                    String message = JOptionPane.showInputDialog("输入额外的信息", lastProvidedMessage == null ? "NO MESSAGE" : lastProvidedMessage);
-                    lastProvidedMessage = message;
-                    // 保存游戏结果
-                    HistoryImpl.getInstance().addOne(
-                            new HistoryObjectFactory(
-                                    name == null ? "Nanshi" : name.isEmpty() ? "Nanshi" : name,
-                                    RunningConfig.score,
-                                    message == null ? "NO MESSAGE" : message.isEmpty() ? "NO MESSAGE" : message,
-                                    RunningConfig.difficulty)
-                                    .create());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Utils.getLogger().warn("Input exception: " + e);
-                } finally {
-                    SceneRun.getInstance().setNextScene(HistoryWindow.class);
-                    synchronized (waitObject) {
-                        waitObject.notify();
-                    }
-                }
-            }
-        });
-//        ？？？？一直很想问qwq  ：：是啥意思啊
+
+
         Game.getInstance().setOnPaint(this::repaint);
         Game.getInstance().setOnFrame(heroControllerImpl::onFrame);
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                super.componentResized(e);
-                // if (RunningConfig.allowResize) {
-                UtilsPC.refreshWindowSize(getWidth(), getHeight());
-                justResized = true;
-//                调整大小完成，但是为什么要记录呢qwq，不理解？？？？
-                // }
-            }
-        });
+//        addComponentListener(new ComponentAdapter() {
+//            @Override
+//            public void componentResized(ComponentEvent e) {
+//                super.componentResized(e);
+//                // if (RunningConfig.allowResize) {
+//                UtilsPC.refreshWindowSize(getWidth(), getHeight());
+//                justResized = true;
+////                调整大小完成，但是为什么要记录呢qwq，不理解？？？？
+//                // }
+//            }
+//        });
     }
 
     public void addTimers() {

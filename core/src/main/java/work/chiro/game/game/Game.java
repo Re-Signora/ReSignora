@@ -140,8 +140,7 @@ public class Game {
      * 每次重绘画面钩子
      */
     private BasicCallback onPaint = null;
-//    再次没找到xxxx，呜呜呜，为什么每次都是从空开始啊？？？？，找不不到初始化和其他乱七八糟的东西诶，进去居然还是只是给接口，呜呜呜
-    /**
+   /**
      * 每帧钩子
      */
     private BasicCallback onFrame = null;
@@ -203,7 +202,7 @@ public class Game {
 
     private Game(CharacterController characterController) {
         this.characterController = characterController;
-        RunningConfig.config = new ConfigFactory(RunningConfig.difficulty).create();
+//        RunningConfig.config = new ConfigFactory(RunningConfig.difficulty).create();
         backgrounds.add(null);
         backgrounds.add(null);
         activityManager.setOnSwitchActivity(newActivity -> {
@@ -211,9 +210,12 @@ public class Game {
             if (newActivity == null) return;
             if (newActivity.getLayout() == null) return;
             if (getTopLayout().getBackground() != null) {
-                if (backgrounds.get(1) != null) {
-                    backgrounds.set(0, backgrounds.get(1));
-                }
+//                if (backgrounds.get(1) != null) {
+//                    backgrounds.set(0, backgrounds.get(1));
+//                }
+
+//                AbstractBackground abstractBackground = new BasicBackgroundFactory(getTopLayout().getBackground()).create();
+//                backgrounds.add(abstractBackground);
                 backgrounds.set(1, new BasicBackgroundFactory(getTopLayout().getBackground()).create());
             }
         });

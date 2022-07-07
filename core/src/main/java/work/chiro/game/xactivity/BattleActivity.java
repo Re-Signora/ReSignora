@@ -112,6 +112,7 @@ public class BattleActivity extends XActivity {
             shogunateSolder.getAnimateContainer().setThing(shogunateSolder);
             shogunateSolder.setFlipped(true);
             getGame().addEnemyThing(shogunateSolder);
+//            添加敌人，不是显示，敌人也没有创建
         };
 
         createEnemies.run();
