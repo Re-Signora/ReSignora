@@ -145,6 +145,107 @@
 
 
 
+# 7.12
+
+###### 哇呜呜呜，隔了三天，然后忘了之前改了写啥了qwq，代码太多太乱了，生活不易，猫猫叹气，呜呜┭┮﹏┭┮
+
+####
+
+1. TimerController备注写的是键盘控制emm
+
+   1. 但是在add中的两个我注释掉过后，发现还是可以前后左右移动，qe能正常放，但是普攻没了，emm，所以这个应该是个自动普攻按钮吧.......这备注怎么标的啊>w<
+
+   2. ```synchronized public boolean remove(Object from, Timer c)```
+
+      这个remove，我注释掉之后没有人和子弹改变，虽然感觉上看上去是蝴蝶移动的，但我直接return false 也没事啊qwq，不理解，直接return true也没事啊，更不理解了qwq，不明白
+
+   3. ```synchronized public void remove(Object from)```
+
+      这个remove删了也没有什么用，感觉这个应该也不是用来移动的函数吧qwq，一个不成熟的小猜测，这个应该是在动画没有出来之前的直接移动？动画出来后这几个函数就废弃了
+
+   4. ```synchronized public void update()```
+
+      这个注释过后就出现大问题，首先是普攻没了，这个应该就是普攻的前移，然后敌人也只是更新了一个其他就没了，最后的话技能的时间居然出现了负数，不理解qwq，什么操作。既然如此的话那对这个好好研究一下吧qwq
+
+      ```
+       synchronized public void update() {
+              if (TimeManager.isPaused()) return;
+              frameTime = TimeManager.getTimeMills();
+              frameCounter.add(frameTime);
+              frameCounter.removeIf(t -> t < ((frameTime >= 1000) ? (frameTime - 1000) : 0));
+              timers.values().forEach(timersList -> timersList.forEach(timer -> timer.update(frameTime)));
+          }
+      ```
+      
+      1. 那首先是一个return？额，回去看```TimeManager```里面是这样的，那么这个应该是暂停功能了，能理解，就是说如果有暂停的话，那么就直接返回，不用管这里面的东西了
+       ```java
+         public static void timePause() {
+             if (paused) return;
+             paused = true;
+             timePauseStart = System.currentTimeMillis();
+         }
+       ```
+      
+      2. 然后就是```frameTime = TimeManager.getTimeMills();```,我感觉这个东西应该是一个用来记录时间的，其余作用并不是很明显qwq，看上去应该就是返回了一个时间
+         ```java
+          public static double getTimeMills() {
+                if (timeStartGlobal == 0) {
+                    timeStartGlobal = System.currentTimeMillis();
+                }
+                if (paused) {
+                    return timeLastValue;
+                }
+                timeLastValue = (double) (System.currentTimeMillis() - timeStartGlobal - timePaused);
+                return timeLastValue;
+            }
+         ```
+      
+      3. 感觉像是添加时间？```frameCounter.add(frameTime);```就是上一个是用来得到时间，这个就是把时间加进去，虽然，我不知道这个加时间进去有什么用qwq
+      
+      4. ```removeIf```就有点迷了，没有看太懂qwq
+      
+      5. 不过又再次实验了一下，后面呢都要用到frameTimer，但是把那个add给注释掉却没事qwq
+      
+      6. 最后一个value我怀疑是对所有的进行一个改变，但是注释掉后，整个也能够跑，所以也不知道这个的功能到低是干什么的，那除此之外的话，看起来最核心的代码一个是取得frameTime，另一个是removeIf
+      
+      5. 还有就是```update```的调用问题了，在game的```getMainTask```里面被调用，感觉这玩意儿其实就是真正战斗时所循环运行的东西了，虽然没有找到循环的点在哪里，但是感觉这里是没有问题的
+      	```java
+         protected Runnable getMainTask() {
+                 return () -> {
+                     try {
+                         timerController.update();
+                         timerController.execute();
+                         if (onFrame != null) {
+                             onFrame.run();
+                         }
+                         getActivityManager().onFrame();
+                         synchronized (allThings) {
+                             allThings.forEach(objList -> objList.forEach(AbstractObject::forward));
+                         }
+                         getTopLayout().forEach(AbstractObject::forward);
+                         crashCheckAction();
+                         synchronized (allThings) {
+                             allThings.forEach(objList -> objList.removeIf(obj -> !obj.isValid()));
+                         }
+                         synchronized (allUnderAttacks) {
+                             allUnderAttacks.forEach(underAttacksList -> underAttacksList.removeIf(underAttack -> !underAttack.getRelativeCharacter().isValid()));
+                         }
+                         if (onPaint != null) {
+                             onPaint.run();
+                         }
+                         timerController.done();
+                         Thread.sleep(1);
+                     } catch (InterruptedException e) {
+                         Utils.getLogger().warn("this thread will exit: " + e);
+                     }
+                 };
+             }
+         ```
+      
+      6. 那理论上来讲，后面针对这个来改就可以了，这个应该就是最后的东西了qwq
+      
+      7. 
+
 
 
 

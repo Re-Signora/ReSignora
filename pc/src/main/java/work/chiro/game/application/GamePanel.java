@@ -97,17 +97,6 @@ public class GamePanel extends JPanel {
 
         Game.getInstance().setOnPaint(this::repaint);
         Game.getInstance().setOnFrame(heroControllerImpl::onFrame);
-//        addComponentListener(new ComponentAdapter() {
-//            @Override
-//            public void componentResized(ComponentEvent e) {
-//                super.componentResized(e);
-//                // if (RunningConfig.allowResize) {
-//                UtilsPC.refreshWindowSize(getWidth(), getHeight());
-//                justResized = true;
-////                调整大小完成，但是为什么要记录呢qwq，不理解？？？？
-//                // }
-//            }
-//        });
     }
 
     public void addTimers() {

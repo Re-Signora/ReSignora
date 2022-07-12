@@ -30,12 +30,18 @@ public class TimerController {
     }
 
     synchronized public void add(Object from, Timer c) {
-        Utils.getLogger().warn("add({}, {})", from, c);
+//        感覺像是鍵盤控制？？不是很理解，試一下
+//        Utils.getLogger().warn("add({}, {})", from, c);
+//        System.out.println(from);
+//        System.out.println(c);
+
+
+
+//        所以這玩意兒其實是加了個子彈進去唄qwq
+
         if (timers.containsKey(from)) {
-//            如果有映射的话？？？？不是很理解add了个啥玩意儿
             timers.get(from).add(c);
         } else {
-//            如果没有映射？就重新新建一个映射，就等于多类一个物体呗qwq
             List<Timer> list = new LinkedList<>();
             list.add(c);
             timers.put(from, list);
@@ -45,22 +51,23 @@ public class TimerController {
     @SuppressWarnings("UnnecessaryLocalVariable")
     synchronized public boolean remove(Object from, Timer c) {
         Utils.getLogger().warn("remove({}, {})", from, c);
-        if (timers.containsKey(from)) {
-            boolean res = timers.get(from).remove(c);
-            // if (timers.get(from).size() == 0) timers.remove(from);
-            return res;
-        } else {
-            return false;
-        }
+//        if (timers.containsKey(from)) {
+//            boolean res = timers.get(from).remove(c);
+//            // if (timers.get(from).size() == 0) timers.remove(from);
+//            return res;
+//        } else {
+//            return false;
+//        }
+        return true;
     }
 
     synchronized public void remove(Object from) {
-        Utils.getLogger().debug("Removing timer created by obj: {}", from);
-        if (timers.containsKey(from)) {
-            timers.get(from).forEach(timer -> Utils.getLogger().debug("\tRemoving timer: {}", timer));
-            timers.get(from).clear();
-            // timers.remove(from);
-        }
+//        Utils.getLogger().debug("Removing timer created by obj: {}", from);
+//        if (timers.containsKey(from)) {
+//            timers.get(from).forEach(timer -> Utils.getLogger().debug("\tRemoving timer: {}", timer));
+//            timers.get(from).clear();
+//            // timers.remove(from);
+//        }
         // DO NOT USE!!
         // timers.remove(from);
     }
@@ -95,9 +102,9 @@ public class TimerController {
         if (TimeManager.isPaused()) return;
 //        ？？？？update和getTimeMills？
         frameTime = TimeManager.getTimeMills();
-        frameCounter.add(frameTime);
+//        frameCounter.add(frameTime);
         frameCounter.removeIf(t -> t < ((frameTime >= 1000) ? (frameTime - 1000) : 0));
-        timers.values().forEach(timersList -> timersList.forEach(timer -> timer.update(frameTime)));
+//        timers.values().forEach(timersList -> timersList.forEach(timer -> timer.update(frameTime)));
     }
 
     public void done() {

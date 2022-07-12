@@ -311,6 +311,7 @@ public class Game {
             try {
 //                我觉得这个是动画处理，但是我没有证据，我看不懂qwq？？？？
                 timerController.update();
+//                這個應該是主要的調用了qwq
                 // execute all
                 timerController.execute();
                 // 按键处理
